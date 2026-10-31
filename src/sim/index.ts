@@ -8,5 +8,7 @@
  */
 
 // ===== [S1] Ausgaben · Exports =====
+export * from "./engine.js";
+export * from "./prelude.js";
 export * from "./scenario.js";
 export * from "./world.js";

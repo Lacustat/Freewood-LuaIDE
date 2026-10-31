@@ -10,10 +10,11 @@
  *  [S4] Welt und Einheiten · world and units
  *  [S5] Ende-zu-Ende · end to end (Graph, Formular)
  */
-import { test } from "node:test";
+import { test as nodeTest } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { FormModel, Graph, Kernel, WowSim, generateFormLua, generateLua, type ResolvedTarget } from "../src/index.js";
+import { FormModel, Graph, Kernel, WowSim, createWasmEngine, generateFormLua, generateLua, type ResolvedTarget } from "../src/index.js";
 import { loadPluginsFromRoot } from "../src/node/fs-loaders.js";
 
 // ===== [S1] Helfer · helpers =====
@@ -25,10 +26,21 @@ async function targets(): Promise<Record<string, ResolvedTarget>> {
 }
 const texts = (s: WowSim, kind: string) => s.log.filter((l) => l.kind === kind).map((l) => l.text);
 
+const wasmBytes = (): Promise<BufferSource> => Promise.resolve(readFileSync(join(process.cwd(), "runtimes/lua50/lua50.wasm")));
+
+// DE: Alle Tests laufen auf dem eigenen Interpreter UND auf der echten Lua-5.0-VM.
+// EN: all tests run on the own interpreter AND on the real Lua 5.0 VM.
+for (const eng of ["interp", "wasm"] as const) {
+const test = (name: string, fn: () => Promise<void>): void => { nodeTest(`[${eng}] ${name}`, fn); };
+const mk = async (target: ResolvedTarget, scenario?: ConstructorParameters<typeof WowSim>[1]): Promise<WowSim> => {
+  if (eng === "interp" || target.luaVersion !== "5.0") return new WowSim(target, scenario);
+  return new WowSim(target, scenario, await createWasmEngine(wasmBytes));
+};
+
 // ===== [S2] Frames und Skripte · frames and scripts =====
 test("vanilla: global script args (this, event, arg1) and chat output", async () => {
   const t = await targets();
-  const sim = new WowSim(t.v!);
+  const sim = await mk(t.v!);
   const r = sim.loadSource(`
     local f = CreateFrame("Frame", "MyFrame")
     f:RegisterEvent("ADDON_LOADED")
@@ -39,12 +51,12 @@ test("vanilla: global script args (this, event, arg1) and chat output", async ()
   assert.ok(r.ok);
   sim.fireEvent("ADDON_LOADED", "MyAddon");
   assert.deepEqual(texts(sim, "chat"), ["ADDON_LOADED:MyAddon:MyFrame"]);
-  assert.equal(sim.rt.interp.globals.get("event"), undefined, "globals are restored after the script");
+  assert.equal(sim.getGlobal("event"), undefined, "globals are restored after the script");
 });
 
 test("retail: parameters (self, event, ...) and no globals", async () => {
   const t = await targets();
-  const sim = new WowSim(t.r!);
+  const sim = await mk(t.r!);
   sim.loadSource(`
     local f = CreateFrame("Frame")
     f:RegisterEvent("ADDON_LOADED")
@@ -59,20 +71,20 @@ test("retail: parameters (self, event, ...) and no globals", async () => {
 test("methods exist only where the target data says so", async () => {
   const t = await targets();
   const code = `local f = CreateFrame("Frame") f:SetSize(10, 20) DEFAULT_CHAT_FRAME:AddMessage(f:GetWidth())`;
-  const v = new WowSim(t.v!);
+  const v = await mk(t.v!);
   const rv = v.loadSource(code);
   assert.equal(rv.ok, false);
   assert.match(rv.error!.message, /attempt to call method `SetSize' \(a nil value\)/);
-  const c = new WowSim(t.c!);
+  const c = await mk(t.c!);
   assert.ok(c.loadSource(code).ok);
   assert.deepEqual(texts(c, "chat"), ["10"]);
-  const bad = new WowSim(t.v!);
+  const bad = await mk(t.v!);
   assert.match(bad.loadSource(`CreateFrame("Banana")`).error!.message, /unknown frame type 'Banana'/);
 });
 
 test("hierarchy: parent, show/hide scripts, visibility, click", async () => {
   const t = await targets();
-  const sim = new WowSim(t.v!);
+  const sim = await mk(t.v!);
   sim.loadSource(`
     local p = CreateFrame("Frame", "P", UIParent)
     local b = CreateFrame("Button", "B", p)
@@ -84,30 +96,30 @@ test("hierarchy: parent, show/hide scripts, visibility, click", async () => {
   const b = sim.byName("B")!;
   assert.equal(sim.visible(b), true);
   sim.click("B");
-  assert.equal(sim.rt.interp.globals.get("clicks"), 1);
-  assert.equal(sim.rt.interp.globals.get("hidden"), true);
+  assert.equal(sim.getGlobal("clicks"), 1);
+  assert.equal(sim.getGlobal("hidden"), true);
   assert.equal(sim.visible(b), false);
   sim.click("C");
   assert.equal(sim.byName("C")!.checked, true);
   sim.click("B"); // still works, hidden parents do not block scripted clicks
-  assert.equal(sim.rt.interp.globals.get("clicks"), 2);
+  assert.equal(sim.getGlobal("clicks"), 2);
 });
 
 test("script errors are logged, not thrown, and later handlers still run", async () => {
   const t = await targets();
-  const sim = new WowSim(t.v!);
+  const sim = await mk(t.v!);
   sim.loadSource(`
     local a = CreateFrame("Frame") a:RegisterEvent("PLAYER_LOGIN") a:SetScript("OnEvent", function() error("boom") end)
     local b = CreateFrame("Frame") b:RegisterEvent("PLAYER_LOGIN") b:SetScript("OnEvent", function() ok = true end)
   `);
   sim.fireEvent("PLAYER_LOGIN");
   assert.match(texts(sim, "error")[0]!, /boom/);
-  assert.equal(sim.rt.interp.globals.get("ok"), true);
+  assert.equal(sim.getGlobal("ok"), true);
 });
 
 test("unknown events and unsimulated API produce warnings", async () => {
   const t = await targets();
-  const sim = new WowSim(t.v!);
+  const sim = await mk(t.v!);
   sim.loadSource(`local f = CreateFrame("Frame") f:RegisterEvent("NOT_REAL") local x = f.nothing`);
   sim.fireEvent("ALSO_NOT_REAL");
   const w = texts(sim, "warn");
@@ -118,7 +130,7 @@ test("unknown events and unsimulated API produce warnings", async () => {
 // ===== [S3] Zeit · time =====
 test("OnUpdate, C_Timer.After, tickers and cancel", async () => {
   const t = await targets();
-  const sim = new WowSim(t.c!);
+  const sim = await mk(t.c!);
   sim.loadSource(`
     updates, ticks, after = 0, 0, nil
     local f = CreateFrame("Frame")
@@ -127,21 +139,21 @@ test("OnUpdate, C_Timer.After, tickers and cancel", async () => {
     ticker = C_Timer.NewTicker(0.5, function(tk) ticks = ticks + 1 end)
   `);
   sim.advance(0.99);
-  assert.equal(sim.rt.interp.globals.get("after"), undefined);
+  assert.equal(sim.getGlobal("after"), undefined);
   sim.advance(0.02);
-  assert.equal(sim.rt.interp.globals.get("after") !== undefined, true);
-  assert.equal(sim.rt.interp.globals.get("ticks"), 2);
+  assert.equal(sim.getGlobal("after") !== undefined, true);
+  assert.equal(sim.getGlobal("ticks"), 2);
   sim.loadSource(`ticker:Cancel()`);
   sim.advance(5);
-  assert.equal(sim.rt.interp.globals.get("ticks"), 2);
-  assert.ok((sim.rt.interp.globals.get("updates") as number) > 100);
-  const v = new WowSim(t.v!);
+  assert.equal(sim.getGlobal("ticks"), 2);
+  assert.ok((sim.getGlobal("updates") as number) > 100);
+  const v = await mk(t.v!);
   assert.match(v.loadSource(`C_Timer.After(1, function() end)`).error!.message, /global `C_Timer'/);
 });
 
 test("slash commands", async () => {
   const t = await targets();
-  const sim = new WowSim(t.v!);
+  const sim = await mk(t.v!);
   sim.loadSource(`
     SLASH_HELLO1 = "/hello"
     SLASH_HELLO2 = "/hi"
@@ -157,18 +169,18 @@ test("slash commands", async () => {
 test("unit API: vanilla reports foreign health as percent, retail as numbers", async () => {
   const t = await targets();
   const code = `return UnitName("target"), UnitHealth("target"), UnitHealthMax("target"), UnitHealth("player"), UnitName("party1"), UnitExists("pet")`;
-  const v = new WowSim(t.v!);
-  assert.deepEqual(v.rt.executeSync(code).values, ["Defias Pillager", 100, 100, 3200, "Helper", false]);
+  const v = await mk(t.v!);
+  assert.deepEqual(v.exec(code).values, ["Defias Pillager", 100, 100, 3200, "Helper", false]);
   v.setHealth("target", 210);
-  assert.deepEqual(v.rt.executeSync(`return UnitHealth("target")`).values, [50]);
-  const r = new WowSim(t.r!);
+  assert.deepEqual(v.exec(`return UnitHealth("target")`).values, [50]);
+  const r = await mk(t.r!);
   r.setHealth("target", 210);
-  assert.deepEqual(r.rt.executeSync(`return UnitHealth("target"), UnitHealthMax("target")`).values, [210, 420]);
+  assert.deepEqual(r.exec(`return UnitHealth("target"), UnitHealthMax("target")`).values, [210, 420]);
 });
 
 test("world changes fire events; chat message events", async () => {
   const t = await targets();
-  const sim = new WowSim(t.v!);
+  const sim = await mk(t.v!);
   sim.loadSource(`
     local f = CreateFrame("Frame")
     for _, e in ipairs({"PLAYER_REGEN_DISABLED","PLAYER_TARGET_CHANGED","UNIT_HEALTH","CHAT_MSG_SAY"}) do f:RegisterEvent(e) end
@@ -178,13 +190,13 @@ test("world changes fire events; chat message events", async () => {
   sim.setCombat(true);
   sim.setTarget(undefined);
   sim.setHealth("player", 100);
-  assert.equal(sim.rt.interp.globals.get("seen"), "CHAT_MSG_SAY(hi);PLAYER_REGEN_DISABLED(nil);PLAYER_TARGET_CHANGED(nil);UNIT_HEALTH(player);");
+  assert.equal(sim.getGlobal("seen"), "CHAT_MSG_SAY(hi);PLAYER_REGEN_DISABLED(nil);PLAYER_TARGET_CHANGED(nil);UNIT_HEALTH(player);");
 });
 
 test("ClassicAPI target keeps Lua 5.0 library functions next to 5.1 syntax", async () => {
   const t = await targets();
-  const sim = new WowSim(t.c!);
-  const r = sim.rt.executeSync(`
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
     local n = 0
     for w in string.gfind("a b c", "%a") do n = n + 1 end
     return n, #"abc", math.mod(7, 3), 7 % 3, getn({1,2}), strlen("xy"), (strsplit(",", "a,b"))
@@ -209,7 +221,7 @@ test("graph output runs in the simulation (vanilla and retail)", async () => {
     g.connect({ node: cat.id, pin: "result" }, { node: pr.id, pin: "text" });
     const gen = generateLua(g, target);
     assert.deepEqual(gen.warnings, [], name);
-    const sim = new WowSim(target);
+    const sim = await mk(target);
     assert.ok(sim.loadSource(gen.code, "graph.lua").ok, name);
     sim.login();
     assert.deepEqual(texts(sim, "chat"), ["Hello, Testhero"], name);
@@ -237,7 +249,7 @@ test("graph with loop, variables and slash runs", async () => {
   link(get.id, "value", pr.id, "text");
   const gen = generateLua(g, t.c!);
   assert.deepEqual(gen.warnings, []);
-  const sim = new WowSim(t.c!);
+  const sim = await mk(t.c!);
   assert.ok(sim.loadSource(gen.code).ok);
   assert.ok(sim.runSlash("/sum"));
   assert.deepEqual(texts(sim, "chat"), ["10"]);
@@ -254,7 +266,7 @@ test("form output builds the same UI in the simulation", async () => {
   m.setAnchor(btn.id, { point: "BOTTOM", relativeTo: null, relativePoint: "BOTTOM", x: 0, y: 10 });
   const gen = generateFormLua(m, t.v!);
   assert.deepEqual(gen.warnings, []);
-  const sim = new WowSim(t.v!);
+  const sim = await mk(t.v!);
   assert.ok(sim.loadSource(gen.code, "form.lua").ok, JSON.stringify(sim.log));
   const snap = sim.snapshot();
   const get = (n: string) => snap.find((x) => x.name === n)!;
@@ -265,7 +277,7 @@ test("form output builds the same UI in the simulation", async () => {
   sim.click("MainOK");
   assert.equal(sim.byName("Main")!.shown, false);
   // retail output uses (self, button, down) and runs too
-  const r = new WowSim(t.r!);
+  const r = await mk(t.r!);
   const rgen = generateFormLua(m, t.r!);
   const rr = r.loadSource(rgen.code.replace("this:GetParent()", "self:GetParent()"), "form.lua");
   assert.ok(rr.ok, JSON.stringify(r.log));
@@ -273,7 +285,49 @@ test("form output builds the same UI in the simulation", async () => {
 
 test("retail backdrop needs the BackdropTemplate", async () => {
   const t = await targets();
-  const sim = new WowSim(t.r!);
+  const sim = await mk(t.r!);
   assert.match(sim.loadSource(`local f = CreateFrame("Frame") f:SetBackdrop({})`).error!.message, /attempt to call method 'SetBackdrop'/);
   assert.ok(sim.loadSource(`local f = CreateFrame("Frame", nil, UIParent, "BackdropTemplate") f:SetBackdrop({}) f:SetBackdropColor(0,0,0,1)`).ok);
 });
+
+test("vanilla environment: no io/os/debug, WoW-style time globals, 5.0 behaviour", async () => {
+  const t = await targets();
+  const sim = await mk(t.v!);
+  const r = sim.exec(`return type(io), type(os), type(debug), type(date), type(time), type(print), type(table.getn), type(string.gfind), type(getglobal), type(select)`);
+  assert.deepEqual(r.values, ["nil", "nil", "nil", "function", "function", "function", "function", "function", "function", "nil"]);
+  assert.equal(sim.exec(`return time() == GetTime()`).values[0], true);
+  const bad = sim.loadSource(`local s = "x"\nreturn s:upper()`);
+  assert.equal(bad.ok, false, "string methods do not exist in Lua 5.0");
+  assert.match(bad.error!.message, /attempt to index local `s' \(a string value\)/);
+});
+
+test("scripts: hooks run after the main handler, GetScript/HasScript, deferred nested scripts", async () => {
+  const t = await targets();
+  const sim = await mk(t.r!);
+  sim.loadSource(`
+    order = ""
+    local f = CreateFrame("Frame", "HookMe")
+    f:SetScript("OnShow", function() order = order .. "main;" end)
+    f:HookScript("OnShow", function() order = order .. "hook;" end)
+    f:Hide()
+    f:Show()
+    order = order .. "after-show;"
+    has = f:HasScript("OnShow")
+    got = type(f:GetScript("OnShow"))
+  `);
+  assert.equal(sim.getGlobal("order"), "after-show;main;hook;", "scripts triggered inside a call run after it (documented)");
+  assert.equal(sim.getGlobal("has"), true);
+  assert.equal(sim.getGlobal("got"), "function");
+});
+
+test("runaway scripts are stopped and logged; the simulation keeps working", async () => {
+  const t = await targets();
+  const sim = await mk(t.v!);
+  const r = sim.loadSource(`while true do end`);
+  assert.equal(r.ok, false);
+  assert.ok(sim.log.some((l) => l.kind === "error"));
+  assert.ok(sim.exec(`return 1 + 1`).ok, "VM is usable afterwards");
+  assert.deepEqual(sim.exec(`return 1 + 1`).values, [2]);
+});
+
+}

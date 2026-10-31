@@ -582,7 +582,8 @@ function installMath(it: Interpreter): LuaTable {
 
 // ===== [S6] os =====
 
-function installOs(now: () => number): LuaTable {
+/** DE: Die os-Bibliothek (auch von der Simulation genutzt). EN: the os library (also used by the simulation). */
+export function installOs(now: () => number): LuaTable {
   const O = new LuaTable();
   reg(O, "time", (a) => {
     const t = a[0];

@@ -4,7 +4,7 @@
  * Copyright (C) 2026 Lacustat
  *
  * INHALT / CONTENTS
- *   [S1] realLua50Syntax ... prüft Quelltext mit der echten Lua-5.0-VM (WASM)
+ *   [S1] realLua50Syntax ... (+ loadLuaWasm, createRealEngine) prüft Quelltext mit der echten Lua-5.0-VM (WASM)
  *
  * DE: Lädt `runtimes/lua50/lua50.wasm` bei Bedarf einmal und nutzt `loadstring` der echten VM, um
  *     Syntaxfehler zu melden, die genau so im Spiel auftreten. Fehlt die Datei, wird still übersprungen.
@@ -12,20 +12,32 @@
  *     syntax errors exactly as the game would. If the file is missing the check is silently skipped.
  */
 
-import { createWasm50Factory, type Wasm50Runtime } from "../src/index.js";
+import { createWasm50Factory, createWasmEngine, type SimEngine, type Wasm50Runtime } from "../src/index.js";
 
 // ===== [S1] realLua50Syntax =====
+
+/** DE: Lädt die WASM-Datei der echten Lua-5.0-VM. EN: loads the WASM file of the real Lua 5.0 VM. */
+export async function loadLuaWasm(): Promise<ArrayBuffer> {
+  const r = await fetch("../runtimes/lua50/lua50.wasm");
+  if (!r.ok) throw new Error(String(r.status));
+  return r.arrayBuffer();
+}
+
+/** DE: Neue Engine für die Simulation auf der echten VM; null, wenn nicht ladbar. EN: new engine for the simulation on the real VM; null if it cannot be loaded. */
+export async function createRealEngine(): Promise<SimEngine | null> {
+  try {
+    return await createWasmEngine(loadLuaWasm);
+  } catch {
+    return null;
+  }
+}
 
 let runtime: Promise<Wasm50Runtime | null> | undefined;
 
 function getRuntime(): Promise<Wasm50Runtime | null> {
   runtime ??= (async () => {
     try {
-      const factory = createWasm50Factory(async () => {
-        const r = await fetch("../runtimes/lua50/lua50.wasm");
-        if (!r.ok) throw new Error(String(r.status));
-        return r.arrayBuffer();
-      });
+      const factory = createWasm50Factory(loadLuaWasm);
       return (await factory.create()) as Wasm50Runtime;
     } catch {
       return null;

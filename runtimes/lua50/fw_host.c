@@ -80,7 +80,7 @@ static int fw_print(lua_State *S) {
   return 0;
 }
 static void count_hook(lua_State *S, lua_Debug *ar) {
-  (void)ar; steps++;
+  (void)ar; steps += 1000; /* hook fires every 1000 VM instructions */
   if (step_limit > 0 && steps > step_limit) { lua_sethook(S, 0, 0, 0); luaL_error(S, "script exceeded the instruction limit"); }
 }
 

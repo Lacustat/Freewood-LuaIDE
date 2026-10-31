@@ -58,7 +58,8 @@
       "GetObjectType",
       "SetID",
       "GetID",
-      "HasScript"
+      "HasScript",
+      "GetScript"
     ],
     "description": {
       "en": "Basic container for other UI elements.",

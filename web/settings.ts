@@ -25,6 +25,8 @@ export interface Settings {
   autosave: boolean;
   /** DE: Syntax zusätzlich mit der echten Lua-5.0-VM prüfen. EN: also check syntax with the real Lua 5.0 VM. */
   realLua: boolean;
+  /** DE: Simulation auf der echten Lua-5.0-VM („real“) oder dem eigenen Interpreter. EN: simulation on the real Lua 5.0 VM ("real") or the own interpreter. */
+  simRuntime: "real" | "interpreter";
   /** 0 = einpassen · fit, sonst Prozent · otherwise percent */
   formsZoom: number;
   stageWidth: number;
@@ -37,6 +39,7 @@ export const DEFAULT_SETTINGS: Settings = {
   tabWidth: 2,
   autosave: true,
   realLua: true,
+  simRuntime: "real",
   formsZoom: 0,
   stageWidth: 1024,
   stageHeight: 768,
@@ -53,6 +56,7 @@ export const SETTING_DEFS: Def[] = [
   { key: "tabWidth", kind: "number", min: 1, max: 8, step: 1 },
   { key: "autosave", kind: "bool" },
   { key: "realLua", kind: "bool" },
+  { key: "simRuntime", kind: "choice", options: ["real", "interpreter"] },
   { key: "formsZoom", kind: "number", min: 0, max: 400, step: 5 },
   { key: "stageWidth", kind: "number", min: 320, max: 3840, step: 1 },
   { key: "stageHeight", kind: "number", min: 240, max: 2160, step: 1 },

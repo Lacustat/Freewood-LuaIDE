@@ -117,5 +117,11 @@
   "app.settings": "Settings",
   "app.saveBrowser": "Save in browser",
   "app.saved": "Saved",
-  "settings.realLua": "Check syntax with the real Lua 5.0 VM (WASM)"
+  "settings.realLua": "Check syntax with the real Lua 5.0 VM (WASM)",
+  "settings.simRuntime": "Simulation runtime",
+  "settings.simRuntime.real": "Real Lua 5.0 VM (WASM)",
+  "settings.simRuntime.interpreter": "Freewood interpreter",
+  "sim.runtimeReal": "Runtime: real Lua 5.0 VM (WASM)",
+  "sim.runtimeInterp": "Runtime: Freewood interpreter",
+  "sim.runtimeFallback": "Real Lua 5.0 VM not available, using the Freewood interpreter."
 }

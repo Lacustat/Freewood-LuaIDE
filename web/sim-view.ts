@@ -9,6 +9,7 @@
  *   [S3] orderSnapshot ...... Zeichenreihenfolge der Vorschau
  */
 
+import { createRealEngine } from "./real-lua.js";
 import { DEFAULT_SCENARIO, FormModel, Graph, WowSim, generateFormLua, generateLua, importFormXml, type Project, type ResolvedTarget, type Scenario, type SnapshotNode } from "../src/index.js";
 import { clear, h, select } from "./dom.js";
 import type { Ctx } from "./ctx.js";
@@ -143,15 +144,18 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
     }
   });
 
-  function start(): void {
+  async function start(): Promise<void> {
     if (timer) {
       clearInterval(timer);
       timer = undefined;
     }
     shownLog = 0;
     clear(log);
-    sim = new WowSim(ctx.target, persistedScenario);
+    const wantReal = ctx.settings.simRuntime === "real" && ctx.target.luaVersion === "5.0";
+    const engine = wantReal ? await createRealEngine() : null;
+    sim = new WowSim(ctx.target, persistedScenario, engine ?? undefined);
     const s = sim;
+    s.addLog("info", ctx.t(engine ? "sim.runtimeReal" : wantReal ? "sim.runtimeFallback" : "sim.runtimeInterp"));
     const units = collectSources(ctx.project, ctx.target, (m) => s.addLog("warn", m));
     if (units.length === 0) s.addLog("info", ctx.t("sim.nothing"));
     for (const u of units) {
@@ -168,7 +172,7 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
     clear(controls);
     const s = sim;
     controls.append(
-      h("div", { class: "btn-row" }, h("button", { class: "btn primary", onclick: start }, "▶ " + (s ? ctx.t("sim.restart") : ctx.t("sim.run")))),
+      h("div", { class: "btn-row" }, h("button", { class: "btn primary", onclick: () => void start() }, "▶ " + (s ? ctx.t("sim.restart") : ctx.t("sim.run")))),
     );
     if (!s) {
       controls.append(h("p", { class: "muted", text: ctx.t("sim.intro") }));
@@ -231,7 +235,7 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
   fit();
   renderControls();
   refresh();
-  if (!sim) start();
+  if (!sim) void start();
 }
 
 // ===== [S3] orderSnapshot =====

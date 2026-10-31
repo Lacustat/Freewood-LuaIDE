@@ -10,20 +10,24 @@
  *   [S4] API-Funktionen ........ Einheiten, Chat, Timer, Misc (nur wenn in den Plugin-Daten)
  *   [S5] snapshot .............. Zustand für die Oberfläche
  *
- * DE: Die Simulation führt Addon-Code im eigenen Interpreter aus. Wichtiger Grundsatz: Es
+ * DE: Die Simulation führt Addon-Code in einer Lua-VM aus (eigener Interpreter oder echte
+ *     Lua-5.0-VM, siehe engine.ts/prelude.ts). Wichtiger Grundsatz: Es
  *     existiert nur, was in den Plugin-Daten des Ziels steht. Ruft ein Addon z. B. `SetSize` in
  *     einem Vanilla-Ziel auf, kommt – wie im echten Client – „attempt to call method … (a nil
  *     value)“. Stehen Funktionen in den Daten, aber ohne Simulation, wird beim Aufruf gewarnt.
- * EN: the simulation runs addon code in the own interpreter. Core principle: only what is in
+ * EN: the simulation runs addon code in a Lua VM (own interpreter or real Lua 5.0 VM, see
+ *     engine.ts/prelude.ts). Core principle: only what is in
  *     the target's plugin data exists. If an addon calls e.g. `SetSize` on a vanilla target, you
  *     get "attempt to call method … (a nil value)" like in the real client. Functions listed in
  *     the data but not simulated produce a warning when called.
  */
 
 import type { ResolvedTarget } from "../core/plugins.js";
-import { InterpRuntime } from "../lua/runtime.js";
-import { LuaFunction, LuaTable, nativeFn, tonum, tostr, type LuaValue } from "../lua/value.js";
+import { installOs } from "../lua/stdlib.js";
+import { LuaTable, tonum, tostr, type LuaFunction, type LuaValue } from "../lua/value.js";
 import type { ExecResult } from "../runtime/types.js";
+import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
+import { buildPrelude, REF_MARK } from "./prelude.js";
 import { DEFAULT_SCENARIO, type LogEntry, type Scenario, type UnitData } from "./scenario.js";
 import { FormModel, type AnchorPoint } from "../forms/model.js";
 
@@ -38,13 +42,13 @@ export interface PointState {
 }
 
 export class FrameState {
-  table = new LuaTable();
   parent: FrameState | null = null;
   children: FrameState[] = [];
   regions: FrameState[] = [];
   shown = true;
-  scripts = new Map<string, LuaFunction>();
-  hooks = new Map<string, LuaFunction[]>();
+  /** DE: Namen der Skripte mit Handler bzw. Hook (die Funktionen liegen in der VM). EN: script names with handler / hook (the functions live in the VM). */
+  scripts = new Set<string>();
+  hooks = new Set<string>();
   events = new Set<string>();
   points: PointState[] = [];
   width = 0;
@@ -61,7 +65,7 @@ export class FrameState {
   value = 0;
   min = 0;
   max = 1;
-  backdrop: LuaTable | undefined;
+  backdrop = false;
   mouse = false;
   movable = false;
   layer = "ARTWORK";
@@ -74,16 +78,26 @@ export class FrameState {
 // ===== [S2] WowSim =====
 
 interface Timer {
+  id: number;
   due: number;
-  fn: LuaValue;
+  hid: number;
   interval?: number;
   left: number;
   cancelled: boolean;
-  handle: LuaTable;
+}
+
+/** DE: Verweise auf Dinge, die in der VM liegen. EN: references to things living in the VM. */
+class HandlerRef {
+  constructor(readonly id: number) {}
+}
+class TableRef {}
+
+function encodeRef(v: unknown): unknown {
+  return v instanceof FrameState ? `${REF_MARK}F${v.id}:${v.kind}:${v.name}` : v;
 }
 
 export class WowSim {
-  readonly rt: InterpRuntime;
+  readonly engine: SimEngine;
   readonly log: LogEntry[] = [];
   readonly frames: FrameState[] = [];
   scenario: Scenario;
@@ -91,34 +105,35 @@ export class WowSim {
   readonly baseTime = 1000;
   private timers: Timer[] = [];
   private nextId = 1;
-  private methodTables = new Map<string, LuaTable>();
+  private nextTimer = 1;
+  private byId = new Map<number, FrameState>();
+  private timerIndex = new Map<number, Timer>();
+  private handlers = new Map<number, HandlerRef>();
   readonly uiParent: FrameState;
+  readonly worldFrame: FrameState;
+  readonly chatFrame: FrameState;
   private tick = 0;
+  /** DE: Tiefe verschachtelter VM-Aufrufe; Skripte, die währenddessen ausgelöst werden, laufen danach. EN: depth of nested VM calls; scripts triggered meanwhile run afterwards. */
+  private depth = 0;
+  private queue: Array<() => void> = [];
 
-  constructor(readonly target: ResolvedTarget, scenario: Scenario = DEFAULT_SCENARIO) {
+  constructor(readonly target: ResolvedTarget, scenario: Scenario = DEFAULT_SCENARIO, engine?: SimEngine) {
     this.scenario = structuredClone(scenario);
-    this.rt = new InterpRuntime(target.luaVersion, {
+    this.engine = engine ?? new InterpEngine(target.luaVersion, {
       now: () => (this.baseTime + this.now) * 1000,
-      print: (s) => this.addLog("print", s),
       compat50: target.syntax === "lua51-transpiled",
+      stepLimit: 2_000_000,
     });
-    this.rt.interp.stepLimit = 2_000_000;
-    this.installAliases();
     this.uiParent = this.makeFrame("Frame", "UIParent", null);
     this.uiParent.width = 1024;
     this.uiParent.height = 768;
-    this.rt.interp.globals.set("UIParent", this.uiParent.table);
-    const world = this.makeFrame("Frame", "WorldFrame", null);
-    world.width = 1024;
-    world.height = 768;
-    this.rt.interp.globals.set("WorldFrame", world.table);
-    this.installApi();
-    const chat = this.makeFrame("Frame", "DEFAULT_CHAT_FRAME", this.uiParent);
-    this.rt.interp.globals.set("DEFAULT_CHAT_FRAME", chat.table);
-    chat.table.set("AddMessage", nativeFn("AddMessage", (a) => {
-      this.addLog("chat", tostr(a[1]));
-    }));
-    this.rt.interp.globals.set("SlashCmdList", new LuaTable());
+    this.worldFrame = this.makeFrame("Frame", "WorldFrame", null);
+    this.worldFrame.width = 1024;
+    this.worldFrame.height = 768;
+    this.chatFrame = this.makeFrame("Frame", "DEFAULT_CHAT_FRAME", this.uiParent);
+    this.installHost();
+    const r = this.guard(() => this.engine.run(buildPrelude(target), "=prelude"));
+    if (!r.ok) throw new Error(`simulation prelude failed: ${r.error?.message}`);
   }
 
   addLog(kind: LogEntry["kind"], text: string): void {
@@ -126,17 +141,42 @@ export class WowSim {
     if (this.log.length > 5000) this.log.splice(0, 1000);
   }
 
-  // ----- Laden und Ausführen · loading and running -----
-  loadSource(code: string, chunk = "addon.lua"): ExecResult {
-    this.rt.output.length = 0;
-    const r = this.rt.executeSync(code, chunk);
+  // ----- VM-Aufrufe · VM calls -----
+  /** DE: Führt `fn` als VM-Aufruf aus; danach laufen aufgeschobene Skripte. EN: runs `fn` as a VM call; deferred scripts run afterwards. */
+  private guard<T>(fn: () => T): T {
+    this.depth++;
+    try {
+      return fn();
+    } finally {
+      this.depth--;
+      if (this.depth === 0) this.flush();
+    }
+  }
+
+  private flush(): void {
+    while (this.depth === 0 && this.queue.length > 0) this.queue.shift()!();
+  }
+
+  private callLua(name: string, args: Prim[]): ExecResult {
+    const r = this.guard(() => this.engine.call(name, args));
     if (!r.ok && r.error) this.addLog("error", r.error.message);
     return r;
   }
 
-  private runLua(fn: LuaValue, args: LuaValue[]): void {
-    const r = this.rt.callFunction(fn, args);
+  /** DE: Führt Quelltext aus, ohne Fehler zu protokollieren (Tests, Konsole). EN: runs source without logging errors (tests, console). */
+  exec(code: string, chunk = "=console"): ExecResult {
+    return this.guard(() => this.engine.run(code, chunk));
+  }
+
+  getGlobal(name: string): unknown {
+    return this.engine.getGlobal(name);
+  }
+
+  // ----- Laden und Ausführen · loading and running -----
+  loadSource(code: string, chunk = "addon.lua"): ExecResult {
+    const r = this.exec(code, `=${chunk}`);
     if (!r.ok && r.error) this.addLog("error", r.error.message);
+    return r;
   }
 
   /** DE: Loginablauf eines Addons. EN: login sequence of an addon. */
@@ -148,37 +188,22 @@ export class WowSim {
   }
 
   // ----- Events und Skripte · events and scripts -----
-  private callScript(f: FrameState, name: string, args: LuaValue[]): void {
-    const fn = f.scripts.get(name);
-    const hooks = f.hooks.get(name) ?? [];
-    if (!fn && hooks.length === 0) return;
-    const G = this.rt.interp.globals;
-    const style = this.target.scriptArgs;
-    const saved = new Map<string, LuaValue>();
-    const setG = (k: string, v: LuaValue) => {
-      if (!saved.has(k)) saved.set(k, G.get(k));
-      G.set(k, v);
-    };
-    if (style !== "arguments") {
-      setG("this", f.table);
-      const payload = name === "OnEvent" ? args.slice(1) : args;
-      if (name === "OnEvent") setG("event", args[0]);
-      for (let i = 0; i < 9; i++) setG(`arg${i + 1}`, payload[i]);
+  private callScript(f: FrameState, name: string, args: Prim[]): void {
+    if (!f.scripts.has(name) && !f.hooks.has(name)) return;
+    if (this.depth > 0) {
+      this.queue.push(() => this.callScript(f, name, args));
+      return;
     }
-    try {
-      for (const h of [...(fn ? [fn] : []), ...hooks]) this.runLua(h, style === "globals" ? [] : [f.table, ...args]);
-    } finally {
-      for (const [k, v] of saved) G.set(k, v);
-    }
+    this.callLua("__fw_fire", [f.id, name, ...args.map((a) => encodeRef(a) as Prim)]);
   }
 
-  fireScript(f: FrameState, name: string, ...args: LuaValue[]): void {
+  fireScript(f: FrameState, name: string, ...args: Prim[]): void {
     this.callScript(f, name, args);
   }
 
-  fireEvent(event: string, ...args: LuaValue[]): void {
+  fireEvent(event: string, ...args: Prim[]): void {
     if (!this.target.events.has(event)) this.addLog("warn", `Event '${event}' does not exist in target '${this.target.id}'.`);
-    this.addLog("event", `${event}${args.length ? "(" + args.map(tostr).join(", ") + ")" : ""}`);
+    this.addLog("event", `${event}${args.length ? "(" + args.map((a) => tostr(a)).join(", ") + ")" : ""}`);
     for (const f of [...this.frames]) if (f.events.has(event)) this.callScript(f, "OnEvent", [event, ...args]);
   }
 
@@ -201,23 +226,9 @@ export class WowSim {
     const m = /^\/(\S+)\s*(.*)$/.exec(line.trim());
     if (!m) return false;
     const cmd = m[1]!.toLowerCase();
-    const G = this.rt.interp.globals;
-    const list = G.get("SlashCmdList");
-    if (list instanceof LuaTable) {
-      // like the client: for every SlashCmdList key look for SLASH_<KEY>1, SLASH_<KEY>2, ...
-      for (const [key, fn] of [...list.hash]) {
-        if (typeof key !== "string" || !(fn instanceof LuaFunction)) continue;
-        for (let i = 1; ; i++) {
-          const alias = G.get(`SLASH_${key}${i}`);
-          if (typeof alias !== "string") break;
-          if (alias.toLowerCase() === "/" + cmd) {
-            this.runLua(fn, [m[2]]);
-            return true;
-          }
-        }
-      }
-    }
-    this.addLog("warn", `Unknown command /${cmd}`);
+    const r = this.callLua("__fw_slash", [cmd, m[2]]);
+    if (r.ok && r.values[0] === true) return true;
+    if (r.ok) this.addLog("warn", `Unknown command /${cmd}`);
     return false;
   }
 
@@ -238,7 +249,7 @@ export class WowSim {
           due.left--;
           if (due.left === 0) due.cancelled = true;
         } else due.cancelled = true;
-        this.runLua(due.fn, due.interval !== undefined ? [due.handle] : []);
+        this.callLua("__fw_timer", [due.hid, due.id, due.interval !== undefined]);
       }
       this.timers = this.timers.filter((t) => !t.cancelled);
       for (const f of [...this.frames]) if (this.visible(f) && (f.scripts.has("OnUpdate") || f.hooks.has("OnUpdate"))) this.callScript(f, "OnUpdate", [dt]);
@@ -268,7 +279,7 @@ export class WowSim {
     this.fireEvent("UNIT_HEALTH", unit);
   }
 
-  unit(id: LuaValue): UnitData | undefined {
+  unit(id: unknown): UnitData | undefined {
     if (typeof id !== "string") return undefined;
     const s = this.scenario;
     if (id === "player") return s.player;
@@ -283,92 +294,83 @@ export class WowSim {
   makeFrame(kind: string, name: string, parent: FrameState | null): FrameState {
     const f = new FrameState(this.nextId++, kind, name);
     f.parent = parent;
-    f.table.host = f;
-    f.table.meta = this.methodsFor(kind);
     if (kind === "Frame" || kind === "Button" || !f.isRegion) f.shown = true;
     if (parent) (f.isRegion ? parent.regions : parent.children).push(f);
     this.frames.push(f);
-    if (name) this.rt.interp.globals.set(name, f.table);
+    this.byId.set(f.id, f);
     return f;
   }
 
-  private methodsFor(kind: string): LuaTable {
-    let meta = this.methodTables.get(kind);
-    if (meta) return meta;
-    const methods = new LuaTable();
-    const names = new Set<string>();
-    for (let w = this.target.widgets.get(kind); w; w = w.inherits ? this.target.widgets.get(w.inherits) : undefined) w.methods.forEach((m) => names.add(m));
-    for (const n of names) {
-      const impl = FRAME_METHODS[n];
-      methods.set(n, nativeFn(n, (args) => {
-        const self = args[0];
-        if (!(self instanceof LuaTable) || !(self.host instanceof FrameState)) throw new Error(`bad self for ${n}: use ':' to call methods`);
-        if (!impl) {
-          this.addLog("warn", `Method ${kind}:${n} exists in the API data but is not simulated.`);
-          return;
-        }
-        return impl(this, self.host, args.slice(1));
-      }));
-    }
-    meta = new LuaTable();
-    meta.set("__index", methods);
-    this.methodTables.set(kind, meta);
-    return meta;
+  // ----- Brücke zur VM · bridge to the VM -----
+  private decode(v: unknown): unknown {
+    if (typeof v !== "string" || v.charCodeAt(0) !== 1) return v;
+    const m = /^\u0001([FHT])(\d*)/.exec(v);
+    if (!m) return v;
+    if (m[1] === "F") return this.byId.get(Number(m[2])) ?? undefined;
+    if (m[1] === "H") return new HandlerRef(Number(m[2]));
+    return new TableRef();
   }
 
-  // ----- Aliase und API · aliases and API -----
-  private installAliases(): void {
-    // intentionally empty: aliases are API functions and come from the plugin data (see [S4])
-  }
-
-  private installApi(): void {
-    const G = this.rt.interp.globals;
-    const setPath = (name: string, fn: LuaFunction) => {
-      const parts = name.split(".");
-      let t = G;
-      for (const p of parts.slice(0, -1)) {
-        let n = t.get(p);
-        if (!(n instanceof LuaTable)) {
-          n = new LuaTable();
-          t.set(p, n);
-        }
-        t = n;
+  private installHost(): void {
+    const e = this.engine;
+    e.host("__fw_log", (kind, text) => {
+      this.addLog(kind as LogEntry["kind"], String(text));
+    });
+    e.host("__fw_time", () => Math.floor(this.baseTime + this.now));
+    const osLib = installOs(() => (this.baseTime + this.now) * 1000);
+    e.host("__fw_date", (fmt, t) => {
+      const r = (osLib.get("date") as LuaFunction).native!([fmt as LuaValue, t as LuaValue]);
+      const v = Array.isArray(r) ? r[0] : r;
+      if (v instanceof LuaTable) return ["year", "month", "day", "hour", "min", "sec", "wday"].map((k) => v.get(k) as Prim);
+      return v as Prim;
+    });
+    e.host("__fw_mktime", (y, m, d, h, mi, s) => Math.floor(new Date(Number(y), Number(m) - 1, Number(d), h === undefined ? 12 : Number(h), mi === undefined ? 0 : Number(mi), s === undefined ? 0 : Number(s)).getTime() / 1000));
+    // all results: (true, ...values) or (false, message)
+    const reply = (fn: () => unknown): Prim[] => {
+      try {
+        const r = fn();
+        const list = Array.isArray(r) ? r : r === undefined ? [] : [r];
+        return [true, ...list.map((x) => encodeRef(x) as Prim)];
+      } catch (err) {
+        return [false, (err as Error).message];
       }
-      t.set(parts[parts.length - 1]!, fn);
     };
-    for (const f of this.target.functions.values()) {
-      const lib = LIB_ALIASES[f.name];
-      if (lib) {
-        const [ns, member] = lib.split(".") as [string, string];
-        const src = (G.get(ns) as LuaTable | undefined)?.get(member);
-        if (src) {
-          G.set(f.name, src);
-          continue;
-        }
-      }
-      // keep the interpreter's own library functions (string.*, table.*, math.*)
-      if (f.name.includes(".") && G.get(f.name.split(".")[0]!) instanceof LuaTable && (G.get(f.name.split(".")[0]!) as LuaTable).get(f.name.split(".")[1]!) !== undefined && !f.name.startsWith("C_")) continue;
-      if (G.get(f.name) !== undefined && !f.name.includes(".")) continue;
-      const impl = API[f.name];
-      setPath(f.name, nativeFn(f.name, (args) => {
+    e.host("__fw_m", (id, name, ...args) => {
+      const f = this.byId.get(Number(id));
+      const n = String(name);
+      return reply(() => {
+        if (!f) throw new Error(`unknown frame ${String(id)}`);
+        const impl = FRAME_METHODS[n];
         if (!impl) {
-          this.addLog("warn", `${f.name}() exists in the API data but is not simulated; it returned nothing.`);
-          return;
+          this.addLog("warn", `Method ${f.kind}:${n} exists in the API data but is not simulated.`);
+          return undefined;
         }
-        return impl(this, args);
-      }));
-    }
+        return impl(this, f, args.map((a) => this.decode(a)));
+      });
+    });
+    e.host("__fw_api", (name, ...args) => {
+      const n = String(name);
+      return reply(() => {
+        const impl = API[n];
+        if (!impl) {
+          this.addLog("warn", `${n}() exists in the API data but is not simulated; it returned nothing.`);
+          return undefined;
+        }
+        return impl(this, args.map((a) => this.decode(a)));
+      });
+    });
   }
 
-  addTimer(seconds: number, fn: LuaValue, interval?: number, iterations?: number): LuaTable {
-    const handle = new LuaTable();
-    const timer: Timer = { due: this.now + Math.max(0, seconds), fn, interval, left: iterations ?? -1, cancelled: false, handle };
-    handle.set("Cancel", nativeFn("Cancel", () => {
-      timer.cancelled = true;
-    }));
-    handle.set("IsCancelled", nativeFn("IsCancelled", () => timer.cancelled));
+  addTimer(seconds: number, fn: unknown, interval?: number, iterations?: number): number {
+    if (!(fn instanceof HandlerRef)) throw new Error("timer callback must be a function");
+    const timer: Timer = { id: this.nextTimer++, due: this.now + Math.max(0, seconds), hid: fn.id, interval, left: iterations ?? -1, cancelled: false };
     this.timers.push(timer);
-    return handle;
+    this.timerIndex.set(timer.id, timer);
+    return timer.id;
+  }
+
+  timerById(id: unknown): Timer | undefined {
+    return typeof id === "number" ? this.timerIndex.get(id) : undefined;
   }
 
   // ===== [S5] snapshot =====
@@ -426,34 +428,27 @@ export interface SnapshotNode {
 
 // ===== [S3] Frame-Methoden =====
 
-type Impl = (sim: WowSim, f: FrameState, a: LuaValue[]) => LuaValue[] | LuaValue | void;
-const n = (v: LuaValue, d = 0): number => tonum(v) ?? d;
+type Impl = (sim: WowSim, f: FrameState, a: unknown[]) => unknown;
+const n = (v: unknown, d = 0): number => tonum(v as LuaValue) ?? d;
+const str = (v: unknown): string => tostr(v as LuaValue);
 
-const LIB_ALIASES: Record<string, string> = {
-  strlen: "string.len", strsub: "string.sub", strfind: "string.find", strlower: "string.lower", strupper: "string.upper",
-  strrep: "string.rep", strbyte: "string.byte", strchar: "string.char", format: "string.format", gsub: "string.gsub",
-  tinsert: "table.insert", tremove: "table.remove", getn: "table.getn", foreach: "table.foreach", foreachi: "table.foreachi",
-  floor: "math.floor", ceil: "math.ceil", abs: "math.abs", max: "math.max", min: "math.min", mod: "math.mod", sqrt: "math.sqrt",
-  random: "math.random",
-};
-
-function framesOf(sim: WowSim, v: LuaValue): FrameState | null {
-  if (v instanceof LuaTable && v.host instanceof FrameState) return v.host;
+function framesOf(sim: WowSim, v: unknown): FrameState | null {
+  if (v instanceof FrameState) return v;
   if (typeof v === "string") return sim.byName(v) ?? null;
   return null;
 }
 
-function addRegion(sim: WowSim, f: FrameState, kind: string, a: LuaValue[]): LuaValue {
+function addRegion(sim: WowSim, f: FrameState, kind: string, a: unknown[]): FrameState {
   const name = typeof a[0] === "string" ? a[0] : "";
   const r = sim.makeFrame(kind, name, f);
   r.layer = typeof a[1] === "string" ? a[1] : "ARTWORK";
   if (kind === "FontString" && typeof a[2] === "string") r.text = "";
-  return r.table;
+  return r;
 }
 
 const FRAME_METHODS: Record<string, Impl> = {
   SetPoint: (sim, f, a) => {
-    const point = tostr(a[0]);
+    const point = str(a[0]);
     let rel: FrameState | null = f.parent ?? sim.uiParent;
     let relPoint = point;
     let x = 0;
@@ -463,7 +458,7 @@ const FRAME_METHODS: Record<string, Impl> = {
       y = n(a[2]);
     } else {
       if (a[1] !== undefined) rel = framesOf(sim, a[1]) ?? rel;
-      relPoint = a[2] !== undefined ? tostr(a[2]) : point;
+      relPoint = a[2] !== undefined ? str(a[2]) : point;
       x = n(a[3]);
       y = n(a[4]);
     }
@@ -475,7 +470,7 @@ const FRAME_METHODS: Record<string, Impl> = {
   },
   GetPoint: (_s, f, a) => {
     const p = f.points[n(a[0], 1) - 1];
-    return p ? [p.point, p.relativeTo?.table, p.relativePoint, p.x, p.y] : undefined;
+    return p ? [p.point, p.relativeTo ?? undefined, p.relativePoint, p.x, p.y] : undefined;
   },
   GetNumPoints: (_s, f) => f.points.length,
   SetWidth: (_s, f, a) => { f.width = n(a[0]); },
@@ -509,14 +504,14 @@ const FRAME_METHODS: Record<string, Impl> = {
     f.parent = p;
     if (p) (f.isRegion ? p.regions : p.children).push(f);
   },
-  GetParent: (_s, f) => f.parent?.table,
+  GetParent: (_s, f) => f.parent ?? undefined,
   GetName: (_s, f) => (f.name ? f.name : undefined),
   GetObjectType: (_s, f) => f.kind,
-  GetChildren: (_s, f) => f.children.map((c) => c.table),
-  GetRegions: (_s, f) => f.regions.map((c) => c.table),
+  GetChildren: (_s, f) => f.children,
+  GetRegions: (_s, f) => f.regions,
   SetFrameLevel: (_s, f, a) => { f.level = n(a[0]); },
   GetFrameLevel: (_s, f) => f.level,
-  SetFrameStrata: (_s, f, a) => { f.strata = tostr(a[0]); },
+  SetFrameStrata: (_s, f, a) => { f.strata = str(a[0]); },
   GetFrameStrata: (_s, f) => f.strata ?? f.parent?.strata ?? "MEDIUM",
   SetToplevel: () => undefined,
   Raise: (_s, f) => { f.level += 1; },
@@ -531,38 +526,33 @@ const FRAME_METHODS: Record<string, Impl> = {
   StopMovingOrSizing: () => undefined,
   SetClampedToScreen: () => undefined,
   SetClipsChildren: () => undefined,
-  SetBackdrop: (_s, f, a) => { f.backdrop = a[0] instanceof LuaTable ? a[0] : undefined; },
+  SetBackdrop: (_s, f, a) => { f.backdrop = a[0] instanceof TableRef; },
   SetBackdropColor: () => undefined,
   SetBackdropBorderColor: () => undefined,
   RegisterEvent: (sim, f, a) => {
-    const e = tostr(a[0]);
+    const e = str(a[0]);
     if (!sim.target.events.has(e)) sim.addLog("warn", `RegisterEvent: '${e}' is not an event of target '${sim.target.id}'.`);
     f.events.add(e);
   },
-  UnregisterEvent: (_s, f, a) => { f.events.delete(tostr(a[0])); },
+  UnregisterEvent: (_s, f, a) => { f.events.delete(str(a[0])); },
   UnregisterAllEvents: (_s, f) => { f.events.clear(); },
-  IsEventRegistered: (_s, f, a) => f.events.has(tostr(a[0])),
+  IsEventRegistered: (_s, f, a) => f.events.has(str(a[0])),
   SetScript: (sim, f, a) => {
-    const name = tostr(a[0]);
+    const name = str(a[0]);
     const allowed = new Set<string>();
     for (let w = sim.target.widgets.get(f.kind); w; w = w.inherits ? sim.target.widgets.get(w.inherits) : undefined) w.scripts.forEach((s) => allowed.add(s));
     if (!allowed.has(name)) sim.addLog("warn", `SetScript: '${name}' is not a script of ${f.kind} in target '${sim.target.id}'.`);
-    if (a[1] instanceof LuaFunction) f.scripts.set(name, a[1]);
+    if (a[1] === true) f.scripts.add(name);
     else f.scripts.delete(name);
   },
-  GetScript: (_s, f, a) => f.scripts.get(tostr(a[0])),
-  HasScript: (_s, f, a) => f.scripts.has(tostr(a[0])),
   HookScript: (_s, f, a) => {
-    if (a[1] instanceof LuaFunction) {
-      const name = tostr(a[0]);
-      f.hooks.set(name, [...(f.hooks.get(name) ?? []), a[1]]);
-    }
+    f.hooks.add(str(a[0]));
   },
   SetID: () => undefined,
   GetID: () => 0,
   CreateTexture: (sim, f, a) => addRegion(sim, f, "Texture", a),
   CreateFontString: (sim, f, a) => addRegion(sim, f, "FontString", a),
-  SetText: (_s, f, a) => { f.text = tostr(a[0]); },
+  SetText: (_s, f, a) => { f.text = str(a[0]); },
   GetText: (_s, f) => f.text,
   SetFont: () => undefined,
   SetTextColor: (_s, f, a) => { f.color = [n(a[0]), n(a[1]), n(a[2]), n(a[3], 1)]; },
@@ -580,8 +570,8 @@ const FRAME_METHODS: Record<string, Impl> = {
   SetTexCoord: () => undefined,
   SetVertexColor: (_s, f, a) => { f.color = [n(a[0]), n(a[1]), n(a[2]), n(a[3], 1)]; },
   SetGradient: () => undefined,
-  SetDrawLayer: (_s, f, a) => { f.layer = tostr(a[0]); },
-  SetNormalTexture: (_s, f, a) => { f.texture = tostr(a[0]); },
+  SetDrawLayer: (_s, f, a) => { f.layer = str(a[0]); },
+  SetNormalTexture: (_s, f, a) => { f.texture = str(a[0]); },
   GetNormalTexture: () => undefined,
   Enable: (_s, f) => { f.enabled = true; },
   Disable: (_s, f) => { f.enabled = false; },
@@ -619,9 +609,9 @@ const FRAME_METHODS: Record<string, Impl> = {
 
 // ===== [S4] API-Funktionen =====
 
-type ApiImpl = (sim: WowSim, a: LuaValue[]) => LuaValue[] | LuaValue | void;
+type ApiImpl = (sim: WowSim, a: unknown[]) => unknown;
 
-function healthShown(sim: WowSim, unitId: LuaValue, u: UnitData, max: boolean): number {
+function healthShown(sim: WowSim, unitId: unknown, u: UnitData, max: boolean): number {
   // Vanilla 1.12: health of units outside your group is reported as a percentage
   const own = typeof unitId === "string" && (unitId === "player" || unitId === "pet" || /^party\d$/.test(unitId));
   if (sim.target.scriptArgs !== "arguments" && !own) return max ? 100 : Math.round((u.health / u.healthMax) * 100);
@@ -643,47 +633,27 @@ const API: Record<string, ApiImpl> = {
   GetNumRaidMembers: (sim) => sim.scenario.raidCount ?? 0,
   InCombatLockdown: (sim) => sim.scenario.inCombat,
   SendChatMessage: (sim, a) => {
-    const type = tostr(a[1] ?? "SAY").toUpperCase();
-    sim.addLog("chat", `[${type}] ${tostr(a[0])}`);
+    const type = str(a[1] ?? "SAY").toUpperCase();
+    sim.addLog("chat", `[${type}] ${str(a[0])}`);
     const ev = `CHAT_MSG_${type}`;
-    if (sim.target.events.has(ev)) sim.fireEvent(ev, a[0], sim.scenario.player.name, tostr(a[2] ?? "Common"));
+    if (sim.target.events.has(ev)) sim.fireEvent(ev, a[0] as string, sim.scenario.player.name, str(a[2] ?? "Common"));
   },
   CreateFrame: (sim, a) => {
-    const kind = tostr(a[0]);
+    const kind = str(a[0]);
     if (!sim.target.widgets.has(kind)) throw new Error(`CreateFrame: unknown frame type '${kind}' in target '${sim.target.id}'`);
     const name = typeof a[1] === "string" ? a[1] : "";
-    if (name && sim.rt.interp.globals.get(name) !== undefined) sim.addLog("warn", `CreateFrame: a global named '${name}' already exists and is replaced.`);
     const parent = a[2] === undefined ? sim.uiParent : framesOf(sim, a[2]) ?? sim.uiParent;
-    const frame = sim.makeFrame(kind, name, parent);
-    if (typeof a[3] === "string" && a[3].split(",").some((t) => t.trim() === "BackdropTemplate")) {
-      // retail: the template mixes the backdrop methods into the frame
-      for (const m of ["SetBackdrop", "SetBackdropColor", "SetBackdropBorderColor"]) {
-        const impl = FRAME_METHODS[m]!;
-        frame.table.set(m, nativeFn(m, (args) => impl(sim, frame, args.slice(1))));
-      }
-    }
-    return frame.table;
+    return sim.makeFrame(kind, name, parent);
   },
-  getglobal: (sim, a) => sim.rt.interp.globals.get(a[0]),
-  setglobal: (sim, a) => { sim.rt.interp.globals.set(a[0], a[1]); },
   "C_Timer.After": (sim, a) => { sim.addTimer(n(a[0]), a[1]); },
   "C_Timer.NewTimer": (sim, a) => sim.addTimer(n(a[0]), a[1]),
   "C_Timer.NewTicker": (sim, a) => sim.addTimer(n(a[0]), a[1], Math.max(0.001, n(a[0])), a[2] === undefined ? undefined : n(a[2])),
-  hooksecurefunc: (sim, a) => {
-    const G = sim.rt.interp.globals;
-    const name = tostr(a[0]);
-    const orig = G.get(name);
-    const hook = a[1];
-    if (!(orig instanceof LuaFunction)) throw new Error(`hooksecurefunc: '${name}' is not a function`);
-    G.set(name, nativeFn(name, (args) => {
-      const r = sim.rt.interp.call(orig, args);
-      sim.rt.interp.call(hook, args);
-      return r;
-    }));
-  },
+  __timer_cancel: (sim, a) => { const t = sim.timerById(a[0]); if (t) t.cancelled = true; },
+  __timer_cancelled: (sim, a) => sim.timerById(a[0])?.cancelled ?? true,
+  __boot: (sim) => [sim.uiParent, sim.worldFrame, sim.chatFrame],
   strsplit: (_sim, a) => {
-    const d = tostr(a[0]);
-    return tostr(a[1]).split(d === "" ? /(?:)/ : d).map((x) => x);
+    const d = str(a[0]);
+    return str(a[1]).split(d === "" ? /(?:)/ : d).map((x) => x);
   },
-  strtrim: (_sim, a) => tostr(a[0]).trim(),
+  strtrim: (_sim, a) => str(a[0]).trim(),
 };

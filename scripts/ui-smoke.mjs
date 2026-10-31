@@ -90,6 +90,8 @@ check(await page.locator("svg.graph-board").count() > 0, "graph board opens");
 await page.click("#tab-sim");
 await page.waitForSelector(".sim-log .log-line");
 check(await page.locator(".sim-log .log-line").count() > 3, "simulation logs lines");
+const logText = await page.locator(".sim-log").innerText();
+check(/real Lua 5\.0 VM|echte Lua-5\.0-VM/.test(logText), "simulation runs on the real Lua 5.0 VM (vanilla)");
 
 check(errors.length === 0, "no console errors " + JSON.stringify(errors));
 await browser.close();
