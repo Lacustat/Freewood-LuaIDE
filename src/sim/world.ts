@@ -443,8 +443,14 @@ export class WowSim {
       return reply(() => {
         const impl = API[n];
         if (!impl) {
-          this.addLog("warn", `${n}() exists in the API data but is not simulated; it returned nothing.`);
-          return undefined;
+          // DE: Keine eigene Logik: typisierte Standardwerte aus der Signatur, mit klarem Hinweis im Log.
+          // EN: no own logic: typed default values from the signature, with a clear note in the log.
+          const def = this.target.functions.get(n);
+          const rets = def && !def.tags?.includes("signature-unknown") ? def.returns ?? [] : [];
+          const vals = rets.map((r) => (r.type === "number" ? 0 : r.type === "string" ? "" : r.type === "boolean" ? false : r.type === "table" ? {} : undefined));
+          while (vals.length && vals[vals.length - 1] === undefined) vals.pop();
+          this.addLog("warn", `${n}() has no simulated behaviour yet; it returned the type default${vals.length === 1 ? "" : "s"}${vals.length ? ` (${vals.map((v) => JSON.stringify(v ?? null)).join(", ")})` : " (nothing)"}.`);
+          return vals as never;
         }
         return impl(this, args.map((a) => this.decode(a)));
       });

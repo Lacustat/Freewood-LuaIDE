@@ -27,7 +27,7 @@ for (const n of names) {
   const path = n.split(".").map((p) => `[${JSON.stringify(p)}]`).join("");
   sim.exec(n.includes(".") ? `local f=_G${path.replace(/^\[("[^"]+")\]/, "[$1]")}; if f then pcall(f) end` : `if ${n} then pcall(${n}) end`);
   if (process.env.DBG && n==process.env.DBG) console.log(sim.log);
-  if (sim.log.some((l) => l.kind === "warn" && l.text.includes("not simulated"))) missing.push(n);
+  if (sim.log.some((l) => l.kind === "warn" && (l.text.includes("not simulated") || l.text.includes("no simulated behaviour")))) missing.push(n);
 }
 const groups = {};
 for (const n of missing) (groups[n.includes(".") ? n.split(".")[0] : "_global"] ||= []).push(n);
