@@ -14,6 +14,7 @@
  *     It is plain JSON and can be saved.
  */
 
+import type { AuraEntry } from "./auras.js";
 import type { CharacterState } from "./character.js";
 import type { InventoryState } from "./inventory.js";
 
@@ -49,6 +50,7 @@ export interface UnitData {
   x?: number;
   y?: number;
   z?: number;
+  auras?: AuraEntry[];
 }
 
 export interface Scenario {
@@ -71,7 +73,8 @@ export interface Scenario {
 export const DEFAULT_SCENARIO: Scenario = {
   realm: "Sandbox",
   locale: "enUS",
-  player: { name: "Testhero", class: "Warrior", classToken: "WARRIOR", race: "Human", level: 60, health: 3200, healthMax: 3200, isPlayer: true, friendly: true, power: 20, powerMax: 100, x: -8913, y: -133, z: 82 },
+  player: { name: "Testhero", class: "Warrior", classToken: "WARRIOR", race: "Human", level: 60, health: 3200, healthMax: 3200, isPlayer: true, friendly: true, power: 20, powerMax: 100, x: -8913, y: -133, z: 82,
+    auras: [{ spellId: 6673, helpful: true, duration: 120, remaining: 80, source: "player" }, { spellId: 21562, helpful: true, stacks: 1, source: "party1" }] },
   target: { name: "Defias Pillager", class: "Warrior", classToken: "WARRIOR", race: "Human", level: 18, health: 420, healthMax: 420, friendly: false, creatureID: 589, x: -8903, y: -133, z: 82 },
   party: [{ name: "Helper", class: "Priest", classToken: "PRIEST", race: "Dwarf", level: 60, health: 2400, healthMax: 2400, isPlayer: true, friendly: true, power: 1500, powerMax: 1800, x: -8920, y: -125, z: 82 }],
   inCombat: false,

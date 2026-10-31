@@ -372,6 +372,47 @@ API["C_DateAndTime.CompareCalendarTime"] = function(a, b)
   if x < y then return -1 elseif x > y then return 1 end
   return 0
 end
+-- ---- Auren als Tabellen · auras as tables ----
+local hAuraAt, hAuraFind = apiw("__aura_at"), apiw("__aura_find")
+local function auraTable(name, icon, apps, id, dispel, helpful, duration, expires, source, guid, mine)
+  if name == nil then return nil end
+  return { name = name, icon = icon, applications = apps, spellId = id, dispelName = dispel, isHelpful = helpful, isHarmful = not helpful,
+    duration = duration, expirationTime = expires, sourceUnit = source, sourceGUID = guid, charges = 0, maxCharges = 0, timeMod = 1,
+    isFromPlayerOrPlayerPet = mine, canApplyAura = false, isRaid = false, isStealable = false, nameplateShowPersonal = false, nameplateShowAll = false }
+end
+API["C_UnitAuras.GetAuraDataByIndex"] = function(unit, index, filter) return auraTable(hAuraAt(unit, index, filter)) end
+API["C_UnitAuras.GetBuffDataByIndex"] = function(unit, index) return auraTable(hAuraAt(unit, index, "HELPFUL")) end
+API["C_UnitAuras.GetDebuffDataByIndex"] = function(unit, index) return auraTable(hAuraAt(unit, index, "HARMFUL")) end
+API["C_UnitAuras.GetAuraDataBySpellName"] = function(unit, name, filter) return auraTable(hAuraFind(unit, "name", name, filter)) end
+API["C_UnitAuras.GetUnitAuraBySpellID"] = function(unit, id, filter) return auraTable(hAuraFind(unit, "id", id, filter)) end
+API["C_UnitAuras.GetPlayerAuraBySpellID"] = function(id) return auraTable(hAuraFind("player", "id", id)) end
+API["C_UnitAuras.GetUnitAuras"] = function(unit, filter)
+  local t, i = {}, 1
+  if filter == nil or filter == "" then filter = "HELPFUL|HARMFUL" end
+  while true do
+    local d = auraTable(hAuraAt(unit, i, filter))
+    if d == nil then break end
+    t[i] = d
+    i = i + 1
+  end
+  return t
+end
+-- ---- RunMacroText (Zeilen wie ein gespeichertes Makro) · RunMacroText ----
+API.RunMacroText = function(text, button)
+  if type(text) ~= "string" and type(text) ~= "number" then error('Usage: RunMacroText("text" [, "button"])', 2) end
+  text = string.sub(tostring(text), 1, 1023)
+  for line in string.gfind(text .. "\n", "([^\n]*)\n") do
+    if string.sub(line, 1, 1) == "#" then
+      -- Kommentar/Direktive übersprungen · directive skipped
+    elseif string.sub(line, 1, 1) == "/" then
+      local cmd, rest = (function(l) local a, b, c, d = string.find(l, "^/(%S+)%s*(.*)$"); return c, d end)(line)
+      if cmd == "stopmacro" then return end
+      if not G.__fw_slash(cmd, rest) then hostLog("warn", "RunMacroText: unknown slash command /" .. tostring(cmd)) end
+    elseif line ~= "" then
+      if G.SendChatMessage then G.SendChatMessage(line) end
+    end
+  end
+end
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then
   for k in pairs(API) do

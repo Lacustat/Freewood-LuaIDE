@@ -377,6 +377,31 @@ test("ClassicAPI: CVars and calendar time follow the docs", async () => {
   assert.deepEqual(r.values, [true, "2", false, undefined, "17", "40", "15", true, true, true, 1970, 5, 2, 1, -1, true]);
 });
 
+test("ClassicAPI: auras, macros and key bindings answer from the scenario", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
+    local d = C_UnitAuras.GetAuraDataByIndex("player", 1, "HELPFUL")
+    local d2 = C_UnitAuras.GetAuraDataByIndex("player", 2, "HELPFUL")
+    local all = C_UnitAuras.GetUnitAuras("player")
+    local byName = C_UnitAuras.GetAuraDataBySpellName("player", "battle shout")
+    local bySpell = C_UnitAuras.GetPlayerAuraBySpellID(21562)
+    local tex, apps = UnitBuff("player", 1)
+    local ran
+    SlashCmdList["TESTM"] = function(msg) ran = msg end
+    SLASH_TESTM1 = "/testm"
+    RunMacroText("#show\\n/testm hello world\\n/stopmacro\\n/testm no")
+    local n, spellRank, spellId = GetMacroSpell(1)
+    return d.name, d.spellId, d.isHelpful, d.sourceUnit, d.duration, d2.spellId, table.getn(all), byName.spellId, bySpell.sourceUnit, tex, apps,
+      GetMacroBody(1), GetMacroBody("Hi"), GetMacroIndexByName("Hi"), n, spellRank, spellId, ran,
+      GetBindingByKey("ctrl-1"), GetBindingAction("W"), C_UnitAuras.GetAuraDataByIndex("player", 1, "HARMFUL")
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, ["Battle Shout", 6673, true, "player", 120, 21562, 2, 6673, "party1", "Interface\\Icons\\Ability_Warrior_BattleShout", 1,
+    "#showtooltip\n/cast Battle Shout", "/script DEFAULT_CHAT_FRAME:AddMessage(\"hi\")", 2, "Battle Shout", "Rank 1", 6673, "hello world",
+    "MULTIACTIONBAR1BUTTON1", "MOVEFORWARD", undefined]);
+});
+
 // ===== [S5] Ende-zu-Ende · end to end =====
 test("graph output runs in the simulation (vanilla and retail)", async () => {
   const t = await targets();

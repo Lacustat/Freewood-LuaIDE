@@ -42,12 +42,23 @@ export interface FactionEntry {
   collapsed?: boolean;
 }
 
+export interface MacroEntry {
+  name: string;
+  icon?: string;
+  body: string;
+  /** DE: Charaktermakro (sonst allgemein). EN: character macro (else general). */
+  character?: boolean;
+}
+
 export interface CharacterState {
   quests: QuestEntry[];
   /** DE: Abgeschlossene Quest-IDs. EN: completed quest IDs. */
   completed: number[];
   factions: FactionEntry[];
   watchedFaction?: number;
+  macros?: MacroEntry[];
+  /** DE: Taste → Befehl, z. B. "CTRL-1": "ACTIONBUTTON1". EN: key → command. */
+  bindings?: Record<string, string>;
 }
 
 // ===== [S2] Beispieldaten · sample data =====
@@ -67,6 +78,11 @@ export const DEFAULT_CHARACTER: CharacterState = {
     { factionID: 21, name: "Booty Bay", description: "The neutral port.", standing: -1500, atWar: false },
   ],
   watchedFaction: 72,
+  macros: [
+    { name: "Shout", icon: "Interface\\Icons\\Ability_Warrior_BattleShout", body: "#showtooltip\n/cast Battle Shout" },
+    { name: "Hi", body: "/script DEFAULT_CHAT_FRAME:AddMessage(\"hi\")", character: true },
+  ],
+  bindings: { "1": "ACTIONBUTTON1", "2": "ACTIONBUTTON2", "CTRL-1": "MULTIACTIONBAR1BUTTON1", "W": "MOVEFORWARD", "UP": "MOVEFORWARD" },
 };
 
 // ===== [S3] CHARACTER_API =====
@@ -162,6 +178,42 @@ export const CHARACTER_API: Record<string, Impl> = {
       f.atWar === true, !f.header && (f.standing ?? 0) >= -3000, f.header === true, f.collapsed === true, f.factionID === c.watchedFaction, !f.header];
   },
   __standings_list: (c) => c.factions.filter((f) => !f.header).flatMap((f) => [f.factionID, (f.standing ?? 0)]),
+  // ----- Makros · macros -----
+  GetNumMacros: (c) => { const m = c.macros ?? []; return [m.filter((x) => !x.character).length, m.filter((x) => x.character).length]; },
+  GetMacroInfo: (c, _i, a) => { const m = typeof a[0] === "number" ? c.macros?.[a[0] - 1] : undefined; return m ? [m.name, m.icon ?? "Interface\\Icons\\INV_Misc_QuestionMark", m.body, m.character === true] : undefined; },
+  GetMacroIndexByName: (c, _i, a) => { const k = (c.macros ?? []).findIndex((m) => m.name === a[0]); return k < 0 ? 0 : k + 1; },
+  GetMacroBody: (c, _i, a) => {
+    const m = typeof a[0] === "number" ? c.macros?.[a[0] - 1] : (c.macros ?? []).find((x) => x.name === a[0]);
+    return m?.body;
+  },
+  GetMacroSpell: (c, inv, a) => {
+    const m = typeof a[0] === "number" ? c.macros?.[a[0] - 1] : undefined;
+    if (!m) return undefined;
+    const line = m.body.split("\n").find((l) => /^\/(cast|castsequence)\s/i.test(l.trim()));
+    const mm = line ? /^\/cast(?:sequence)?\s+(?:\[[^\]]*\]\s*)?([^;(]+?)\s*(?:\(Rank (\d+)\))?\s*(?:;.*)?$/i.exec(line.trim()) : null;
+    if (!mm) return undefined;
+    const name = mm[1]!.toLowerCase();
+    let best: { id: number; rank: string; n: number } | undefined;
+    for (const id of inv.known) {
+      const s = inv.spells[String(id)];
+      if (!s || s.name.toLowerCase() !== name) continue;
+      const n = Number(/(\d+)/.exec(s.rank ?? "")?.[1] ?? 0);
+      if (mm[2] !== undefined ? n === Number(mm[2]) : !best || n > best.n) best = { id, rank: s.rank ?? "", n };
+    }
+    return best ? [inv.spells[String(best.id)]!.name, best.rank, best.id] : undefined;
+  },
+  GetRunningMacro: () => undefined,
+  GetRunningMacroButton: () => undefined,
+  // ----- Tastenbelegung · key bindings -----
+  GetBindingByKey: (c, _i, a) => (typeof a[0] === "string" ? c.bindings?.[a[0].toUpperCase()] : undefined),
+  GetBindingAction: (c, _i, a) => (typeof a[0] === "string" ? c.bindings?.[a[0].toUpperCase()] ?? "" : ""),
+  GetBindingKey: (c, _i, a) => Object.entries(c.bindings ?? {}).filter(([, cmd]) => cmd === a[0]).map(([k]) => k).slice(0, 2),
+  GetNumBindings: (c) => new Set(Object.values(c.bindings ?? {})).size,
+  GetBinding: (c, _i, a) => {
+    const cmds = [...new Set(Object.values(c.bindings ?? {}))];
+    const cmd = typeof a[0] === "number" ? cmds[a[0] - 1] : undefined;
+    return cmd === undefined ? undefined : [cmd, ...Object.entries(c.bindings ?? {}).filter(([, v]) => v === cmd).map(([k]) => k).slice(0, 2)];
+  },
   // ----- Zauberbuch · spellbook -----
   GetNumSpellTabs: (_c, inv) => (bookSpells(inv).length > 0 ? 1 : 0),
   GetSpellTabInfo: (_c, inv, a) => (a[0] === 1 ? ["General", "Interface\\Icons\\INV_Misc_QuestionMark", 0, bookSpells(inv).length] : undefined),
