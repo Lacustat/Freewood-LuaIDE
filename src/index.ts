@@ -20,3 +20,4 @@ export * from "./lua/index.js";
 export * from "./analysis/api-check.js";
 export * from "./editor/index.js";
 export * from "./graph/index.js";
+export * from "./forms/index.js";

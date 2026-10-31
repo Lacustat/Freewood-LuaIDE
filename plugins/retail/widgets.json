@@ -1,9 +1,156 @@
 [
-  { "name": "Frame", "scripts": ["OnLoad", "OnEvent", "OnUpdate", "OnShow", "OnHide"],
-    "methods": ["SetPoint", "SetSize", "SetShown", "Show", "Hide", "SetAlpha", "SetFrameStrata", "SetFrameLevel", "RegisterEvent", "UnregisterEvent", "SetScript", "HookScript", "CreateTexture", "CreateFontString"],
-    "description": { "en": "Basic container for other UI elements.", "de": "Grundbehälter für andere UI-Elemente." } },
-  { "name": "Button", "inherits": "Frame", "scripts": ["OnClick", "OnEnter", "OnLeave"], "methods": ["SetText", "GetText", "Enable", "Disable", "RegisterForClicks"],
-    "description": { "en": "A clickable frame.", "de": "Ein anklickbarer Frame." } },
-  { "name": "Cooldown", "inherits": "Frame", "scripts": ["OnCooldownDone"], "methods": ["SetCooldown", "Clear"],
-    "description": { "en": "A frame showing a cooldown sweep.", "de": "Ein Frame, der einen Abklingzeit-Sweep zeigt." } }
+  {
+    "name": "Frame",
+    "scripts": [
+      "OnLoad",
+      "OnEvent",
+      "OnUpdate",
+      "OnShow",
+      "OnHide"
+    ],
+    "methods": [
+      "SetPoint",
+      "SetSize",
+      "SetShown",
+      "Show",
+      "Hide",
+      "SetAlpha",
+      "SetFrameStrata",
+      "SetFrameLevel",
+      "RegisterEvent",
+      "UnregisterEvent",
+      "SetScript",
+      "HookScript",
+      "CreateTexture",
+      "CreateFontString"
+    ],
+    "description": {
+      "en": "Basic container for other UI elements.",
+      "de": "Grundbehälter für andere UI-Elemente."
+    }
+  },
+  {
+    "name": "Button",
+    "inherits": "Frame",
+    "scripts": [
+      "OnClick",
+      "OnEnter",
+      "OnLeave"
+    ],
+    "methods": [
+      "SetText",
+      "GetText",
+      "Enable",
+      "Disable",
+      "RegisterForClicks"
+    ],
+    "description": {
+      "en": "A clickable frame.",
+      "de": "Ein anklickbarer Frame."
+    }
+  },
+  {
+    "name": "Cooldown",
+    "inherits": "Frame",
+    "scripts": [
+      "OnCooldownDone"
+    ],
+    "methods": [
+      "SetCooldown",
+      "Clear"
+    ],
+    "description": {
+      "en": "A frame showing a cooldown sweep.",
+      "de": "Ein Frame, der einen Abklingzeit-Sweep zeigt."
+    }
+  },
+  {
+    "name": "CheckButton",
+    "scripts": [],
+    "methods": [
+      "SetChecked",
+      "GetChecked"
+    ],
+    "description": {
+      "en": "A button with a checked state.",
+      "de": "Ein Button mit Häkchen-Zustand."
+    },
+    "inherits": "Button"
+  },
+  {
+    "name": "EditBox",
+    "scripts": [
+      "OnEnterPressed",
+      "OnEscapePressed",
+      "OnTextChanged"
+    ],
+    "methods": [
+      "SetText",
+      "GetText",
+      "SetFocus",
+      "ClearFocus",
+      "SetMaxLetters",
+      "SetAutoFocus",
+      "SetMultiLine"
+    ],
+    "description": {
+      "en": "A text input field.",
+      "de": "Ein Texteingabefeld."
+    },
+    "inherits": "Frame"
+  },
+  {
+    "name": "StatusBar",
+    "scripts": [
+      "OnValueChanged"
+    ],
+    "methods": [
+      "SetMinMaxValues",
+      "SetValue",
+      "GetValue",
+      "SetStatusBarTexture",
+      "SetStatusBarColor"
+    ],
+    "description": {
+      "en": "A bar that shows a value.",
+      "de": "Ein Balken, der einen Wert zeigt."
+    },
+    "inherits": "Frame"
+  },
+  {
+    "name": "FontString",
+    "scripts": [],
+    "methods": [
+      "SetText",
+      "GetText",
+      "SetFont",
+      "SetTextColor",
+      "SetJustifyH",
+      "SetPoint",
+      "Show",
+      "Hide"
+    ],
+    "description": {
+      "en": "Text drawn inside a frame.",
+      "de": "Text, der in einem Frame gezeichnet wird."
+    }
+  },
+  {
+    "name": "Texture",
+    "scripts": [],
+    "methods": [
+      "SetTexture",
+      "SetTexCoord",
+      "SetVertexColor",
+      "SetColorTexture",
+      "SetPoint",
+      "SetSize",
+      "Show",
+      "Hide"
+    ],
+    "description": {
+      "en": "An image drawn inside a frame.",
+      "de": "Ein Bild, das in einem Frame gezeichnet wird."
+    }
+  }
 ]

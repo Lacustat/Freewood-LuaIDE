@@ -1,12 +1,34 @@
 [
   {
     "name": "Frame",
-    "scripts": ["OnLoad", "OnEvent", "OnUpdate", "OnShow", "OnHide", "OnMouseDown", "OnMouseUp"],
+    "scripts": [
+      "OnLoad",
+      "OnEvent",
+      "OnUpdate",
+      "OnShow",
+      "OnHide",
+      "OnMouseDown",
+      "OnMouseUp"
+    ],
     "methods": [
-      "SetPoint", "SetWidth", "SetHeight", "SetAlpha", "Show", "Hide", "SetParent",
-      "SetFrameLevel", "SetFrameStrata", "EnableMouse", "SetMovable", "SetBackdrop",
-      "RegisterEvent", "UnregisterEvent", "SetScript", "GetScript",
-      "CreateTexture", "CreateFontString"
+      "SetPoint",
+      "SetWidth",
+      "SetHeight",
+      "SetAlpha",
+      "Show",
+      "Hide",
+      "SetParent",
+      "SetFrameLevel",
+      "SetFrameStrata",
+      "EnableMouse",
+      "SetMovable",
+      "SetBackdrop",
+      "RegisterEvent",
+      "UnregisterEvent",
+      "SetScript",
+      "GetScript",
+      "CreateTexture",
+      "CreateFontString"
     ],
     "description": {
       "en": "Basic container for other UI elements; receives events and scripts.",
@@ -16,8 +38,19 @@
   {
     "name": "Button",
     "inherits": "Frame",
-    "scripts": ["OnClick", "OnEnter", "OnLeave"],
-    "methods": ["SetText", "GetText", "Enable", "Disable", "SetNormalTexture", "RegisterForClicks"],
+    "scripts": [
+      "OnClick",
+      "OnEnter",
+      "OnLeave"
+    ],
+    "methods": [
+      "SetText",
+      "GetText",
+      "Enable",
+      "Disable",
+      "SetNormalTexture",
+      "RegisterForClicks"
+    ],
     "description": {
       "en": "A clickable frame.",
       "de": "Ein anklickbarer Frame."
@@ -26,7 +59,16 @@
   {
     "name": "FontString",
     "scripts": [],
-    "methods": ["SetText", "GetText", "SetFont", "SetTextColor", "SetJustifyH", "SetPoint", "Show", "Hide"],
+    "methods": [
+      "SetText",
+      "GetText",
+      "SetFont",
+      "SetTextColor",
+      "SetJustifyH",
+      "SetPoint",
+      "Show",
+      "Hide"
+    ],
     "description": {
       "en": "Text drawn inside a frame.",
       "de": "Text, der in einem Frame gezeichnet wird."
@@ -35,10 +77,72 @@
   {
     "name": "Texture",
     "scripts": [],
-    "methods": ["SetTexture", "SetTexCoord", "SetVertexColor", "SetPoint", "SetWidth", "SetHeight", "Show", "Hide"],
+    "methods": [
+      "SetTexture",
+      "SetTexCoord",
+      "SetVertexColor",
+      "SetPoint",
+      "SetWidth",
+      "SetHeight",
+      "Show",
+      "Hide"
+    ],
     "description": {
       "en": "An image drawn inside a frame.",
       "de": "Ein Bild, das in einem Frame gezeichnet wird."
+    }
+  },
+  {
+    "name": "CheckButton",
+    "inherits": "Button",
+    "scripts": [],
+    "methods": [
+      "SetChecked",
+      "GetChecked"
+    ],
+    "description": {
+      "en": "A button with a checked state.",
+      "de": "Ein Button mit Häkchen-Zustand."
+    }
+  },
+  {
+    "name": "EditBox",
+    "inherits": "Frame",
+    "scripts": [
+      "OnEnterPressed",
+      "OnEscapePressed",
+      "OnTextChanged"
+    ],
+    "methods": [
+      "SetText",
+      "GetText",
+      "SetFocus",
+      "ClearFocus",
+      "SetMaxLetters",
+      "SetAutoFocus",
+      "SetMultiLine"
+    ],
+    "description": {
+      "en": "A text input field.",
+      "de": "Ein Texteingabefeld."
+    }
+  },
+  {
+    "name": "StatusBar",
+    "inherits": "Frame",
+    "scripts": [
+      "OnValueChanged"
+    ],
+    "methods": [
+      "SetMinMaxValues",
+      "SetValue",
+      "GetValue",
+      "SetStatusBarTexture",
+      "SetStatusBarColor"
+    ],
+    "description": {
+      "en": "A bar that shows a value, for example health.",
+      "de": "Ein Balken, der einen Wert zeigt, zum Beispiel Leben."
     }
   }
 ]
