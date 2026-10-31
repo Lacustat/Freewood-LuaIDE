@@ -55,6 +55,9 @@ export interface SpellData {
   maxRange?: number;
   cost?: number;
   powerType?: number;
+  passive?: boolean;
+  /** DE: Stufe, ab der man den Zauber lernt. EN: level at which the spell is learned. */
+  level?: number;
 }
 
 export interface InventoryState {

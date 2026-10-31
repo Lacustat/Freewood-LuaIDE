@@ -14,3 +14,4 @@ export * from "./scenario.js";
 export * from "./world.js";
 export * from "./inventory.js";
 export * from "./units.js";
+export * from "./character.js";

@@ -326,6 +326,32 @@ test("ClassicAPI: unit helpers answer from the scenario units", async () => {
   assert.deepEqual(r.values, ["WARRIOR", 1, "Human", 1, 20, 100, 80, 0, 18, "0xF130", 589, undefined, true, false, "party1", true, true, 100, 0, false, false, 0]);
 });
 
+test("ClassicAPI: quest log, reputation and spellbook answer from the scenario", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
+    local n, q = GetNumQuestLogEntries()
+    local info = C_QuestLog.GetInfo(2)
+    local title, lvl, tag, hdr, coll, done = GetQuestLogTitle(3)
+    local _, _, _, _, _, d2 = C_QuestLog.GetQuestLogTitle(3)
+    local all = C_QuestLog.GetAllCompletedQuestIDs()
+    local name, desc, standing, bmin, bmax, bval = GetFactionInfo(2)
+    local fd = C_Reputation.GetFactionDataByID(72)
+    local watched = C_Reputation.GetWatchedFactionData()
+    local st = C_Reputation.GetFactionStandings()
+    local item = C_SpellBook.GetSpellBookItemInfo(2, 0)
+    local tab = C_SpellBook.GetSpellBookSkillLineInfo(1)
+    local slot, book = FindSpellBookSlotByID(6673)
+    C_Reputation.SetFactionInactiveByID(72)
+    return n, q, info.title, info.questID, info.isHeader, title, done, d2, C_QuestLog.IsOnQuest(7), C_QuestLog.GetHeaderIndexForQuest(783),
+      table.getn(all), all[1], name, standing, bmin, bmax, bval, fd.reaction, fd.isWatched, watched.name, st[47], item.name, item.subName, tab.numSpellBookItems,
+      slot, book, GetSpellName(1, "spell"), IsPlayerSpell(78), C_Reputation.IsFactionActiveByID(72), GetFactionParentID(72), C_QuestLog.IsQuestFlaggedCompleted(6)
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, [3, 2, "Kobold Camp Cleanup", 7, false, "A Threat Within", 1, 1, true, 1, 3, 5, "Stormwind", 6, 9000, 21000, 9500, 6, true, "Stormwind", 1200,
+    "Battle Shout", "Rank 1", 2, 2, "spell", "Heroic Strike", true, false, 469, true]);
+});
+
 // ===== [S5] Ende-zu-Ende · end to end =====
 test("graph output runs in the simulation (vanilla and retail)", async () => {
   const t = await targets();

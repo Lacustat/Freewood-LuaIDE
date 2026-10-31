@@ -28,6 +28,7 @@ import { LuaTable, tonum, tostr, type LuaFunction, type LuaValue } from "../lua/
 import type { ExecResult } from "../runtime/types.js";
 import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
 import { buildPrelude, REF_MARK } from "./prelude.js";
+import { CHARACTER_API, DEFAULT_CHARACTER, type CharacterState } from "./character.js";
 import { UNIT_API } from "./units.js";
 import { DEFAULT_INVENTORY, INVENTORY_API, type InventoryState } from "./inventory.js";
 import { rewrite51to50 } from "../lua/rewrite50.js";
@@ -299,6 +300,12 @@ export class WowSim {
     if (!u) return;
     u.health = Math.max(0, Math.min(u.healthMax, health));
     this.fireEvent("UNIT_HEALTH", unit);
+  }
+
+  private char: CharacterState | undefined;
+
+  character(): CharacterState {
+    return (this.char ??= structuredClone(this.scenario.character ?? DEFAULT_CHARACTER));
   }
 
   inventory(): InventoryState {
@@ -719,4 +726,5 @@ const API: Record<string, ApiImpl> = {
 };
 for (const [k, f] of Object.entries(UNIT_API)) API[k] = (sim, a) => f(sim, a);
 API.UnitHealthMissing = (sim, a) => { const u = sim.unit(a[0]); return u ? Math.max(0, healthShown(sim, a[0], u, true) - healthShown(sim, a[0], u, false)) : 0; };
+for (const [k, f] of Object.entries(CHARACTER_API)) API[k] = (sim, a) => f(sim.character(), sim.inventory(), a);
 for (const [k, f] of Object.entries(INVENTORY_API)) API[k] = (sim, a) => f(sim.inventory(), a);

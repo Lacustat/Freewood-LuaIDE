@@ -14,6 +14,7 @@
  *     It is plain JSON and can be saved.
  */
 
+import type { CharacterState } from "./character.js";
 import type { InventoryState } from "./inventory.js";
 
 // ===== [S1] UnitData, Scenario =====
@@ -61,6 +62,8 @@ export interface Scenario {
   inCombat: boolean;
   /** DE: Gegenstände, Taschen, Zauber (optional, sonst Beispieldaten). EN: items, bags, spells (optional, else sample data). */
   inventory?: InventoryState;
+  /** DE: Quest-Log, Ruf (optional, sonst Beispieldaten). EN: quest log, reputation (optional, else sample data). */
+  character?: CharacterState;
 }
 
 // ===== [S2] DEFAULT_SCENARIO =====

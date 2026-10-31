@@ -309,6 +309,54 @@ API["C_Spell.GetSpellInfo"] = function(id)
   if name == nil then return nil end
   return { name = name, iconID = icon, castTime = cast, minRange = minR, maxRange = maxR, spellID = sid, rank = rank, cost = cost, isFunnel = funnel, powerType = power }
 end
+-- ---- Quests, Ruf, Zauberbuch als Tabellen · quests, reputation, spellbook as tables ----
+local hQuest, hList, hFaction, hStand = apiw("__quest_info"), apiw("__completed_list"), apiw("__faction_data"), apiw("__standings_list")
+local hBook, hTab = apiw("__book_item"), apiw("__book_tab")
+API["C_QuestLog.GetInfo"] = function(i)
+  local title, id, level, header, collapsed = hQuest(i)
+  if title == nil then return nil end
+  return { title = title, questLogIndex = i, questID = id, level = level, difficultyLevel = level, suggestedGroup = 0, frequency = 0,
+    isHeader = header, isCollapsed = collapsed, questClassification = 0, readyForTranslation = true, isOnMap = false, hasLocalPOI = false,
+    isTask = false, isBounty = false, isStory = false, isHidden = false, isScaling = false }
+end
+API["C_QuestLog.GetQuestLogTitle"] = function(i)
+  local title, id, level, header, collapsed, complete = hQuest(i)
+  if title == nil then return end
+  local c
+  if complete then c = 1 end
+  return title, level, 0, header, collapsed, c, 0, id, false, false, false, false, false, false, false, false, false
+end
+API["C_QuestLog.GetAllCompletedQuestIDs"] = function()
+  local r = pack(hList())
+  local t = {}
+  for i = 1, r.n do t[i] = r[i] end
+  return t
+end
+local function factionTable(id, name, desc, reaction, cmin, cmax, cur, war, canWar, header, collapsed, watched, canInactive)
+  if id == nil then return nil end
+  return { factionID = id, name = name, description = desc, reaction = reaction, currentReactionThreshold = cmin, nextReactionThreshold = cmax,
+    currentStanding = cur, atWarWith = war, canToggleAtWar = canWar, isHeader = header, isHeaderWithRep = false, isCollapsed = collapsed,
+    isWatched = watched, canSetInactive = canInactive, isChild = false, hasBonusRepGain = false, isAccountWide = false }
+end
+API["C_Reputation.GetFactionDataByID"] = function(id) return factionTable(hFaction("id", id)) end
+API["C_Reputation.GetFactionDataByIndex"] = function(i) return factionTable(hFaction("index", i)) end
+API["C_Reputation.GetWatchedFactionData"] = function() return factionTable(hFaction("watched", 0)) end
+API["C_Reputation.GetFactionStandings"] = function()
+  local r = pack(hStand())
+  local t = {}
+  for i = 1, r.n, 2 do t[r[i]] = r[i + 1] end
+  return t
+end
+API["C_SpellBook.GetSpellBookItemInfo"] = function(slot, bank)
+  local id, name, rank, icon, passive = hBook(slot, bank)
+  if id == nil then return nil end
+  return { itemType = 1, actionID = id, spellID = id, name = name, subName = rank, iconID = icon, isPassive = passive, isOffSpec = false }
+end
+API["C_SpellBook.GetSpellBookSkillLineInfo"] = function(i)
+  local name, icon, offset, num = hTab(i)
+  if name == nil then return nil end
+  return { name = name, iconID = icon, itemIndexOffset = offset, numSpellBookItems = num, isGuild = false, shouldHide = false }
+end
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then
   for k in pairs(API) do
