@@ -100,5 +100,21 @@
   "sim.slash": "Chat-Befehl",
   "sim.target": "Hat ein Ziel",
   "sim.time": "Zeit",
-  "sim.world": "Welt"
+  "sim.world": "Welt",
+  "settings.title": "Einstellungen",
+  "settings.theme": "Farbschema",
+  "settings.theme.dark": "Dunkel",
+  "settings.theme.light": "Hell",
+  "settings.codeFontSize": "Schriftgröße Code (px)",
+  "settings.tabWidth": "Tab-Breite (Leerzeichen)",
+  "settings.autosave": "Automatisch speichern",
+  "settings.formsZoom": "Forms-Zoom (%)",
+  "settings.formsZoom.hint": "0 = ans Fenster anpassen",
+  "settings.stageWidth": "Forms-Bühne Breite (px)",
+  "settings.stageHeight": "Forms-Bühne Höhe (px)",
+  "settings.reset": "Zurücksetzen",
+  "settings.close": "Schließen",
+  "app.settings": "Einstellungen",
+  "app.saveBrowser": "Im Browser speichern",
+  "app.saved": "Gespeichert"
 }

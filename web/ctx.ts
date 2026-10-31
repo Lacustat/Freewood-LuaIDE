@@ -8,6 +8,7 @@
  *   [S2] Starter ..... Beispielprojekt
  */
 
+import type { Settings } from "./settings.js";
 import { Graph, FormModel, Project, type Kernel, type LocalizedText, type ResolvedTarget } from "../src/index.js";
 
 // ===== [S1] Ctx =====
@@ -16,11 +17,15 @@ export interface Ctx {
   kernel: Kernel;
   project: Project;
   target: ResolvedTarget;
+  /** DE: Nutzereinstellungen (nur lesen; ändern über den Dialog). EN: user settings (read-only here; change via the dialog). */
+  settings: Settings;
   t(key: string, params?: Record<string, string | number>): string;
   /** DE: Text aus Plugin-Daten in der aktuellen Sprache. EN: plugin-data text in the current language. */
   text(value: LocalizedText | undefined): string;
   /** DE: Speichert das Projekt (lokal im Browser). EN: saves the project (locally in the browser). */
   save(): void;
+  /** DE: Speichert sofort, auch ohne Auto-Speichern. EN: saves immediately even with autosave off. */
+  saveNow(): void;
   openFile(path: string): void;
   /** DE: Legt eine Datei an oder ersetzt ihren Inhalt. EN: creates a file or replaces its content. */
   writeFile(path: string, content: string): void;

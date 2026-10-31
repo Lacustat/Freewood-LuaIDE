@@ -15,11 +15,11 @@ import { ANCHOR_POINTS, FormModel, generateFormLua, generateFormXml, highlightLu
 import { clear, h, pickFile, select, toast } from "./dom.js";
 import type { Ctx } from "./ctx.js";
 
-const SCREEN = { width: 1024, height: 768 };
 
 // ===== [S1] renderFormsView =====
 
 export function renderFormsView(root: HTMLElement, ctx: Ctx, path: string): void {
+  const SCREEN = { width: ctx.settings.stageWidth, height: ctx.settings.stageHeight };
   clear(root);
   const file = ctx.project.getFile(path);
   if (!file) return;
@@ -61,9 +61,9 @@ export function renderFormsView(root: HTMLElement, ctx: Ctx, path: string): void
   let scale = 1;
   function fit(): void {
     const w = viewport.clientWidth || SCREEN.width;
-    scale = Math.min(1, Math.max(0.3, (w - 8) / SCREEN.width));
+    scale = ctx.settings.formsZoom > 0 ? ctx.settings.formsZoom / 100 : Math.min(1, Math.max(0.3, (w - 8) / SCREEN.width));
     screen.style.transform = `scale(${scale})`;
-    viewport.style.height = `${SCREEN.height * scale + 8}px`;
+    viewport.style.height = ctx.settings.formsZoom > 0 ? "100%" : `${SCREEN.height * scale + 8}px`;
   }
 
   function drawCanvas(): void {

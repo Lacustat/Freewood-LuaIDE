@@ -62,10 +62,24 @@ await page.fill(".sidebar input[placeholder]", "extra.lua");
 await page.click(".sidebar button:has-text('+')");
 check(await page.locator("text=extra.lua").count() > 0, "new file appears");
 
+// Settings: font size, zoom, persistence
+await page.click("#settings-btn");
+await page.waitForSelector(".dialog");
+await page.fill(".dialog label:has-text('Code font size') input", "18");
+await page.press(".dialog label:has-text('Code font size') input", "Tab");
+check((await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--code-size"))).trim() === "18px", "font size setting applied");
+await page.fill(".dialog label:has-text('Forms zoom') input", "150");
+await page.press(".dialog label:has-text('Forms zoom') input", "Tab");
+await page.click(".dialog button:has-text('Close')");
+await page.reload();
+await page.waitForSelector(".topbar");
+check((await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--code-size"))).trim() === "18px", "settings persist after reload");
+
 // Forms
 await page.click("text=ui.fwform");
 await page.waitForSelector(".form-screen");
 check(await page.locator(".forms-props").count() > 0, "forms editor opens");
+check((await page.locator(".form-screen").evaluate((e) => e.style.transform)) === "scale(1.5)", "forms zoom 150% applied");
 
 // Graph
 await page.click("text=welcome.fwgraph");

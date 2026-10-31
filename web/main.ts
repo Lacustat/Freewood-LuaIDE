@@ -16,6 +16,7 @@ import { renderCodeView } from "./editor-view.js";
 import { renderFormsView } from "./forms-view.js";
 import { renderGraphView } from "./graph-view.js";
 import { renderSimView } from "./sim-view.js";
+import { applySettings, loadSettings, openSettingsDialog, saveSettings, type Settings } from "./settings.js";
 
 const STORE_PROJECT = "freewood.project.v1";
 const STORE_LANG = "freewood.lang";
@@ -70,7 +71,9 @@ async function boot(): Promise<void> {
     project = starterProject("vanilla-1.12", kernel.plugins.resolve("vanilla-1.12"));
   }
   if (!kernel.plugins.has(project.targetId)) project.targetId = kernel.plugins.list()[0]?.id ?? project.targetId;
-  new App(app, kernel, project, failed).render();
+  const application = new App(app, kernel, project, failed);
+  applySettings(application.settings);
+  application.render();
 }
 
 // ===== [S2] App =====
@@ -95,7 +98,9 @@ class App {
       },
       t: (k, p) => i18n.t(k, p),
       text: (v) => (v ? i18n.text(v) : ""),
+      settings: this.settings,
       save: () => this.save(),
+      saveNow: () => this.save(true),
       openFile: (p) => {
         this.current = p;
         this.view = "files";
@@ -111,7 +116,10 @@ class App {
     };
   }
 
-  save(): void {
+  settings: Settings = loadSettings();
+
+  save(force = false): void {
+    if (!force && !this.settings.autosave) return;
     if (this.saveTimer) clearTimeout(this.saveTimer);
     this.saveTimer = setTimeout(() => safeSet(STORE_PROJECT, this.project.serialize()), 300);
   }
@@ -131,6 +139,8 @@ class App {
       h("label", { class: "inline-field" }, h("span", { text: t("app.target") }), select(targets, this.project.targetId, (v) => { this.project.targetId = v; this.save(); this.render(); }, { id: "target-select" })),
       h("label", { class: "inline-field" }, h("span", { text: t("app.language") }), select(this.kernel.i18n.languages().map((l) => ({ value: l, label: l.toUpperCase() })), this.kernel.i18n.language, (v) => { this.kernel.i18n.setLanguage(v); safeSet(STORE_LANG, v); this.render(); }, { id: "lang-select" })),
       h("span", { class: "spacer" }),
+      ...(this.settings.autosave ? [] : [h("button", { class: "btn", onclick: () => { this.save(true); toast(t("app.saved")); } }, t("app.saveBrowser"))]),
+      h("button", { class: "btn", id: "settings-btn", onclick: () => openSettingsDialog(t, this.settings, (next) => { this.settings = next; saveSettings(next); applySettings(next); this.render(); }) }, t("app.settings")),
       h("button", { class: "btn", onclick: () => this.newProject() }, t("app.new")),
       h("button", { class: "btn", onclick: () => this.open() }, t("app.open")),
       h("button", { class: "btn", onclick: () => download(`${this.project.name}.fwproj.json`, this.project.serialize()) }, t("app.saveFile")),

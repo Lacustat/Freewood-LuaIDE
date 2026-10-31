@@ -46,3 +46,23 @@ test("web/*.ts have SPDX header, Lacustat author and a contents index", () => {
     assert.match(head, /INHALT \/ CONTENTS|Inhalt · Contents/, f);
   }
 });
+
+// ===== 4. Einstellungen · settings =====
+import { sanitizeSettings, DEFAULT_SETTINGS } from "../web/settings.js";
+
+test("settings: invalid values fall back or are clamped", () => {
+  assert.deepEqual(sanitizeSettings(null), DEFAULT_SETTINGS);
+  const s = sanitizeSettings({ codeFontSize: 999, tabWidth: "x", theme: "pink", formsZoom: -5, autosave: false });
+  assert.equal(s.codeFontSize, 28);
+  assert.equal(s.tabWidth, DEFAULT_SETTINGS.tabWidth);
+  assert.equal(s.theme, "dark");
+  assert.equal(s.formsZoom, 0);
+  assert.equal(s.autosave, false);
+});
+
+test("every settings key has a language entry in all locales", () => {
+  for (const loc of ["en", "de"]) {
+    const d = JSON.parse(read(`src/locales/${loc}.json`)) as Record<string, string>;
+    for (const k of Object.keys(DEFAULT_SETTINGS)) assert.ok(`settings.${k}` in d, `${loc}: settings.${k}`);
+  }
+});

@@ -100,5 +100,21 @@
   "sim.slash": "Slash command",
   "sim.target": "Has target",
   "sim.time": "Time",
-  "sim.world": "World"
+  "sim.world": "World",
+  "settings.title": "Settings",
+  "settings.theme": "Theme",
+  "settings.theme.dark": "Dark",
+  "settings.theme.light": "Light",
+  "settings.codeFontSize": "Code font size (px)",
+  "settings.tabWidth": "Tab width (spaces)",
+  "settings.autosave": "Save automatically",
+  "settings.formsZoom": "Forms zoom (%)",
+  "settings.formsZoom.hint": "0 = fit to window",
+  "settings.stageWidth": "Forms stage width (px)",
+  "settings.stageHeight": "Forms stage height (px)",
+  "settings.reset": "Reset",
+  "settings.close": "Close",
+  "app.settings": "Settings",
+  "app.saveBrowser": "Save in browser",
+  "app.saved": "Saved"
 }

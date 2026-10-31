@@ -193,10 +193,10 @@ export function renderCodeView(root: HTMLElement, ctx: Ctx, path: string): void 
       if (e.key === "Escape") { e.preventDefault(); closePopup(); return; }
     }
     if ((e.ctrlKey || e.metaKey) && e.code === "Space") { e.preventDefault(); showPopup(true); return; }
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") { e.preventDefault(); ctx.save(); return; }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") { e.preventDefault(); ctx.saveNow(); return; }
     if (e.key === "Tab") {
       e.preventDefault();
-      ta.setRangeText("  ", ta.selectionStart, ta.selectionEnd, "end");
+      ta.setRangeText(" ".repeat(ctx.settings.tabWidth), ta.selectionStart, ta.selectionEnd, "end");
       onInput();
     } else if (e.key === "Enter") {
       e.preventDefault();
@@ -204,7 +204,7 @@ export function renderCodeView(root: HTMLElement, ctx: Ctx, path: string): void 
       const lineStart = ta.value.lastIndexOf("\n", pos - 1) + 1;
       const line = ta.value.slice(lineStart, pos);
       const indent = /^\s*/.exec(line)![0];
-      const more = /(\bthen|\bdo|\)|\belse|\brepeat|\{)\s*$/.test(line) && /(\bthen|\bdo|\belse|\brepeat|\{|\bfunction\b.*\))\s*$/.test(line) ? "  " : "";
+      const more = /(\bthen|\bdo|\)|\belse|\brepeat|\{)\s*$/.test(line) && /(\bthen|\bdo|\belse|\brepeat|\{|\bfunction\b.*\))\s*$/.test(line) ? " ".repeat(ctx.settings.tabWidth) : "";
       ta.setRangeText("\n" + indent + more, pos, ta.selectionEnd, "end");
       onInput();
     }
