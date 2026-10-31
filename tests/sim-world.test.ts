@@ -282,3 +282,28 @@ engines("retail on the real Lua 5.1 VM: prelude, API, table length, string metho
   assert.deepEqual(v, ["ABC", 3, 3, "number", "Testhero", "7-x", 2]);
   assert.equal(sim.engine.luaVersion, "5.1");
 });
+
+engines("FreewoodProbe example addon runs through in the simulation", async (mk) => {
+  const { readFileSync } = await import("node:fs");
+  const code = readFileSync("examples/FreewoodProbe/FreewoodProbe.lua", "utf8");
+  for (const id of ["v", "c"] as const) {
+    const t = await targets();
+    const sim = await mk(t[id]!);
+    sim.loadSource(code, "FreewoodProbe.lua");
+    sim.login("FreewoodProbe");
+    sim.advance(5);
+    sim.advance(160);
+    const v = run(sim, `
+      local db = FreewoodProbeDB
+      local bad = ""
+      for i = 1, table.getn(db.results) do
+        local r = db.results[i]
+        if not r.ok and (string.find(r.err, "syntax", 1, true)) then bad = bad .. r.name .. " => " .. r.err .. "\\n" end
+      end
+      return db.finished ~= nil and 1 or 0, table.getn(db.results), table.getn(db.events), bad
+    `);
+    assert.equal(v[0], 1, `${id}: probe did not finish`);
+    assert.ok((v[1] as number) > 250, `${id}: expected many results, got ${String(v[1])}`);
+    assert.equal(v[3], "", `${id}: syntax errors in the probe list:\n${String(v[3])}`);
+  }
+});

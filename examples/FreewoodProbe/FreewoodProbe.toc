@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: Freewood Probe
+## Notes: Runs one API test every 0.3 s and writes all results and events into the SavedVariable FreewoodProbeDB. / Führt alle 0,3 s einen API-Test aus und schreibt Ergebnisse und Ereignisse in die SavedVariable FreewoodProbeDB.
+## Author: Lacustat
+## SavedVariables: FreewoodProbeDB
+FreewoodProbe.lua

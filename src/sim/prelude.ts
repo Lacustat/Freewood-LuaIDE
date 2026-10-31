@@ -788,21 +788,8 @@ function methodNames(target: ResolvedTarget, kind: string): string[] {
   return [...names];
 }
 
-export function buildPrelude(target: ResolvedTarget, opts: { rewrite?: boolean; vm?: "5.0" | "5.1" } = {}): string {
-  // DE: Maßgeblich ist die Version der VM, nicht des Ziels (ClassicAPI = 5.1-Syntax auf der 5.0-VM).
-  // EN: the VM version counts, not the target's (ClassicAPI = 5.1 syntax on the 5.0 VM).
-  const v50 = (opts.vm ?? target.luaVersion) === "5.0";
-  const classic = target.syntax === "lua51-transpiled" && v50;
-  const classicApi = target.syntax === "lua51-transpiled";
-  const kinds = [...target.widgets.keys()].map((k) => `[${JSON.stringify(k)}]=${luaList(methodNames(target, k))}`).join(",\n");
-  const aliases = Object.entries(LIB_ALIASES).map(([k, v]) => `[${JSON.stringify(k)}]=${JSON.stringify(v)}`).join(",");
-  const names = [...target.functions.keys()];
-  const pack = v50 ? "local function pack(...) return arg end" : 'local function pack(...) return { n = select("#", ...), ... } end';
-  const unp = v50 ? "local unp = unpack" : "local function unp(t) return unpack(t, 1, t.n) end";
-  const printBody = v50 ? "local a = arg" : "local a = pack(...)";
-  const nativeStrip = v50
-    ? `
-G.time = function(t)
+// DE: `time`/`date`/`difftime` wie im Spiel (auf jeder VM). EN: `time`/`date`/`difftime` as in the game (on every VM).
+const TIME_LUA = String.raw`G.time = function(t)
   if type(t) == "table" then
     if t.year == nil then error("field 'year' missing in date table", 2) end
     if t.month == nil then error("field 'month' missing in date table", 2) end
@@ -819,10 +806,27 @@ G.date = function(f, t)
   end
   return year
 end
-G.difftime = function(a, b) return a - (b or 0) end
+G.difftime = function(a, b) return a - (b or 0) end`;
+
+export function buildPrelude(target: ResolvedTarget, opts: { rewrite?: boolean; vm?: "5.0" | "5.1" } = {}): string {
+  // DE: Maßgeblich ist die Version der VM, nicht des Ziels (ClassicAPI = 5.1-Syntax auf der 5.0-VM).
+  // EN: the VM version counts, not the target's (ClassicAPI = 5.1 syntax on the 5.0 VM).
+  const v50 = (opts.vm ?? target.luaVersion) === "5.0";
+  const classic = target.syntax === "lua51-transpiled" && v50;
+  const classicApi = target.syntax === "lua51-transpiled";
+  const kinds = [...target.widgets.keys()].map((k) => `[${JSON.stringify(k)}]=${luaList(methodNames(target, k))}`).join(",\n");
+  const aliases = Object.entries(LIB_ALIASES).map(([k, v]) => `[${JSON.stringify(k)}]=${JSON.stringify(v)}`).join(",");
+  const names = [...target.functions.keys()];
+  const pack = v50 ? "local function pack(...) return arg end" : 'local function pack(...) return { n = select("#", ...), ... } end';
+  const unp = v50 ? "local unp = unpack" : "local function unp(t) return unpack(t, 1, t.n) end";
+  const printBody = v50 ? "local a = arg" : "local a = pack(...)";
+  const nativeStrip = v50
+    ? `
+${TIME_LUA}
 G.os, G.io, G.debug, G.loadlib, G.dofile, G.loadfile, G.require, G._TRACEBACK = nil, nil, nil, nil, nil, nil, nil, nil
 ${classic ? "" : "G.coroutine = nil"}`
-    : "";
+    : `${TIME_LUA}
+`;
 
   return `-- Freewood simulation prelude (generated)
 ${classic ? CLASSIC_HELPERS : ""}
