@@ -267,6 +267,27 @@ test("ClassicAPI: string methods, 60 upvalues and a fresh for-loop variable per 
   assert.deepEqual(r.values, ["ABC", "5 gold", 990, "a1", "b2"]);
 });
 
+test("ClassicAPI: colour, text, number and expansion helpers follow the docs", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
+    local C = C_ColorUtil
+    local h, s, v = C.ConvertRGBToHSV(0, 1, 0)
+    local gh = C.ConvertRGBToHSV(0.5, 0.5, 0.5)
+    local r, g, b = C.ConvertHSVToRGB(120, 1, 1)
+    return h, s, v, gh, r, g, b,
+      C.WrapTextInColor("Hi", { r = 1, g = 0, b = 0 }),
+      C.GenerateTextColorCode({ r = 1, g = 0, b = 0 }),
+      CalculateStringEditDistance("kitten", "sitting"), CalculateStringEditDistance("help", "hepl"),
+      AbbreviateNumbers(1234), AbbreviateNumbers(12345), AbbreviateNumbers(1999999), AbbreviateNumbers(-12345), AbbreviateNumbers(1.5e10),
+      BreakUpLargeNumbers(1234567), BreakUpLargeNumbers(123.456), BreakUpLargeNumbers(-1234567), BreakUpLargeNumbers(5),
+      GetMaxPlayerLevel(), ClassicExpansionAtLeast(1), ClassicExpansionAtMost(0), InCombatLockdown()
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, [120, 1, 1, -1, 0, 1, 0, "|cffff0000Hi|r", "ffff0000", 3, 2,
+    "1.2K", "12K", "1.9M", "-12345", "15", "1,234,567", "123.5", "-1,234,567", "5", 60, false, true, false]);
+});
+
 // ===== [S5] Ende-zu-Ende · end to end =====
 test("graph output runs in the simulation (vanilla and retail)", async () => {
   const t = await targets();

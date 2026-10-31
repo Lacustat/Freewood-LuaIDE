@@ -165,6 +165,126 @@ API.strreplace = function(s, find, replace)
   return tconcat(out), count
 end
 API.strsplittable = function(sep, s, pieces) return { G.strsplit(sep, s, pieces) } end
+-- ---- Reine Rechenfunktionen (ClassicAPI docs/API.md) · pure calculation functions ----
+local function num(v, i, f) v = tonumber(v); if not v then badarg(i, f, "number expected, got " .. typeName(v)) end return v end
+local function hsv(r, g, b)
+  local mx, mn = math.max(r, g, b), math.min(r, g, b)
+  local d = mx - mn
+  local h = -1
+  if d > 0 then
+    if mx == r then h = 60 * math.mod((g - b) / d, 6)
+    elseif mx == g then h = 60 * ((b - r) / d + 2)
+    else h = 60 * ((r - g) / d + 4) end
+    if h < 0 then h = h + 360 end
+  end
+  local s = 0
+  if mx > 0 then s = d / mx end
+  return h, s, mx
+end
+local function rgbFromHsv(h, s, v)
+  if h < 0 or s == 0 then return v, v, v end
+  h = math.mod(h, 360) / 60
+  local i = math.floor(h)
+  local f = h - i
+  local p, q, t = v * (1 - s), v * (1 - s * f), v * (1 - s * (1 - f))
+  if i == 0 then return v, t, p elseif i == 1 then return q, v, p elseif i == 2 then return p, v, t
+  elseif i == 3 then return p, q, v elseif i == 4 then return t, p, v end
+  return v, p, q
+end
+local function hsvToHsl(h, s, v)
+  local l = v * (1 - s / 2)
+  local sl = 0
+  if l > 0 and l < 1 then sl = (v - l) / math.min(l, 1 - l) end
+  return h, sl, l
+end
+local function hslToHsv(h, s, l)
+  local v = l + s * math.min(l, 1 - l)
+  local sv = 0
+  if v > 0 then sv = 2 * (1 - l / v) end
+  return h, sv, v
+end
+API["C_ColorUtil.ConvertRGBToHSV"] = function(r, g, b) return hsv(num(r, 1, "ConvertRGBToHSV"), num(g, 2, "ConvertRGBToHSV"), num(b, 3, "ConvertRGBToHSV")) end
+API["C_ColorUtil.ConvertHSVToRGB"] = function(h, s, v) return rgbFromHsv(num(h, 1, "ConvertHSVToRGB"), num(s, 2, "ConvertHSVToRGB"), num(v, 3, "ConvertHSVToRGB")) end
+API["C_ColorUtil.ConvertHSVToHSL"] = function(h, s, v) return hsvToHsl(num(h, 1, "ConvertHSVToHSL"), num(s, 2, "ConvertHSVToHSL"), num(v, 3, "ConvertHSVToHSL")) end
+API["C_ColorUtil.ConvertHSLToHSV"] = function(h, s, l) return hslToHsv(num(h, 1, "ConvertHSLToHSV"), num(s, 2, "ConvertHSLToHSV"), num(l, 3, "ConvertHSLToHSV")) end
+API["C_ColorUtil.ConvertHSLToRGB"] = function(h, s, l)
+  h, s, l = num(h, 1, "ConvertHSLToRGB"), num(s, 2, "ConvertHSLToRGB"), num(l, 3, "ConvertHSLToRGB")
+  if h < 0 or s == 0 then return l, l, l end
+  return rgbFromHsv(hslToHsv(h, s, l))
+end
+local function byte255(x) x = x or 0; if x < 0 then x = 0 elseif x > 1 then x = 1 end return math.floor(x * 255 + 0.5) end
+API["C_ColorUtil.GenerateTextColorCode"] = function(c)
+  if type(c) ~= "table" then badarg(1, "GenerateTextColorCode", "table expected, got " .. typeName(c)) end
+  local a = c.a; if a == nil then a = 1 end
+  return string.format("%02x%02x%02x%02x", byte255(a), byte255(c.r), byte255(c.g), byte255(c.b))
+end
+API["C_ColorUtil.WrapTextInColorCode"] = function(text, code) return "|c" .. tostring(code) .. tostring(text) .. "|r" end
+API["C_ColorUtil.WrapTextInColor"] = function(text, c) return "|c" .. API["C_ColorUtil.GenerateTextColorCode"](c) .. tostring(text) .. "|r" end
+API.CalculateStringEditDistance = function(a, b)
+  if type(a) ~= "string" then badarg(1, "CalculateStringEditDistance", "string expected, got " .. typeName(a)) end
+  if type(b) ~= "string" then badarg(2, "CalculateStringEditDistance", "string expected, got " .. typeName(b)) end
+  local la, lb = string.len(a), string.len(b)
+  if math.min(la, lb) >= 256 then return nil end
+  local prev, cur = {}, {}
+  for j = 0, lb do prev[j] = j end
+  for i = 1, la do
+    cur[0] = i
+    for j = 1, lb do
+      local cost = 1
+      if string.byte(a, i) == string.byte(b, j) then cost = 0 end
+      cur[j] = math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost)
+    end
+    prev, cur = cur, prev
+  end
+  return prev[lb]
+end
+API.GetClassicExpansionLevel = function() return 0 end
+API.GetExpansionLevel = function() return 0 end
+API.GetAccountExpansionLevel = function() return 0 end
+API.GetMaxPlayerLevel = function() return 60 end
+API.InCombatLockdown = function() return false end
+API.ClassicExpansionAtLeast = function(l) return num(l, 1, "ClassicExpansionAtLeast") <= 0 end
+API.ClassicExpansionAtMost = function(l) return num(l, 1, "ClassicExpansionAtMost") >= 0 end
+API.GetServerTime = function() return hostTime() end
+local ABBR = {
+  { 1e12, "", 1e11, 10 }, { 1e13, "", 1e12, 1 }, { 1e9, "", 1e8, 10 }, { 1e10, "", 1e9, 1 },
+  { 1e6, "M", 1e5, 10 }, { 1e7, "M", 1e6, 1 }, { 1e3, "K", 1e2, 10 }, { 1e4, "K", 1e3, 1 },
+}
+table.sort(ABBR, function(x, y) return x[1] > y[1] end)
+API.AbbreviateNumbers = function(n, opts)
+  n = num(n, 1, "AbbreviateNumbers")
+  local list = ABBR
+  if type(opts) == "table" and type(opts.breakpointData) == "table" then
+    list = {}
+    for i = 1, table.getn(opts.breakpointData) do
+      local b = opts.breakpointData[i]
+      list[i] = { b.breakpoint, b.abbreviation or "", b.significandDivisor, b.fractionDivisor }
+    end
+    table.sort(list, function(x, y) return x[1] > y[1] end)
+  end
+  for i = 1, table.getn(list) do
+    local b = list[i]
+    if n >= b[1] then return tostring(math.floor(n / b[3]) / b[4]) .. b[2] end
+  end
+  return tostring(n)
+end
+local function groups(s)
+  local out = s
+  while true do
+    local r, k = string.gsub(out, "^(-?%d+)(%d%d%d)", "%1,%2")
+    out = r
+    if k == 0 then break end
+  end
+  return out
+end
+API.BreakUpLargeNumbers = function(n)
+  n = num(n, 1, "BreakUpLargeNumbers")
+  local a = math.abs(n)
+  local sign = ""
+  if n < 0 then sign = "-" end
+  if a == math.floor(a) or a >= 1000 then return sign .. groups(string.format("%d", math.floor(a))) end
+  return sign .. string.format("%.1f", math.floor(a * 10 + 0.5) / 10)
+end
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then
   for k in pairs(API) do
