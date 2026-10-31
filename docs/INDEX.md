@@ -27,6 +27,9 @@
 | `src/sim/*.ts` | Simulation: Welt (`world.ts`), Motoren (`engine.ts`), Lua-Prelude (`prelude.ts`), Szenario, Gegenstände/Taschen/Zauber (`inventory.ts`), Einheiten (`units.ts`), Fenster (`interaction.ts`), Auren (`auras.ts`), Charakter (`character.ts`), CVars/Zeit (`system.ts`) · simulation: world, engines, Lua prelude, scenario, items/bags/spells (`inventory.ts`), units (`units.ts`), windows (`interaction.ts`), auras (`auras.ts`), character (`character.ts`), CVars/time (`system.ts`) |
 | `web/*.ts`, `web/index.html`, `web/style.css` | Web-Oberfläche · web UI |
 | `runtimes/lua50/*`, `src/lua/wasm50.ts`, `web/real-lua.ts` | Echtes Lua 5.0 als WASM · real Lua 5.0 as WASM |
+| `runtimes/lua51/*` | Echtes Lua 5.1 als WASM (Retail) · real Lua 5.1 as WASM (Retail) |
+| `src/sim/{host,extras,map,misc,misc2,gear,items,spells,playerbuffs,unitinfo,social,uiworld}.ts` | Simulations-Module · simulation modules |
+| `examples/FreewoodProbe/*` | Test-Addon fürs Spiel · in-game test addon |
 | `scripts/serve.mjs`, `scripts/ui-smoke.mjs` | Server, UI-Rauchtest · static server, UI smoke test |
 | `src/locales/*.json` | Sprachdateien · language files |
 | `plugins/*` | Beispiel-Plugins · sample plugins |
