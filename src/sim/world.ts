@@ -29,6 +29,7 @@ import type { ExecResult } from "../runtime/types.js";
 import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
 import { buildPrelude, REF_MARK } from "./prelude.js";
 import { CHARACTER_API, DEFAULT_CHARACTER, type CharacterState } from "./character.js";
+import { CvarStore, SYSTEM_API } from "./system.js";
 import { UNIT_API } from "./units.js";
 import { DEFAULT_INVENTORY, INVENTORY_API, type InventoryState } from "./inventory.js";
 import { rewrite51to50 } from "../lua/rewrite50.js";
@@ -301,6 +302,10 @@ export class WowSim {
     u.health = Math.max(0, Math.min(u.healthMax, health));
     this.fireEvent("UNIT_HEALTH", unit);
   }
+
+  readonly cvars = new CvarStore();
+  /** DE: Serverzeit (UTC) in Unix-Sekunden. EN: server time (UTC) in Unix seconds. */
+  serverEpoch(): number { return 1_778_260_148 + this.now; }
 
   private char: CharacterState | undefined;
 
@@ -726,5 +731,6 @@ const API: Record<string, ApiImpl> = {
 };
 for (const [k, f] of Object.entries(UNIT_API)) API[k] = (sim, a) => f(sim, a);
 API.UnitHealthMissing = (sim, a) => { const u = sim.unit(a[0]); return u ? Math.max(0, healthShown(sim, a[0], u, true) - healthShown(sim, a[0], u, false)) : 0; };
+for (const [k, f] of Object.entries(SYSTEM_API)) API[k] = (sim, a) => f(sim, a);
 for (const [k, f] of Object.entries(CHARACTER_API)) API[k] = (sim, a) => f(sim.character(), sim.inventory(), a);
 for (const [k, f] of Object.entries(INVENTORY_API)) API[k] = (sim, a) => f(sim.inventory(), a);

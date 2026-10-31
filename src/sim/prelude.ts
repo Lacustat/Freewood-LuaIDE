@@ -245,7 +245,6 @@ API.GetMaxPlayerLevel = function() return 60 end
 API.InCombatLockdown = function() return false end
 API.ClassicExpansionAtLeast = function(l) return num(l, 1, "ClassicExpansionAtLeast") <= 0 end
 API.ClassicExpansionAtMost = function(l) return num(l, 1, "ClassicExpansionAtMost") >= 0 end
-API.GetServerTime = function() return hostTime() end
 local ABBR = {
   { 1e12, "", 1e11, 10 }, { 1e13, "", 1e12, 1 }, { 1e9, "", 1e8, 10 }, { 1e10, "", 1e9, 1 },
   { 1e6, "M", 1e5, 10 }, { 1e7, "M", 1e6, 1 }, { 1e3, "K", 1e2, 10 }, { 1e4, "K", 1e3, 1 },
@@ -356,6 +355,22 @@ API["C_SpellBook.GetSpellBookSkillLineInfo"] = function(i)
   local name, icon, offset, num = hTab(i)
   if name == nil then return nil end
   return { name = name, iconID = icon, itemIndexOffset = offset, numSpellBookItems = num, isGuild = false, shouldHide = false }
+end
+-- ---- Kalenderzeit (Server-UTC) · calendar time ----
+local hCal, hCalNow, hCalEpoch = apiw("__calendar"), apiw("__calendar_now"), apiw("__calendar_epoch")
+local function calTable(y, m, d, wd, h, mi) return { year = y, month = m, monthDay = d, weekday = wd, hour = h, minute = mi } end
+local function calEpoch(t) return hCalEpoch(t.year, t.month, t.monthDay, t.hour or 0, t.minute or 0) end
+API["C_DateAndTime.GetCurrentCalendarTime"] = function() return calTable(hCalNow()) end
+API["C_DateAndTime.GetCalendarTimeFromEpoch"] = function(e)
+  e = num(e, 1, "GetCalendarTimeFromEpoch")
+  return calTable(hCal(e))
+end
+API["C_DateAndTime.AdjustTimeByDays"] = function(t, n) return calTable(hCal(calEpoch(t) + num(n, 2, "AdjustTimeByDays") * 86400)) end
+API["C_DateAndTime.AdjustTimeByMinutes"] = function(t, n) return calTable(hCal(calEpoch(t) + num(n, 2, "AdjustTimeByMinutes") * 60)) end
+API["C_DateAndTime.CompareCalendarTime"] = function(a, b)
+  local x, y = calEpoch(a), calEpoch(b)
+  if x < y then return -1 elseif x > y then return 1 end
+  return 0
 end
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then

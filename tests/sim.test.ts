@@ -352,6 +352,31 @@ test("ClassicAPI: quest log, reputation and spellbook answer from the scenario",
     "Battle Shout", "Rank 1", 2, 2, "spell", "Heroic Strike", true, false, 469, true]);
 });
 
+test("ClassicAPI: CVars and calendar time follow the docs", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
+    local ok1 = C_CVar.SetCVar("SoftTargetFriend", 2)
+    local v1 = GetCVar("SoftTargetFriend")
+    local ro = C_CVar.SetCVar("realmList", "x")
+    local none = C_CVar.SetCVar("doesNotExist", 1)
+    RegisterCVar("myAddonFlags", "0")
+    C_CVar.SetCVarBitfield("myAddonFlags", 1, true)
+    C_CVar.SetCVarBitfield("myAddonFlags", 5, true)
+    local flags = GetCVar("myAddonFlags")
+    C_CVar.SetTempCVar("cameraDistanceMax", "40")
+    local tmp = GetCVar("cameraDistanceMax")
+    C_CVar.RemoveTempCVar("cameraDistanceMax")
+    local value, def, _, _, _, _, readOnly = C_CVar.GetCVarInfo("realmList")
+    local c = C_DateAndTime.GetCalendarTimeFromEpoch(0)
+    local t1 = C_DateAndTime.AdjustTimeByDays({ year = 2026, month = 1, monthDay = 31, hour = 10, minute = 0 }, 1)
+    return ok1, v1, ro, none, flags, tmp, GetCVar("cameraDistanceMax"), readOnly, C_CVar.GetCVarBool("gxMaximize"), C_CVar.GetCVarBitfield("myAddonFlags", 5),
+      c.year, c.weekday, t1.month, t1.monthDay, C_DateAndTime.CompareCalendarTime(c, t1), GetServerTime() > 1700000000
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, [true, "2", false, undefined, "17", "40", "15", true, true, true, 1970, 5, 2, 1, -1, true]);
+});
+
 // ===== [S5] Ende-zu-Ende · end to end =====
 test("graph output runs in the simulation (vanilla and retail)", async () => {
   const t = await targets();
