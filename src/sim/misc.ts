@@ -33,7 +33,7 @@ interface MiscState {
   nextAtlas: number;
 }
 
-const st = (h: SimHost): MiscState => h.store("misc", () => ({
+export const st = (h: SimHost): MiscState => h.store("misc", () => ({
   addons: [
     { name: h.addonName, title: h.addonName, notes: "The addon under test.", loaded: true, loadOnDemand: false, interface: 11200, deps: [], optional: [], security: 1 },
     { name: "Blizzard_AuctionUI", title: "Blizzard Auction UI", notes: "", loaded: false, loadOnDemand: true, interface: 11200, deps: [], optional: [], security: 0 },
@@ -83,7 +83,7 @@ function hexdec(s: string): string | undefined {
 
 // ===== [S3] MISC_API =====
 
-const addon = (h: SimHost, v: unknown): AddonInfo | undefined => {
+export const addon = (h: SimHost, v: unknown): AddonInfo | undefined => {
   const l = st(h).addons;
   return typeof v === "number" ? l[v - 1] : typeof v === "string" ? l.find((a) => a.name.toLowerCase() === v.toLowerCase()) : undefined;
 };
