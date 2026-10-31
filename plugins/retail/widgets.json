@@ -1,0 +1,9 @@
+[
+  { "name": "Frame", "scripts": ["OnLoad", "OnEvent", "OnUpdate", "OnShow", "OnHide"],
+    "methods": ["SetPoint", "SetSize", "SetShown", "Show", "Hide", "SetAlpha", "SetFrameStrata", "SetFrameLevel", "RegisterEvent", "UnregisterEvent", "SetScript", "HookScript", "CreateTexture", "CreateFontString"],
+    "description": { "en": "Basic container for other UI elements.", "de": "Grundbehälter für andere UI-Elemente." } },
+  { "name": "Button", "inherits": "Frame", "scripts": ["OnClick", "OnEnter", "OnLeave"], "methods": ["SetText", "GetText", "Enable", "Disable", "RegisterForClicks"],
+    "description": { "en": "A clickable frame.", "de": "Ein anklickbarer Frame." } },
+  { "name": "Cooldown", "inherits": "Frame", "scripts": ["OnCooldownDone"], "methods": ["SetCooldown", "Clear"],
+    "description": { "en": "A frame showing a cooldown sweep.", "de": "Ein Frame, der einen Abklingzeit-Sweep zeigt." } }
+]

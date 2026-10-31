@@ -1,0 +1,17 @@
+[
+  { "name": "GetTime", "system": "Misc", "params": [], "returns": [{ "name": "time", "type": "number" }],
+    "description": { "en": "Returns the time in seconds since the client started.", "de": "Gibt die Zeit in Sekunden seit dem Start des Clients zurück." } },
+  { "name": "UnitName", "system": "Unit", "params": [{ "name": "unit", "type": "UnitId" }],
+    "returns": [{ "name": "name", "type": "string" }, { "name": "realm", "type": "string" }],
+    "description": { "en": "Returns the name and realm of a unit.", "de": "Gibt Name und Realm einer Einheit zurück." } },
+  { "name": "CreateFrame", "system": "UI",
+    "params": [{ "name": "frameType", "type": "string" }, { "name": "name", "type": "string", "optional": true }, { "name": "parent", "type": "Frame", "optional": true }, { "name": "template", "type": "string", "optional": true }],
+    "returns": [{ "name": "frame", "type": "Frame" }],
+    "description": { "en": "Creates a frame of the given type.", "de": "Erstellt einen Frame des angegebenen Typs." } },
+  { "name": "C_Timer.After", "system": "C_Timer",
+    "params": [{ "name": "seconds", "type": "number" }, { "name": "callback", "type": "function" }], "returns": [],
+    "description": { "en": "Calls a function once after a delay.", "de": "Ruft eine Funktion einmalig nach einer Verzögerung auf." } },
+  { "name": "C_Map.GetBestMapForUnit", "system": "C_Map", "params": [{ "name": "unit", "type": "UnitId" }],
+    "returns": [{ "name": "uiMapID", "type": "number" }],
+    "description": { "en": "Returns the map ID a unit is on.", "de": "Gibt die Karten-ID zurück, auf der sich eine Einheit befindet." } }
+]

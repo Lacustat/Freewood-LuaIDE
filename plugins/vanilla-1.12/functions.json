@@ -1,0 +1,130 @@
+[
+  {
+    "name": "GetTime",
+    "system": "Misc",
+    "params": [],
+    "returns": [{ "name": "time", "type": "number" }],
+    "description": {
+      "en": "Returns the time in seconds since the client started.",
+      "de": "Gibt die Zeit in Sekunden seit dem Start des Clients zurück."
+    }
+  },
+  {
+    "name": "UnitName",
+    "system": "Unit",
+    "params": [{ "name": "unit", "type": "UnitId" }],
+    "returns": [{ "name": "name", "type": "string" }],
+    "description": {
+      "en": "Returns the name of a unit, for example of the target.",
+      "de": "Gibt den Namen einer Einheit zurück, zum Beispiel des Ziels."
+    }
+  },
+  {
+    "name": "UnitHealth",
+    "system": "Unit",
+    "params": [{ "name": "unit", "type": "UnitId" }],
+    "returns": [{ "name": "health", "type": "number" }],
+    "description": {
+      "en": "Returns the current health of a unit.",
+      "de": "Gibt die aktuellen Lebenspunkte einer Einheit zurück."
+    }
+  },
+  {
+    "name": "UnitHealthMax",
+    "system": "Unit",
+    "params": [{ "name": "unit", "type": "UnitId" }],
+    "returns": [{ "name": "maxHealth", "type": "number" }],
+    "description": {
+      "en": "Returns the maximum health of a unit.",
+      "de": "Gibt die maximalen Lebenspunkte einer Einheit zurück."
+    }
+  },
+  {
+    "name": "GetNumPartyMembers",
+    "system": "Group",
+    "params": [],
+    "returns": [{ "name": "count", "type": "number" }],
+    "description": {
+      "en": "Returns the number of other members in your party.",
+      "de": "Gibt die Anzahl der anderen Gruppenmitglieder zurück."
+    }
+  },
+  {
+    "name": "SendChatMessage",
+    "system": "Chat",
+    "params": [
+      { "name": "msg", "type": "string" },
+      { "name": "chatType", "type": "string", "optional": true },
+      { "name": "language", "type": "string", "optional": true },
+      { "name": "channel", "type": "string|number", "optional": true }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Sends a chat message.",
+      "de": "Sendet eine Chat-Nachricht."
+    }
+  },
+  {
+    "name": "CreateFrame",
+    "system": "UI",
+    "params": [
+      { "name": "frameType", "type": "string" },
+      { "name": "name", "type": "string", "optional": true },
+      { "name": "parent", "type": "Frame", "optional": true },
+      { "name": "template", "type": "string", "optional": true }
+    ],
+    "returns": [{ "name": "frame", "type": "Frame" }],
+    "description": {
+      "en": "Creates a frame of the given type.",
+      "de": "Erstellt einen Frame des angegebenen Typs."
+    }
+  },
+  {
+    "name": "getglobal",
+    "system": "Lua",
+    "params": [{ "name": "name", "type": "string" }],
+    "returns": [{ "name": "value", "type": "any" }],
+    "description": {
+      "en": "Returns the value of a global variable by its name.",
+      "de": "Gibt den Wert einer globalen Variable anhand ihres Namens zurück."
+    }
+  },
+  {
+    "name": "setglobal",
+    "system": "Lua",
+    "params": [
+      { "name": "name", "type": "string" },
+      { "name": "value", "type": "any" }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Sets a global variable by its name.",
+      "de": "Setzt eine globale Variable anhand ihres Namens."
+    }
+  },
+  {
+    "name": "table.getn",
+    "system": "Lua",
+    "params": [{ "name": "table", "type": "table" }],
+    "returns": [{ "name": "n", "type": "number" }],
+    "description": {
+      "en": "Lua 5.0: length of a list. There is no # operator in Lua 5.0.",
+      "de": "Lua 5.0: Länge einer Liste. Den #-Operator gibt es in Lua 5.0 nicht."
+    },
+    "tags": ["lua50"]
+  },
+  {
+    "name": "string.gfind",
+    "system": "Lua",
+    "params": [
+      { "name": "s", "type": "string" },
+      { "name": "pattern", "type": "string" }
+    ],
+    "returns": [{ "name": "iterator", "type": "function" }],
+    "description": {
+      "en": "Lua 5.0: iterates over all matches of a pattern (called gmatch in Lua 5.1).",
+      "de": "Lua 5.0: läuft über alle Treffer eines Musters (in Lua 5.1 heißt es gmatch)."
+    },
+    "tags": ["lua50"]
+  }
+]

@@ -1,0 +1,4 @@
+{
+  "frameStrata": ["BACKGROUND", "LOW", "MEDIUM", "HIGH", "DIALOG", "FULLSCREEN", "FULLSCREEN_DIALOG", "TOOLTIP"],
+  "drawLayers": ["BACKGROUND", "BORDER", "ARTWORK", "OVERLAY", "HIGHLIGHT"]
+}

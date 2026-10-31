@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "retail",
+  "version": "0.1.0",
+  "name": { "en": "WoW Retail (Lua 5.1)", "de": "WoW Retail (Lua 5.1)" },
+  "description": {
+    "en": "Sample data for the current retail client. Later generated from public sources.",
+    "de": "Beispieldaten für den aktuellen Retail-Client. Später aus öffentlichen Quellen generiert."
+  },
+  "author": "Lacustat",
+  "license": "GPL-3.0-only",
+  "luaVersion": "5.1",
+  "syntax": "lua51",
+  "scriptArgs": "arguments",
+  "files": { "functions": "functions.json", "events": "events.json", "widgets": "widgets.json", "layers": "layers.json" },
+  "sources": [
+    { "title": "Warcraft Wiki - World of Warcraft API", "url": "https://warcraft.wiki.gg/wiki/World_of_Warcraft_API", "license": "CC BY-SA 4.0" }
+  ]
+}

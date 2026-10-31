@@ -1,0 +1,8 @@
+{
+  "app.title": "Freewood LUA IDE",
+  "app.language": "Language",
+  "project.new": "New project",
+  "project.target": "Target platform",
+  "plugin.loaded": "Plugin {name} loaded",
+  "error.unknown": "Unknown error"
+}

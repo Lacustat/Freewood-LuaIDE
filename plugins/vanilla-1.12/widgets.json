@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Frame",
+    "scripts": ["OnLoad", "OnEvent", "OnUpdate", "OnShow", "OnHide", "OnMouseDown", "OnMouseUp"],
+    "methods": [
+      "SetPoint", "SetWidth", "SetHeight", "SetAlpha", "Show", "Hide", "SetParent",
+      "SetFrameLevel", "SetFrameStrata", "EnableMouse", "SetMovable", "SetBackdrop",
+      "RegisterEvent", "UnregisterEvent", "SetScript", "GetScript",
+      "CreateTexture", "CreateFontString"
+    ],
+    "description": {
+      "en": "Basic container for other UI elements; receives events and scripts.",
+      "de": "Grundbehälter für andere UI-Elemente; empfängt Events und Skripte."
+    }
+  },
+  {
+    "name": "Button",
+    "inherits": "Frame",
+    "scripts": ["OnClick", "OnEnter", "OnLeave"],
+    "methods": ["SetText", "GetText", "Enable", "Disable", "SetNormalTexture", "RegisterForClicks"],
+    "description": {
+      "en": "A clickable frame.",
+      "de": "Ein anklickbarer Frame."
+    }
+  },
+  {
+    "name": "FontString",
+    "scripts": [],
+    "methods": ["SetText", "GetText", "SetFont", "SetTextColor", "SetJustifyH", "SetPoint", "Show", "Hide"],
+    "description": {
+      "en": "Text drawn inside a frame.",
+      "de": "Text, der in einem Frame gezeichnet wird."
+    }
+  },
+  {
+    "name": "Texture",
+    "scripts": [],
+    "methods": ["SetTexture", "SetTexCoord", "SetVertexColor", "SetPoint", "SetWidth", "SetHeight", "Show", "Hide"],
+    "description": {
+      "en": "An image drawn inside a frame.",
+      "de": "Ein Bild, das in einem Frame gezeichnet wird."
+    }
+  }
+]
