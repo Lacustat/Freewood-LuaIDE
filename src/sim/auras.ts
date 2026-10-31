@@ -42,9 +42,9 @@ export interface AuraHost {
   now: number;
 }
 
-interface Filter { helpful: boolean; harmful: boolean; player?: boolean }
+export interface Filter { helpful: boolean; harmful: boolean; player?: boolean }
 
-function parseFilter(f: unknown, defaultHelpful: boolean): Filter {
+export function parseFilter(f: unknown, defaultHelpful: boolean): Filter {
   const tokens = typeof f === "string" ? f.toUpperCase().split(/[|\s]+/).filter(Boolean) : [];
   const out: Filter = { helpful: tokens.includes("HELPFUL"), harmful: tokens.includes("HARMFUL") };
   if (tokens.includes("PLAYER")) out.player = true;
@@ -56,7 +56,7 @@ function parseFilter(f: unknown, defaultHelpful: boolean): Filter {
 }
 
 /** DE: Passende Auren in Doku-Reihenfolge (eigene zuerst, Segen vor Schaden ohne Filter). EN: matching auras in docs order. */
-function list(h: AuraHost, unit: unknown, filter: Filter): AuraEntry[] {
+export function list(h: AuraHost, unit: unknown, filter: Filter): AuraEntry[] {
   const all = (h.unit(unit)?.auras ?? []).filter((a) => a.duration === undefined || a.duration === 0 || (a.remaining ?? a.duration) > h.now);
   const pick = (helpful: boolean): AuraEntry[] => {
     const m = all.filter((a) => a.helpful === helpful && (filter.player === undefined || (a.source === "player") === filter.player));
@@ -65,7 +65,7 @@ function list(h: AuraHost, unit: unknown, filter: Filter): AuraEntry[] {
   return [...(filter.helpful ? pick(true) : []), ...(filter.harmful ? pick(false) : [])];
 }
 
-function row(h: AuraHost, unit: unknown, a: AuraEntry): unknown[] {
+export function row(h: AuraHost, unit: unknown, a: AuraEntry): unknown[] {
   const sp = h.inventory().spells[String(a.spellId)];
   const src = a.source !== undefined ? h.unit(a.source) : undefined;
   const exp = a.duration ? 1000 + (a.remaining ?? a.duration) : 0;

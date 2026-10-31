@@ -187,3 +187,21 @@ engines("spells: cast time, cooldown, power, aura, interrupt and info functions"
   assert.deepEqual(v.slice(0, 5), [true, "Fire", "Fireball", true, true]);
   assert.match(sim.log.map((l) => l.text).join("\n"), /Cast of Hearthstone stopped/);
 });
+
+engines("C_UnitAuras: positional, slots, instance ids, player buffs", async (mk) => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const v = run(sim, `
+    local slots = { C_UnitAuras.GetAuraSlots("player", "HELPFUL") }
+    local n1 = C_UnitAuras.UnitAura("player", 1, "HELPFUL")
+    local d = C_UnitAuras.GetAuraDataBySlot("player", 1)
+    local byId = d and C_UnitAuras.GetAuraDataByAuraInstanceID("player", d.auraInstanceID)
+    local c = C_UnitAuras.GetAuraDispelTypeColor("Magic")
+    local id, perm = GetPlayerBuff(1, "HELPFUL")
+    return type(slots), (d and d.auraInstanceID ~= nil) and 1 or 0, (byId and byId.name == d.name) and 1 or 0, c.b, type(id), C_UnitAuras.UnitDebuff("player", 99)
+  `);
+  assert.equal(v[0], "table");
+  assert.equal(v[3], 1);
+  assert.equal(v[4], "number");
+  assert.equal(v[5], undefined);
+});

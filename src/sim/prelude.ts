@@ -484,7 +484,64 @@ local function auraTable(name, icon, apps, id, dispel, helpful, duration, expire
   if name == nil then return nil end
   return { name = name, icon = icon, applications = apps, spellId = id, dispelName = dispel, isHelpful = helpful, isHarmful = not helpful,
     duration = duration, expirationTime = expires, sourceUnit = source, sourceGUID = guid, charges = 0, maxCharges = 0, timeMod = 1,
-    isFromPlayerOrPlayerPet = mine, canApplyAura = false, isRaid = false, isStealable = false, nameplateShowPersonal = false, nameplateShowAll = false }
+    isFromPlayerOrPlayerPet = mine, canApplyAura = false, isRaid = false, isStealable = false, nameplateShowPersonal = false, nameplateShowAll = false,
+    auraInstanceID = 100000 + (id or 0) }
+end
+local function auraList(unit, filter)
+  local t, i = {}, 1
+  while true do
+    local d = auraTable(hAuraAt(unit, i, filter))
+    if d == nil then break end
+    d.slot = i
+    t[i] = d
+    i = i + 1
+  end
+  return t
+end
+local function auraPositional(d)
+  if d == nil then return nil end
+  return d.name, d.icon, d.applications, d.dispelName, d.duration, d.expirationTime, d.sourceUnit, d.isStealable, d.nameplateShowPersonal, d.spellId, d.canApplyAura, false, d.isFromPlayerOrPlayerPet, d.nameplateShowAll, d.timeMod
+end
+API["C_UnitAuras.UnitAura"] = function(unit, index, filter) return auraPositional(auraTable(hAuraAt(unit, index, filter or "HELPFUL"))) end
+API["C_UnitAuras.UnitBuff"] = function(unit, index, filter) return auraPositional(auraTable(hAuraAt(unit, index, "HELPFUL" .. (filter and ("|" .. filter) or "")))) end
+API["C_UnitAuras.UnitDebuff"] = function(unit, index, filter) return auraPositional(auraTable(hAuraAt(unit, index, "HARMFUL" .. (filter and ("|" .. filter) or "")))) end
+API["C_UnitAuras.GetAuraSlots"] = function(unit, filter, maxSlots)
+  local all = auraList(unit, "HELPFUL|HARMFUL")
+  local want = auraList(unit, filter or "HELPFUL")
+  local out, n = {}, 0
+  for i = 1, table.getn(want) do
+    for j = 1, table.getn(all) do
+      if all[j].spellId == want[i].spellId and all[j].isHelpful == want[i].isHelpful then
+        n = n + 1
+        out[n] = j
+        break
+      end
+    end
+    if maxSlots and n >= maxSlots then break end
+  end
+  return nil, unpack(out)
+end
+API["C_UnitAuras.GetAuraDataBySlot"] = function(unit, slot) return auraTable(hAuraAt(unit, slot, "HELPFUL|HARMFUL")) end
+API["C_UnitAuras.UnitAuraBySlot"] = function(unit, slot) return auraPositional(auraTable(hAuraAt(unit, slot, "HELPFUL|HARMFUL"))) end
+API["C_UnitAuras.GetAuraDataByAuraInstanceID"] = function(unit, id, buf)
+  local all = auraList(unit, "HELPFUL|HARMFUL")
+  for i = 1, table.getn(all) do
+    if all[i].auraInstanceID == id then
+      if type(buf) == "table" then
+        for k in pairs(buf) do buf[k] = nil end
+        for k, v in pairs(all[i]) do buf[k] = v end
+        return buf
+      end
+      return all[i]
+    end
+  end
+end
+API["C_UnitAuras.RegisterComboDuration"] = function() return true end
+API["C_UnitAuras.RegisterAuraDurationModifierByTrigger"] = function() return true end
+API["C_UnitAuras.GetAuraDispelTypeColor"] = function(name)
+  local c = { Magic = { 0.2, 0.6, 1 }, Curse = { 0.6, 0, 1 }, Disease = { 0.6, 0.4, 0 }, Poison = { 0, 0.6, 0 } }
+  local v = c[name] or { 0.8, 0, 0 }
+  return { r = v[1], g = v[2], b = v[3], a = 1 }
 end
 API["C_UnitAuras.GetAuraDataByIndex"] = function(unit, index, filter) return auraTable(hAuraAt(unit, index, filter)) end
 API["C_UnitAuras.GetBuffDataByIndex"] = function(unit, index) return auraTable(hAuraAt(unit, index, "HELPFUL")) end
