@@ -13,3 +13,4 @@ export * from "./prelude.js";
 export * from "./scenario.js";
 export * from "./world.js";
 export * from "./inventory.js";
+export * from "./units.js";

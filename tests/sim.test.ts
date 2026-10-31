@@ -309,6 +309,23 @@ test("ClassicAPI: bags, items and spells answer from the scenario", async () => 
     "Linen Cloth", "|cffffffff|Hitem:2589:0:0:0|h[Linen Cloth]|h|r", 1, 7, 20, true, true, false, "|cff71d5ff|Hspell:133:0|h[Fireball]|h|r", 7, 6]);
 });
 
+test("ClassicAPI: unit helpers answer from the scenario units", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
+    local g = UnitGUID("target")
+    local cls, cid = UnitClassBase("player")
+    local race, rid = UnitRaceBase("player")
+    local inr, chk = UnitInRange("target")
+    local d2 = UnitDistanceSquared("target")
+    return cls, cid, race, rid, UnitPower("player"), UnitPowerMax("player"), UnitPowerMissing("player"), UnitPower("player", 0),
+      string.len(g), string.sub(g, 1, 6), UnitCreatureID("target"), UnitCreatureID("player"), IsUnitToken("targettarget"), IsUnitToken("Bob"),
+      UnitTokenFromName("help"), inr, chk, d2, UnitStandState("player"), UnitIsPet("pet"), UnitIsAFK("player"), UnitHealthMissing("player")
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, ["WARRIOR", 1, "Human", 1, 20, 100, 80, 0, 18, "0xF130", 589, undefined, true, false, "party1", true, true, 100, 0, false, false, 0]);
+});
+
 // ===== [S5] Ende-zu-Ende · end to end =====
 test("graph output runs in the simulation (vanilla and retail)", async () => {
   const t = await targets();

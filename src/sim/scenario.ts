@@ -28,6 +28,26 @@ export interface UnitData {
   healthMax: number;
   isPlayer?: boolean;
   friendly?: boolean;
+  /** DE: Optionale Zusatzwerte (Beispieldaten). EN: optional extra values (sample data). */
+  guid?: string;
+  power?: number;
+  powerMax?: number;
+  /** DE: 0 Mana, 1 Wut, 2 Fokus, 3 Energie, 4 Zufriedenheit. EN: 0 mana, 1 rage, 2 focus, 3 energy, 4 happiness. */
+  powerType?: number;
+  afk?: boolean;
+  dnd?: boolean;
+  feignDeath?: boolean;
+  pet?: boolean;
+  minion?: boolean;
+  owner?: "player" | "target";
+  standState?: number;
+  subName?: string;
+  creatureID?: number;
+  speed?: number;
+  runSpeed?: number;
+  x?: number;
+  y?: number;
+  z?: number;
 }
 
 export interface Scenario {
@@ -48,9 +68,9 @@ export interface Scenario {
 export const DEFAULT_SCENARIO: Scenario = {
   realm: "Sandbox",
   locale: "enUS",
-  player: { name: "Testhero", class: "Warrior", classToken: "WARRIOR", race: "Human", level: 60, health: 3200, healthMax: 3200, isPlayer: true, friendly: true },
-  target: { name: "Defias Pillager", class: "Warrior", classToken: "WARRIOR", race: "Human", level: 18, health: 420, healthMax: 420, friendly: false },
-  party: [{ name: "Helper", class: "Priest", classToken: "PRIEST", race: "Dwarf", level: 60, health: 2400, healthMax: 2400, isPlayer: true, friendly: true }],
+  player: { name: "Testhero", class: "Warrior", classToken: "WARRIOR", race: "Human", level: 60, health: 3200, healthMax: 3200, isPlayer: true, friendly: true, power: 20, powerMax: 100, x: -8913, y: -133, z: 82 },
+  target: { name: "Defias Pillager", class: "Warrior", classToken: "WARRIOR", race: "Human", level: 18, health: 420, healthMax: 420, friendly: false, creatureID: 589, x: -8903, y: -133, z: 82 },
+  party: [{ name: "Helper", class: "Priest", classToken: "PRIEST", race: "Dwarf", level: 60, health: 2400, healthMax: 2400, isPlayer: true, friendly: true, power: 1500, powerMax: 1800, x: -8920, y: -125, z: 82 }],
   inCombat: false,
 };
 
