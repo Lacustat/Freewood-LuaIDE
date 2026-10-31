@@ -66,3 +66,13 @@ test("every settings key has a language entry in all locales", () => {
     for (const k of Object.keys(DEFAULT_SETTINGS)) assert.ok(`settings.${k}` in d, `${loc}: settings.${k}`);
   }
 });
+
+// ===== 5. Plugin-Daten · plugin data =====
+test("plugin function data: unique names, unknown signatures are empty", () => {
+  for (const id of JSON.parse(read("plugins/index.json")) as string[]) {
+    const fns = JSON.parse(read(`plugins/${id}/functions.json`)) as { name: string; params: unknown[]; returns: unknown[]; tags?: string[] }[];
+    const names = fns.map((f) => f.name);
+    assert.equal(new Set(names).size, names.length, `${id}: duplicate function names`);
+    for (const f of fns) if (f.tags?.includes("signature-unknown")) assert.equal(f.params.length + f.returns.length, 0, `${id}: ${f.name}`);
+  }
+});

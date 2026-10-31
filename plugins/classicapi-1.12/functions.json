@@ -332,28 +332,46 @@
   {
     "name": "C_AddOns.IsAddOnLoaded",
     "system": "AddOns",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "addon",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "loaded",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (AddOns). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (AddOns). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether an addon is loaded.",
+      "de": "Gibt zurück, ob ein Addon geladen ist."
+    }
   },
   {
     "name": "C_AddOns.LoadAddOn",
     "system": "AddOns",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "addon",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "loaded",
+        "type": "boolean"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (AddOns). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (AddOns). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Loads an addon.",
+      "de": "Lädt ein Addon."
+    }
   },
   {
     "name": "C_APIDocumentation.GetSystem",
@@ -735,15 +753,22 @@
   {
     "name": "C_ClassColor.GetClassColor",
     "system": "ClassColor",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "classFile",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "color",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (ClassColor). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (ClassColor). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the colour table of a class.",
+      "de": "Gibt die Farbtabelle einer Klasse zurück."
+    }
   },
   {
     "name": "C_ColorUtil.ConvertRGBToHSV",
@@ -855,12 +880,9 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "ClassicAPI function (Combat). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Combat). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Starts auto attack.",
+      "de": "Startet den Autoangriff."
+    }
   },
   {
     "name": "StopAttack",
@@ -868,12 +890,9 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "ClassicAPI function (Combat). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Combat). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Stops auto attack.",
+      "de": "Beendet den Autoangriff."
+    }
   },
   {
     "name": "CombatLogGetCurrentEventInfo",
@@ -1034,15 +1053,22 @@
   {
     "name": "C_CVar.GetCVarBool",
     "system": "CVar",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "value",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (CVar). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (CVar). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns a console variable as boolean.",
+      "de": "Gibt eine Konsolenvariable als Wahrheitswert zurück."
+    }
   },
   {
     "name": "C_CVar.GetCVarInfo",
@@ -1073,15 +1099,26 @@
   {
     "name": "C_CVar.SetCVar",
     "system": "CVar",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "value",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "success",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (CVar). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (CVar). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Sets a console variable.",
+      "de": "Setzt eine Konsolenvariable."
+    }
   },
   {
     "name": "C_CVar.SetCVarBitfield",
@@ -1190,28 +1227,50 @@
   {
     "name": "C_Container.GetContainerItemID",
     "system": "Container",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "bag",
+        "type": "number"
+      },
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "itemId",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Container). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Container). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the item id in a bag slot.",
+      "de": "Gibt die Gegenstands-ID eines Taschenplatzes zurück."
+    }
   },
   {
     "name": "C_Container.GetContainerItemInfo",
     "system": "Container",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "bag",
+        "type": "number"
+      },
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "info",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Container). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Container). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns an info table for a bag item.",
+      "de": "Gibt eine Info-Tabelle zu einem Taschengegenstand zurück."
+    }
   },
   {
     "name": "C_Container.GetContainerItemEquipmentSetInfo",
@@ -1268,15 +1327,26 @@
   {
     "name": "C_Container.GetContainerNumFreeSlots",
     "system": "Container",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "bag",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "freeSlots",
+        "type": "number"
+      },
+      {
+        "name": "bagType",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Container). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Container). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the free slots of a bag.",
+      "de": "Gibt die freien Plätze einer Tasche zurück."
+    }
   },
   {
     "name": "C_Container.GetBackpackAutosortDisabled",
@@ -1749,28 +1819,42 @@
   {
     "name": "C_EncodingUtil.EncodeBase64",
     "system": "EncodingUtil",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "encoded",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (EncodingUtil). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (EncodingUtil). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Encodes text as Base64.",
+      "de": "Kodiert Text als Base64."
+    }
   },
   {
     "name": "C_EncodingUtil.DecodeBase64",
     "system": "EncodingUtil",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "decoded",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (EncodingUtil). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (EncodingUtil). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Decodes Base64 text.",
+      "de": "Dekodiert Base64-Text."
+    }
   },
   {
     "name": "C_EncodingUtil.EncodeHex",
@@ -2283,14 +2367,16 @@
     "name": "C_Reputation.GetWatchedFactionData",
     "system": "Faction",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "data",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Faction). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Faction). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the watched faction.",
+      "de": "Gibt die beobachtete Fraktion zurück."
+    }
   },
   {
     "name": "C_Reputation.IsFactionActive",
@@ -2519,25 +2605,24 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "ClassicAPI function (Focus). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Focus). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Clears the focus target.",
+      "de": "Entfernt das Fokusziel."
+    }
   },
   {
     "name": "FocusUnit",
     "system": "Focus",
-    "params": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "ClassicAPI function (Focus). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Focus). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Sets the focus target.",
+      "de": "Setzt das Fokusziel."
+    }
   },
   {
     "name": "GetMouseFoci",
@@ -3283,15 +3368,27 @@
   {
     "name": "C_Item.GetItemCount",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "item",
+        "type": "string|number"
+      },
+      {
+        "name": "includeBank",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "count",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Item). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Item). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns how many of an item the player has.",
+      "de": "Gibt zurück, wie viele eines Gegenstands der Spieler hat."
+    }
   },
   {
     "name": "C_Item.GetItemData",
@@ -3361,15 +3458,22 @@
   {
     "name": "C_Item.GetItemIconByID",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "itemId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "icon",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Item). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Item). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the icon of an item id.",
+      "de": "Gibt das Symbol einer Gegenstands-ID zurück."
+    }
   },
   {
     "name": "C_Item.GetItemID",
@@ -3387,15 +3491,62 @@
   {
     "name": "C_Item.GetItemInfo",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "item",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "link",
+        "type": "string"
+      },
+      {
+        "name": "quality",
+        "type": "number"
+      },
+      {
+        "name": "level",
+        "type": "number"
+      },
+      {
+        "name": "minLevel",
+        "type": "number"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "subType",
+        "type": "string"
+      },
+      {
+        "name": "stackCount",
+        "type": "number"
+      },
+      {
+        "name": "equipLoc",
+        "type": "string"
+      },
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "sellPrice",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Item). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Item). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns item data.",
+      "de": "Gibt Gegenstandsdaten zurück."
+    }
   },
   {
     "name": "C_Item.GetItemInfoInstant",
@@ -3530,15 +3681,22 @@
   {
     "name": "C_Item.GetItemNameByID",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "itemId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Item). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Item). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the name of an item id.",
+      "de": "Gibt den Namen einer Gegenstands-ID zurück."
+    }
   },
   {
     "name": "C_Item.GetItemQuality",
@@ -3556,15 +3714,22 @@
   {
     "name": "C_Item.GetItemQualityByID",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "itemId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "quality",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Item). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Item). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the quality of an item id.",
+      "de": "Gibt die Qualität einer Gegenstands-ID zurück."
+    }
   },
   {
     "name": "C_Item.GetItemSellPrice",
@@ -3790,15 +3955,22 @@
   {
     "name": "C_Item.IsEquippedItem",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "item",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isEquipped",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Item). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Item). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether an item is equipped.",
+      "de": "Gibt zurück, ob ein Gegenstand angelegt ist."
+    }
   },
   {
     "name": "C_Item.IsItemDataCached",
@@ -4752,15 +4924,22 @@
   {
     "name": "CreateFromMixins",
     "system": "Lua",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "...",
+        "type": "table"
+      }
+    ],
+    "returns": [
+      {
+        "name": "object",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Lua). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Lua). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Creates a new table from mixins.",
+      "de": "Erstellt eine neue Tabelle aus Mixins."
+    }
   },
   {
     "name": "math.fmod",
@@ -4791,15 +4970,26 @@
   {
     "name": "Mixin",
     "system": "Lua",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "object",
+        "type": "table"
+      },
+      {
+        "name": "...",
+        "type": "table"
+      }
+    ],
+    "returns": [
+      {
+        "name": "object",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Lua). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Lua). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Copies fields of mixins into an object.",
+      "de": "Kopiert Felder von Mixins in ein Objekt."
+    }
   },
   {
     "name": "select",
@@ -4934,28 +5124,46 @@
   {
     "name": "strjoin",
     "system": "Lua",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "delimiter",
+        "type": "string"
+      },
+      {
+        "name": "...",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "joined",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Lua). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Lua). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Joins strings with a delimiter.",
+      "de": "Verbindet Texte mit einem Trennzeichen."
+    }
   },
   {
     "name": "strlenutf8",
     "system": "Lua",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "length",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Lua). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Lua). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the length in UTF-8 characters.",
+      "de": "Gibt die Länge in UTF-8-Zeichen zurück."
+    }
   },
   {
     "name": "strmatch",
@@ -4973,15 +5181,30 @@
   {
     "name": "strreplace",
     "system": "Lua",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      },
+      {
+        "name": "find",
+        "type": "string"
+      },
+      {
+        "name": "replace",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "result",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Lua). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Lua). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Replaces plain text occurrences.",
+      "de": "Ersetzt Textvorkommen ohne Muster."
+    }
   },
   {
     "name": "strrev",
@@ -5012,15 +5235,22 @@
   {
     "name": "table.count",
     "system": "Lua",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "table",
+        "type": "table"
+      }
+    ],
+    "returns": [
+      {
+        "name": "count",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Lua). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Lua). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Counts all entries of a table.",
+      "de": "Zählt alle Einträge einer Tabelle."
+    }
   },
   {
     "name": "table.maxn",
@@ -5038,15 +5268,22 @@
   {
     "name": "table.wipe",
     "system": "Lua",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "table",
+        "type": "table"
+      }
+    ],
+    "returns": [
+      {
+        "name": "table",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Lua). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Lua). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Removes all entries of a table.",
+      "de": "Entfernt alle Einträge einer Tabelle."
+    }
   },
   {
     "name": "unpack",
@@ -5389,15 +5626,22 @@
   {
     "name": "C_Map.GetBestMapForUnit",
     "system": "Map",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "uiMapId",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Map). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Map). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the map id for a unit.",
+      "de": "Gibt die Karten-ID einer Einheit zurück."
+    }
   },
   {
     "name": "C_Map.GetFallbackWorldMapID",
@@ -5467,15 +5711,22 @@
   {
     "name": "C_Map.GetMapInfo",
     "system": "Map",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "uiMapId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "info",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Map). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Map). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns info about a map.",
+      "de": "Gibt Informationen zu einer Karte zurück."
+    }
   },
   {
     "name": "C_Map.GetMapInfoAtPosition",
@@ -5545,15 +5796,26 @@
   {
     "name": "C_Map.GetPlayerMapPosition",
     "system": "Map",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "uiMapId",
+        "type": "number"
+      },
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "position",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Map). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Map). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the map position of a unit.",
+      "de": "Gibt die Kartenposition einer Einheit zurück."
+    }
   },
   {
     "name": "C_Map.GetUserWaypoint",
@@ -5805,15 +6067,22 @@
   {
     "name": "C_NamePlate.GetNamePlateForUnit",
     "system": "NamePlate",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "frame",
+        "type": "Frame"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (NamePlate). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (NamePlate). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the name plate frame of a unit.",
+      "de": "Gibt den Namensplaketten-Frame einer Einheit zurück."
+    }
   },
   {
     "name": "C_NamePlate.GetNamePlateGUIDs",
@@ -6377,15 +6646,22 @@
   {
     "name": "C_QuestLog.IsOnQuest",
     "system": "Quest",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "questId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isOnQuest",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Quest). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Quest). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player has the quest.",
+      "de": "Gibt zurück, ob der Spieler die Quest hat."
+    }
   },
   {
     "name": "C_QuestLog.IsQuestDataCachedByID",
@@ -6442,15 +6718,22 @@
   {
     "name": "C_QuestLog.IsQuestFlaggedCompleted",
     "system": "Quest",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "questId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "completed",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Quest). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Quest). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether a quest was completed (Turtle WoW).",
+      "de": "Gibt zurück, ob eine Quest abgeschlossen wurde (Turtle WoW)."
+    }
   },
   {
     "name": "GetQuestLogCompletionText",
@@ -6806,15 +7089,22 @@
   {
     "name": "C_Spell.GetSpellInfo",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spell",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "info",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns an info table for a spell.",
+      "de": "Gibt eine Info-Tabelle zu einem Zauber zurück."
+    }
   },
   {
     "name": "C_Spell.GetSpellLevelInfo",
@@ -6871,15 +7161,22 @@
   {
     "name": "C_Spell.GetSpellName",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spellId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the name of a spell id.",
+      "de": "Gibt den Namen einer Zauber-ID zurück."
+    }
   },
   {
     "name": "C_Spell.GetSpellPowerCost",
@@ -6949,15 +7246,22 @@
   {
     "name": "C_Spell.GetSpellTexture",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spellId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "icon",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the icon of a spell id.",
+      "de": "Gibt das Symbol einer Zauber-ID zurück."
+    }
   },
   {
     "name": "C_Spell.IsAutoAttackSpell",
@@ -7079,15 +7383,26 @@
   {
     "name": "C_Spell.IsSpellUsable",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spell",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "usable",
+        "type": "boolean"
+      },
+      {
+        "name": "noMana",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether a spell is usable.",
+      "de": "Gibt zurück, ob ein Zauber nutzbar ist."
+    }
   },
   {
     "name": "C_Spell.ResetsMeleeSwing",
@@ -7183,15 +7498,22 @@
   {
     "name": "CastSpellByID",
     "system": "Spell",
-    "params": [],
+    "params": [
+      {
+        "name": "spellId",
+        "type": "number"
+      },
+      {
+        "name": "target",
+        "type": "UnitId",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Casts a spell by id.",
+      "de": "Wirkt einen Zauber per ID."
+    }
   },
   {
     "name": "CastSpellNoToggle",
@@ -7287,15 +7609,42 @@
   {
     "name": "GetSpellInfo",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spell",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "rank",
+        "type": "string"
+      },
+      {
+        "name": "icon",
+        "type": "string"
+      },
+      {
+        "name": "castTime",
+        "type": "number"
+      },
+      {
+        "name": "minRange",
+        "type": "number"
+      },
+      {
+        "name": "maxRange",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns spell data by name or id.",
+      "de": "Gibt Zauberdaten per Name oder ID zurück."
+    }
   },
   {
     "name": "GetSpellLink",
@@ -7443,28 +7792,51 @@
   {
     "name": "IsSpellKnown",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spellId",
+        "type": "number"
+      },
+      {
+        "name": "isPet",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "isKnown",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether a spell is known.",
+      "de": "Gibt zurück, ob ein Zauber bekannt ist."
+    }
   },
   {
     "name": "IsUsableSpell",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spell",
+        "type": "string|number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "usable",
+        "type": "boolean"
+      },
+      {
+        "name": "noMana",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Spell). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether a spell is usable.",
+      "de": "Gibt zurück, ob ein Zauber nutzbar ist."
+    }
   },
   {
     "name": "SpellHasRange",
@@ -7745,12 +8117,9 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Dismounts the player.",
+      "de": "Steigt vom Reittier ab."
+    }
   },
   {
     "name": "GetMirrorTimerInfo",
@@ -7834,66 +8203,76 @@
     "name": "IsFalling",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isFalling",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is falling.",
+      "de": "Gibt zurück, ob der Spieler fällt."
+    }
   },
   {
     "name": "IsIndoors",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isIndoors",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is indoors.",
+      "de": "Gibt zurück, ob der Spieler in Gebäuden ist."
+    }
   },
   {
     "name": "IsInGroup",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "inGroup",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is in a party or raid.",
+      "de": "Gibt zurück, ob der Spieler in Gruppe oder Schlachtzug ist."
+    }
   },
   {
     "name": "IsInRaid",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "inRaid",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is in a raid.",
+      "de": "Gibt zurück, ob der Spieler in einem Schlachtzug ist."
+    }
   },
   {
     "name": "IsLoggedIn",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isLoggedIn",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is logged in.",
+      "de": "Gibt zurück, ob der Spieler angemeldet ist."
+    }
   },
   {
     "name": "IsLoggingOut",
@@ -7912,27 +8291,31 @@
     "name": "IsMounted",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isMounted",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is mounted.",
+      "de": "Gibt zurück, ob der Spieler beritten ist."
+    }
   },
   {
     "name": "IsOutdoors",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isOutdoors",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is outdoors.",
+      "de": "Gibt zurück, ob der Spieler draußen ist."
+    }
   },
   {
     "name": "IsPlayerInWorld",
@@ -7951,27 +8334,31 @@
     "name": "IsStealthed",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isStealthed",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is stealthed.",
+      "de": "Gibt zurück, ob der Spieler getarnt ist."
+    }
   },
   {
     "name": "IsSwimming",
     "system": "State",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isSwimming",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (State). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (State). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the player is swimming.",
+      "de": "Gibt zurück, ob der Spieler schwimmt."
+    }
   },
   {
     "name": "C_SwingTimer.EnableRangeCheck",
@@ -8002,15 +8389,17 @@
   {
     "name": "CopyToClipboard",
     "system": "System",
-    "params": [],
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "ClassicAPI function (System). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (System). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Copies text to the clipboard.",
+      "de": "Kopiert Text in die Zwischenablage."
+    }
   },
   {
     "name": "FlashClientIcon",
@@ -8068,14 +8457,16 @@
     "name": "GetPlayerFacing",
     "system": "Targeting",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "radians",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Targeting). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Targeting). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the facing of the player in radians.",
+      "de": "Gibt die Blickrichtung des Spielers im Bogenmaß zurück."
+    }
   },
   {
     "name": "TargetDirectionEnemy",
@@ -8393,14 +8784,16 @@
     "name": "C_DateAndTime.GetCurrentCalendarTime",
     "system": "Time",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "time",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Time). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Time). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the current calendar time.",
+      "de": "Gibt die aktuelle Kalenderzeit zurück."
+    }
   },
   {
     "name": "C_DateAndTime.GetSecondsUntilDailyReset",
@@ -8432,27 +8825,31 @@
     "name": "GetServerTime",
     "system": "Time",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "seconds",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Time). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Time). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the server time as Unix timestamp.",
+      "de": "Gibt die Serverzeit als Unix-Zeitstempel zurück."
+    }
   },
   {
     "name": "GetTickTime",
     "system": "Time",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "seconds",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Time). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Time). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the duration of the last frame.",
+      "de": "Gibt die Dauer des letzten Frames zurück."
+    }
   },
   {
     "name": "GetTimeCached",
@@ -8730,15 +9127,22 @@
   {
     "name": "UnitClassBase",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "classFile",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the English class token.",
+      "de": "Gibt das englische Klassenkürzel zurück."
+    }
   },
   {
     "name": "UnitCreatedBySpell",
@@ -8808,15 +9212,22 @@
   {
     "name": "UnitGUID",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "guid",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the GUID of a unit.",
+      "de": "Gibt die GUID einer Einheit zurück."
+    }
   },
   {
     "name": "UnitHasIncomingResurrection",
@@ -8834,15 +9245,22 @@
   {
     "name": "UnitHealthMissing",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "missing",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns missing health.",
+      "de": "Gibt fehlende Lebenspunkte zurück."
+    }
   },
   {
     "name": "UnitInLineOfSight",
@@ -8860,41 +9278,62 @@
   {
     "name": "UnitInRange",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "inRange",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the unit is in range.",
+      "de": "Gibt zurück, ob die Einheit in Reichweite ist."
+    }
   },
   {
     "name": "UnitIsAFK",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isAFK",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the unit is AFK.",
+      "de": "Gibt zurück, ob die Einheit AFK ist."
+    }
   },
   {
     "name": "UnitIsDND",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isDND",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the unit is DND.",
+      "de": "Gibt zurück, ob die Einheit nicht gestört werden will."
+    }
   },
   {
     "name": "UnitIsFeignDeath",
@@ -8951,15 +9390,22 @@
   {
     "name": "UnitIsPet",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isPet",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns whether the unit is a pet.",
+      "de": "Gibt zurück, ob die Einheit ein Tier ist."
+    }
   },
   {
     "name": "UnitIsPossessed",
@@ -9003,41 +9449,77 @@
   {
     "name": "UnitPower",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      },
+      {
+        "name": "powerType",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "power",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the current power of a unit.",
+      "de": "Gibt die aktuelle Ressource einer Einheit zurück."
+    }
   },
   {
     "name": "UnitPowerMax",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      },
+      {
+        "name": "powerType",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "maxPower",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns the maximum power of a unit.",
+      "de": "Gibt die maximale Ressource einer Einheit zurück."
+    }
   },
   {
     "name": "UnitPowerMissing",
     "system": "Unit",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      },
+      {
+        "name": "powerType",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "missing",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (Unit). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (Unit). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns missing power.",
+      "de": "Gibt fehlende Ressource zurück."
+    }
   },
   {
     "name": "UnitRaceBase",
@@ -9172,15 +9654,31 @@
   {
     "name": "C_UnitAuras.GetAuraDataByIndex",
     "system": "UnitAuras",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      },
+      {
+        "name": "filter",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "aura",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (UnitAuras). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (UnitAuras). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns aura data by index.",
+      "de": "Gibt Aura-Daten per Index zurück."
+    }
   },
   {
     "name": "C_UnitAuras.GetAuraDataBySlot",
@@ -9263,15 +9761,22 @@
   {
     "name": "C_UnitAuras.GetPlayerAuraBySpellID",
     "system": "UnitAuras",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spellId",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "aura",
+        "type": "table"
+      }
+    ],
     "description": {
-      "en": "ClassicAPI function (UnitAuras). Signature not documented yet.",
-      "de": "ClassicAPI-Funktion (UnitAuras). Signatur noch nicht dokumentiert."
-    },
-    "tags": [
-      "signature-unknown"
-    ]
+      "en": "Returns a player aura by spell id.",
+      "de": "Gibt eine Spieler-Aura per Zauber-ID zurück."
+    }
   },
   {
     "name": "C_UnitAuras.GetUnitAuraBySpellID",
@@ -9597,5 +10102,49 @@
     "tags": [
       "signature-unknown"
     ]
+  },
+  {
+    "name": "C_Container.GetContainerNumSlots",
+    "system": "ClassicAPI",
+    "params": [
+      {
+        "name": "bag",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "numSlots",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the slot count of a bag.",
+      "de": "Gibt die Platzanzahl einer Tasche zurück."
+    }
+  },
+  {
+    "name": "C_Container.UseContainerItem",
+    "system": "ClassicAPI",
+    "params": [
+      {
+        "name": "bag",
+        "type": "number"
+      },
+      {
+        "name": "slot",
+        "type": "number"
+      },
+      {
+        "name": "unit",
+        "type": "UnitId",
+        "optional": true
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Uses a bag item.",
+      "de": "Benutzt einen Taschengegenstand."
+    }
   }
 ]

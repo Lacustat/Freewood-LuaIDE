@@ -16,7 +16,7 @@
 - **Einstellungen (`web/settings.ts`)**: Farbschema, Code-Schriftgröße, Tab-Breite, Auto-Speichern, Forms-Zoom (0 = einpassen) und Bühnengröße; gespeichert im Browser. Neue Einstellung = ein Eintrag in `SETTING_DEFS` plus Sprachschlüssel `settings.<key>`.
 - **Fehlermeldungen wie das Original**: Der Interpreter meldet im 5.0-Modus wie die echte 5.0-VM (``attempt to index local `x' (a nil value)``); abgesichert durch `tests/fixtures/lua50-oracle.json`, das aus echtem Lua 5.0 (WASM) erzeugt wurde.
 - **Spike `spikes/lua50-wasm`**: echtes Lua 5.0 als WASM, siehe dortige README.
-- **Plugin-Daten**: Vanilla ca. 1060 Funktionen, 160 Events (die meisten Funktionen nur als Name mit Tag `signature-unknown`; Signaturen folgen), ClassicAPI ca. 730 Funktionen (nur Namen) und zusätzliche Widget-Methoden. Quellen stehen in den Manifesten.
+- **Plugin-Daten**: Vanilla ca. 1060 Funktionen (ca. 310 mit Signatur, aus dem Gedächtnis erstellt und noch zu prüfen; Rest nur Name mit Tag `signature-unknown`), 160 Events, ClassicAPI ca. 735 Funktionen (ca. 80 mit Signatur) und zusätzliche Widget-Methoden. Quellen stehen in den Manifesten.
 - **Tests**: `npm test` (Einheitstests), `node scripts/ui-smoke.mjs` (UI-Rauchtest, braucht Playwright und laufenden Server).
 
 ## English
@@ -31,5 +31,5 @@
 - **Settings (`web/settings.ts`)**: theme, code font size, tab width, autosave, forms zoom (0 = fit) and stage size; stored in the browser. A new setting is one entry in `SETTING_DEFS` plus a language key `settings.<key>`.
 - **Error messages like the original**: in 5.0 mode the interpreter reports like the real 5.0 VM (``attempt to index local `x' (a nil value)``); backed by `tests/fixtures/lua50-oracle.json`, generated from real Lua 5.0 (WASM).
 - **Spike `spikes/lua50-wasm`**: real Lua 5.0 as WASM, see its README.
-- **Plugin data**: Vanilla about 1060 functions and 160 events (most functions are names only with tag `signature-unknown`; signatures to follow), ClassicAPI about 730 functions (names only) plus extra widget methods. Sources are listed in the manifests.
+- **Plugin data**: Vanilla about 1060 functions (about 310 with signature, written from memory and still to be verified; the rest are names only with tag `signature-unknown`), 160 events, ClassicAPI about 735 functions (about 80 with signature) plus extra widget methods. Sources are listed in the manifests.
 - **Tests**: `npm test` (unit tests), `node scripts/ui-smoke.mjs` (UI smoke test, needs Playwright and a running server).
