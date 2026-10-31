@@ -26,6 +26,18 @@
       {
         "name": "arg1",
         "type": "UnitId"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "number"
+      },
+      {
+        "name": "arg4",
+        "type": "string"
       }
     ],
     "description": {
@@ -296,5 +308,114 @@
       "en": "Event added by ClassicAPI. Arguments not documented yet.",
       "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
     }
+  },
+  {
+    "name": "UNIT_SPELLCAST_SUCCEEDED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "number"
+      },
+      {
+        "name": "arg4",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Unit spell cast event; only SUCCEEDED was seen in the OctoWoW probe, the argument list of the others is assumed.",
+      "de": "Zauber-Ereignis einer Einheit; in der OctoWoW-Probe wurde nur SUCCEEDED gesehen, die Argumente der anderen sind angenommen."
+    }
+  },
+  {
+    "name": "UNIT_SPELLCAST_STOP",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "number"
+      },
+      {
+        "name": "arg4",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Unit spell cast event; only SUCCEEDED was seen in the OctoWoW probe, the argument list of the others is assumed.",
+      "de": "Zauber-Ereignis einer Einheit; in der OctoWoW-Probe wurde nur SUCCEEDED gesehen, die Argumente der anderen sind angenommen."
+    },
+    "tags": [
+      "unverified"
+    ]
+  },
+  {
+    "name": "UNIT_SPELLCAST_FAILED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "number"
+      },
+      {
+        "name": "arg4",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Unit spell cast event; only SUCCEEDED was seen in the OctoWoW probe, the argument list of the others is assumed.",
+      "de": "Zauber-Ereignis einer Einheit; in der OctoWoW-Probe wurde nur SUCCEEDED gesehen, die Argumente der anderen sind angenommen."
+    },
+    "tags": [
+      "unverified"
+    ]
+  },
+  {
+    "name": "UNIT_SPELLCAST_INTERRUPTED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "number"
+      },
+      {
+        "name": "arg4",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Unit spell cast event; only SUCCEEDED was seen in the OctoWoW probe, the argument list of the others is assumed.",
+      "de": "Zauber-Ereignis einer Einheit; in der OctoWoW-Probe wurde nur SUCCEEDED gesehen, die Argumente der anderen sind angenommen."
+    },
+    "tags": [
+      "unverified"
+    ]
   }
 ]

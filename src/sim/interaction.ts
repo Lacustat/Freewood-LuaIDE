@@ -92,7 +92,7 @@ export const INTERACTION_API: Record<string, Impl> = {
   GetNumLootItems: (h) => h.interaction().loot?.items.length ?? 0,
   GetLootSlotInfo: (h, a) => {
     const l = h.interaction().loot; const i = num(a[0]);
-    if (!l || i === undefined) return undefined;
+    if (!l || i === undefined) return [undefined, "", 0, 0];
     const it = l.items[i - 1];
     if (!it) return undefined;
     const m = meta(h, it.id);
@@ -120,7 +120,7 @@ export const INTERACTION_API: Record<string, Impl> = {
   GetMerchantNumItems: (h) => h.interaction().merchant?.items.length ?? 0,
   GetMerchantItemInfo: (h, a) => {
     const it = h.interaction().merchant?.items[(num(a[0]) ?? 0) - 1];
-    if (!it) return undefined;
+    if (!it) return [undefined, undefined, 0, 1, 0, 1]; // DE/EN: ungültiger Index = Standardwerte (Probe) · invalid index = defaults (probe)
     const m = meta(h, it.id);
     return [m.name, m.icon, it.price, it.stack ?? 1, it.available ?? -1, true];
   },

@@ -134,7 +134,7 @@ export const CHARACTER_API: Record<string, Impl> = {
   GetNumQuestLogEntries: (c) => [visibleRows(c).length, c.quests.filter((q) => q.header === undefined).length],
   GetQuestLogTitle: (c, _i, a) => {
     const q = visibleRows(c)[typeof a[0] === "number" ? a[0] - 1 : -1];
-    if (!q) return undefined;
+    if (!q) return [undefined, 0, undefined, undefined, undefined, undefined]; // probe: invalid index = defaults
     if (q.header !== undefined) return [q.header, 0, undefined, true, q.collapsed === true, undefined];
     return [q.title, q.level ?? 1, undefined, undefined, undefined, q.complete ? 1 : undefined];
   },

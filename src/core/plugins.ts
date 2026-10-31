@@ -146,7 +146,7 @@ export class PluginRegistry {
       for (const name of removes?.functions ?? []) functions.delete(name);
       for (const name of removes?.events ?? []) events.delete(name);
       for (const name of removes?.widgets ?? []) widgets.delete(name);
-      for (const fn of plugin.data.functions) functions.set(fn.name, fn);
+      for (const fn of plugin.data.functions) functions.set(fn.name, { ...fn, origin: pluginId });
       for (const ev of plugin.data.events) events.set(ev.name, ev);
       for (const w of plugin.data.widgets) widgets.set(w.name, mergeWidget(widgets.get(w.name), w));
       if (plugin.data.layers) layers = plugin.data.layers;

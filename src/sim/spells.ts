@@ -128,7 +128,7 @@ function finish(h: SimHost, info: CastInfo): void {
   if (sp.nextMelee) h.note("info", `${sp.name} queued for the next melee swing (the damage is not simulated).`);
   applyAura(h, info.spellID, sp, info.target ?? "target");
   h.fireIf(info.channel ? "SPELLCAST_CHANNEL_STOP" : "SPELLCAST_STOP", sp.name);
-  h.fireIf("UNIT_SPELLCAST_SUCCEEDED", "player", sp.name);
+  h.fireIf("UNIT_SPELLCAST_SUCCEEDED", "player", `Cast-3-0-0-0-${info.spellID}-0000666459`, info.spellID, sp.name); // probe: unit, castGUID, spellID, name
   h.note("info", `Cast of ${sp.name} finished (the effect is not simulated).`);
 }
 
@@ -136,7 +136,7 @@ export function interruptCast(h: SimHost, why = "Interrupted"): boolean {
   const s = st(h); const c = s.cast; if (!c) return false;
   c.timer.cancel(); delete s.cast;
   h.fireIf(c.channel ? "SPELLCAST_CHANNEL_STOP" : "SPELLCAST_INTERRUPTED", c.name);
-  h.fireIf("UNIT_SPELLCAST_INTERRUPTED", "player", c.name);
+  h.fireIf("UNIT_SPELLCAST_INTERRUPTED", "player", `Cast-3-0-0-0-${c.spellID}-0000666459`, c.spellID, c.name);
   h.note("info", `Cast of ${c.name} stopped: ${why}`);
   return true;
 }
@@ -170,7 +170,7 @@ export function castSpell(h: SimHost, ref: SpellRef, target?: string): boolean {
   info.timer = h.later(dur, () => finish(h, info));
   s.cast = info;
   if (info.channel) h.fireIf("SPELLCAST_CHANNEL_START", channelMs, sp.name); else h.fireIf("SPELLCAST_START", sp.name, castMs);
-  h.fireIf("UNIT_SPELLCAST_START", "player", sp.name);
+  h.fireIf("UNIT_SPELLCAST_START", "player", `Cast-3-0-0-0-${info.spellID}-0000666459`, info.spellID, sp.name);
   return true;
 }
 
@@ -212,7 +212,7 @@ export const SPELLS_API: Record<string, Impl> = {
     const r = spellArg(h, a); if (!r) return undefined;
     const c = cooldownOf(h, r.id, r.sp); return [c.start, c.duration, 1];
   },
-  "C_Spell.GetSpellCooldown": sp1((h, r) => { const c = cooldownOf(h, r.id, r.sp); return [{ startTime: c.start, duration: c.duration, isEnabled: true, modRate: 1, isOnGCD: c.gcd }]; }),
+  "C_Spell.GetSpellCooldown": sp1((h, r) => { const c = cooldownOf(h, r.id, r.sp); return [{ startTime: c.start, duration: c.duration, isEnabled: true, modRate: 1 }]; }),
   GetSpellInfo: (h, a) => { const r = spellArg(h, a) ?? (typeof a[0] === "string" ? resolveSpell(h, a[0], true) : undefined); return r ? [r.sp.name, r.sp.rank ?? "", r.sp.icon, r.sp.cost ?? 0, false, r.sp.powerType ?? 0, r.sp.castTime ?? 0, r.sp.minRange ?? 0, r.sp.maxRange ?? 0, r.id] : undefined; },
   GetSpellLink: (h, a) => { const r = spellArg(h, a); return r ? [`|cff71d5ff|Hspell:${r.id}:0|h[${r.sp.name}]|h|r`, r.id] : undefined; },
   GetSpellBaseCooldown: sp1((_h, r) => r.sp.cooldown ?? 0),

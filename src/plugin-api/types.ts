@@ -114,6 +114,8 @@ export interface ApiFunction {
   /** DE: Hinweis, ab wann es das gibt (frei). EN: free-form note on availability. */
   since?: string;
   tags?: string[];
+  /** DE: Plugin, das die Funktion mitbringt (wird beim Auflösen gesetzt). EN: plugin that brings the function (set when resolving). */
+  origin?: string;
 }
 
 export interface ApiEvent {

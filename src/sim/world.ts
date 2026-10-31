@@ -33,7 +33,8 @@ import { CHARACTER_API, DEFAULT_CHARACTER, type CharacterState } from "./charact
 import { INTERACTION_API, SAMPLE_GOSSIP, SAMPLE_LOOT, SAMPLE_MERCHANT, type GossipState, type InteractionState, type LootState, type MerchantState } from "./interaction.js";
 import { AURA_API } from "./auras.js";
 import { CvarStore, SYSTEM_API } from "./system.js";
-import { UNIT_API } from "./units.js";
+import { UNIT_API, unitGuid } from "./units.js";
+import { openTaxi } from "./uiworld.js";
 import { DEFAULT_INVENTORY, INVENTORY_API, type InventoryState } from "./inventory.js";
 import { rewrite51to50 } from "../lua/rewrite50.js";
 import { DEFAULT_SCENARIO, type LogEntry, type Scenario, type UnitData } from "./scenario.js";
@@ -234,6 +235,11 @@ export class WowSim {
     if (!this.target.events.has(event)) this.addLog("warn", `Event '${event}' does not exist in target '${this.target.id}'.`);
     this.addLog("event", `${event}${args.length ? "(" + args.map((a) => tostr(a)).join(", ") + ")" : ""}`);
     for (const f of [...this.frames]) if (f.events.has(event)) this.callScript(f, "OnEvent", [event, ...args]);
+    // DE: Auf OctoWoW (ClassicAPI) feuern UNIT_*-Ereignisse zusätzlich mit der GUID statt des Tokens (Probe). EN: on OctoWoW (ClassicAPI) UNIT_* events fire a second time with the GUID instead of the token (probe).
+    if (this.target.syntax === "lua51-transpiled" && event.startsWith("UNIT_") && !event.startsWith("UNIT_SPELLCAST") && typeof args[0] === "string") {
+      const u = this.unit(args[0]);
+      if (u) this.fireEvent(event, unitGuid(u), ...args.slice(1));
+    }
   }
 
   click(frame: FrameState | string, button = "LeftButton"): void {
@@ -355,6 +361,8 @@ export class WowSim {
   /** DE: Öffnet ein Händlerfenster. EN: opens a merchant window. */
   openMerchant(m: MerchantState = structuredClone(SAMPLE_MERCHANT)): void { this.inter.merchant = m; this.fireEvent("MERCHANT_SHOW"); }
   /** DE: Öffnet ein Gossip-Fenster. EN: opens a gossip window. */
+  /** DE: Öffnet die Flugkarte. EN: opens the taxi map. */
+  openTaxi(): void { openTaxi(this); }
   openGossip(g: GossipState = structuredClone(SAMPLE_GOSSIP)): void { this.inter.gossip = g; this.fireEvent("GOSSIP_SHOW"); }
 
   private inv: InventoryState | undefined;
@@ -458,7 +466,14 @@ export class WowSim {
           this.addLog("warn", `${n}() has no simulated behaviour yet; it returned the type default${vals.length === 1 ? "" : "s"}${vals.length ? ` (${vals.map((v) => JSON.stringify(v ?? null)).join(", ")})` : " (nothing)"}.`);
           return vals as never;
         }
-        return impl(this, args.map((a) => this.decode(a)));
+        const r = impl(this, args.map((a) => this.decode(a)));
+        // DE: Vanilla-Funktionen liefern 1/nil statt true/false (Probe auf OctoWoW); ClassicAPI-Funktionen echte Wahrheitswerte.
+        // EN: vanilla functions return 1/nil instead of true/false (OctoWoW probe); ClassicAPI functions real booleans.
+        if (this.target.functions.get(n)?.origin === "vanilla-1.12") {
+          const cv = (x: unknown): unknown => (x === true ? 1 : x === false ? undefined : x);
+          return Array.isArray(r) ? r.map(cv) : cv(r);
+        }
+        return r;
       });
     });
   }

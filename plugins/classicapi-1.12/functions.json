@@ -4190,7 +4190,8 @@
       "de": "(englisch) Returns the number of quests that GetGossipAvailableQuests() / GetGossipActiveQuests() return. Each quest is one (title, level) pair, so the count always agrees with the list. These functions count quests in gossip menus only. For a questgiver that has no gossip menu, use GetNumAvailableQuests() / GetNumActiveQuests()."
     },
     "tags": [
-      "types-inferred"
+      "types-inferred",
+      "absent-on-octowoow-1.18.1"
     ]
   },
   {
@@ -4203,7 +4204,8 @@
       "de": "(englisch) Returns the number of options that GetGossipOptions() returns. Each option is one (text, type) pair, so the count always agrees with the list."
     },
     "tags": [
-      "types-inferred"
+      "types-inferred",
+      "absent-on-octowoow-1.18.1"
     ]
   },
   {
@@ -7364,7 +7366,8 @@
       "de": "(englisch) Returns the text of a macro. macro is the macro's index or its name. If no macro is there, the function returns nothing."
     },
     "tags": [
-      "types-inferred"
+      "types-inferred",
+      "absent-on-octowoow-1.18.1"
     ]
   },
   {
@@ -9099,7 +9102,8 @@
       "de": "(englisch) Returns a QuestInfo table for one row of the quest log, or nil if the index is not a row of the log. The index counts headers, the same as GetQuestLogTitle(index)."
     },
     "tags": [
-      "types-inferred"
+      "types-inferred",
+      "absent-on-octowoow-1.18.1"
     ]
   },
   {
@@ -9367,7 +9371,10 @@
     "description": {
       "en": "Returns whether a quest was completed (Turtle WoW).",
       "de": "Gibt zurück, ob eine Quest abgeschlossen wurde (Turtle WoW)."
-    }
+    },
+    "tags": [
+      "absent-on-octowoow-1.18.1"
+    ]
   },
   {
     "name": "GetQuestLogCompletionText",
@@ -11439,7 +11446,8 @@
       "de": "(englisch) Returns the stance-bar index of your active form or stance. This is the same 1-based index that GetShapeshiftFormInfo(index) takes. Returns 0 when no form or stance is active. GetShapeshiftForm(true) is the number that [stance:N] and [form:N] test."
     },
     "tags": [
-      "types-inferred"
+      "types-inferred",
+      "absent-on-octowoow-1.18.1"
     ]
   },
   {

@@ -1757,5 +1757,54 @@
       "en": "Fires when someone offers a resurrection.",
       "de": "Wird ausgelöst, wenn jemand eine Wiederbelebung anbietet."
     }
+  },
+  {
+    "name": "UPDATE_MACROS",
+    "payload": [],
+    "description": {
+      "en": "Fires when a macro is created, edited or deleted (seen in the OctoWoW probe).",
+      "de": "Wird ausgelöst, wenn ein Makro erstellt, geändert oder gelöscht wird (in der OctoWoW-Probe gesehen)."
+    }
+  },
+  {
+    "name": "CURSOR_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the cursor contents change (seen in the OctoWoW probe).",
+      "de": "Wird ausgelöst, wenn sich der Cursorinhalt ändert (in der OctoWoW-Probe gesehen)."
+    }
+  },
+  {
+    "name": "CHAT_MSG_CHANNEL_NOTICE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      },
+      {
+        "name": "arg4",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Channel notice, e.g. YOU_JOINED / YOU_LEFT; arg4 is \"<index>. <name>\" (OctoWoW probe).",
+      "de": "Kanalhinweis, z. B. YOU_JOINED / YOU_LEFT; arg4 ist \"<Nr>. <Name>\" (OctoWoW-Probe)."
+    }
+  },
+  {
+    "name": "UPDATE_INSTANCE_INFO",
+    "payload": [],
+    "description": {
+      "en": "Fires after RequestRaidInfo() (OctoWoW probe).",
+      "de": "Wird nach RequestRaidInfo() ausgelöst (OctoWoW-Probe)."
+    }
   }
 ]

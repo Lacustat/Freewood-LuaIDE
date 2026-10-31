@@ -170,7 +170,7 @@ test("unit API: vanilla reports foreign health as percent, retail as numbers", a
   const t = await targets();
   const code = `return UnitName("target"), UnitHealth("target"), UnitHealthMax("target"), UnitHealth("player"), UnitName("party1"), UnitExists("pet")`;
   const v = await mk(t.v!);
-  assert.deepEqual(v.exec(code).values, ["Defias Pillager", 100, 100, 3200, "Helper", false]);
+  assert.deepEqual(v.exec(code).values, ["Defias Pillager", 100, 100, 3200, "Helper"]);
   v.setHealth("target", 210);
   assert.deepEqual(v.exec(`return UnitHealth("target")`).values, [50]);
   const r = await mk(t.r!);

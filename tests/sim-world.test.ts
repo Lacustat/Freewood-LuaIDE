@@ -102,7 +102,7 @@ engines("equipment, cursor, bag moves and equipment sets", async (mk) => {
       local stillThere = GetContainerItemInfo(0, 2)
       return slot, string.find(link, "Worn Shortsword") ~= nil, before ~= nil, holds, back ~= nil, stillThere ~= nil, CursorHasItem(), GetBagName(0), ContainerIDToInventoryID(1)
     `);
-    assert.deepEqual(v, [16, true, true, true, true, true, false, "Backpack", 20]);
+    assert.deepEqual(v, [16, true, true, 1, true, true, undefined, "Backpack", 20]);
   }
   const sim = await mk(t.c!);
   const v = run(sim, `
@@ -162,14 +162,14 @@ engines("spells: cast time, cooldown, power, aura, interrupt and info functions"
   run(sim, `local p = C_Spell.GetSpellPowerCost(6673) pcost = p[1].cost ptype = p[1].name`);
   run(sim, `CastSpellByName("Fireball")`);
   const mid = run(sim, `local n, _, _, s, e = C_Spell.UnitCastingInfo("player") return n, e > s, IsCurrentCast("Fireball")`);
-  assert.deepEqual(mid, ["Fireball", true, true]);
+  assert.deepEqual(mid, ["Fireball", true, 1]);
   sim.advance(1.6);
   const after = run(sim, `
     CastSpellByName("Battle Shout")
     local cd = C_Spell.GetSpellCooldown(133)
     local hasAura = C_UnitAuras and 1 or 0
     local usable, noMana = IsUsableSpell("Fireball")
-    return C_Spell.UnitCastingInfo("player"), cd.isOnGCD, cd.duration, UnitMana and 1 or 0, usable, GetSpellCooldown("Heroic Strike"), table.concat(seen, ",")
+    return C_Spell.UnitCastingInfo("player"), cd.duration > 0, cd.duration, UnitMana and 1 or 0, usable, GetSpellCooldown("Heroic Strike"), table.concat(seen, ",")
   `);
   assert.equal(after[0], undefined);
   assert.equal(after[1], true);
@@ -250,6 +250,7 @@ engines("world: zones, time, keys, sound, targeting, bar, quests, talents, taxi"
   assert.deepEqual(w.slice(0, 4), [4, "Aldenbrook", "Mage", 2]);
   assert.deepEqual(w.slice(4), [2, "master", 3, 1, 1, "Spammerson", 1]);
   sim.advance(1);
+  sim.openTaxi();
   const x = run(sim, `
     local n = GetNumWhoResults()
     local q = GetNumQuestLogEntries()
@@ -267,7 +268,7 @@ engines("world: zones, time, keys, sound, targeting, bar, quests, talents, taxi"
   `);
   assert.equal(x[0], 1);
   assert.deepEqual(x.slice(2, 7), [51, 50, "Arms", 1, 2]);
-  assert.equal(x[9], "1 Hr 2 Min 5 Sec");
+  assert.equal(x[9], "1 Hr 2 Mins ");
 });
 
 engines("retail on the real Lua 5.1 VM: prelude, API, table length, string methods", async (mk) => {

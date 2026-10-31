@@ -62,22 +62,41 @@ const subZone = (h: SimHost): string => (h.scenario.player as { subZone?: string
 const CITIES = new Set(["Stormwind City", "Ironforge", "Orgrimmar", "Undercity", "Thunder Bluff"]);
 const clock = (h: SimHost) => { const d = new Date(h.serverEpoch() * 1000); return [d.getUTCHours(), d.getUTCMinutes()]; };
 
+// DE: Format nach Probe: "1 Hr 2 Mins " (Sekunden entfallen ab einer Stunde, Leerzeichen am Ende); `unverified` für Tage.
+// EN: format per probe: "1 Hr 2 Mins " (seconds dropped from one hour on, trailing space); `unverified` for days.
 function secondsToTime(sec: number, noSeconds: boolean): string {
   const s = Math.floor(sec); const d = Math.floor(s / 86400), hr = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), r = s % 60;
-  const out: string[] = [];
-  if (d) out.push(`${d} Day${d > 1 ? "s" : ""}`);
-  if (hr) out.push(`${hr} Hr`);
-  if (m) out.push(`${m} Min`);
-  if (r && !noSeconds || out.length === 0) out.push(`${r} Sec`);
-  return out.join(" ");
+  let out = "";
+  if (d) out += `${d} ${d > 1 ? "Days" : "Day"} `;
+  if (hr) out += `${hr} Hr `;
+  if (m) out += `${m} ${m > 1 ? "Mins" : "Min"} `;
+  if (r && !noSeconds && !hr && !d) out += `${r} Sec `;
+  return out;
 }
 
+// DE: Kalimdor-Liste aus der OctoWoW-Probe; Östliche Königreiche aus dem Gedächtnis (`unverified`).
+// EN: Kalimdor list from the OctoWoW probe; Eastern Kingdoms from memory (`unverified`).
+const CONTINENTS = ["Kalimdor", "Eastern Kingdoms"];
+const ZONES: string[][] = [
+  ["Ashenvale", "Azshara", "Blackstone Island", "Caverns of Time", "Darkshore", "Darnassus", "Desolace", "Dire Maul", "Durotar", "Dustwallow Marsh", "Felwood", "Feralas", "GM Island", "Gates of Ahn'Qiraj", "Hyjal", "Icepoint Rock", "Maraudon", "Moonglade", "Moonwhisper Coast", "Mulgore", "Orgrimmar", "Silithus", "Stonetalon Mountains", "Tanaris", "Tel'Abim", "Teldrassil", "The Barrens", "Thousand Needles", "Thunder Bluff", "Timbermaw Hold"],
+  ["Alterac Mountains", "Arathi Highlands", "Badlands", "Blasted Lands", "Burning Steppes", "Deadwind Pass", "Dun Morogh", "Duskwood", "Eastern Plaguelands", "Elwynn Forest", "Hillsbrad Foothills", "Ironforge", "Loch Modan", "Redridge Mountains", "Searing Gorge", "Silverpine Forest", "Stormwind City", "Stranglethorn Vale", "Swamp of Sorrows", "The Hinterlands", "Tirisfal Glades", "Undercity", "Western Plaguelands", "Westfall", "Wetlands"],
+];
+const contOf = (h: SimHost): number => ((here(h)?.continent ?? 0) === 1 ? 1 : 2);
+const zoneIdx = (h: SimHost): number => ZONES[contOf(h) - 1]!.indexOf(zoneName(h)) + 1;
+
 export const WORLD_API: Record<string, Impl> = {
+  GetMapContinents: () => CONTINENTS,
+  GetMapZones: (_h, a) => ZONES[(num(a[0]) ?? 0) - 1] ?? [],
+  GetCurrentMapContinent: (h) => contOf(h),
+  GetCurrentMapZone: (h) => zoneIdx(h),
+  SetMapToCurrentZone: () => undefined,
+  SetMapZoom: () => undefined,
+  GetMapInfo: (h) => [zoneName(h).replace(/ /g, ""), 668, 768],
   GetZoneText: (h) => zoneName(h),
   GetRealZoneText: (h) => zoneName(h),
   GetSubZoneText: (h) => subZone(h) || (SUB[zoneName(h)] ?? ""),
   GetMinimapZoneText: (h) => subZone(h) || zoneName(h),
-  GetZonePVPInfo: (h) => (CITIES.has(zoneName(h)) ? "friendly" : "contested"),
+  GetZonePVPInfo: (h) => (CITIES.has(zoneName(h)) ? ["friendly", factionOf(h.scenario.player)] : ["friendly", factionOf(h.scenario.player)]), // probe: Durotar = friendly, Horde
   GetBindLocation: () => "Stormwind City",
   GetGameTime: (h) => clock(h),
   GetFramerate: () => 60,
@@ -258,9 +277,9 @@ const spellOf = (h: SimHost, s: Slot | undefined) => (s?.type === "spell" ? reso
 export const BAR_API: Record<string, Impl> = {
   HasAction: (h, a) => slotOf(h, a[0]) !== undefined,
   GetActionTexture: (h, a) => { const s = slotOf(h, a[0]); if (!s) return undefined; if (s.type === "spell") return spellOf(h, s)?.sp.icon; if (s.type === "item") return h.inventory().items[String(s.id)]?.icon; return h.character().macros?.[s.index - 1]?.icon; },
-  GetActionText: (h, a) => { const s = slotOf(h, a[0]); return s?.type === "macro" ? h.character().macros?.[s.index - 1]?.name : undefined; },
+  GetActionText: (h, a) => { const s = slotOf(h, a[0]); if (!s) return undefined; return [s.type === "macro" ? h.character().macros?.[s.index - 1]?.name : undefined, s.type.toUpperCase(), s.type === "macro" ? s.index : s.id]; }, // probe: OctoWoW also returns type and id
   GetActionCount: (h, a) => { const s = slotOf(h, a[0]); if (s?.type !== "item") return 0; let n = 0; for (const b of Object.values(h.inventory().bags)) for (const sl of Object.values(b.slots)) if (sl && sl.id === s.id) n += sl.count; return n; },
-  GetActionCooldown: (h, a) => { const r = spellOf(h, slotOf(h, a[0])); if (!r) return [0, 0, 0]; const c = cooldownOf(h, r.id, r.sp); return [c.start, c.duration, c.duration > 0 ? 1 : 0]; },
+  GetActionCooldown: (h, a) => { const r = spellOf(h, slotOf(h, a[0])); if (!r) return [0, 0, 1]; const c = cooldownOf(h, r.id, r.sp); return [c.start, c.duration, 1]; },
   IsUsableAction: (h, a) => { const s = slotOf(h, a[0]); if (!s) return [false, false]; const r = spellOf(h, s); return r ? [cooldownOf(h, r.id, r.sp).duration === 0, false] : [true, false]; },
   IsCurrentAction: (h, a) => { const s = slotOf(h, a[0]); return s?.type === "spell" && s.id === 6603 && ui(h).attacking; },
   IsAttackAction: (h, a) => { const s = slotOf(h, a[0]); return s?.type === "spell" && s.id === 6603; },
@@ -316,7 +335,7 @@ export const QUEST_API: Record<string, Impl> = {
   GetQuestLogPushable: (h) => qAt(h, ui(h).selQuest) !== undefined && h.scenario.party.length > 0,
   IsCurrentQuestFailed: () => false,
   GetNumQuestLogChoices: () => 0, GetNumQuestLogRewards: () => 0, GetQuestLogRequiredMoney: () => 0, GetQuestLogRewardMoney: () => 0,
-  GetQuestGreenRange: (h) => { const l = h.scenario.player.level; return l <= 5 ? 0 : l <= 39 ? Math.floor(l / 10) + 5 : Math.floor(l / 5) + 1; },
+  GetQuestGreenRange: (h) => { const l = h.scenario.player.level; return l <= 7 ? 4 : l <= 39 ? Math.floor(l / 10) + 5 : Math.floor(l / 5) + 1; },
   AddQuestWatch: (h, a) => { const q = qAt(h, a[0]); if (!q || q.questID === undefined) return; const u = ui(h); if (!u.watch.includes(q.questID)) { if (u.watch.length >= 5) { h.fire("UI_ERROR_MESSAGE", "You may only track 5 quests."); return; } u.watch.push(q.questID); h.fireIf("QUEST_WATCH_UPDATE", num(a[0]) ?? 0); } },
   RemoveQuestWatch: (h, a) => { const q = qAt(h, a[0]); if (!q) return; const u = ui(h); u.watch = u.watch.filter((x) => x !== q.questID); h.fireIf("QUEST_LOG_UPDATE"); },
   IsQuestWatched: (h, a) => { const q = qAt(h, a[0]); return q !== undefined && q.questID !== undefined && ui(h).watch.includes(q.questID) ? 1 : undefined; },
@@ -330,15 +349,18 @@ export const QUEST_API: Record<string, Impl> = {
 
 // ===== [S8] TAXI_API =====
 
-const nodesHere = (h: SimHost) => { const m = h.scenario.player.x === undefined ? 0 : (here(h) ? (here(h)!.continent ?? 0) : 0); return TAXI_NODES.filter((n) => n.map === m && (n.faction === "Neutral" || n.faction === factionOf(h.scenario.player))); };
+/** DE: Öffnet die Flugkarte (Ereignis TAXIMAP_OPENED). Geschlossen liefern die Flugfunktionen wie im Spiel nichts (Probe). EN: opens the taxi map; closed, the taxi functions return nothing like in the game (probe). */
+export function openTaxi(h: SimHost): void { ui(h).taxiOpen = true; h.fireIf("TAXIMAP_OPENED"); }
+const nodesHere = (h: SimHost) => {
+  if (!ui(h).taxiOpen) return []; const m = h.scenario.player.x === undefined ? 0 : (here(h) ? (here(h)!.continent ?? 0) : 0); return TAXI_NODES.filter((n) => n.map === m && (n.faction === "Neutral" || n.faction === factionOf(h.scenario.player))); };
 const current = (h: SimHost) => { const p = h.scenario.player; return nodesHere(h).find((n) => p.x !== undefined && p.y !== undefined && Math.hypot(n.x - p.x, n.y - p.y) < 300); };
 const costTo = (h: SimHost, to: number): number => { const c = current(h); return TAXI_PATHS.find((p) => p.fromNodeID === c?.nodeID && p.toNodeID === to)?.cost ?? 0; };
 
 export const TAXI_API: Record<string, Impl> = {
   NumTaxiNodes: (h) => nodesHere(h).length,
-  TaxiNodeName: (h, a) => nodesHere(h)[(num(a[0]) ?? 0) - 1]?.name,
+  TaxiNodeName: (h, a) => nodesHere(h)[(num(a[0]) ?? 0) - 1]?.name ?? "INVALID",
   TaxiNodeGetType: (h, a) => { const n = nodesHere(h)[(num(a[0]) ?? 0) - 1]; if (!n) return "NONE"; const c = current(h); return c?.nodeID === n.nodeID ? "CURRENT" : TAXI_PATHS.some((p) => p.fromNodeID === c?.nodeID && p.toNodeID === n.nodeID) ? "REACHABLE" : "DISTANT"; },
-  TaxiNodeCost: (h, a) => { const n = nodesHere(h)[(num(a[0]) ?? 0) - 1]; return n ? costTo(h, n.nodeID) : 0; },
+  TaxiNodeCost: (h, a) => { const n = nodesHere(h)[(num(a[0]) ?? 0) - 1]; if (!n) throw new Error("Invalid taxi node slot"); return costTo(h, n.nodeID); },
   TaxiNodePosition: (h, a) => { const n = nodesHere(h)[(num(a[0]) ?? 0) - 1]; return n ? [Math.round((0.5 - n.y / 40000) * 1e4) / 1e4, Math.round((0.5 - n.x / 40000) * 1e4) / 1e4] : [0, 0]; },
   TaxiNodeSetCurrent: () => undefined,
   GetNumRoutes: (h, a) => { const n = nodesHere(h)[(num(a[0]) ?? 0) - 1]; return n && costTo(h, n.nodeID) > 0 ? 1 : 0; },

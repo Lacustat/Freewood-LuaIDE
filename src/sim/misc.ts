@@ -205,11 +205,10 @@ function coinText(n: number, sep: string): string {
   const parts = [g ? `${g} Gold` : "", s ? `${s} Silver` : "", c ? `${c} Copper` : ""].filter(Boolean);
   return parts.length ? parts.join(sep) : "0 Copper";
 }
-function coinTex(n: number, size?: number): string {
+// DE: Format nach Probe auf OctoWoW (UI-MoneyIcons, ohne Leerzeichen). EN: format per the OctoWoW probe (UI-MoneyIcons, no spaces).
+function coinTex(n: number, _size?: number): string {
   if (n < 0) n = 0;
   const [g, s, c] = copper(Math.floor(n));
-  const h = size ?? 14;
-  const tex = (kind: string, l: number): string => `|TInterface\\MoneyFrame\\UI-${kind}Icon:${h}:${h}:2:0|t`;
-  const parts = [g ? `${g}${tex("Gold", 0)}` : "", s ? `${s}${tex("Silver", 0)}` : "", c ? `${c}${tex("Copper", 0)}` : ""].filter(Boolean);
-  return parts.length ? parts.join(" ") : `0${tex("Copper", 0)}`;
+  const tex = (k: number): string => `|TInterface\\MoneyFrame\\UI-MoneyIcons:0:0:0:0:4:1:${k}:${k + 1}:0:1|t`;
+  return (g ? `${g}${tex(0)}` : "") + (s ? `${s}${tex(1)}` : "") + (c || (!g && !s) ? `${c}${tex(2)}` : "");
 }

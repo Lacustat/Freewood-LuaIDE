@@ -110,7 +110,7 @@ function delFriend(h: SimHost, who2: unknown): void {
 
 export const FRIENDS_API: Record<string, Impl> = {
   GetNumFriends: (h) => social(h).friends.length,
-  GetFriendInfo: (h, a) => { const f = social(h).friends[(num(a[0]) ?? 0) - 1]; return f ? [f.name, f.level, f.class, f.area, f.connected, ""] : undefined; },
+  GetFriendInfo: (h, a) => { const f = social(h).friends[(num(a[0]) ?? 0) - 1]; return f ? [f.name, f.level, f.class, f.area, f.connected, ""] : [undefined, 0, "Unknown", "Unknown", undefined, ""]; }, // probe: invalid index = defaults
   AddFriend: (h, a) => { if (str(a[0])) addFriend(h, str(a[0])!); },
   RemoveFriend: (h, a) => delFriend(h, a[0]),
   AddOrRemoveFriend: (h, a) => { const n = str(a[0]); if (!n) return; if (social(h).friends.some((f) => f.name.toLowerCase() === n.toLowerCase())) delFriend(h, n); else addFriend(h, n); },
@@ -122,14 +122,14 @@ export const FRIENDS_API: Record<string, Impl> = {
   DelIgnore: (h, a) => delIgnore(h, a[0]),
   AddOrDelIgnore: (h, a) => { const n = str(a[0]); if (!n) return; if (social(h).ignore.some((x) => x.toLowerCase() === n.toLowerCase())) delIgnore(h, n); else addIgnore(h, n); },
   GetNumIgnores: (h) => social(h).ignore.length,
-  GetIgnoreName: (h, a) => social(h).ignore[(num(a[0]) ?? 0) - 1],
+  GetIgnoreName: (h, a) => social(h).ignore[(num(a[0]) ?? 0) - 1] ?? "Unknown",
   SetSelectedIgnore: (h, a) => { social(h).selIgnore = num(a[0]) ?? 0; },
   GetSelectedIgnore: (h) => social(h).selIgnore,
   SendWho: (h, a) => runWho(h, str(a[0]) ?? ""),
   SetWhoToUI: () => undefined,
   SortWho: () => undefined,
   GetNumWhoResults: (h) => { const s = social(h); return [s.who.length, s.whoTotal]; },
-  GetWhoInfo: (h, a) => { const w = social(h).who[(num(a[0]) ?? 0) - 1]; return w ? [w.name, w.guild, w.level, w.race, w.class, w.zone, w.classToken] : undefined; },
+  GetWhoInfo: (h, a) => { const w = social(h).who[(num(a[0]) ?? 0) - 1]; return w ? [w.name, w.guild, w.level, w.race, w.class, w.zone, w.classToken] : ["", "", 0, "Unknown", "Unknown", "Unknown"]; },
   "C_FriendList.GetNumFriends": (h) => social(h).friends.length,
   "C_FriendList.GetNumOnlineFriends": (h) => social(h).friends.filter((f) => f.connected).length,
   "C_FriendList.GetFriendInfo": (h, a) => { const s = social(h); const k = s.friends.findIndex((f) => f.name.toLowerCase() === String(a[0]).toLowerCase()); return k < 0 ? undefined : friendTable(s.friends[k]!, k + 1); },
@@ -183,8 +183,7 @@ export const GROUP_API: Record<string, Impl> = {
   PromoteToAssistant: (h, a) => { const u = h.unit(a[0]) ?? members(h).find((x) => x.name.toLowerCase() === String(a[0]).toLowerCase()); if (u && !social(h).assistants.includes(u.name)) { social(h).assistants.push(u.name); h.fireIf("RAID_ROSTER_UPDATE"); } },
   DemoteAssistant: (h, a) => { const u = h.unit(a[0]) ?? members(h).find((x) => x.name.toLowerCase() === String(a[0]).toLowerCase()); if (u) { const s = social(h); s.assistants = s.assistants.filter((x) => x !== u.name); h.fireIf("RAID_ROSTER_UPDATE"); } },
   GetRaidRosterInfo: (h, a) => {
-    if (!inRaid(h)) return undefined;
-    const u = members(h)[(num(a[0]) ?? 0) - 1]; if (!u) return undefined; const s = social(h);
+    const u = inRaid(h) ? members(h)[(num(a[0]) ?? 0) - 1] : undefined; if (!u) return [undefined, 0, 1, 1]; const s = social(h);
     const rank = leaderName(h, s) === u.name ? 2 : s.assistants.includes(u.name) ? 1 : 0;
     return [u.name, rank, s.subgroup[u.name] ?? 1, u.level, u.class, u.classToken, h.scenario.player.zone ?? "Elwynn Forest", u.connected !== false, u.dead === true || u.health <= 0, rank === 1 ? "ASSISTANT" : undefined];
   },
@@ -216,7 +215,7 @@ export const GUILD_API: Record<string, Impl> = {
   IsInGuild: (h) => h.scenario.player.guild !== undefined,
   GetGuildInfo: (h, a) => { const u = h.unit(a[0]); return u?.guild ? [u.guild, u.guildRank ?? "Member", u.guildRankIndex ?? 4] : undefined; },
   GetNumGuildMembers: (h) => { const n = roster(h).length; return [n, n]; },
-  GetGuildRosterInfo: (h, a) => { const u = roster(h)[(num(a[0]) ?? 0) - 1]; return u ? [u.name, u.guildRank ?? "Member", u.guildRankIndex ?? 4, u.level, u.class, h.scenario.player.zone ?? "Elwynn Forest", "", "", true, 0, u.classToken] : undefined; },
+  GetGuildRosterInfo: (h, a) => { const u = roster(h)[(num(a[0]) ?? 0) - 1]; if (!u) return [undefined, undefined, 0, 0, undefined, undefined, undefined, undefined, undefined, ""]; return u ? [u.name, u.guildRank ?? "Member", u.guildRankIndex ?? 4, u.level, u.class, h.scenario.player.zone ?? "Elwynn Forest", "", "", true, 0, u.classToken] : undefined; },
   GetGuildRosterLastOnline: () => undefined,
   GetGuildRosterMOTD: (h) => (h.scenario.player.guild ? social(h).motd : ""),
   GuildSetMOTD: (h, a) => { social(h).motd = str(a[0]) ?? ""; h.fireIf("GUILD_MOTD", social(h).motd); },

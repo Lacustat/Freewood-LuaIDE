@@ -228,7 +228,9 @@ export const INVENTORY_API: Record<string, Impl> = {
     const id = resolveItemID(inv, a[0]);
     const it = id === undefined ? undefined : inv.items[String(id)];
     if (id === undefined || !it) return undefined;
-    return [it.name, itemLink(id, it), it.quality, it.level ?? 1, it.minLevel ?? 0, it.type ?? "", it.subType ?? "", it.stack ?? 1, it.equipLoc ?? "", it.icon ?? ""];
+    // DE: Format nach Probe auf OctoWoW: Link kurz (item:id:0:0:0), kein minLevel, Verkaufspreis als 10. Wert.
+    // EN: format per the OctoWoW probe: short link (item:id:0:0:0), no minLevel, sell price as 10th value.
+    return [it.name, `item:${id}:0:0:0`, it.quality, it.level ?? 1, it.type ?? "", it.subType ?? "", it.stack ?? 1, it.equipLoc ?? "", it.icon ?? "", it.sellPrice ?? 0];
   },
   GetItemCount: (inv, a) => {
     const id = resolveItemID(inv, a[0]);
