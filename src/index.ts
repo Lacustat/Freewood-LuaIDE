@@ -16,3 +16,4 @@
 export * from "./plugin-api/index.js";
 export * from "./core/index.js";
 export * from "./runtime/index.js";
+export * from "./lua/index.js";
