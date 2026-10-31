@@ -269,3 +269,16 @@ engines("world: zones, time, keys, sound, targeting, bar, quests, talents, taxi"
   assert.deepEqual(x.slice(2, 7), [51, 50, "Arms", 1, 2]);
   assert.equal(x[9], "1 Hr 2 Min 5 Sec");
 });
+
+engines("retail on the real Lua 5.1 VM: prelude, API, table length, string methods", async (mk) => {
+  const t = await targets();
+  const sim = await mk(t.r!);
+  const v = run(sim, `
+    local s = "abc"
+    local tbl = { 1, 2, 3 }
+    local id = C_Map.GetBestMapForUnit("player")
+    return s:upper(), #tbl, select("#", 1, 2, 3), type(id), UnitName("player"), string.format("%d-%s", 7, "x"), math.floor(2.7)
+  `);
+  assert.deepEqual(v, ["ABC", 3, 3, "number", "Testhero", "7-x", 2]);
+  assert.equal(sim.engine.luaVersion, "5.1");
+});

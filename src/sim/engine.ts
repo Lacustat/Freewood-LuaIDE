@@ -87,11 +87,11 @@ export class InterpEngine implements SimEngine {
 // ===== [S3] WasmEngine =====
 
 export class WasmEngine implements SimEngine {
-  readonly id = "lua50-wasm";
-  readonly luaVersion: LuaVersion = "5.0";
+  readonly id: string;
+  readonly luaVersion: LuaVersion;
   private readonly chunks = new Map<string, string>();
 
-  constructor(private readonly rt: Wasm50Runtime) {}
+  constructor(private readonly rt: Wasm50Runtime) { this.luaVersion = rt.luaVersion; this.id = rt.luaVersion === "5.1" ? "lua51-wasm" : "lua50-wasm"; }
 
   host(name: string, fn: HostFn): void {
     this.rt.registerFunction(name, (...a: unknown[]) => {
@@ -128,15 +128,20 @@ export class WasmEngine implements SimEngine {
   }
 }
 
-/** DE: Läuft das Ziel auf der echten Lua-5.0-VM? (Vanilla und ClassicAPI; Retail braucht Lua 5.1.) EN: can the target run on the real Lua 5.0 VM? (Vanilla and ClassicAPI; Retail needs Lua 5.1.) */
+/** DE: Gibt es für das Ziel eine echte VM? Vanilla und ClassicAPI: Lua 5.0, Retail: Lua 5.1. EN: is there a real VM for the target? Vanilla and ClassicAPI: Lua 5.0, Retail: Lua 5.1. */
 export function supportsRealVm(target: { luaVersion: LuaVersion; syntax: string }): boolean {
-  return target.luaVersion === "5.0" || target.syntax === "lua51-transpiled";
+  return target.luaVersion === "5.0" || target.luaVersion === "5.1";
+}
+
+/** DE: Welche Lua-VM braucht das Ziel? EN: which Lua VM does the target need? */
+export function realVmVersion(target: { luaVersion: LuaVersion; syntax: string }): LuaVersion {
+  return target.syntax === "lua51-transpiled" ? "5.0" : target.luaVersion;
 }
 
 /** DE: Erzeugt eine Engine auf der echten Lua-5.0-VM. EN: creates an engine on the real Lua 5.0 VM. */
 /** DE: `classic` = ClassicAPI-Verhalten der VM (String-Methoden, 60 Upvalues, Schleifenvariable je Durchlauf). EN: `classic` = ClassicAPI VM behaviour. */
-export async function createWasmEngine(load: () => Promise<BufferSource>, classic = false): Promise<SimEngine> {
+export async function createWasmEngine(load: () => Promise<BufferSource>, classic = false, version: LuaVersion = "5.0"): Promise<SimEngine> {
   const module = await WebAssembly.compile(await load());
-  const rt = await Wasm50Runtime.create(module, undefined, classic);
+  const rt = await Wasm50Runtime.create(module, undefined, classic, version);
   return new WasmEngine(rt);
 }

@@ -10,7 +10,7 @@
  */
 
 import { createRealEngine } from "./real-lua.js";
-import { DEFAULT_SCENARIO, supportsRealVm, FormModel, Graph, WowSim, generateFormLua, generateLua, importFormXml, type InventoryState, type Project, type ResolvedTarget, type Scenario, type SnapshotNode } from "../src/index.js";
+import { DEFAULT_SCENARIO, realVmVersion, supportsRealVm, FormModel, Graph, WowSim, generateFormLua, generateLua, importFormXml, type InventoryState, type Project, type ResolvedTarget, type Scenario, type SnapshotNode } from "../src/index.js";
 import { clear, h, select } from "./dom.js";
 import type { Ctx } from "./ctx.js";
 
@@ -152,7 +152,7 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
     shownLog = 0;
     clear(log);
     const wantReal = ctx.settings.simRuntime === "real" && supportsRealVm(ctx.target);
-    const engine = wantReal ? await createRealEngine(ctx.target.syntax === "lua51-transpiled") : null;
+    const engine = wantReal ? await createRealEngine(ctx.target.syntax === "lua51-transpiled", realVmVersion(ctx.target) === "5.1" ? "5.1" : "5.0") : null;
     sim = new WowSim(ctx.target, persistedScenario, engine ?? undefined);
     const s = sim;
     s.addLog("info", ctx.t(engine ? "sim.runtimeReal" : wantReal ? "sim.runtimeFallback" : "sim.runtimeInterp"));

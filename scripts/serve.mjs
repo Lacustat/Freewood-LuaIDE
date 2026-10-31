@@ -31,7 +31,7 @@ const server = createServer(async (req, res) => {
       res.writeHead(403).end("Forbidden");
       return;
     }
-    const allowed = ["/web/", "/dist/", "/plugins/", "/src/locales/", "/runtimes/lua50/lua50.wasm"];
+    const allowed = ["/web/", "/dist/", "/plugins/", "/src/locales/", "/runtimes/lua50/lua50.wasm", "/runtimes/lua51/lua51.wasm"];
     if (!allowed.some((p) => path.startsWith(p))) {
       res.writeHead(404).end("Not found");
       return;

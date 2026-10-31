@@ -14,7 +14,7 @@ import { test as nodeTest } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { FormModel, Graph, Kernel, WowSim, createWasmEngine, supportsRealVm, generateFormLua, generateLua, type ResolvedTarget } from "../src/index.js";
+import { FormModel, Graph, Kernel, WowSim, createWasmEngine, realVmVersion, supportsRealVm, generateFormLua, generateLua, type ResolvedTarget } from "../src/index.js";
 import { loadPluginsFromRoot } from "../src/node/fs-loaders.js";
 
 // ===== [S1] Helfer · helpers =====
@@ -26,7 +26,7 @@ async function targets(): Promise<Record<string, ResolvedTarget>> {
 }
 const texts = (s: WowSim, kind: string) => s.log.filter((l) => l.kind === kind).map((l) => l.text);
 
-const wasmBytes = (): Promise<BufferSource> => Promise.resolve(readFileSync(join(process.cwd(), "runtimes/lua50/lua50.wasm")));
+const wasmBytes = (v: "5.0" | "5.1" = "5.0"): (() => Promise<BufferSource>) => () => Promise.resolve(readFileSync(join(process.cwd(), v === "5.1" ? "runtimes/lua51/lua51.wasm" : "runtimes/lua50/lua50.wasm")));
 
 // DE: Alle Tests laufen auf dem eigenen Interpreter UND auf der echten Lua-5.0-VM.
 // EN: all tests run on the own interpreter AND on the real Lua 5.0 VM.
@@ -34,7 +34,7 @@ for (const eng of ["interp", "wasm"] as const) {
 const test = (name: string, fn: () => Promise<void>): void => { nodeTest(`[${eng}] ${name}`, fn); };
 const mk = async (target: ResolvedTarget, scenario?: ConstructorParameters<typeof WowSim>[1]): Promise<WowSim> => {
   if (eng === "interp" || !supportsRealVm(target)) return new WowSim(target, scenario);
-  return new WowSim(target, scenario, await createWasmEngine(wasmBytes, target.syntax === "lua51-transpiled"));
+  return new WowSim(target, scenario, await createWasmEngine(wasmBytes(realVmVersion(target) === "5.1" ? "5.1" : "5.0"), target.syntax === "lua51-transpiled", realVmVersion(target)));
 };
 
 // ===== [S2] Frames und Skripte · frames and scripts =====

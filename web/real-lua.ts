@@ -24,9 +24,10 @@ export async function loadLuaWasm(): Promise<ArrayBuffer> {
 }
 
 /** DE: Neue Engine für die Simulation auf der echten VM; null, wenn nicht ladbar. EN: new engine for the simulation on the real VM; null if it cannot be loaded. */
-export async function createRealEngine(classic = false): Promise<SimEngine | null> {
+export async function createRealEngine(classic = false, version: "5.0" | "5.1" = "5.0"): Promise<SimEngine | null> {
   try {
-    return await createWasmEngine(loadLuaWasm, classic);
+    const file = version === "5.1" ? "lua51/lua51.wasm" : "lua50/lua50.wasm";
+    return await createWasmEngine(async () => { const r = await fetch(`../runtimes/${file}`); if (!r.ok) throw new Error(`cannot load ${file}`); return r.arrayBuffer(); }, classic, version);
   } catch {
     return null;
   }

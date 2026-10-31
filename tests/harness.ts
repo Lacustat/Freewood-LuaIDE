@@ -12,7 +12,7 @@
 import { test as nodeTest } from "node:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { Kernel, WowSim, createWasmEngine, supportsRealVm, type ResolvedTarget } from "../src/index.js";
+import { Kernel, WowSim, createWasmEngine, realVmVersion, supportsRealVm, type ResolvedTarget } from "../src/index.js";
 import { loadPluginsFromRoot } from "../src/node/fs-loaders.js";
 
 export async function targets(): Promise<Record<string, ResolvedTarget>> {
@@ -22,14 +22,14 @@ export async function targets(): Promise<Record<string, ResolvedTarget>> {
   return { v: k.plugins.resolve("vanilla-1.12"), c: k.plugins.resolve("classicapi-1.12"), r: k.plugins.resolve("retail") };
 }
 
-const wasmBytes = (): Promise<BufferSource> => Promise.resolve(readFileSync(join(process.cwd(), "runtimes/lua50/lua50.wasm")));
+const wasmBytes = (v: "5.0" | "5.1" = "5.0"): (() => Promise<BufferSource>) => () => Promise.resolve(readFileSync(join(process.cwd(), v === "5.1" ? "runtimes/lua51/lua51.wasm" : "runtimes/lua50/lua50.wasm")));
 
 /** DE: Registriert den Test für beide Engines. EN: registers the test for both engines. */
 export function engines(name: string, fn: (mk: (t: ResolvedTarget, scenario?: ConstructorParameters<typeof WowSim>[1]) => Promise<WowSim>) => Promise<void>): void {
   for (const eng of ["interp", "wasm"] as const) {
     const mk = async (target: ResolvedTarget, scenario?: ConstructorParameters<typeof WowSim>[1]): Promise<WowSim> => {
       if (eng === "interp" || !supportsRealVm(target)) return new WowSim(target, scenario);
-      return new WowSim(target, scenario, await createWasmEngine(wasmBytes, target.syntax === "lua51-transpiled"));
+      return new WowSim(target, scenario, await createWasmEngine(wasmBytes(realVmVersion(target) === "5.1" ? "5.1" : "5.0"), target.syntax === "lua51-transpiled", realVmVersion(target)));
     };
     nodeTest(`[${eng}] ${name}`, () => fn(mk));
   }

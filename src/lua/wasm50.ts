@@ -93,7 +93,7 @@ interface Exports {
 }
 
 export class Wasm50Runtime implements LuaRuntime {
-  readonly luaVersion: LuaVersion = "5.0";
+  luaVersion: LuaVersion = "5.0";
   /** DE: Zeilen, die `print` ausgegeben hat. EN: lines printed by `print`. */
   readonly output: string[] = [];
   private x!: Exports;
@@ -103,8 +103,9 @@ export class Wasm50Runtime implements LuaRuntime {
 
   private constructor() {}
 
-  static async create(module: WebAssembly.Module, instructionLimit = 20_000_000, classic = false): Promise<Wasm50Runtime> {
+  static async create(module: WebAssembly.Module, instructionLimit = 20_000_000, classic = false, version: LuaVersion = "5.0"): Promise<Wasm50Runtime> {
     const rt = new Wasm50Runtime();
+    rt.luaVersion = version;
     const wasi = {
       environ_get: () => 0,
       environ_sizes_get: (countPtr: number, sizePtr: number) => {
@@ -290,6 +291,20 @@ export function createWasm50Factory(load: () => Promise<BufferSource>): RuntimeF
     async create(): Promise<LuaRuntime> {
       compiled ??= load().then((b) => WebAssembly.compile(b));
       return Wasm50Runtime.create(await compiled);
+    },
+  };
+}
+
+/** DE: Wie oben, aber für die echte Lua-5.1-VM (Retail, `lua51.wasm`). EN: like above, but for the real Lua 5.1 VM (Retail, `lua51.wasm`). */
+export function createWasm51Factory(load: () => Promise<BufferSource>): RuntimeFactory {
+  let compiled: Promise<WebAssembly.Module> | undefined;
+  return {
+    id: "lua51-wasm",
+    luaVersion: "5.1",
+    name: { en: "Lua 5.1 (real VM, WASM)", de: "Lua 5.1 (echte VM, WASM)" },
+    async create(): Promise<LuaRuntime> {
+      compiled ??= load().then((b) => WebAssembly.compile(b));
+      return Wasm50Runtime.create(await compiled, undefined, false, "5.1");
     },
   };
 }
