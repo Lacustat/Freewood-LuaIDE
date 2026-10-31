@@ -28,6 +28,7 @@ import { LuaTable, tonum, tostr, type LuaFunction, type LuaValue } from "../lua/
 import type { ExecResult } from "../runtime/types.js";
 import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
 import { buildPrelude, REF_MARK } from "./prelude.js";
+import { rewrite51to50 } from "../lua/rewrite50.js";
 import { DEFAULT_SCENARIO, type LogEntry, type Scenario, type UnitData } from "./scenario.js";
 import { FormModel, type AnchorPoint } from "../forms/model.js";
 
@@ -116,6 +117,9 @@ export class WowSim {
   /** DE: Tiefe verschachtelter VM-Aufrufe; Skripte, die währenddessen ausgelöst werden, laufen danach. EN: depth of nested VM calls; scripts triggered meanwhile run afterwards. */
   private depth = 0;
   private queue: Array<() => void> = [];
+  /** DE: 5.1-Quelltext vor dem Ausführen nach 5.0 umschreiben (ClassicAPI auf der echten VM). EN: rewrite 5.1 source to 5.0 before running (ClassicAPI on the real VM). */
+  readonly rewrite: boolean;
+  addonName = "MyAddon";
 
   constructor(readonly target: ResolvedTarget, scenario: Scenario = DEFAULT_SCENARIO, engine?: SimEngine) {
     this.scenario = structuredClone(scenario);
@@ -124,6 +128,7 @@ export class WowSim {
       compat50: target.syntax === "lua51-transpiled",
       stepLimit: 2_000_000,
     });
+    this.rewrite = target.syntax === "lua51-transpiled" && this.engine.id !== "freewood-interp";
     this.uiParent = this.makeFrame("Frame", "UIParent", null);
     this.uiParent.width = 1024;
     this.uiParent.height = 768;
@@ -132,7 +137,7 @@ export class WowSim {
     this.worldFrame.height = 768;
     this.chatFrame = this.makeFrame("Frame", "DEFAULT_CHAT_FRAME", this.uiParent);
     this.installHost();
-    const r = this.guard(() => this.engine.run(buildPrelude(target), "=prelude"));
+    const r = this.guard(() => this.engine.run(buildPrelude(target, { rewrite: this.rewrite, vm: this.engine.luaVersion }), "=prelude"));
     if (!r.ok) throw new Error(`simulation prelude failed: ${r.error?.message}`);
   }
 
@@ -165,7 +170,21 @@ export class WowSim {
 
   /** DE: Führt Quelltext aus, ohne Fehler zu protokollieren (Tests, Konsole). EN: runs source without logging errors (tests, console). */
   exec(code: string, chunk = "=console"): ExecResult {
-    return this.guard(() => this.engine.run(code, chunk));
+    return this.guard(() => this.engine.run(this.prepare(code, chunk), chunk));
+  }
+
+  /** DE: Wendet bei Bedarf den 5.1→5.0-Umschreiber an; bei Syntaxfehlern meldet die VM selbst. EN: applies the 5.1→5.0 rewriter if needed; on syntax errors the VM reports itself. */
+  private prepare(code: string, chunk: string): string {
+    if (this.target.syntax !== "lua51-transpiled") return code;
+    if (!this.rewrite) {
+      // own interpreter: speaks 5.1 syntax itself; only the addon file arguments (name, table) are added
+      return code.includes("...") ? `return (function(...) ${code}\nend)(${JSON.stringify(this.addonName)}, __fw_addon_table(${JSON.stringify(this.addonName)}))` : code;
+    }
+    try {
+      return rewrite51to50(code, chunk.replace(/^[=@]/, ""), { addonName: this.addonName });
+    } catch {
+      return code;
+    }
   }
 
   getGlobal(name: string): unknown {
@@ -173,7 +192,8 @@ export class WowSim {
   }
 
   // ----- Laden und Ausführen · loading and running -----
-  loadSource(code: string, chunk = "addon.lua"): ExecResult {
+  loadSource(code: string, chunk = "addon.lua", addonName?: string): ExecResult {
+    if (addonName !== undefined) this.addonName = addonName;
     const r = this.exec(code, `=${chunk}`);
     if (!r.ok && r.error) this.addLog("error", r.error.message);
     return r;
@@ -315,6 +335,14 @@ export class WowSim {
     const e = this.engine;
     e.host("__fw_log", (kind, text) => {
       this.addLog(kind as LogEntry["kind"], String(text));
+    });
+    e.host("__fw_rewrite", (src, chunk) => {
+      if (!this.rewrite) return [false];
+      try {
+        return [true, rewrite51to50(String(src), String(chunk).replace(/^[=@]/, ""))];
+      } catch {
+        return [false];
+      }
     });
     e.host("__fw_time", () => Math.floor(this.baseTime + this.now));
     const osLib = installOs(() => (this.baseTime + this.now) * 1000);
@@ -652,8 +680,34 @@ const API: Record<string, ApiImpl> = {
   __timer_cancelled: (sim, a) => sim.timerById(a[0])?.cancelled ?? true,
   __boot: (sim) => [sim.uiParent, sim.worldFrame, sim.chatFrame],
   strsplit: (_sim, a) => {
-    const d = str(a[0]);
-    return str(a[1]).split(d === "" ? /(?:)/ : d).map((x) => x);
+    // delimiters are a SET of characters; `pieces` caps the number of results (docs/API.md)
+    const set = str(a[0]);
+    const text = str(a[1]);
+    const max = a[2] === undefined ? 0 : Math.floor(n(a[2]));
+    const out: string[] = [];
+    let cur = "";
+    for (const ch of text) {
+      if (set.includes(ch) && (max <= 0 || out.length < max - 1)) {
+        out.push(cur);
+        cur = "";
+      } else cur += ch;
+    }
+    out.push(cur);
+    return out;
   },
-  strtrim: (_sim, a) => str(a[0]).trim(),
+  strtrim: (_sim, a) => {
+    const chars = a[1] === undefined ? " \t\n\v\f\r" : str(a[1]);
+    const s = [...str(a[0])];
+    let i = 0;
+    let j = s.length;
+    while (i < j && chars.includes(s[i]!)) i++;
+    while (j > i && chars.includes(s[j - 1]!)) j--;
+    return s.slice(i, j).join("");
+  },
+  strlenutf8: (_sim, a) => [...str(a[0])].length,
+  strcmputf8i: (_sim, a) => {
+    const x = str(a[0]).toLowerCase();
+    const y = str(a[1]).toLowerCase();
+    return x < y ? -1 : x > y ? 1 : 0;
+  },
 };

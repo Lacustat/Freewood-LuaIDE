@@ -128,6 +128,11 @@ export class WasmEngine implements SimEngine {
   }
 }
 
+/** DE: Läuft das Ziel auf der echten Lua-5.0-VM? (Vanilla und ClassicAPI; Retail braucht Lua 5.1.) EN: can the target run on the real Lua 5.0 VM? (Vanilla and ClassicAPI; Retail needs Lua 5.1.) */
+export function supportsRealVm(target: { luaVersion: LuaVersion; syntax: string }): boolean {
+  return target.luaVersion === "5.0" || target.syntax === "lua51-transpiled";
+}
+
 /** DE: Erzeugt eine Engine auf der echten Lua-5.0-VM. EN: creates an engine on the real Lua 5.0 VM. */
 export async function createWasmEngine(load: () => Promise<BufferSource>): Promise<SimEngine> {
   const module = await WebAssembly.compile(await load());

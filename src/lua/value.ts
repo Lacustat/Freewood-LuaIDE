@@ -63,31 +63,64 @@ export class LuaTable {
     }
     if (key === undefined) throw new LuaError("table index is nil");
     if (value === undefined) this.hash.delete(key);
-    else this.hash.set(key, value);
+    else {
+      if (this.iterKeys && !this.hash.has(key)) {
+        this.iterKeys = undefined;
+        this.iterIdx = undefined;
+      }
+      this.hash.set(key, value);
+    }
   }
 
   length(): number {
     return this.arr.length;
   }
 
+  // Schnappschuss der Hash-Schlüssel für next(): Schlüssel dürfen während des Durchlaufs auf nil gesetzt
+  // werden (wie in echtem Lua, z. B. table.wipe). · snapshot of hash keys for next(): keys may be set
+  // to nil during a traversal (like real Lua, e.g. table.wipe).
+  private iterKeys: LuaValue[] | undefined;
+  private iterIdx: Map<LuaValue, number> | undefined;
+
+  private snapshot(): void {
+    this.iterKeys = [...this.hash.keys()];
+    this.iterIdx = new Map(this.iterKeys.map((k, i) => [k, i]));
+  }
+
+  private hashFrom(start: number): [LuaValue, LuaValue] | undefined {
+    const keys = this.iterKeys!;
+    for (let j = start; j < keys.length; j++) {
+      const v = this.hash.get(keys[j]);
+      if (v !== undefined) return [keys[j], v];
+    }
+    return undefined;
+  }
+
   /** DE: Nächster Schlüssel nach `key` (für next/pairs). EN: next key after `key`. */
   next(key: LuaValue): [LuaValue, LuaValue] | undefined {
-    let i: number;
+    let i = -1;
     if (key === undefined) i = 0;
-    else if (typeof key === "number" && Number.isInteger(key) && key >= 1 && key <= this.arr.length) i = key;
-    else i = -1;
+    else if (typeof key === "number" && Number.isInteger(key) && key >= 1) {
+      if (key <= this.arr.length) i = key;
+      else if (!this.hash.has(key) && !this.iterIdx?.has(key)) i = this.arr.length; // array shrank while iterating
+    }
     if (i >= 0) {
       for (; i < this.arr.length; i++) if (this.arr[i] !== undefined) return [i + 1, this.arr[i]];
-      for (const [k, v] of this.hash) return [k, v];
-      return undefined;
+      if (this.hash.size === 0) return undefined;
+      if (key === undefined && this.arr.length === 0) {
+        // cheap "first element" (e.g. `next(t) == nil` checks); the snapshot is built on demand
+        for (const [k, v] of this.hash) return [k, v];
+      }
+      this.snapshot();
+      return this.hashFrom(0);
     }
-    let found = false;
-    for (const [k, v] of this.hash) {
-      if (found) return [k, v];
-      if (k === key) found = true;
+    let idx = this.iterIdx?.get(key);
+    if (idx === undefined) {
+      if (!this.hash.has(key)) throw new LuaError("invalid key to 'next'");
+      this.snapshot();
+      idx = this.iterIdx!.get(key)!;
     }
-    if (!found) throw new LuaError("invalid key to 'next'");
-    return undefined;
+    return this.hashFrom(idx + 1);
   }
 }
 

@@ -14,7 +14,7 @@ import { test as nodeTest } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { FormModel, Graph, Kernel, WowSim, createWasmEngine, generateFormLua, generateLua, type ResolvedTarget } from "../src/index.js";
+import { FormModel, Graph, Kernel, WowSim, createWasmEngine, supportsRealVm, generateFormLua, generateLua, type ResolvedTarget } from "../src/index.js";
 import { loadPluginsFromRoot } from "../src/node/fs-loaders.js";
 
 // ===== [S1] Helfer · helpers =====
@@ -33,7 +33,7 @@ const wasmBytes = (): Promise<BufferSource> => Promise.resolve(readFileSync(join
 for (const eng of ["interp", "wasm"] as const) {
 const test = (name: string, fn: () => Promise<void>): void => { nodeTest(`[${eng}] ${name}`, fn); };
 const mk = async (target: ResolvedTarget, scenario?: ConstructorParameters<typeof WowSim>[1]): Promise<WowSim> => {
-  if (eng === "interp" || target.luaVersion !== "5.0") return new WowSim(target, scenario);
+  if (eng === "interp" || !supportsRealVm(target)) return new WowSim(target, scenario);
   return new WowSim(target, scenario, await createWasmEngine(wasmBytes));
 };
 
@@ -202,6 +202,69 @@ test("ClassicAPI target keeps Lua 5.0 library functions next to 5.1 syntax", asy
     return n, #"abc", math.mod(7, 3), 7 % 3, getn({1,2}), strlen("xy"), (strsplit(",", "a,b"))
   `);
   assert.deepEqual(r.values, [3, 3, 1, 1, 2, 2, "a"]);
+});
+
+test("ClassicAPI: Lua 5.1 library backports (select, unpack range, xpcall args, table.*, string.*)", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
+    local out = {}
+    local function add(...) out[table.getn(out) + 1] = tostring((select('#', ...))) .. ":" .. strjoin(",", ...) end
+    add(select(2, "a", "b", "c"))
+    add(select(-1, "a", "b", "c"))
+    add(unpack({10, 20, 30}, 2))
+    add(unpack({10, 20, 30}, 2, 2))
+    add(xpcall(function(a, b) return a + b end, function(e) return e end, 2, 3))
+    local w = {1, 2, 3, x = 1}
+    local n1, n2, n3 = table.count(w)
+    add(n1, n2, n3, table.maxn({[1] = "x", [9] = "y"}))
+    add(table.getn(table.wipe(w)))
+    add(math.modf(-3.7))
+    add(string.match("2024-01-15", "(%d+)-(%d+)-(%d+)"))
+    add(string.match("no digits", "%d+"))
+    add(strmatch("hello", "l+"))
+    add((string.gsub("$name the $class", "%$(%w+)", { name = "Bob", class = "Druid" })))
+    add(strsplit(",", "a,b,c,d", 2))
+    add(strsplit(" -", "a b-c"))
+    add(strtrim("xxhelloxx", "x"))
+    add(strconcat("a", "b", 1))
+    add(math.huge == 1 / 0, collectgarbage("step"), type(collectgarbage("count")))
+    return table.concat(out, ";")
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.equal(r.values[0], [
+    "2:b,c", "1:c", "2:20,30", "1:20", "2:,5", "4:4,3,3,9", "1:0", "2:-3,-0.7",
+    "3:2024,01,15", "1:", "1:ll", "1:Bob the Druid", "2:a,b,c,d", "3:a,b,c", "1:hello", "1:ab1", "3:,,number",
+  ].join(";"));
+});
+
+test("ClassicAPI: 5.1 syntax in addon files, hex, long brackets, negative modulo", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.loadSource(`
+    local name, tbl = ...
+    tbl.x = 1
+    result = name .. ":" .. tostring(tbl == select(2, ...)) .. ":" .. 0xFF .. ":" .. (-1 % 3) .. ":" .. [=[a]]b]=] .. ":" .. #tbl
+  `, "main.lua", "TestAddon");
+  assert.ok(r.ok, String(r.error?.message));
+  assert.equal(sim.getGlobal("result"), "TestAddon:true:255:2:a]]b:0");
+});
+
+test("ClassicAPI: string methods, 60 upvalues and a fresh for-loop variable per pass", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const fns: string[] = [];
+  const decl = Array.from({ length: 45 }, (_, i) => `local v${i} = ${i}`).join("\n");
+  const sum = Array.from({ length: 45 }, (_, i) => `v${i}`).join(" + ");
+  fns.push(decl, `function many() return ${sum} end`);
+  const r = sim.exec(`
+    ${fns.join("\n")}
+    local show = {}
+    for i, name in ipairs({ "a", "b" }) do show[i] = function() return name .. i end end
+    return ("abc"):upper(), ("%d gold"):format(5), many(), show[1](), show[2]()
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, ["ABC", "5 gold", 990, "a1", "b2"]);
 });
 
 // ===== [S5] Ende-zu-Ende · end to end =====

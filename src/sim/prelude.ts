@@ -31,12 +31,174 @@ export const LIB_ALIASES: Record<string, string> = {
   tinsert: "table.insert", tremove: "table.remove", getn: "table.getn", foreach: "table.foreach", foreachi: "table.foreachi",
   floor: "math.floor", ceil: "math.ceil", abs: "math.abs", max: "math.max", min: "math.min", mod: "math.mod", sqrt: "math.sqrt",
   random: "math.random",
+  // ClassicAPI: globals and string/math namespaces point at the same function
+  strmatch: "string.match", strrev: "string.reverse",
+  "string.split": "strsplit", "string.trim": "strtrim", "string.join": "strjoin", "string.concat": "strconcat",
+  "math.fmod": "math.mod", "string.gmatch": "string.gfind",
 };
 
 /**
  * DE: Hilfsfunktionen des Umschreibers (`#` → __len, `%` → __mod), wie bei ClassicAPI.
  * EN: helper functions of the rewriter (`#` → __len, `%` → __mod), like ClassicAPI.
  */
+const CLASSIC_API = String.raw`
+-- ---- Lua 5.1 backports (ClassicAPI, docs/API.md "Lua") ----
+local pre = {}
+for k in pairs(API) do pre[k] = true end
+local rawunpack, rawxpcall, rawgsub, rawgc = unpack, xpcall, string.gsub, collectgarbage
+local function slice(t, i, j)
+  local c = { n = j - i + 1 }
+  for k = i, j do c[k - i + 1] = t[k] end
+  if c.n < 0 then c.n = 0 end
+  return rawunpack(c, 1, c.n)
+end
+local function badarg(n, fname, msg) error("bad argument #" .. n .. " to \`" .. fname .. "' (" .. msg .. ")", 3) end
+local function typeName(v) if v == nil then return "no value" end return type(v) end
+if math.huge == nil then math.huge = 1 / 0 end
+API.unpack = function(t, i, j)
+  if type(t) ~= "table" then badarg(1, "unpack", "table expected, got " .. typeName(t)) end
+  i = i or 1
+  if j == nil then j = table.getn(t) end
+  return slice(t, i, j)
+end
+API.select = function(n, ...)
+  local a = @ARGS@
+  if n == "#" then return a.n end
+  local num = tonumber(n)
+  if not num then badarg(1, "select", "number expected, got " .. typeName(n)) end
+  if num < 0 then num = a.n + num + 1 end
+  if num < 1 then badarg(1, "select", "index out of range") end
+  return slice(a, num, a.n)
+end
+API.xpcall = function(f, msgh, ...)
+  local a = @ARGS@
+  if a.n == 0 then return rawxpcall(f, msgh) end
+  return rawxpcall(function() return f(rawunpack(a)) end, msgh)
+end
+API.collectgarbage = function(opt, v)
+  if type(opt) == "string" then
+    if opt == "count" then return gcinfo() end
+    if opt == "collect" then rawgc() return 0 end
+    if opt == "step" then return true end
+    if opt == "stop" or opt == "restart" or opt == "setpause" or opt == "setstepmul" then return 0 end
+    badarg(1, "collectgarbage", "invalid option '" .. opt .. "'")
+  end
+  return rawgc(opt)
+end
+API["table.wipe"] = function(t)
+  if type(t) ~= "table" then badarg(1, "wipe", "table expected, got " .. typeName(t)) end
+  for k in pairs(t) do t[k] = nil end
+  table.setn(t, 0)
+  return t
+end
+API["table.count"] = function(t)
+  if type(t) ~= "table" then badarg(1, "count", "table expected, got " .. typeName(t)) end
+  local total, maxi = 0, 0
+  for k in pairs(t) do
+    total = total + 1
+    if type(k) == "number" and k >= 1 and k == math.floor(k) and k > maxi then maxi = k end
+  end
+  local arr = 0
+  for k in pairs(t) do
+    if type(k) == "number" and k >= 1 and k <= total and k == math.floor(k) then arr = arr + 1 end
+  end
+  return total, arr, maxi
+end
+API["table.maxn"] = function(t)
+  if type(t) ~= "table" then badarg(1, "maxn", "table expected, got " .. typeName(t)) end
+  local m = 0
+  for k in pairs(t) do if type(k) == "number" and k > m then m = k end end
+  return m
+end
+API["math.modf"] = function(x)
+  x = tonumber(x)
+  if not x then badarg(1, "modf", "number expected, got " .. typeName(x)) end
+  local i
+  if x >= 0 then i = math.floor(x) else i = math.ceil(x) end
+  return i, x - i
+end
+API["string.match"] = function(s, pattern, init)
+  local r = pack(sfind(s, pattern, init))
+  if r[1] == nil then return nil end
+  if r.n <= 2 then return ssub(s, r[1], r[2]) end
+  return slice(r, 3, r.n)
+end
+API["string.gsub"] = function(s, pat, repl, n)
+  if type(repl) == "table" then
+    local map = repl
+    repl = function(k) return map[k] end
+  end
+  return rawgsub(s, pat, repl, n)
+end
+API.strjoin = function(delim, ...)
+  local a = @ARGS@
+  local parts = {}
+  for i = 1, a.n do
+    local v = a[i]
+    if type(v) == "string" or type(v) == "number" then parts[i] = tostring(v) else parts[i] = "" end
+  end
+  return tconcat(parts, delim)
+end
+API.strconcat = function(...)
+  local a = @ARGS@
+  local parts = {}
+  for i = 1, a.n do
+    local v = a[i]
+    if type(v) ~= "string" and type(v) ~= "number" then badarg(i, "strconcat", "string expected, got " .. typeName(v)) end
+    parts[i] = tostring(v)
+  end
+  return tconcat(parts)
+end
+API.strreplace = function(s, find, replace)
+  s, find, replace = tostring(s), tostring(find), tostring(replace)
+  if find == "" then return s, 0 end
+  local out, pos, count = {}, 1, 0
+  while true do
+    local a, b = sfind(s, find, pos, true)
+    if not a then break end
+    out[table.getn(out) + 1] = ssub(s, pos, a - 1)
+    out[table.getn(out) + 1] = replace
+    pos = b + 1
+    count = count + 1
+  end
+  out[table.getn(out) + 1] = ssub(s, pos)
+  return tconcat(out), count
+end
+API.strsplittable = function(sep, s, pieces) return { G.strsplit(sep, s, pieces) } end
+-- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
+if @NATIVE@ then
+  for k in pairs(API) do
+    if not pre[k] then
+      local c, kk = getp(k)
+      if c and c[kk] ~= nil then API[k] = nil end
+    end
+  end
+end
+`;
+
+const REWRITE_LUA = String.raw`
+do
+  local origLoad = loadstring
+  G.loadstring = function(src, name)
+    if type(src) == "string" then
+      local r = pack(hostRewrite(src, name or src))
+      if r[1] == true and type(r[2]) == "string" then src = r[2] end
+    end
+    return origLoad(src, name)
+  end
+end
+`;
+
+/** DE: Datei-Argumente eines Addons: eine Tabelle je Addon (ClassicAPI). EN: file arguments of an addon: one table per addon (ClassicAPI). */
+const ADDON_TABLES = `
+local __addonTables = {}
+function __fw_addon_table(name)
+  local t = __addonTables[name]
+  if not t then t = {}; __addonTables[name] = t end
+  return t
+end
+`;
+
 export const CLASSIC_HELPERS = `
 function __mod(a, b) return a - math.floor(a / b) * b end
 function __len(x)
@@ -63,8 +225,12 @@ function methodNames(target: ResolvedTarget, kind: string): string[] {
   return [...names];
 }
 
-export function buildPrelude(target: ResolvedTarget): string {
-  const v50 = target.luaVersion === "5.0";
+export function buildPrelude(target: ResolvedTarget, opts: { rewrite?: boolean; vm?: "5.0" | "5.1" } = {}): string {
+  // DE: Maßgeblich ist die Version der VM, nicht des Ziels (ClassicAPI = 5.1-Syntax auf der 5.0-VM).
+  // EN: the VM version counts, not the target's (ClassicAPI = 5.1 syntax on the 5.0 VM).
+  const v50 = (opts.vm ?? target.luaVersion) === "5.0";
+  const classic = target.syntax === "lua51-transpiled" && v50;
+  const classicApi = target.syntax === "lua51-transpiled";
   const kinds = [...target.widgets.keys()].map((k) => `[${JSON.stringify(k)}]=${luaList(methodNames(target, k))}`).join(",\n");
   const aliases = Object.entries(LIB_ALIASES).map(([k, v]) => `[${JSON.stringify(k)}]=${JSON.stringify(v)}`).join(",");
   const names = [...target.functions.keys()];
@@ -91,18 +257,20 @@ G.date = function(f, t)
   return year
 end
 G.difftime = function(a, b) return a - (b or 0) end
-G.os, G.io, G.debug, G.loadlib, G.dofile, G.loadfile, G.require, G._TRACEBACK = nil, nil, nil, nil, nil, nil, nil, nil`
+G.os, G.io, G.debug, G.loadlib, G.dofile, G.loadfile, G.require, G._TRACEBACK = nil, nil, nil, nil, nil, nil, nil, nil
+${classic ? "" : "G.coroutine = nil"}`
     : "";
 
   return `-- Freewood simulation prelude (generated)
-${target.syntax === "lua51-transpiled" ? CLASSIC_HELPERS : ""}
+${classic ? CLASSIC_HELPERS : ""}
+${target.syntax === "lua51-transpiled" ? ADDON_TABLES : ""}
 local G = _G
 local type, tostring, tonumber, pairs, ipairs, error, pcall, setmetatable = type, tostring, tonumber, pairs, ipairs, error, pcall, setmetatable
 local sfind, ssub, slower, sgsub = string.find, string.sub, string.lower, string.gsub
 local tconcat = table.concat
 local unpack = unpack
-local hostApi, hostM, hostLog, hostTime, hostDate, hostMktime = __fw_api, __fw_m, __fw_log, __fw_time, __fw_date, __fw_mktime
-G.__fw_api, G.__fw_m, G.__fw_log, G.__fw_time, G.__fw_date, G.__fw_mktime = nil, nil, nil, nil, nil, nil
+local hostApi, hostM, hostLog, hostTime, hostDate, hostMktime, hostRewrite = __fw_api, __fw_m, __fw_log, __fw_time, __fw_date, __fw_mktime, __fw_rewrite
+G.__fw_api, G.__fw_m, G.__fw_log, G.__fw_time, G.__fw_date, G.__fw_mktime, G.__fw_rewrite = nil, nil, nil, nil, nil, nil, nil
 local STYLE = ${JSON.stringify(target.scriptArgs)}
 ${pack}
 ${unp}
@@ -313,24 +481,29 @@ local function setp(path, v)
   end
 end
 
-for _, name in ipairs(NAMES) do
-  local impl = API[name]
-  if not impl then
-    local al = ALIAS[name]
-    local done = false
-    if al then
-      local c, k = getp(al)
-      if c and c[k] ~= nil then setp(name, c[k]); done = true end
-    end
-    if not done then
-      local c, k = getp(name)
-      if not (c and c[k] ~= nil and ssub(name, 1, 2) ~= "C_") then setp(name, apiw(name)) end
-    end
-  else
-    setp(name, impl)
-  end
-end
+${classicApi ? CLASSIC_API.split("@ARGS@").join(v50 ? "arg" : "pack(...)").split("@NATIVE@").join(v50 ? "false" : "true") : ""}
 
+local function install(name, aliasPass)
+  local impl = API[name]
+  if impl then
+    if not aliasPass then setp(name, impl) end
+    return
+  end
+  local al = ALIAS[name]
+  if al then
+    if not aliasPass then return end
+    local c, k = getp(al)
+    if c and c[k] ~= nil then setp(name, c[k]); return end
+  elseif aliasPass then
+    return
+  end
+  local c, k = getp(name)
+  if not (c and c[k] ~= nil and ssub(name, 1, 2) ~= "C_") then setp(name, apiw(name)) end
+end
+for _, name in ipairs(NAMES) do install(name, false) end
+for _, name in ipairs(NAMES) do install(name, true) end
+
+${classic && opts.rewrite ? REWRITE_LUA : ""}
 G.print = function(...)
   ${printBody}
   local parts = {}

@@ -193,7 +193,7 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
       return a.slice(n);
     });
   }
-  reg(G, "collectgarbage", (a) => (a[0] === "count" ? 100 : 0));
+  reg(G, "collectgarbage", (a) => (a[0] === "count" ? 100 : a[0] === "step" ? true : 0));
   reg(G, "loadstring", (a) => {
     const src = checkStr("loadstring", a, 1);
     const name = typeof a[1] === "string" ? a[1] : src;
