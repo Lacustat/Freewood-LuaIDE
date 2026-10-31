@@ -17,3 +17,5 @@ export * from "./plugin-api/index.js";
 export * from "./core/index.js";
 export * from "./runtime/index.js";
 export * from "./lua/index.js";
+export * from "./analysis/api-check.js";
+export * from "./editor/index.js";
