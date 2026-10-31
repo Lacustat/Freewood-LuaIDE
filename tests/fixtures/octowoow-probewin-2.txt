@@ -2267,7 +2267,7 @@ FreewoodProbeWinDB = {
 				},
 				[6] = {
 					["ret"] = {
-						[1] = "'1: 'One-Handed Axes' | 'Two-Handed Axes' | 'Bows' | 'Guns' | 'One-Handed Maces' | 'Two-Handed Maces' | 'Polearms' | 'One-Handed Swords' | 'Two-Handed Swords' | 'Staves' | 'Fist Weapons' | 'Miscellaneous' | 'Daggers' | 'Thrown' | 'Crossbows' | 'Wands' | 'Fishing Pole'  ;;  2: 'Miscellaneous' | 'Cloth' | 'Leather' | 'Mail' | 'Plate' | 'Shields' | 'Librams' | 'Idols' | 'Totems'  ;;  3: 'Bag' | 'Soul Bag' | 'Herb Bag' | 'Enchanting Bag' | 'Engineering Bag' | 'Gem Bag' | 'Mining Bag' | 'Leatherworking Bag' | 'Meat Bag' | 'Fish Bag'  ;;  4: '",
+						[1] = "'1: 'One-Handed Axes' | 'Two-Handed Axes' | 'Bows' | 'Guns' | 'One-Handed Maces' | 'Two-Handed Maces' | 'Polearms' | 'One-Handed Swords' | 'Two-Handed Swords' | 'Staves' | 'Fist Weapons' | 'Miscellaneous' | 'Daggers' | 'Thrown' | 'Crossbows' | 'Wands' | 'Fishing Pole'  ;;  2: 'Miscellaneous' | 'Cloth' | 'Leather' | 'Mail' | 'Plate' | 'Shields' | 'Librams' | 'Idols' | 'Seller'  ;;  3: 'Bag' | 'Soul Bag' | 'Herb Bag' | 'Enchanting Bag' | 'Engineering Bag' | 'Gem Bag' | 'Mining Bag' | 'Leatherworking Bag' | 'Meat Bag' | 'Fish Bag'  ;;  4: '",
 					},
 					["name"] = "FWP_each(4, function(i) return GetAuctionItemSubClasses(i) end)",
 					["t"] = "276.47",
