@@ -108,7 +108,7 @@ export const WORLD_API: Record<string, Impl> = {
   GetTickTime: () => 0.016,
   GetText: (_h, a) => (typeof a[0] === "string" ? a[0] : undefined),
   SecondsToTime: (_h, a) => secondsToTime(num(a[0]) ?? 0, a[1] === true || a[1] === 1),
-  RequestTimePlayed: (h) => { h.later(0.2, () => h.fireIf("TIME_PLAYED_MSG", Math.floor(h.now) + 86400, Math.floor(h.now) + 3600)); },
+  RequestTimePlayed: (h) => { h.later(0.2, () => { h.fireIf("TIME_PLAYED_MSG", Math.floor(h.now) + 86400, Math.floor(h.now) + 3600); h.fire("CHAT_MSG_SYSTEM", "Death counter: 0 | Quests completed: 0", "", "", ""); }); }, // probe: OctoWoW adds a system line
   IsLinuxClient: () => false, IsMacClient: () => false, IsWindowsClient: () => true,
   IsLoggedIn: () => true, IsPlayerInWorld: () => true, InCinematic: () => false, OpeningCinematic: () => undefined, StopCinematic: () => undefined,
   IsLoggingOut: (h) => ui(h).loggingOut,

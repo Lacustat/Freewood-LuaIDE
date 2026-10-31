@@ -107,6 +107,7 @@
   "sim.windows": "Open windows (sample data)",
   "sim.openLoot": "Loot",
   "sim.openMerchant": "Merchant",
+  "sim.openWindow": "Open",
   "sim.openGossip": "Gossip",
   "settings.title": "Settings",
   "settings.theme": "Theme",

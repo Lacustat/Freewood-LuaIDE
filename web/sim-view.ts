@@ -228,6 +228,10 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
       h("button", { class: "btn", onclick: () => { s.openLoot(); refresh(); } }, ctx.t("sim.openLoot")),
       h("button", { class: "btn", onclick: () => { s.openMerchant(); refresh(); } }, ctx.t("sim.openMerchant")),
       h("button", { class: "btn", onclick: () => { s.openGossip(); refresh(); } }, ctx.t("sim.openGossip")));
+    // DE: Alle weiteren NPC-Fenster (Post, Auktion, Handel, Ausbilder …). EN: all other NPC windows.
+    const winSel = h("select", { "aria-label": ctx.t("sim.windows") }, ...s.windowNames.map((n) => h("option", { value: n, text: n })));
+    controls.append(h("div", { class: "field inline" }, winSel,
+      h("button", { class: "btn", onclick: () => { s.openWindow((winSel as HTMLSelectElement).value); refresh(); } }, ctx.t("sim.openWindow"))));
     // Gegenstände, Taschen, Zauber als JSON · items, bags, spells as JSON
     const invText = h("textarea", { rows: "6", spellcheck: "false", "aria-label": ctx.t("sim.inventory") });
     invText.value = JSON.stringify(s.inventory(), null, 1);

@@ -107,6 +107,7 @@
   "sim.windows": "Fenster öffnen (Beispieldaten)",
   "sim.openLoot": "Beute",
   "sim.openMerchant": "Händler",
+  "sim.openWindow": "Öffnen",
   "sim.openGossip": "Gossip",
   "settings.title": "Einstellungen",
   "settings.theme": "Farbschema",

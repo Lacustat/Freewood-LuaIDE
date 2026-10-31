@@ -143,6 +143,8 @@ export const MAP_API: Record<string, Impl> = {
   "C_Map.GetMapArtLayers": (_h, a) => { const m = byId.get(num(a[0]) ?? NaN); return [m?.dir ? [{ layerWidth: 1002, layerHeight: 668, tileWidth: 256, tileHeight: 256, minScale: 1, maxScale: 1, additionalZoomSteps: 0 }] : []]; },
   "C_Map.GetMapArtLayerTextures": (_h, a) => { const m = byId.get(num(a[0]) ?? NaN); return [m?.dir && a[1] === 1 ? Array.from({ length: 12 }, (_, i) => `Interface\\WorldMap\\${m.dir}\\${m.dir}${i + 1}`) : []]; },
   "C_Map.GetMapWorldSize": (_h, a) => { const r = rectOf(byId.get(num(a[0]) ?? NaN)); return r ? [round(r.left - r.right, 1), round(r.top - r.bottom, 1)] : [undefined, undefined]; },
+  // DE: Vanilla: Position auf der aktuellen Zonenkarte, 0/0 für Einheiten außerhalb der Gruppe (Probe: 0.433, 0.689). EN: vanilla: position on the current zone map, 0/0 for units outside the group.
+  GetPlayerMapPosition: (h, a) => { const m = unitMap(h, a[0]); const p = m ? toMap(m.map, m.x, m.y) : undefined; return p ? [round(p.x), round(p.y)] : [0, 0]; },
   "C_Map.GetPlayerMapPosition": (h, a) => {
     const u = h.unit(a[1]); const m = byId.get(num(a[0]) ?? NaN);
     if (!u || u.x === undefined || u.y === undefined) return undefined;

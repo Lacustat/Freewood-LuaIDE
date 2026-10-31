@@ -628,6 +628,20 @@ Vector2DMixin.ScaleBy = function(self, f) self.x, self.y = self.x * f, self.y * 
 Vector2DMixin.Add = function(self, dx, dy) self.x, self.y = self.x + dx, self.y + dy end
 Vector2DMixin.Subtract = function(self, dx, dy) self.x, self.y = self.x - dx, self.y - dy end
 Vector2DMixin.DivideBy = function(self, f) self.x, self.y = self.x / f, self.y / f end
+Vector2DMixin.Dot = function(self, o) return self.x * o.x + self.y * o.y end
+Vector2DMixin.Cross = function(self, o) return self.x * o.y - self.y * o.x end
+Vector2DMixin.GetLengthSquared = function(self) return self.x * self.x + self.y * self.y end
+Vector2DMixin.GetLength = function(self) return math.sqrt(self.x * self.x + self.y * self.y) end
+Vector2DMixin.IsZero = function(self) return self.x == 0 and self.y == 0 end
+Vector2DMixin.Normalize = function(self)
+  local l = math.sqrt(self.x * self.x + self.y * self.y)
+  if l > 0 then self.x, self.y = self.x / l, self.y / l end
+end
+Vector2DMixin.RotateDirection = function(self, a)
+  local c, sn = math.cos(a), math.sin(a)
+  self.x, self.y = self.x * c - self.y * sn, self.x * sn + self.y * c
+end
+Vector2DMixin.OnLoad = function(self) end
 local VEC_META = { __index = Vector2DMixin }
 G.Vector2DMixin = Vector2DMixin
 G.CreateVector2D = function(x, y) return setmetatable({ x = x, y = y }, VEC_META) end
@@ -854,6 +868,11 @@ local ALIAS = {${aliases}}
 local NAMES = ${luaList(names)}
 local META, MC, LM, API = {}, {}, {}, {}
 local mm
+local EH
+local function reportErr(err)
+  hostLog("error", tostring(err))
+  if EH then pcall(EH, err) end
+end
 
 -- ---- references ----
 local function frame(id, kind, name)
@@ -979,6 +998,65 @@ local function apiw(name)
   end
 end
 
+API.seterrorhandler = function(f) EH = f end
+API.geterrorhandler = function() return EH or function(e) hostLog("error", tostring(e)) end end
+API.GetNumFrames = function()
+  local n = 0
+  for _ in pairs(FR) do n = n + 1 end
+  return n
+end
+API.EnumerateFrames = function(prev)
+  local pid = -1
+  if prev and ID[prev] then pid = ID[prev] end
+  local best
+  for id in pairs(FR) do
+    if type(id) == "number" and id > pid and (not best or id < best) then best = id end
+  end
+  if best then return FR[best] end
+  return nil
+end
+API.RunScript = function(text)
+  local f, err = (G.loadstring or loadstring)(text)
+  if not f then error(err, 2) end
+  f()
+end
+API.CreateFont = function(name)
+  local f = { _font = "Fonts\\\\FRIZQT__.TTF", _size = 12, _flags = "", _c = { 1, 1, 1, 1 } }
+  f.SetFont = function(self, p, sz, fl) self._font, self._size, self._flags = p, sz, fl or "" end
+  f.GetFont = function(self) return self._font, self._size, self._flags end
+  f.SetTextColor = function(self, r, g, b, a) self._c = { r, g, b, a or 1 } end
+  f.GetTextColor = function(self) return self._c[1], self._c[2], self._c[3], self._c[4] end
+  f.SetFontObject = function(self, o) if o then self._font, self._size, self._flags = o:GetFont() end end
+  f.GetName = function(self) return name end
+  f.SetShadowColor = function() end
+  f.SetShadowOffset = function() end
+  f.SetSpacing = function() end
+  f.SetJustifyH = function() end
+  f.SetJustifyV = function() end
+  if name then G[name] = f end
+  return f
+end
+API.securecall = function(f, ...)
+  local a = ${v50 ? "arg" : "pack(...)"}
+  if type(f) == "string" then f = G[f] end
+  return f(unp(a))
+end
+API.securecallfunction = API.securecall
+API.securecallmethod = function(obj, method, ...)
+  local a = ${v50 ? "arg" : "pack(...)"}
+  return obj[method](obj, unp(a))
+end
+API.secureexecuterange = function(t, fn, ...)
+  local a = ${v50 ? "arg" : "pack(...)"}
+  for k, v in pairs(t) do fn(k, v, unp(a)) end
+end
+API.GetClickFrame = function(n) return G[n] end
+API.FillLocalizedClassList = function(t, female)
+  t = t or {}
+  t.WARRIOR, t.PALADIN, t.HUNTER, t.ROGUE, t.PRIEST = "Warrior", "Paladin", "Hunter", "Rogue", "Priest"
+  t.SHAMAN, t.MAGE, t.WARLOCK, t.DRUID = "Shaman", "Mage", "Warlock", "Druid"
+  return t
+end
 API.getglobal = function(n) return G[n] end
 API.setglobal = function(n, v) G[n] = v end
 
@@ -1109,7 +1187,7 @@ function __fw_fire(id, name, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
     local ok, err
     if STYLE == "globals" then ok, err = pcall(list[i])
     else ok, err = pcall(list[i], f, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) end
-    if not ok then hostLog("error", tostring(err)) end
+    if not ok then reportErr(err) end
   end
   if saved then
     G.this, G.event, G.arg1, G.arg2, G.arg3, G.arg4, G.arg5, G.arg6, G.arg7, G.arg8, G.arg9 = saved[1], saved[2], saved[3], saved[4], saved[5], saved[6], saved[7], saved[8], saved[9], saved[10], saved[11]
@@ -1120,7 +1198,7 @@ function __fw_timer(hid, tid, pass)
   local fn = HD[hid]
   local ok, err
   if pass then ok, err = pcall(fn, TM[tid]) else ok, err = pcall(fn) end
-  if not ok then hostLog("error", tostring(err)) end
+  if not ok then reportErr(err) end
 end
 
 function __fw_slash(cmd, rest)
@@ -1134,7 +1212,7 @@ function __fw_slash(cmd, rest)
         if type(alias) ~= "string" then break end
         if slower(alias) == "/" .. cmd then
           local ok, err = pcall(fn, rest)
-          if not ok then hostLog("error", tostring(err)) end
+          if not ok then reportErr(err) end
           return true
         end
         i = i + 1

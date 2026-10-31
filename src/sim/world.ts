@@ -28,7 +28,7 @@ import { LuaTable, tonum, tostr, type LuaFunction, type LuaValue } from "../lua/
 import type { ExecResult } from "../runtime/types.js";
 import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
 import { buildPrelude, REF_MARK } from "./prelude.js";
-import { EXTRA_API } from "./extras.js";
+import { EXTRA_API, WINDOW_NAMES, openWindow } from "./extras.js";
 import { CHARACTER_API, DEFAULT_CHARACTER, type CharacterState } from "./character.js";
 import { INTERACTION_API, SAMPLE_GOSSIP, SAMPLE_LOOT, SAMPLE_MERCHANT, type GossipState, type InteractionState, type LootState, type MerchantState } from "./interaction.js";
 import { AURA_API } from "./auras.js";
@@ -363,6 +363,9 @@ export class WowSim {
   /** DE: Öffnet ein Gossip-Fenster. EN: opens a gossip window. */
   /** DE: Öffnet die Flugkarte. EN: opens the taxi map. */
   openTaxi(): void { openTaxi(this); }
+  /** DE: Öffnet ein NPC-Fenster ("mail", "auction", "trade", "trainer" …). EN: opens an NPC window. */
+  openWindow(name: string): boolean { return openWindow(this, name); }
+  readonly windowNames: string[] = WINDOW_NAMES;
   openGossip(g: GossipState = structuredClone(SAMPLE_GOSSIP)): void { this.inter.gossip = g; this.fireEvent("GOSSIP_SHOW"); }
 
   private inv: InventoryState | undefined;

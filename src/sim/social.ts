@@ -85,7 +85,8 @@ function runWho(h: SimHost, q: string): void {
     const t = q.trim().toLowerCase().replace(/^[nzgcr]-/, "").replace(/"/g, "");
     s.who = t ? WHO_POOL.filter((w) => [w.name, w.guild, w.zone, w.class, w.race, String(w.level)].some((x) => x.toLowerCase().includes(t))) : [...WHO_POOL];
     s.whoTotal = s.who.length; s.whoPending = false;
-    h.fireIf("WHO_LIST_UPDATE");
+    if (s.who.length === 0) h.fire("CHAT_MSG_SYSTEM", "0 players total", "", "", ""); // probe: OctoWoW sends no WHO_LIST_UPDATE for 0 results
+    else h.fireIf("WHO_LIST_UPDATE");
   });
 }
 
@@ -95,7 +96,7 @@ function addIgnore(h: SimHost, name: string): void {
 }
 function delIgnore(h: SimHost, who2: unknown): void {
   const s = social(h); const k = typeof who2 === "number" ? who2 - 1 : s.ignore.findIndex((x) => x.toLowerCase() === String(who2).toLowerCase());
-  if (k >= 0 && k < s.ignore.length) { s.ignore.splice(k, 1); h.fireIf("IGNORELIST_UPDATE"); }
+  if (k >= 0 && k < s.ignore.length) { s.ignore.splice(k, 1); h.fireIf("IGNORELIST_UPDATE"); } else if (typeof who2 === "string") h.fire("CHAT_MSG_SYSTEM", "Player not found.", "", "", ""); // probe
 }
 function addFriend(h: SimHost, name: string): void {
   const s = social(h); const n = cap(name);
@@ -105,7 +106,7 @@ function addFriend(h: SimHost, name: string): void {
 }
 function delFriend(h: SimHost, who2: unknown): void {
   const s = social(h); const k = typeof who2 === "number" ? who2 - 1 : s.friends.findIndex((f) => f.name.toLowerCase() === String(who2).toLowerCase());
-  if (k >= 0 && k < s.friends.length) { s.friends.splice(k, 1); h.fireIf("FRIENDLIST_UPDATE"); }
+  if (k >= 0 && k < s.friends.length) { s.friends.splice(k, 1); h.fireIf("FRIENDLIST_UPDATE"); } else if (typeof who2 === "string") h.fire("CHAT_MSG_SYSTEM", "Player not found.", "", "", ""); // probe
 }
 
 export const FRIENDS_API: Record<string, Impl> = {

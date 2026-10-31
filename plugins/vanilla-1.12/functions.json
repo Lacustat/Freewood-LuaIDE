@@ -18191,5 +18191,41 @@
     "tags": [
       "unverified"
     ]
+  },
+  {
+    "name": "SelectAvailableQuest",
+    "system": "Quest",
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Selects an available quest in the quest greeting window.",
+      "de": "Wählt eine verfügbare Quest im Quest-Begrüßungsfenster."
+    },
+    "tags": [
+      "unverified"
+    ]
+  },
+  {
+    "name": "SelectActiveQuest",
+    "system": "Quest",
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Selects an active quest in the quest greeting window.",
+      "de": "Wählt eine aktive Quest im Quest-Begrüßungsfenster."
+    },
+    "tags": [
+      "unverified"
+    ]
   }
 ]

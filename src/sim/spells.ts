@@ -106,7 +106,7 @@ export function applyAura(h: SimHost, id: number, sp: SpellData, target: string)
   const entry: AuraEntry = { spellId: id, helpful: sp.aura.helpful, duration: sp.aura.duration, remaining: h.now + sp.aura.duration, source: "player", ...(sp.aura.dispelName ? { dispelName: sp.aura.dispelName } : {}) };
   if (prev >= 0) list[prev] = entry; else list.push(entry);
   const tok = sp.aura.onSelf ? "player" : target;
-  h.fireIf("PLAYER_AURAS_CHANGED"); h.fireIf("UNIT_AURA", tok);
+  h.fireIf("UNIT_AURA", tok); h.fireIf("PLAYER_AURAS_CHANGED");
 }
 
 function fail(h: SimHost, spellName: string, why: string): void {
@@ -119,16 +119,21 @@ function finish(h: SimHost, info: CastInfo): void {
   const s = st(h); const sp = h.inventory().spells[String(info.spellID)]; if (!sp) return;
   delete s.cast;
   const u = player(h);
+  // DE: Reihenfolge wie auf OctoWoW (Probe): Leiste, STOP, SUCCEEDED, Leiste, Ressource, Aura. EN: order as on OctoWoW (probe).
+  h.fireIf("ACTIONBAR_UPDATE_STATE"); h.fireIf("ACTIONBAR_UPDATE_STATE"); h.fireIf("ACTIONBAR_UPDATE_STATE");
+  h.fireIf("ACTIONBAR_UPDATE_COOLDOWN"); h.fireIf("ACTIONBAR_UPDATE_STATE");
+  if (sp.cooldown && sp.cooldown > 0) s.cooldowns.set(info.spellID, { start: h.now, duration: sp.cooldown / 1000 });
+  if (!sp.noGcd) s.gcd = { start: info.start - h.baseTime, duration: 1.5 };
+  if (sp.nextMelee) h.note("info", `${sp.name} queued for the next melee swing (the damage is not simulated).`);
+  h.fireIf("ACTIONBAR_UPDATE_STATE");
+  h.fireIf(info.channel ? "SPELLCAST_CHANNEL_STOP" : "SPELLCAST_STOP", sp.name);
+  h.fireIf("UNIT_SPELLCAST_SUCCEEDED", "player", `Cast-3-0-0-0-${info.spellID}-0000666459`, info.spellID, sp.name); // probe: unit, castGUID, spellID, name
+  h.fireIf("ACTIONBAR_UPDATE_COOLDOWN");
   if (u && (sp.cost ?? 0) > 0 && !info.channel && (sp.powerType ?? primaryPower(u)) === primaryPower(u)) {
     u.power = Math.max(0, (u.power ?? 0) - (sp.cost ?? 0));
     h.fireIf(POWER_EVENT[sp.powerType ?? primaryPower(u)] ?? "UNIT_MANA", "player");
   }
-  if (sp.cooldown && sp.cooldown > 0) s.cooldowns.set(info.spellID, { start: h.now, duration: sp.cooldown / 1000 });
-  if (!sp.noGcd) s.gcd = { start: info.start - h.baseTime, duration: 1.5 };
-  if (sp.nextMelee) h.note("info", `${sp.name} queued for the next melee swing (the damage is not simulated).`);
   applyAura(h, info.spellID, sp, info.target ?? "target");
-  h.fireIf(info.channel ? "SPELLCAST_CHANNEL_STOP" : "SPELLCAST_STOP", sp.name);
-  h.fireIf("UNIT_SPELLCAST_SUCCEEDED", "player", `Cast-3-0-0-0-${info.spellID}-0000666459`, info.spellID, sp.name); // probe: unit, castGUID, spellID, name
   h.note("info", `Cast of ${sp.name} finished (the effect is not simulated).`);
 }
 
