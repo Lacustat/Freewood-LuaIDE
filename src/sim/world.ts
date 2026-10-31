@@ -29,6 +29,7 @@ import type { ExecResult } from "../runtime/types.js";
 import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
 import { buildPrelude, REF_MARK } from "./prelude.js";
 import { CHARACTER_API, DEFAULT_CHARACTER, type CharacterState } from "./character.js";
+import { INTERACTION_API, SAMPLE_GOSSIP, SAMPLE_LOOT, SAMPLE_MERCHANT, type GossipState, type InteractionState, type LootState, type MerchantState } from "./interaction.js";
 import { AURA_API } from "./auras.js";
 import { CvarStore, SYSTEM_API } from "./system.js";
 import { UNIT_API } from "./units.js";
@@ -314,8 +315,23 @@ export class WowSim {
     return (this.char ??= structuredClone(this.scenario.character ?? DEFAULT_CHARACTER));
   }
 
+  private inter: InteractionState = { buyback: [] };
+
+  interaction(): InteractionState { return this.inter; }
+  fire(event: string, ...args: (string | number | boolean)[]): void { this.fireEvent(event, ...args); }
+  note(kind: "info" | "warn", text: string): void { this.addLog(kind, text); }
+
+  /** DE: Öffnet das Beutefenster (Beispieldaten, wenn nichts übergeben wird). EN: opens the loot window. */
+  openLoot(loot: LootState = structuredClone(SAMPLE_LOOT)): void { this.inter.loot = loot; this.fireEvent("LOOT_OPENED"); }
+  /** DE: Öffnet ein Händlerfenster. EN: opens a merchant window. */
+  openMerchant(m: MerchantState = structuredClone(SAMPLE_MERCHANT)): void { this.inter.merchant = m; this.fireEvent("MERCHANT_SHOW"); }
+  /** DE: Öffnet ein Gossip-Fenster. EN: opens a gossip window. */
+  openGossip(g: GossipState = structuredClone(SAMPLE_GOSSIP)): void { this.inter.gossip = g; this.fireEvent("GOSSIP_SHOW"); }
+
+  private inv: InventoryState | undefined;
+
   inventory(): InventoryState {
-    return this.scenario.inventory ?? DEFAULT_INVENTORY;
+    return (this.inv ??= structuredClone(this.scenario.inventory ?? DEFAULT_INVENTORY));
   }
 
   unit(id: unknown): UnitData | undefined {
@@ -732,6 +748,7 @@ const API: Record<string, ApiImpl> = {
 };
 for (const [k, f] of Object.entries(UNIT_API)) API[k] = (sim, a) => f(sim, a);
 API.UnitHealthMissing = (sim, a) => { const u = sim.unit(a[0]); return u ? Math.max(0, healthShown(sim, a[0], u, true) - healthShown(sim, a[0], u, false)) : 0; };
+for (const [k, f] of Object.entries(INTERACTION_API)) API[k] = (sim, a) => f(sim, a);
 for (const [k, f] of Object.entries(AURA_API)) API[k] = (sim, a) => f(sim, a);
 for (const [k, f] of Object.entries(SYSTEM_API)) API[k] = (sim, a) => f(sim, a);
 for (const [k, f] of Object.entries(CHARACTER_API)) API[k] = (sim, a) => f(sim.character(), sim.inventory(), a);

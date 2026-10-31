@@ -67,6 +67,8 @@ export interface InventoryState {
   spells: Record<string, SpellData>;
   /** DE: Bekannte Zauber-IDs. EN: known spell IDs. */
   known: number[];
+  /** DE: Geld in Kupfer. EN: money in copper. */
+  money?: number;
 }
 
 // ===== [S2] Beispieldaten · sample data =====
@@ -87,7 +89,13 @@ export const DEFAULT_INVENTORY: InventoryState = {
     "133": { name: "Fireball", rank: "Rank 1", icon: "Interface\\Icons\\Spell_Fire_FlameBolt", castTime: 1500, maxRange: 35, cost: 30, powerType: 0 },
   },
   known: [78, 6673],
+  money: 25000,
 };
+
+// Zusätzliche Beispielgegenstände für Beute, Händler und Müll · extra sample items for loot, vendor and junk
+DEFAULT_INVENTORY.items["117"] = { name: "Tough Jerky", quality: 1, level: 1, type: "Consumable", subType: "Food & Drink", classID: 0, subclassID: 5, stack: 20, icon: "Interface\\Icons\\INV_Misc_Food_54", sellPrice: 1, bindType: 0 };
+DEFAULT_INVENTORY.items["159"] = { name: "Refreshing Spring Water", quality: 1, level: 1, type: "Consumable", subType: "Food & Drink", classID: 0, subclassID: 5, stack: 20, icon: "Interface\\Icons\\INV_Drink_07", sellPrice: 1, bindType: 0 };
+DEFAULT_INVENTORY.items["99001"] = { name: "Worn Fang (sample junk)", quality: 0, level: 1, type: "Miscellaneous", subType: "Junk", classID: 15, subclassID: 0, stack: 1, icon: "Interface\\Icons\\INV_Misc_Bone_01", sellPrice: 12, bindType: 0 };
 
 // ===== [S3] Abfragen · queries =====
 
@@ -125,12 +133,38 @@ function freeSlots(inv: InventoryState, bag: unknown): number[] | undefined {
   return out;
 }
 
+/** DE: Legt Gegenstände in die Taschen (erst Stapel auffüllen, dann freie Plätze). EN: puts items into the bags. */
+export function addItem(inv: InventoryState, id: number, count: number): boolean {
+  const max = inv.items[String(id)]?.stack ?? 1;
+  let left = count;
+  const order = Object.keys(inv.bags).sort((a, b) => Number(a) - Number(b));
+  for (const b of order) for (const s of Object.values(inv.bags[b]!.slots)) {
+    if (left > 0 && s.id === id && s.count < max) { const add = Math.min(max - s.count, left); s.count += add; left -= add; }
+  }
+  for (const b of order) {
+    const bag = inv.bags[b]!;
+    for (let i = 1; i <= bag.size && left > 0; i++) {
+      if (!bag.slots[String(i)]) { const add = Math.min(max, left); bag.slots[String(i)] = { id, count: add }; left -= add; }
+    }
+  }
+  return left === 0;
+}
+
+/** DE: Liest und leert einen Taschenplatz. EN: reads and clears a bag slot. */
+export function takeSlot(inv: InventoryState, bag: number, slot: number): BagSlot | undefined {
+  const b = inv.bags[String(bag)];
+  const s = b?.slots[String(slot)];
+  if (b && s) delete b.slots[String(slot)];
+  return s;
+}
+
 // ===== [S4] API-Funktionen · API impls =====
 
 type Impl = (inv: InventoryState, a: unknown[]) => unknown;
 
 export const INVENTORY_API: Record<string, Impl> = {
   // Vanilla
+  GetMoney: (inv) => inv.money ?? 0,
   GetContainerNumSlots: (inv, a) => inv.bags[String(a[0])]?.size ?? 0,
   GetContainerItemInfo: (inv, a) => {
     const s = slotAt(inv, a[0], a[1]);

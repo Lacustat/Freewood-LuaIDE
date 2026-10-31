@@ -413,6 +413,31 @@ API.RunMacroText = function(text, button)
     end
   end
 end
+-- ---- Händler und Gossip als Tabellen · merchant and gossip as tables ----
+local hMerch, hGOpt, hGQuest = apiw("__merchant_item"), apiw("__gossip_options"), apiw("__gossip_quests")
+API["C_MerchantFrame.GetItemInfo"] = function(slot)
+  local id, price, stack, avail, purchasable, throttled, extended = hMerch(slot)
+  if id == nil then return nil end
+  return { itemID = id, price = price, stackCount = stack, numAvailable = avail, isPurchasable = purchasable, isThrottled = throttled, hasExtendedCost = extended }
+end
+API["C_GossipInfo.GetOptions"] = function()
+  local r, t = pack(hGOpt()), {}
+  for i = 1, r.n, 5 do
+    t[table.getn(t) + 1] = { gossipOptionID = r[i], name = r[i + 1], icon = r[i + 2], flags = r[i + 3], orderIndex = r[i + 4] }
+  end
+  return t
+end
+local function gossipQuests(kind)
+  local r, t = pack(hGQuest(kind)), {}
+  for i = 1, r.n, 4 do
+    local q = { questID = r[i], title = r[i + 1], questLevel = r[i + 2] }
+    if kind == "active" then q.isComplete = r[i + 3] end
+    t[table.getn(t) + 1] = q
+  end
+  return t
+end
+API["C_GossipInfo.GetAvailableQuests"] = function() return gossipQuests("available") end
+API["C_GossipInfo.GetActiveQuests"] = function() return gossipQuests("active") end
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then
   for k in pairs(API) do

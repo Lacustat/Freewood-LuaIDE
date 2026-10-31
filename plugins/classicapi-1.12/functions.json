@@ -14283,5 +14283,23 @@
       "en": "Uses a bag item.",
       "de": "Benutzt einen Taschengegenstand."
     }
+  },
+  {
+    "name": "GetNumBuybackItems",
+    "system": "MerchantFrame",
+    "params": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Number of items in the buyback list (referenced in the ClassicAPI docs; not listed there as its own entry).",
+      "de": "Anzahl der Gegenstände in der Rückkauf-Liste (in der ClassicAPI-Doku erwähnt, dort ohne eigenen Eintrag)."
+    },
+    "tags": [
+      "unverified"
+    ]
   }
 ]

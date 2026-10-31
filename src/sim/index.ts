@@ -17,3 +17,4 @@ export * from "./units.js";
 export * from "./character.js";
 export * from "./system.js";
 export * from "./auras.js";
+export * from "./interaction.js";

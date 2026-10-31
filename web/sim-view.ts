@@ -223,6 +223,11 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
     const hasTarget = h("input", { type: "checkbox", checked: !!s.scenario.target });
     hasTarget.addEventListener("change", () => { s.setTarget(hasTarget.checked ? structuredClone(DEFAULT_SCENARIO.target) : undefined); renderControls(); refresh(); });
     controls.append(h("label", { class: "field inline" }, hasTarget, h("span", { text: ctx.t("sim.target") })));
+    // Fenster öffnen · open windows
+    controls.append(h("h4", { text: ctx.t("sim.windows") }),
+      h("button", { class: "btn", onclick: () => { s.openLoot(); refresh(); } }, ctx.t("sim.openLoot")),
+      h("button", { class: "btn", onclick: () => { s.openMerchant(); refresh(); } }, ctx.t("sim.openMerchant")),
+      h("button", { class: "btn", onclick: () => { s.openGossip(); refresh(); } }, ctx.t("sim.openGossip")));
     // Gegenstände, Taschen, Zauber als JSON · items, bags, spells as JSON
     const invText = h("textarea", { rows: "6", spellcheck: "false", "aria-label": ctx.t("sim.inventory") });
     invText.value = JSON.stringify(s.inventory(), null, 1);

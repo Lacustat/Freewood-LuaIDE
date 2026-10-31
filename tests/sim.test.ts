@@ -402,6 +402,51 @@ test("ClassicAPI: auras, macros and key bindings answer from the scenario", asyn
     "MULTIACTIONBAR1BUTTON1", "MOVEFORWARD", undefined]);
 });
 
+test("loot, merchant and gossip windows open, answer and change the bags", async () => {
+  const t = await targets();
+  for (const target of [t.v!, t.c!]) {
+    const sim = await mk(target);
+    sim.exec(`
+      seen = {}
+      local f = CreateFrame("Frame")
+      f:RegisterEvent("LOOT_OPENED") f:RegisterEvent("MERCHANT_SHOW") f:RegisterEvent("GOSSIP_SHOW") f:RegisterEvent("PLAYER_MONEY")
+      f:SetScript("OnEvent", function() table.insert(seen, event) end)
+    `);
+    sim.openLoot();
+    sim.openMerchant();
+    sim.openGossip();
+    const r = sim.exec(`
+      local _, lname, lcount = GetLootSlotInfo(1)
+      local n0 = GetNumLootItems()
+      LootSlot(1)
+      local n1 = GetNumLootItems()
+      local _, linen = GetContainerItemInfo(0, 2)
+      local m1 = GetMerchantItemInfo(2)
+      local money0 = GetMoney()
+      BuyMerchantItem(1, 1)
+      local money1 = GetMoney()
+      UseContainerItem(0, 2)
+      local sold = GetBuybackItemInfo(1) and 1 or 0
+      local gtext = GetGossipText()
+      local o1 = GetGossipOptions()
+      return lname, lcount, n0, n1, linen, m1, money0 - money1, sold, GetMoney() > money1, gtext, o1, (GetGossipAvailableQuests()), table.getn(seen)
+    `);
+    assert.equal(r.ok, true, String(r.error?.message));
+    assert.deepEqual(r.values, ["Linen Cloth", 2, 2, 1, 9, "Refreshing Spring Water", 25, 1, true, "Greetings, adventurer. Can I help you?", "I want to browse your goods.", "Kobold Camp Cleanup", 3]);
+  }
+  const sim = await mk((await targets()).c!);
+  sim.openMerchant();
+  const r = sim.exec(`
+    local info = C_MerchantFrame.GetItemInfo(3)
+    local junk = C_MerchantFrame.GetNumJunkItems()
+    local g = C_GossipInfo.GetOptions()
+    local q = C_GossipInfo.GetActiveQuests()
+    return info.itemID, info.numAvailable, junk, C_MerchantFrame.IsSellAllJunkEnabled()
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, [4496, 3, 0, true]);
+});
+
 // ===== [S5] Ende-zu-Ende · end to end =====
 test("graph output runs in the simulation (vanilla and retail)", async () => {
   const t = await targets();
