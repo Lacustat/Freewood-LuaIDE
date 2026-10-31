@@ -9,7 +9,16 @@
   },
   {
     "name": "ADDON_LOADED",
-    "payload": [{ "name": "arg1", "type": "string", "description": { "en": "Name of the loaded addon", "de": "Name des geladenen Addons" } }],
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string",
+        "description": {
+          "en": "Name of the loaded addon",
+          "de": "Name des geladenen Addons"
+        }
+      }
+    ],
     "description": {
       "en": "Fires when an addon has finished loading.",
       "de": "Wird ausgelöst, wenn ein Addon fertig geladen ist."
@@ -25,7 +34,16 @@
   },
   {
     "name": "UNIT_HEALTH",
-    "payload": [{ "name": "arg1", "type": "UnitId", "description": { "en": "The unit whose health changed", "de": "Die Einheit, deren Leben sich geändert hat" } }],
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId",
+        "description": {
+          "en": "The unit whose health changed",
+          "de": "Die Einheit, deren Leben sich geändert hat"
+        }
+      }
+    ],
     "description": {
       "en": "Fires when the health of a unit changes.",
       "de": "Wird ausgelöst, wenn sich die Lebenspunkte einer Einheit ändern."
@@ -34,13 +52,74 @@
   {
     "name": "CHAT_MSG_SAY",
     "payload": [
-      { "name": "arg1", "type": "string", "description": { "en": "Message text", "de": "Nachrichtentext" } },
-      { "name": "arg2", "type": "string", "description": { "en": "Sender name", "de": "Name des Absenders" } },
-      { "name": "arg3", "type": "string", "description": { "en": "Language", "de": "Sprache" } }
+      {
+        "name": "arg1",
+        "type": "string",
+        "description": {
+          "en": "Message text",
+          "de": "Nachrichtentext"
+        }
+      },
+      {
+        "name": "arg2",
+        "type": "string",
+        "description": {
+          "en": "Sender name",
+          "de": "Name des Absenders"
+        }
+      },
+      {
+        "name": "arg3",
+        "type": "string",
+        "description": {
+          "en": "Language",
+          "de": "Sprache"
+        }
+      }
     ],
     "description": {
       "en": "Fires when someone nearby says something.",
       "de": "Wird ausgelöst, wenn jemand in der Nähe etwas sagt."
+    }
+  },
+  {
+    "name": "PLAYER_LOGIN",
+    "payload": [],
+    "description": {
+      "en": "Fires once after login when the UI is ready.",
+      "de": "Wird einmal nach dem Anmelden ausgelöst, wenn die UI bereit ist."
+    }
+  },
+  {
+    "name": "PLAYER_TARGET_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the target changes.",
+      "de": "Wird ausgelöst, wenn sich das Ziel ändert."
+    }
+  },
+  {
+    "name": "PLAYER_REGEN_DISABLED",
+    "payload": [],
+    "description": {
+      "en": "Fires when combat starts.",
+      "de": "Wird ausgelöst, wenn der Kampf beginnt."
+    }
+  },
+  {
+    "name": "PLAYER_REGEN_ENABLED",
+    "payload": [],
+    "description": {
+      "en": "Fires when combat ends.",
+      "de": "Wird ausgelöst, wenn der Kampf endet."
+    }
+  },
+  {
+    "name": "CHAT_MSG_SYSTEM",
+    "payload": [],
+    "description": {
+      "en": "Fires for system messages.",
+      "de": "Wird für Systemmeldungen ausgelöst."
     }
   }
 ]

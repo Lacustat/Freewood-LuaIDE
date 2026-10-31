@@ -133,7 +133,9 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
   reg(G, "assert", (a) => {
     if (a[0] === undefined || a[0] === false) {
       const msg = a.length > 1 ? a[1] : "assertion failed!";
-      throw new LuaError(msg);
+      const err = new LuaError(msg);
+      err.raw = true;
+      throw err;
     }
     return a;
   });
@@ -144,7 +146,9 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
       const line = level === 1 ? it.line : it.callLines[it.callLines.length - (level - 1)] ?? it.line;
       throw new LuaError(`${it.chunk}:${line}: ${v}`, line, it.chunk);
     }
-    throw new LuaError(v);
+    const err = new LuaError(v);
+    err.raw = true;
+    throw err;
   });
   const protect = (fn: LuaValue, args: Args, handler?: LuaValue): LuaValue[] => {
     const savedDepth = it.depth;
@@ -640,6 +644,11 @@ export interface StdlibOptions {
   print?: (line: string) => void;
   /** DE: Zeitquelle in ms (Simulation darf eigene Uhr liefern). EN: time source in ms. */
   now?: () => number;
+  /**
+   * DE: Lua-5.1-Syntax auf der 5.0-VM (ClassicAPI): zusätzlich gfind, math.mod, table.foreach usw.
+   * EN: Lua 5.1 syntax on the 5.0 VM (ClassicAPI): additionally gfind, math.mod, table.foreach etc.
+   */
+  compat50?: boolean;
 }
 
 export function installStdlib(it: Interpreter, opts: StdlibOptions = {}): void {
@@ -652,4 +661,45 @@ export function installStdlib(it: Interpreter, opts: StdlibOptions = {}): void {
   G.set("table", installTable(it));
   G.set("math", installMath(it));
   G.set("os", installOs(opts.now ?? (() => Date.now())));
+  if (opts.compat50 && it.version === "5.1") {
+    const ref50 = new Interpreter50Shim(it);
+    ref50.install();
+  }
+}
+
+/** DE: Ergänzt die 5.0-only-Funktionen auf einer 5.1-Umgebung. EN: adds the 5.0-only functions to a 5.1 environment. */
+class Interpreter50Shim {
+  constructor(private it: Interpreter) {}
+  install(): void {
+    const G = this.it.globals;
+    const S = G.get("string") as LuaTable;
+    const T = G.get("table") as LuaTable;
+    const M = G.get("math") as LuaTable;
+    S.set("gfind", S.get("gmatch"));
+    M.set("mod", M.get("fmod"));
+    reg(T, "setn", (a) => {
+      checkTable("setn", a, 1).set("n", checkNum("setn", a, 2));
+    });
+    const it = this.it;
+    reg(T, "foreach", (a) => {
+      const t = checkTable("foreach", a, 1);
+      const f = checkFn("foreach", a, 2);
+      for (const k of [...t.arr.keys()].map((i) => i + 1)) {
+        const r = it.call(f, [k, t.get(k)])[0];
+        if (r !== undefined) return r;
+      }
+      for (const [k, v] of [...t.hash]) {
+        const r = it.call(f, [k, v])[0];
+        if (r !== undefined) return r;
+      }
+    });
+    reg(T, "foreachi", (a) => {
+      const t = checkTable("foreachi", a, 1);
+      const f = checkFn("foreachi", a, 2);
+      for (let i = 1; i <= t.length(); i++) {
+        const r = it.call(f, [i, t.get(i)])[0];
+        if (r !== undefined) return r;
+      }
+    });
+  }
 }

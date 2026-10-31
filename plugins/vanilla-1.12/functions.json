@@ -3,7 +3,12 @@
     "name": "GetTime",
     "system": "Misc",
     "params": [],
-    "returns": [{ "name": "time", "type": "number" }],
+    "returns": [
+      {
+        "name": "time",
+        "type": "number"
+      }
+    ],
     "description": {
       "en": "Returns the time in seconds since the client started.",
       "de": "Gibt die Zeit in Sekunden seit dem Start des Clients zurück."
@@ -12,8 +17,18 @@
   {
     "name": "UnitName",
     "system": "Unit",
-    "params": [{ "name": "unit", "type": "UnitId" }],
-    "returns": [{ "name": "name", "type": "string" }],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "description": {
       "en": "Returns the name of a unit, for example of the target.",
       "de": "Gibt den Namen einer Einheit zurück, zum Beispiel des Ziels."
@@ -22,8 +37,18 @@
   {
     "name": "UnitHealth",
     "system": "Unit",
-    "params": [{ "name": "unit", "type": "UnitId" }],
-    "returns": [{ "name": "health", "type": "number" }],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "health",
+        "type": "number"
+      }
+    ],
     "description": {
       "en": "Returns the current health of a unit.",
       "de": "Gibt die aktuellen Lebenspunkte einer Einheit zurück."
@@ -32,8 +57,18 @@
   {
     "name": "UnitHealthMax",
     "system": "Unit",
-    "params": [{ "name": "unit", "type": "UnitId" }],
-    "returns": [{ "name": "maxHealth", "type": "number" }],
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "maxHealth",
+        "type": "number"
+      }
+    ],
     "description": {
       "en": "Returns the maximum health of a unit.",
       "de": "Gibt die maximalen Lebenspunkte einer Einheit zurück."
@@ -43,7 +78,12 @@
     "name": "GetNumPartyMembers",
     "system": "Group",
     "params": [],
-    "returns": [{ "name": "count", "type": "number" }],
+    "returns": [
+      {
+        "name": "count",
+        "type": "number"
+      }
+    ],
     "description": {
       "en": "Returns the number of other members in your party.",
       "de": "Gibt die Anzahl der anderen Gruppenmitglieder zurück."
@@ -53,10 +93,25 @@
     "name": "SendChatMessage",
     "system": "Chat",
     "params": [
-      { "name": "msg", "type": "string" },
-      { "name": "chatType", "type": "string", "optional": true },
-      { "name": "language", "type": "string", "optional": true },
-      { "name": "channel", "type": "string|number", "optional": true }
+      {
+        "name": "msg",
+        "type": "string"
+      },
+      {
+        "name": "chatType",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "language",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "channel",
+        "type": "string|number",
+        "optional": true
+      }
     ],
     "returns": [],
     "description": {
@@ -68,12 +123,32 @@
     "name": "CreateFrame",
     "system": "UI",
     "params": [
-      { "name": "frameType", "type": "string" },
-      { "name": "name", "type": "string", "optional": true },
-      { "name": "parent", "type": "Frame", "optional": true },
-      { "name": "template", "type": "string", "optional": true }
+      {
+        "name": "frameType",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "parent",
+        "type": "Frame",
+        "optional": true
+      },
+      {
+        "name": "template",
+        "type": "string",
+        "optional": true
+      }
     ],
-    "returns": [{ "name": "frame", "type": "Frame" }],
+    "returns": [
+      {
+        "name": "frame",
+        "type": "Frame"
+      }
+    ],
     "description": {
       "en": "Creates a frame of the given type.",
       "de": "Erstellt einen Frame des angegebenen Typs."
@@ -82,8 +157,18 @@
   {
     "name": "getglobal",
     "system": "Lua",
-    "params": [{ "name": "name", "type": "string" }],
-    "returns": [{ "name": "value", "type": "any" }],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "value",
+        "type": "any"
+      }
+    ],
     "description": {
       "en": "Returns the value of a global variable by its name.",
       "de": "Gibt den Wert einer globalen Variable anhand ihres Namens zurück."
@@ -93,8 +178,14 @@
     "name": "setglobal",
     "system": "Lua",
     "params": [
-      { "name": "name", "type": "string" },
-      { "name": "value", "type": "any" }
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "value",
+        "type": "any"
+      }
     ],
     "returns": [],
     "description": {
@@ -105,26 +196,714 @@
   {
     "name": "table.getn",
     "system": "Lua",
-    "params": [{ "name": "table", "type": "table" }],
-    "returns": [{ "name": "n", "type": "number" }],
+    "params": [
+      {
+        "name": "table",
+        "type": "table"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
     "description": {
       "en": "Lua 5.0: length of a list. There is no # operator in Lua 5.0.",
       "de": "Lua 5.0: Länge einer Liste. Den #-Operator gibt es in Lua 5.0 nicht."
     },
-    "tags": ["lua50"]
+    "tags": [
+      "lua50"
+    ]
   },
   {
     "name": "string.gfind",
     "system": "Lua",
     "params": [
-      { "name": "s", "type": "string" },
-      { "name": "pattern", "type": "string" }
+      {
+        "name": "s",
+        "type": "string"
+      },
+      {
+        "name": "pattern",
+        "type": "string"
+      }
     ],
-    "returns": [{ "name": "iterator", "type": "function" }],
+    "returns": [
+      {
+        "name": "iterator",
+        "type": "function"
+      }
+    ],
     "description": {
       "en": "Lua 5.0: iterates over all matches of a pattern (called gmatch in Lua 5.1).",
       "de": "Lua 5.0: läuft über alle Treffer eines Musters (in Lua 5.1 heißt es gmatch)."
     },
-    "tags": ["lua50"]
+    "tags": [
+      "lua50"
+    ]
+  },
+  {
+    "name": "strlen",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.len.",
+      "de": "Alias für string.len."
+    }
+  },
+  {
+    "name": "strsub",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      },
+      {
+        "name": "i",
+        "type": "number"
+      },
+      {
+        "name": "j",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.sub.",
+      "de": "Alias für string.sub."
+    }
+  },
+  {
+    "name": "strfind",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      },
+      {
+        "name": "pattern",
+        "type": "string"
+      },
+      {
+        "name": "init",
+        "type": "number",
+        "optional": true
+      },
+      {
+        "name": "plain",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "i",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.find.",
+      "de": "Alias für string.find."
+    }
+  },
+  {
+    "name": "strlower",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.lower.",
+      "de": "Alias für string.lower."
+    }
+  },
+  {
+    "name": "strupper",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.upper.",
+      "de": "Alias für string.upper."
+    }
+  },
+  {
+    "name": "strrep",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      },
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.rep.",
+      "de": "Alias für string.rep."
+    }
+  },
+  {
+    "name": "strbyte",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      },
+      {
+        "name": "i",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "b",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.byte.",
+      "de": "Alias für string.byte."
+    }
+  },
+  {
+    "name": "strchar",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "b",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.char.",
+      "de": "Alias für string.char."
+    }
+  },
+  {
+    "name": "format",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "fmt",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "s",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.format.",
+      "de": "Alias für string.format."
+    }
+  },
+  {
+    "name": "gsub",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "s",
+        "type": "string"
+      },
+      {
+        "name": "pattern",
+        "type": "string"
+      },
+      {
+        "name": "repl",
+        "type": "string|function|table"
+      },
+      {
+        "name": "n",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "s",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of string.gsub.",
+      "de": "Alias für string.gsub."
+    }
+  },
+  {
+    "name": "tinsert",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "t",
+        "type": "table"
+      },
+      {
+        "name": "a",
+        "type": "any"
+      },
+      {
+        "name": "b",
+        "type": "any",
+        "optional": true
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Alias of table.insert.",
+      "de": "Alias für table.insert."
+    }
+  },
+  {
+    "name": "tremove",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "t",
+        "type": "table"
+      },
+      {
+        "name": "pos",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "v",
+        "type": "any"
+      }
+    ],
+    "description": {
+      "en": "Alias of table.remove.",
+      "de": "Alias für table.remove."
+    }
+  },
+  {
+    "name": "getn",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "t",
+        "type": "table"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of table.getn.",
+      "de": "Alias für table.getn."
+    }
+  },
+  {
+    "name": "foreach",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "t",
+        "type": "table"
+      },
+      {
+        "name": "f",
+        "type": "function"
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Alias of table.foreach.",
+      "de": "Alias für table.foreach."
+    }
+  },
+  {
+    "name": "foreachi",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "t",
+        "type": "table"
+      },
+      {
+        "name": "f",
+        "type": "function"
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Alias of table.foreachi.",
+      "de": "Alias für table.foreachi."
+    }
+  },
+  {
+    "name": "floor",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "x",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.floor.",
+      "de": "Alias für math.floor."
+    }
+  },
+  {
+    "name": "ceil",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "x",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.ceil.",
+      "de": "Alias für math.ceil."
+    }
+  },
+  {
+    "name": "abs",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "x",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.abs.",
+      "de": "Alias für math.abs."
+    }
+  },
+  {
+    "name": "max",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "a",
+        "type": "number"
+      },
+      {
+        "name": "b",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.max.",
+      "de": "Alias für math.max."
+    }
+  },
+  {
+    "name": "min",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "a",
+        "type": "number"
+      },
+      {
+        "name": "b",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.min.",
+      "de": "Alias für math.min."
+    }
+  },
+  {
+    "name": "mod",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "a",
+        "type": "number"
+      },
+      {
+        "name": "b",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.mod.",
+      "de": "Alias für math.mod."
+    }
+  },
+  {
+    "name": "sqrt",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "x",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.sqrt.",
+      "de": "Alias für math.sqrt."
+    }
+  },
+  {
+    "name": "random",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "a",
+        "type": "number",
+        "optional": true
+      },
+      {
+        "name": "b",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "n",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Alias of math.random.",
+      "de": "Alias für math.random."
+    }
+  },
+  {
+    "name": "UnitExists",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "exists",
+        "type": "boolean"
+      }
+    ],
+    "description": {
+      "en": "Returns whether the unit exists.",
+      "de": "Gibt zurück, ob die Einheit existiert."
+    }
+  },
+  {
+    "name": "UnitLevel",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "level",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the level of a unit.",
+      "de": "Gibt die Stufe einer Einheit zurück."
+    }
+  },
+  {
+    "name": "UnitClass",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "class",
+        "type": "string"
+      },
+      {
+        "name": "token",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the class name and class token of a unit.",
+      "de": "Gibt Klassenname und Klassen-Token einer Einheit zurück."
+    }
+  },
+  {
+    "name": "UnitRace",
+    "system": "Lua",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "race",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the race of a unit.",
+      "de": "Gibt das Volk einer Einheit zurück."
+    }
+  },
+  {
+    "name": "GetRealmName",
+    "system": "Lua",
+    "params": [],
+    "returns": [
+      {
+        "name": "realm",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the name of the realm.",
+      "de": "Gibt den Namen des Realms zurück."
+    }
+  },
+  {
+    "name": "GetLocale",
+    "system": "Lua",
+    "params": [],
+    "returns": [
+      {
+        "name": "locale",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the client locale, for example enUS.",
+      "de": "Gibt die Client-Sprache zurück, zum Beispiel deDE."
+    }
+  },
+  {
+    "name": "GetNumRaidMembers",
+    "system": "Lua",
+    "params": [],
+    "returns": [
+      {
+        "name": "count",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the number of raid members.",
+      "de": "Gibt die Anzahl der Schlachtzugsmitglieder zurück."
+    }
   }
 ]

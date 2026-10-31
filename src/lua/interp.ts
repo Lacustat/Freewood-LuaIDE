@@ -80,7 +80,19 @@ export class Interpreter {
       if (fn.native) {
         const savedLine = this.line;
         this.line = line;
-        const r = fn.native(args);
+        let r: ReturnType<NonNullable<LuaFunction["native"]>>;
+        try {
+          r = fn.native(args);
+        } catch (e) {
+          // errors raised by library code get the position of the call, like luaL_error
+          if (e instanceof LuaError) {
+            if (e.line === undefined && !e.raw && typeof e.value === "string") throw this.rt(e.value, line);
+            throw e;
+          }
+          if (e instanceof RangeError) throw e;
+          if (e instanceof Error) throw this.rt(e.message, line);
+          throw e;
+        }
         this.line = savedLine;
         if (r === undefined) return [];
         return Array.isArray(r) ? r : [r];

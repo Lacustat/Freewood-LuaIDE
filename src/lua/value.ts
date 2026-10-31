@@ -109,6 +109,8 @@ export class LuaError extends Error {
   /** DE: Der Lua-Fehlerwert (meist ein String). EN: the Lua error value (usually a string). */
   value: LuaValue;
   traceback?: string;
+  /** DE: true = Fehlerwert unverändert weitergeben (kein Positionspräfix). EN: true = pass the value unchanged (no position prefix). */
+  raw = false;
   constructor(value: LuaValue | string, public line?: number, public chunk?: string) {
     super(typeof value === "string" ? value : "error object");
     this.value = value as LuaValue;

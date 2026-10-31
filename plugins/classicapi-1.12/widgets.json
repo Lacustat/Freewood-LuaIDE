@@ -1,6 +1,31 @@
 [
-  { "name": "Frame", "scripts": [], "methods": ["HookScript", "SetShown", "SetSize", "SetClipsChildren"],
-    "description": { "en": "Extra Frame methods added by ClassicAPI.", "de": "Zusätzliche Frame-Methoden durch ClassicAPI." } },
-  { "name": "Cooldown", "inherits": "Frame", "scripts": ["OnCooldownDone"], "methods": ["SetCooldown", "Clear"],
-    "description": { "en": "A frame showing a cooldown sweep.", "de": "Ein Frame, der einen Abklingzeit-Sweep zeigt." } }
+  {
+    "name": "Frame",
+    "scripts": [],
+    "methods": [
+      "HookScript",
+      "SetShown",
+      "SetSize",
+      "SetClipsChildren"
+    ],
+    "description": {
+      "en": "Extra Frame methods added by ClassicAPI.",
+      "de": "Zusätzliche Frame-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "Cooldown",
+    "inherits": "Frame",
+    "scripts": [
+      "OnCooldownDone"
+    ],
+    "methods": [
+      "SetCooldown",
+      "Clear"
+    ],
+    "description": {
+      "en": "A frame showing a cooldown sweep.",
+      "de": "Ein Frame, der einen Abklingzeit-Sweep zeigt."
+    }
+  }
 ]

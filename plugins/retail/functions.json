@@ -1,17 +1,434 @@
 [
-  { "name": "GetTime", "system": "Misc", "params": [], "returns": [{ "name": "time", "type": "number" }],
-    "description": { "en": "Returns the time in seconds since the client started.", "de": "Gibt die Zeit in Sekunden seit dem Start des Clients zurück." } },
-  { "name": "UnitName", "system": "Unit", "params": [{ "name": "unit", "type": "UnitId" }],
-    "returns": [{ "name": "name", "type": "string" }, { "name": "realm", "type": "string" }],
-    "description": { "en": "Returns the name and realm of a unit.", "de": "Gibt Name und Realm einer Einheit zurück." } },
-  { "name": "CreateFrame", "system": "UI",
-    "params": [{ "name": "frameType", "type": "string" }, { "name": "name", "type": "string", "optional": true }, { "name": "parent", "type": "Frame", "optional": true }, { "name": "template", "type": "string", "optional": true }],
-    "returns": [{ "name": "frame", "type": "Frame" }],
-    "description": { "en": "Creates a frame of the given type.", "de": "Erstellt einen Frame des angegebenen Typs." } },
-  { "name": "C_Timer.After", "system": "C_Timer",
-    "params": [{ "name": "seconds", "type": "number" }, { "name": "callback", "type": "function" }], "returns": [],
-    "description": { "en": "Calls a function once after a delay.", "de": "Ruft eine Funktion einmalig nach einer Verzögerung auf." } },
-  { "name": "C_Map.GetBestMapForUnit", "system": "C_Map", "params": [{ "name": "unit", "type": "UnitId" }],
-    "returns": [{ "name": "uiMapID", "type": "number" }],
-    "description": { "en": "Returns the map ID a unit is on.", "de": "Gibt die Karten-ID zurück, auf der sich eine Einheit befindet." } }
+  {
+    "name": "GetTime",
+    "system": "Misc",
+    "params": [],
+    "returns": [
+      {
+        "name": "time",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the time in seconds since the client started.",
+      "de": "Gibt die Zeit in Sekunden seit dem Start des Clients zurück."
+    }
+  },
+  {
+    "name": "UnitName",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "realm",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the name and realm of a unit.",
+      "de": "Gibt Name und Realm einer Einheit zurück."
+    }
+  },
+  {
+    "name": "CreateFrame",
+    "system": "UI",
+    "params": [
+      {
+        "name": "frameType",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "parent",
+        "type": "Frame",
+        "optional": true
+      },
+      {
+        "name": "template",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "frame",
+        "type": "Frame"
+      }
+    ],
+    "description": {
+      "en": "Creates a frame of the given type.",
+      "de": "Erstellt einen Frame des angegebenen Typs."
+    }
+  },
+  {
+    "name": "C_Timer.After",
+    "system": "C_Timer",
+    "params": [
+      {
+        "name": "seconds",
+        "type": "number"
+      },
+      {
+        "name": "callback",
+        "type": "function"
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Calls a function once after a delay.",
+      "de": "Ruft eine Funktion einmalig nach einer Verzögerung auf."
+    }
+  },
+  {
+    "name": "C_Map.GetBestMapForUnit",
+    "system": "C_Map",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "uiMapID",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the map ID a unit is on.",
+      "de": "Gibt die Karten-ID zurück, auf der sich eine Einheit befindet."
+    }
+  },
+  {
+    "name": "UnitHealth",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "health",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the current health of a unit.",
+      "de": "Gibt die aktuellen Lebenspunkte einer Einheit zurück."
+    }
+  },
+  {
+    "name": "UnitHealthMax",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "maxHealth",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the maximum health of a unit.",
+      "de": "Gibt die maximalen Lebenspunkte einer Einheit zurück."
+    }
+  },
+  {
+    "name": "UnitExists",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "exists",
+        "type": "boolean"
+      }
+    ],
+    "description": {
+      "en": "Returns whether the unit exists.",
+      "de": "Gibt zurück, ob die Einheit existiert."
+    }
+  },
+  {
+    "name": "UnitLevel",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "level",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns the level of a unit.",
+      "de": "Gibt die Stufe einer Einheit zurück."
+    }
+  },
+  {
+    "name": "UnitClass",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "class",
+        "type": "string"
+      },
+      {
+        "name": "token",
+        "type": "string"
+      },
+      {
+        "name": "classId",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Returns class name, token and id of a unit.",
+      "de": "Gibt Klassenname, Token und ID einer Einheit zurück."
+    }
+  },
+  {
+    "name": "UnitRace",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "unit",
+        "type": "UnitId"
+      }
+    ],
+    "returns": [
+      {
+        "name": "race",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the race of a unit.",
+      "de": "Gibt das Volk einer Einheit zurück."
+    }
+  },
+  {
+    "name": "GetRealmName",
+    "system": "Unit",
+    "params": [],
+    "returns": [
+      {
+        "name": "realm",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the name of the realm.",
+      "de": "Gibt den Namen des Realms zurück."
+    }
+  },
+  {
+    "name": "GetLocale",
+    "system": "Unit",
+    "params": [],
+    "returns": [
+      {
+        "name": "locale",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Returns the client locale.",
+      "de": "Gibt die Client-Sprache zurück."
+    }
+  },
+  {
+    "name": "InCombatLockdown",
+    "system": "Unit",
+    "params": [],
+    "returns": [
+      {
+        "name": "inCombat",
+        "type": "boolean"
+      }
+    ],
+    "description": {
+      "en": "Returns whether the UI is in combat lockdown.",
+      "de": "Gibt zurück, ob die UI im Kampf gesperrt ist."
+    }
+  },
+  {
+    "name": "SendChatMessage",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "msg",
+        "type": "string"
+      },
+      {
+        "name": "chatType",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "languageID",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Sends a chat message.",
+      "de": "Sendet eine Chat-Nachricht."
+    }
+  },
+  {
+    "name": "hooksecurefunc",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "hook",
+        "type": "function"
+      }
+    ],
+    "returns": [],
+    "description": {
+      "en": "Runs a function after another global function.",
+      "de": "Führt eine Funktion nach einer anderen globalen Funktion aus."
+    }
+  },
+  {
+    "name": "strsplit",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "delimiter",
+        "type": "string"
+      },
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "...",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Splits a string at a delimiter.",
+      "de": "Teilt eine Zeichenkette an einem Trennzeichen."
+    }
+  },
+  {
+    "name": "strtrim",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Removes whitespace at both ends.",
+      "de": "Entfernt Leerraum an beiden Enden."
+    }
+  },
+  {
+    "name": "C_Timer.NewTicker",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "seconds",
+        "type": "number"
+      },
+      {
+        "name": "callback",
+        "type": "function"
+      },
+      {
+        "name": "iterations",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "ticker",
+        "type": "table"
+      }
+    ],
+    "description": {
+      "en": "Calls a function repeatedly.",
+      "de": "Ruft eine Funktion wiederholt auf."
+    }
+  },
+  {
+    "name": "C_Timer.NewTimer",
+    "system": "Unit",
+    "params": [
+      {
+        "name": "seconds",
+        "type": "number"
+      },
+      {
+        "name": "callback",
+        "type": "function"
+      }
+    ],
+    "returns": [
+      {
+        "name": "timer",
+        "type": "table"
+      }
+    ],
+    "description": {
+      "en": "Creates a cancelable one-shot timer.",
+      "de": "Erstellt einen abbrechbaren Einmal-Timer."
+    }
+  }
 ]

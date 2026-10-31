@@ -1,8 +1,98 @@
 [
-  { "name": "ADDON_LOADED", "payload": [{ "name": "addOnName", "type": "string" }],
-    "description": { "en": "Fires when an addon has finished loading.", "de": "Wird ausgelöst, wenn ein Addon fertig geladen ist." } },
-  { "name": "PLAYER_ENTERING_WORLD", "payload": [{ "name": "isInitialLogin", "type": "boolean" }, { "name": "isReloadingUi", "type": "boolean" }],
-    "description": { "en": "Fires after login, loading screens and /reload.", "de": "Wird nach Login, Ladebildschirmen und /reload ausgelöst." } },
-  { "name": "UNIT_HEALTH", "payload": [{ "name": "unitTarget", "type": "UnitId" }],
-    "description": { "en": "Fires when the health of a unit changes.", "de": "Wird ausgelöst, wenn sich die Lebenspunkte einer Einheit ändern." } }
+  {
+    "name": "ADDON_LOADED",
+    "payload": [
+      {
+        "name": "addOnName",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when an addon has finished loading.",
+      "de": "Wird ausgelöst, wenn ein Addon fertig geladen ist."
+    }
+  },
+  {
+    "name": "PLAYER_ENTERING_WORLD",
+    "payload": [
+      {
+        "name": "isInitialLogin",
+        "type": "boolean"
+      },
+      {
+        "name": "isReloadingUi",
+        "type": "boolean"
+      }
+    ],
+    "description": {
+      "en": "Fires after login, loading screens and /reload.",
+      "de": "Wird nach Login, Ladebildschirmen und /reload ausgelöst."
+    }
+  },
+  {
+    "name": "UNIT_HEALTH",
+    "payload": [
+      {
+        "name": "unitTarget",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the health of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich die Lebenspunkte einer Einheit ändern."
+    }
+  },
+  {
+    "name": "PLAYER_LOGIN",
+    "payload": [],
+    "description": {
+      "en": "Fires once after login when the UI is ready.",
+      "de": "Wird einmal nach dem Anmelden ausgelöst, wenn die UI bereit ist."
+    }
+  },
+  {
+    "name": "PLAYER_TARGET_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the target changes.",
+      "de": "Wird ausgelöst, wenn sich das Ziel ändert."
+    }
+  },
+  {
+    "name": "PLAYER_REGEN_DISABLED",
+    "payload": [],
+    "description": {
+      "en": "Fires when combat starts.",
+      "de": "Wird ausgelöst, wenn der Kampf beginnt."
+    }
+  },
+  {
+    "name": "PLAYER_REGEN_ENABLED",
+    "payload": [],
+    "description": {
+      "en": "Fires when combat ends.",
+      "de": "Wird ausgelöst, wenn der Kampf endet."
+    }
+  },
+  {
+    "name": "CHAT_MSG_SAY",
+    "payload": [
+      {
+        "name": "text",
+        "type": "string"
+      },
+      {
+        "name": "playerName",
+        "type": "string"
+      },
+      {
+        "name": "languageName",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when someone nearby says something.",
+      "de": "Wird ausgelöst, wenn jemand in der Nähe etwas sagt."
+    }
+  }
 ]
