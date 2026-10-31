@@ -209,10 +209,10 @@ export class FormModel {
 
   move(id: string, dx: number, dy: number): void {
     const w = this.require(id);
-    const a = w.anchors[0];
-    if (!a) return;
-    a.x += dx;
-    a.y += dy;
+    for (const a of w.anchors) {
+      a.x += dx;
+      a.y += dy;
+    }
   }
 
   /** DE: Eine Stufe nach vorn/hinten (Frame-Level bzw. Sublevel). EN: one step forward/back. */

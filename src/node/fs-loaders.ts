@@ -54,7 +54,7 @@ export async function loadPluginsFromRoot(
 
 export async function loadLocalesFromDir(i18n: I18n, dir: string): Promise<string[]> {
   const loaded: string[] = [];
-  for (const name of (await readdir(dir)).filter((n) => n.endsWith(".json")).sort()) {
+  for (const name of (await readdir(dir)).filter((n) => n.endsWith(".json") && n !== "index.json").sort()) {
     const lang = name.slice(0, -".json".length);
     i18n.addCatalogJson(lang, await readFile(join(dir, name), "utf8"));
     loaded.push(lang);
