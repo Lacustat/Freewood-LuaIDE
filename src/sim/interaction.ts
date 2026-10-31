@@ -94,7 +94,7 @@ export const INTERACTION_API: Record<string, Impl> = {
     const l = h.interaction().loot; const i = num(a[0]);
     if (!l || i === undefined) return [undefined, "", 0, 0];
     const it = l.items[i - 1];
-    if (!it) return undefined;
+    if (!it) return [undefined, "", 0, -1];
     const m = meta(h, it.id);
     return [m.icon, m.name, it.count, m.quality];
   },

@@ -439,7 +439,7 @@ local SYNC = { loot = true, lootroll = true, itemtext = true }
 -- DE: Fallback: Fenster per Abfrage erkennen, falls ihr Ereignis auf diesem Client nicht kommt. EN: fallback: detect windows by query in case their event does not fire on this client.
 local POLL = {
   tradeskill = "GetNumTradeSkills() > 0", craft = "GetNumCrafts() > 0", trainer = "GetNumTrainerServices() > 0",
-  merchant = "GetMerchantNumItems() > 0", itemtext = "ItemTextGetText() ~= nil", auction = "CanSendAuctionQuery() and AuctionFrame and AuctionFrame:IsVisible()",
+  merchant = "GetMerchantNumItems() > 0", itemtext = "ItemTextGetText() ~= nil and ItemTextGetText() ~= ''", auction = "CanSendAuctionQuery() and AuctionFrame and AuctionFrame:IsVisible()",
 }
 local GUESS = {
   { "^TRADE_SKILL.*SHOW", "tradeskill" }, { "^TRADE_SKILL.*OPEN", "tradeskill" }, { "^CRAFT.*SHOW", "craft" }, { "^TRAINER.*SHOW", "trainer" },

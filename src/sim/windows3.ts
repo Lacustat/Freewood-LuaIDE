@@ -172,8 +172,8 @@ export const PVP_API: Record<string, Impl> = {
 // ===== [S4] Petition, Gilde · petition =====
 
 export const PETITION_API: Record<string, Impl> = {
-  CanSignPetition: (h) => { const p = w3(h).petition; return !!p && !p.isOrigin && !p.names.includes(h.scenario.player.name); },
-  GetPetitionInfo: (h) => { const p = w3(h).petition; return p ? [p.type, p.title, p.body, p.max, p.origin, p.isOrigin, p.min] : undefined; },
+  CanSignPetition: (h) => { const p = w3(h).petition; return !p || (!p.isOrigin && !p.names.includes(h.scenario.player.name)); },
+  GetPetitionInfo: (h) => { const p = w3(h).petition; return p ? [p.type, p.title, p.body, p.max, p.origin, p.isOrigin, p.min] : [undefined, undefined, undefined, 0, undefined, undefined]; },
   GetNumPetitionNames: (h) => w3(h).petition?.names.length ?? 0,
   GetPetitionNameInfo: (h, a) => w3(h).petition?.names[(num(a[0]) ?? 0) - 1],
   OfferPetition: (h) => { if (w3(h).petition && h.unit("target")) h.note("info", `OfferPetition: offered to ${h.unit("target")!.name} (the answer is not simulated).`); },
@@ -191,7 +191,7 @@ export const PETITION_API: Record<string, Impl> = {
   AcceptGuild: (h) => { const w = w3(h); if (w.invited) { h.note("info", `AcceptGuild: joined "${w.invited}" (not simulated).`); delete w.invited; } },
   DeclineGuild: (h) => { delete w3(h).invited; },
   GetTabardCreationCost: () => 100000,
-  GetTabardInfo: (h) => (w3(h).tabard ? [0, 0, 0, 0, 0] : undefined),
+  GetTabardInfo: () => [],
   CloseTabardCreation: (h) => { const w = w3(h); if (w.tabard) { w.tabard = false; h.fireIf("CLOSE_TABARD_FRAME"); } },
 };
 

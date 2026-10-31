@@ -45,32 +45,35 @@ interface Skill { open: boolean; sel: number; rank: number; max: number; name: s
 interface W2 { ts: Skill; craft: Skill; trainer?: { sel: number; services: Service[]; filter: Record<string, boolean>; greeting: string; skillLine: boolean }; }
 interface Service { spell: number; name: string; icon: string; cost: number; level: number; state: "available" | "unavailable" | "used"; desc: string }
 const w2 = (h: SimHost): W2 => h.store("windows2", (): W2 => ({ ts: { open: false, sel: 0, rank: 1, max: 75, name: "Sample Tailoring" }, craft: { open: false, sel: 0, rank: 1, max: 75, name: "Sample Enchanting" } }));
+// DE: Index 1 ist eine Überschrift (wie auf OctoWoW, Probe 2), Rezepte beginnen bei 2. EN: index 1 is a header row (as on OctoWoW, probe 2); recipes start at 2.
 const rec = (i: unknown): Recipe | undefined => RECIPES[(num(i) ?? 0) - 1];
+const trec = (i: unknown): Recipe | undefined => RECIPES[(num(i) ?? 0) - 2];
+const HEADER = "Consumable";
 
 // ===== [S2] Handwerk · tradeskill =====
 
 export const TRADESKILL_API: Record<string, Impl> = {
-  GetNumTradeSkills: (h) => (w2(h).ts.open ? RECIPES.length : 0),
-  GetFirstTradeSkill: (h) => (w2(h).ts.open ? 1 : 0),
+  GetNumTradeSkills: (h) => (w2(h).ts.open ? RECIPES.length + 1 : 0),
+  GetFirstTradeSkill: (h) => (w2(h).ts.open ? 2 : 0),
   GetTradeSkillLine: (h) => { const s = w2(h).ts; return s.open ? [s.name, s.rank, s.max] : ["UNKNOWN", 0, 0]; },
-  GetTradeSkillInfo: (h, a) => { const r = rec(a[0]); return r && w2(h).ts.open ? [r.name, kind(r, w2(h).ts.rank), avail(h, r), true] : undefined; },
-  GetTradeSkillIcon: (_h, a) => rec(a[0])?.icon,
-  GetTradeSkillItemLink: (h, a) => { const r = rec(a[0]); if (!r) return undefined; ensureItems(h); return im(h, r.result).link; },
-  GetTradeSkillNumMade: (_h, a) => { const r = rec(a[0]); return r ? r.made : [0, 0]; },
-  GetTradeSkillNumReagents: (_h, a) => rec(a[0])?.reagents.length ?? 0,
-  GetTradeSkillReagentInfo: (h, a) => { const x = rec(a[0])?.reagents[(num(a[1]) ?? 0) - 1]; if (!x) return undefined; const m = im(h, x.id); return [m.name, m.icon, x.count, have(h, x.id)]; },
-  GetTradeSkillReagentItemLink: (h, a) => { const x = rec(a[0])?.reagents[(num(a[1]) ?? 0) - 1]; return x ? im(h, x.id).link : undefined; },
+  GetTradeSkillInfo: (h, a) => { const o = w2(h).ts.open; if (o && num(a[0]) === 1) return [HEADER, "header", 0, 1]; const r = trec(a[0]); return r && o ? [r.name, kind(r, w2(h).ts.rank), avail(h, r), undefined] : [undefined, undefined, 0, undefined]; },
+  GetTradeSkillIcon: (_h, a) => trec(a[0])?.icon,
+  GetTradeSkillItemLink: (h, a) => { if (num(a[0]) === 1) return ""; const r = trec(a[0]); if (!r) return undefined; ensureItems(h); return im(h, r.result).link; },
+  GetTradeSkillNumMade: (_h, a) => { const r = trec(a[0]); return r ? r.made : [1, 1]; },
+  GetTradeSkillNumReagents: (_h, a) => trec(a[0])?.reagents.length ?? 0,
+  GetTradeSkillReagentInfo: (h, a) => { const x = trec(a[0])?.reagents[(num(a[1]) ?? 0) - 1]; if (!x) return undefined; const m = im(h, x.id); return [m.name, m.icon, x.count, have(h, x.id)]; },
+  GetTradeSkillReagentItemLink: (h, a) => { const x = trec(a[0])?.reagents[(num(a[1]) ?? 0) - 1]; return x ? im(h, x.id).link : undefined; },
   GetTradeSkillTools: () => undefined,
   GetTradeSkillCooldown: () => undefined,
   GetTradeSkillItemStats: () => [],
   GetTradeSkillSelectionIndex: (h) => w2(h).ts.sel,
-  SelectTradeSkill: (h, a) => { const s = w2(h).ts; if (s.open && rec(a[0])) { s.sel = num(a[0]) ?? 0; h.fireIf("TRADE_SKILL_UPDATE"); } },
+  SelectTradeSkill: (h, a) => { const s = w2(h).ts; if (s.open && trec(a[0])) { s.sel = num(a[0]) ?? 0; h.fireIf("TRADE_SKILL_UPDATE"); } },
   GetTradeskillRepeatCount: () => 1,
-  GetTradeSkillSubClasses: () => [], GetTradeSkillSubClassFilter: () => false, SetTradeSkillSubClassFilter: () => undefined,
-  GetTradeSkillInvSlots: () => [], GetTradeSkillInvSlotFilter: () => false, SetTradeSkillInvSlotFilter: () => undefined,
+  GetTradeSkillSubClasses: () => [HEADER], GetTradeSkillSubClassFilter: () => false, SetTradeSkillSubClassFilter: () => undefined,
+  GetTradeSkillInvSlots: () => ["Not equippable."], GetTradeSkillInvSlotFilter: () => false, SetTradeSkillInvSlotFilter: () => undefined,
   CollapseTradeSkillSubClass: () => undefined, ExpandTradeSkillSubClass: () => undefined,
   DoTradeSkill: (h, a) => {
-    const s = w2(h).ts; const r = rec(a[0]); if (!s.open || !r) return;
+    const s = w2(h).ts; const r = trec(a[0]); if (!s.open || !r) return;
     let n = Math.max(1, num(a[1]) ?? 1); ensureItems(h);
     const step = (): void => {
       if (n <= 0 || avail(h, r) <= 0) { h.fireIf("UNIT_SPELLCAST_STOP", "player"); return; }
@@ -101,8 +104,8 @@ export const CRAFT_API: Record<string, Impl> = {
   GetCraftDescription: (_h, a) => { const r = rec(a[0]); return r ? `Creates ${r.name}.` : undefined; },
   GetCraftItemLink: (h, a) => { const r = rec(a[0]); if (!r) return undefined; ensureItems(h); return im(h, r.result).link; },
   GetCraftNumReagents: (_h, a) => rec(a[0])?.reagents.length ?? 0,
-  GetCraftReagentInfo: (h, a) => TRADESKILL_API.GetTradeSkillReagentInfo!(h, a),
-  GetCraftReagentItemLink: (h, a) => TRADESKILL_API.GetTradeSkillReagentItemLink!(h, a),
+  GetCraftReagentInfo: (h, a) => TRADESKILL_API.GetTradeSkillReagentInfo!(h, [(num(a[0]) ?? 0) + 1, a[1]]),
+  GetCraftReagentItemLink: (h, a) => TRADESKILL_API.GetTradeSkillReagentItemLink!(h, [(num(a[0]) ?? 0) + 1, a[1]]),
   GetCraftSpellFocus: () => undefined,
   GetCraftButtonToken: () => undefined,
   GetCraftSelectionIndex: (h) => w2(h).craft.sel,

@@ -129,14 +129,14 @@ engines("tradeskill and craft: recipes, reagents, crafting", async (mk) => {
   sim.openWindow("tradeskill");
   const v = run(sim, `
     local n = GetNumTradeSkills()
-    local name, kind, avail = GetTradeSkillInfo(1)
-    local rn, _, rc, have = GetTradeSkillReagentInfo(1, 1)
-    DoTradeSkill(1, 2)
+    local name, kind, avail = GetTradeSkillInfo(2)
+    local rn, _, rc, have = GetTradeSkillReagentInfo(2, 1)
+    DoTradeSkill(2, 2)
     return n, name, kind, avail, rn, rc, have
   `);
-  assert.deepEqual(v, [3, "Linen Bandage", "medium", 7, "Linen Cloth", 1, 7]);
+  assert.deepEqual(v, [4, "Linen Bandage", "medium", 7, "Linen Cloth", 1, 7]);
   sim.advance(5);
-  assert.deepEqual(run(sim, `local _, _, avail = GetTradeSkillInfo(1); local n, r, m = GetTradeSkillLine(); return avail, n, r, m`), [5, "Sample Tailoring", 1, 75]);
+  assert.deepEqual(run(sim, `local _, _, avail = GetTradeSkillInfo(2); local n, r, m = GetTradeSkillLine(); return avail, n, r, m`), [5, "Sample Tailoring", 1, 75]);
   const sim2 = await mk(t.v);
   sim2.openWindow("craft");
   assert.deepEqual(run(sim2, `return GetNumCrafts(), GetCraftName(1), GetCraftNumReagents(3)`), [3, "Linen Bandage", 1]);

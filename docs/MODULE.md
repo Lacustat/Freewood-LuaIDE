@@ -54,3 +54,5 @@
 ## FreewoodProbeWin (v2)
 DE: Sofort-Erfassung (loot, lootroll, itemtext), Abfrage-Erkennung (tradeskill, craft, trainer, merchant, itemtext, auction), Hook auf RegisterEvent (db.registered), Gruppe registrar (GUILD_REGISTRAR_SHOW).
 EN: immediate capture (loot, lootroll, itemtext), polling detection (tradeskill, craft, trainer, merchant, itemtext, auction), RegisterEvent hook (db.registered), group registrar (GUILD_REGISTRAR_SHOW).
+
+Kalibrierung Probe 2 · calibration probe 2: tradeskill (Überschrift an Index 1, Rezepte ab 2), Loot außerhalb, Petition ohne Petition, Tabard, CanSignPetition. Fixture: tests/fixtures/octowoow-probewin-results.txt
