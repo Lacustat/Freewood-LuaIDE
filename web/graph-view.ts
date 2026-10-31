@@ -307,7 +307,7 @@ export function renderGraphView(root: HTMLElement, ctx: Ctx, path: string): void
       for (const x of shown.slice(0, 60)) palette.append(h("button", { class: "pal-item", onclick: x.run, text: x.label }));
     };
     group(ctx.t("graph.events"), [...ctx.target.events.keys()].map((name) => ({ label: name, run: () => addNode("event", { event: name }) })));
-    group(ctx.t("graph.functions"), [...ctx.target.functions.keys()].map((name) => ({ label: name, run: () => addNode("call", { fn: name }) })));
+    group(ctx.t("graph.functions"), [...ctx.target.functions.entries()].filter(([, f]) => !f.tags?.includes("signature-unknown")).map(([name]) => ({ label: name, run: () => addNode("call", { fn: name }) })));
     const builtins = Object.values(BUILTIN_NODES).map((d) => ({ label: ctx.text(d.title), run: () => addNode(d.type) }));
     group(ctx.t("graph.builtins"), builtins);
   }
@@ -354,7 +354,7 @@ export function renderGraphView(root: HTMLElement, ctx: Ctx, path: string): void
         side.append(field(ctx.t("graph.event"), select([...ctx.target.events.keys()].map((v) => ({ value: v, label: v })), String(n.props["event"] ?? ""), (v) => change("event", v, true))));
         break;
       case "call":
-        side.append(field(ctx.t("graph.function"), select([...ctx.target.functions.keys()].map((v) => ({ value: v, label: v })), String(n.props["fn"] ?? ""), (v) => change("fn", v, true))));
+        side.append(field(ctx.t("graph.function"), select([...ctx.target.functions.entries()].filter(([name, f]) => !f.tags?.includes("signature-unknown") || name === n.props["fn"]).map(([v]) => ({ value: v, label: v })), String(n.props["fn"] ?? ""), (v) => change("fn", v, true))));
         break;
       case "get_var": case "set_var": side.append(text("name", ctx.t("graph.varName"))); break;
       case "number": {

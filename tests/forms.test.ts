@@ -137,7 +137,7 @@ test("Lua generation per target", async () => {
   parse(r.code, "gen", "5.1");
 
   const bad = new FormModel();
-  bad.add("Cooldown", null);
+  bad.add("NoSuchWidget", null);
   bad.add("Frame", null, { scripts: { OnBogus: "x=1" } });
   const codes = generateFormLua(bad, t.v!).warnings.map((w) => w.code);
   assert.deepEqual(codes.sort(), ["FORM_SCRIPT_UNKNOWN", "FORM_UNKNOWN_KIND"]);

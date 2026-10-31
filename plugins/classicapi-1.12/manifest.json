@@ -2,7 +2,10 @@
   "schema": 1,
   "id": "classicapi-1.12",
   "version": "0.1.0",
-  "name": { "en": "WoW 1.12 + ClassicAPI (Lua 5.1 syntax)", "de": "WoW 1.12 + ClassicAPI (Lua-5.1-Syntax)" },
+  "name": {
+    "en": "WoW 1.12 + ClassicAPI (Lua 5.1 syntax)",
+    "de": "WoW 1.12 + ClassicAPI (Lua-5.1-Syntax)"
+  },
   "description": {
     "en": "Vanilla 1.12 plus what the ClassicAPI DLL adds: Lua 5.1 syntax (transpiled on the 5.0 VM), C_Timer and more. Sample data, not complete.",
     "de": "Vanilla 1.12 plus das, was die ClassicAPI-DLL ergänzt: Lua-5.1-Syntax (auf der 5.0-VM umgeschrieben), C_Timer und mehr. Beispieldaten, nicht vollständig."
@@ -14,13 +17,19 @@
   "scriptArgs": "both",
   "clientBuild": "1.12.1",
   "interfaceVersion": 11200,
-  "extends": ["vanilla-1.12"],
+  "extends": [
+    "vanilla-1.12"
+  ],
   "files": {
     "functions": "functions.json",
     "events": "events.json",
     "widgets": "widgets.json"
   },
   "sources": [
-    { "title": "ClassicAPI (brues-code/ClassicAPI)", "url": "https://github.com/brues-code/ClassicAPI", "license": "GPL-3.0" }
+    {
+      "title": "ClassicAPI (brues-code/ClassicAPI)",
+      "url": "https://github.com/brues-code/ClassicAPI",
+      "license": "GPL-3.0"
+    }
   ]
 }

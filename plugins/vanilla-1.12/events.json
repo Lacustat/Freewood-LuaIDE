@@ -121,5 +121,1641 @@
       "en": "Fires for system messages.",
       "de": "Wird für Systemmeldungen ausgelöst."
     }
+  },
+  {
+    "name": "PLAYER_LOGOUT",
+    "payload": [],
+    "description": {
+      "en": "Fires just before the player logs out; last chance to write saved variables.",
+      "de": "Wird kurz vor dem Abmelden ausgelöst; letzte Gelegenheit, gespeicherte Variablen zu schreiben."
+    }
+  },
+  {
+    "name": "PLAYER_LEAVING_WORLD",
+    "payload": [],
+    "description": {
+      "en": "Fires when a loading screen starts.",
+      "de": "Wird ausgelöst, wenn ein Ladebildschirm beginnt."
+    }
+  },
+  {
+    "name": "PLAYER_QUITING",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player starts quitting the game.",
+      "de": "Wird ausgelöst, wenn der Spieler das Spiel beendet."
+    }
+  },
+  {
+    "name": "PLAYER_CAMPING",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player starts the logout countdown.",
+      "de": "Wird ausgelöst, wenn der Abmelde-Countdown startet."
+    }
+  },
+  {
+    "name": "PLAYER_ALIVE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player is resurrected or released as a ghost.",
+      "de": "Wird ausgelöst, wenn der Spieler wiederbelebt wird oder als Geist freigelassen wurde."
+    }
+  },
+  {
+    "name": "PLAYER_DEAD",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player dies.",
+      "de": "Wird ausgelöst, wenn der Spieler stirbt."
+    }
+  },
+  {
+    "name": "PLAYER_UNGHOST",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player returns to life from ghost form.",
+      "de": "Wird ausgelöst, wenn der Spieler aus der Geistgestalt zurückkehrt."
+    }
+  },
+  {
+    "name": "PLAYER_ENTER_COMBAT",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player starts auto-attacking.",
+      "de": "Wird ausgelöst, wenn der Spieler mit dem Autoangriff beginnt."
+    }
+  },
+  {
+    "name": "PLAYER_LEAVE_COMBAT",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player stops auto-attacking.",
+      "de": "Wird ausgelöst, wenn der Spieler den Autoangriff beendet."
+    }
+  },
+  {
+    "name": "PLAYER_LEVEL_UP",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when the player gains a level (arg1 = new level).",
+      "de": "Wird ausgelöst, wenn der Spieler eine Stufe aufsteigt (arg1 = neue Stufe)."
+    }
+  },
+  {
+    "name": "PLAYER_XP_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when experience points change.",
+      "de": "Wird ausgelöst, wenn sich die Erfahrungspunkte ändern."
+    }
+  },
+  {
+    "name": "PLAYER_MONEY",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player's money changes.",
+      "de": "Wird ausgelöst, wenn sich das Geld des Spielers ändert."
+    }
+  },
+  {
+    "name": "PLAYER_AURAS_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player's buffs or debuffs change.",
+      "de": "Wird ausgelöst, wenn sich Buffs oder Debuffs des Spielers ändern."
+    }
+  },
+  {
+    "name": "PLAYER_COMBO_POINTS",
+    "payload": [],
+    "description": {
+      "en": "Fires when combo points change.",
+      "de": "Wird ausgelöst, wenn sich die Combopunkte ändern."
+    }
+  },
+  {
+    "name": "PLAYER_PET_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the pet changes.",
+      "de": "Wird ausgelöst, wenn sich das Tier ändert."
+    }
+  },
+  {
+    "name": "PLAYER_FLAGS_CHANGED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when AFK/DND flags change.",
+      "de": "Wird ausgelöst, wenn sich AFK/DND-Markierungen ändern."
+    }
+  },
+  {
+    "name": "PLAYER_GUILD_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when guild membership changes.",
+      "de": "Wird ausgelöst, wenn sich die Gildenzugehörigkeit ändert."
+    }
+  },
+  {
+    "name": "PLAYER_UPDATE_RESTING",
+    "payload": [],
+    "description": {
+      "en": "Fires when the resting state changes.",
+      "de": "Wird ausgelöst, wenn sich der Ruhezustand ändert."
+    }
+  },
+  {
+    "name": "PLAYER_PVP_KILLS_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the honorable kills change.",
+      "de": "Wird ausgelöst, wenn sich die ehrenhaften Siege ändern."
+    }
+  },
+  {
+    "name": "PLAYER_PVP_RANK_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the PvP rank changes.",
+      "de": "Wird ausgelöst, wenn sich der PvP-Rang ändert."
+    }
+  },
+  {
+    "name": "CHARACTER_POINTS_CHANGED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when talent points change.",
+      "de": "Wird ausgelöst, wenn sich Talentpunkte ändern."
+    }
+  },
+  {
+    "name": "UNIT_MAXHEALTH",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the maximum health of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich die maximalen Lebenspunkte ändern."
+    }
+  },
+  {
+    "name": "UNIT_MANA",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when mana of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich das Mana einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_MAXMANA",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when maximum mana changes.",
+      "de": "Wird ausgelöst, wenn sich das maximale Mana ändert."
+    }
+  },
+  {
+    "name": "UNIT_RAGE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when rage changes.",
+      "de": "Wird ausgelöst, wenn sich die Wut ändert."
+    }
+  },
+  {
+    "name": "UNIT_MAXRAGE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when maximum rage changes.",
+      "de": "Wird ausgelöst, wenn sich die maximale Wut ändert."
+    }
+  },
+  {
+    "name": "UNIT_ENERGY",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when energy changes.",
+      "de": "Wird ausgelöst, wenn sich die Energie ändert."
+    }
+  },
+  {
+    "name": "UNIT_MAXENERGY",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when maximum energy changes.",
+      "de": "Wird ausgelöst, wenn sich die maximale Energie ändert."
+    }
+  },
+  {
+    "name": "UNIT_FOCUS",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when focus changes.",
+      "de": "Wird ausgelöst, wenn sich der Fokus ändert."
+    }
+  },
+  {
+    "name": "UNIT_AURA",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when buffs or debuffs of a unit change.",
+      "de": "Wird ausgelöst, wenn sich Buffs oder Debuffs einer Einheit ändern."
+    }
+  },
+  {
+    "name": "UNIT_LEVEL",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the level of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich die Stufe einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_NAME_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the name of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich der Name einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_FLAGS",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when unit flags change.",
+      "de": "Wird ausgelöst, wenn sich Einheiten-Markierungen ändern."
+    }
+  },
+  {
+    "name": "UNIT_FACTION",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the faction of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich die Fraktion einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_PET",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the pet of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich das Tier einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_DISPLAYPOWER",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the power type of a unit changes (e.g. shapeshift).",
+      "de": "Wird ausgelöst, wenn sich die Ressourcenart ändert (z. B. Gestaltwandel)."
+    }
+  },
+  {
+    "name": "UNIT_PORTRAIT_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the portrait of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich das Porträt einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_MODEL_CHANGED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the model of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich das Modell einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_INVENTORY_CHANGED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when equipment of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich die Ausrüstung einer Einheit ändert."
+    }
+  },
+  {
+    "name": "UNIT_COMBAT",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      },
+      {
+        "name": "arg4",
+        "type": "number"
+      },
+      {
+        "name": "arg5",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires for combat text of a unit (action, descriptor, damage, damage type).",
+      "de": "Wird für Kampftext einer Einheit ausgelöst (Aktion, Beschreibung, Schaden, Schadensart)."
+    }
+  },
+  {
+    "name": "UNIT_ATTACK_POWER",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when attack power changes.",
+      "de": "Wird ausgelöst, wenn sich die Angriffskraft ändert."
+    }
+  },
+  {
+    "name": "UNIT_HAPPINESS",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when pet happiness changes.",
+      "de": "Wird ausgelöst, wenn sich die Zufriedenheit des Tiers ändert."
+    }
+  },
+  {
+    "name": "UNIT_QUEST_LOG_CHANGED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when the quest log of a unit changes.",
+      "de": "Wird ausgelöst, wenn sich das Questlog einer Einheit ändert."
+    }
+  },
+  {
+    "name": "SPELLCAST_START",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when the player starts casting (arg1 spell, arg2 cast time in ms).",
+      "de": "Wird ausgelöst, wenn der Spieler zu zaubern beginnt (arg1 Zauber, arg2 Zauberzeit in ms)."
+    }
+  },
+  {
+    "name": "SPELLCAST_STOP",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player stops casting.",
+      "de": "Wird ausgelöst, wenn der Spieler das Zaubern beendet."
+    }
+  },
+  {
+    "name": "SPELLCAST_FAILED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a cast fails.",
+      "de": "Wird ausgelöst, wenn ein Zauber fehlschlägt."
+    }
+  },
+  {
+    "name": "SPELLCAST_INTERRUPTED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a cast is interrupted.",
+      "de": "Wird ausgelöst, wenn ein Zauber unterbrochen wird."
+    }
+  },
+  {
+    "name": "SPELLCAST_DELAYED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when a cast is delayed (arg1 delay in ms).",
+      "de": "Wird ausgelöst, wenn ein Zauber verzögert wird (arg1 Verzögerung in ms)."
+    }
+  },
+  {
+    "name": "SPELLCAST_CHANNEL_START",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when a channeled spell starts.",
+      "de": "Wird ausgelöst, wenn ein Kanalzauber beginnt."
+    }
+  },
+  {
+    "name": "SPELLCAST_CHANNEL_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when a channeled spell is updated.",
+      "de": "Wird ausgelöst, wenn ein Kanalzauber aktualisiert wird."
+    }
+  },
+  {
+    "name": "SPELLCAST_CHANNEL_STOP",
+    "payload": [],
+    "description": {
+      "en": "Fires when a channeled spell ends.",
+      "de": "Wird ausgelöst, wenn ein Kanalzauber endet."
+    }
+  },
+  {
+    "name": "CURRENT_SPELL_CAST_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the current spell cast changes.",
+      "de": "Wird ausgelöst, wenn sich der aktuelle Zauber ändert."
+    }
+  },
+  {
+    "name": "SPELLS_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the spell book changes.",
+      "de": "Wird ausgelöst, wenn sich das Zauberbuch ändert."
+    }
+  },
+  {
+    "name": "LEARNED_SPELL_IN_TAB",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when a spell was learned in a spell tab.",
+      "de": "Wird ausgelöst, wenn ein Zauber in einem Reiter gelernt wurde."
+    }
+  },
+  {
+    "name": "SPELL_UPDATE_COOLDOWN",
+    "payload": [],
+    "description": {
+      "en": "Fires when a spell cooldown changes.",
+      "de": "Wird ausgelöst, wenn sich eine Zauber-Abklingzeit ändert."
+    }
+  },
+  {
+    "name": "SPELL_UPDATE_USABLE",
+    "payload": [],
+    "description": {
+      "en": "Fires when spell usability changes.",
+      "de": "Wird ausgelöst, wenn sich die Nutzbarkeit von Zaubern ändert."
+    }
+  },
+  {
+    "name": "SKILL_LINES_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when skills change.",
+      "de": "Wird ausgelöst, wenn sich Fertigkeiten ändern."
+    }
+  },
+  {
+    "name": "ACTIONBAR_UPDATE_STATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the state of action buttons changes.",
+      "de": "Wird ausgelöst, wenn sich der Zustand von Aktionsschaltflächen ändert."
+    }
+  },
+  {
+    "name": "ACTIONBAR_UPDATE_USABLE",
+    "payload": [],
+    "description": {
+      "en": "Fires when action usability changes.",
+      "de": "Wird ausgelöst, wenn sich die Nutzbarkeit von Aktionen ändert."
+    }
+  },
+  {
+    "name": "ACTIONBAR_UPDATE_COOLDOWN",
+    "payload": [],
+    "description": {
+      "en": "Fires when action cooldowns change.",
+      "de": "Wird ausgelöst, wenn sich Aktions-Abklingzeiten ändern."
+    }
+  },
+  {
+    "name": "ACTIONBAR_SLOT_CHANGED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when an action slot changes.",
+      "de": "Wird ausgelöst, wenn sich ein Aktionsplatz ändert."
+    }
+  },
+  {
+    "name": "ACTIONBAR_PAGE_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the action bar page changes.",
+      "de": "Wird ausgelöst, wenn sich die Aktionsleisten-Seite ändert."
+    }
+  },
+  {
+    "name": "UPDATE_SHAPESHIFT_FORMS",
+    "payload": [],
+    "description": {
+      "en": "Fires when the available shapeshift forms change.",
+      "de": "Wird ausgelöst, wenn sich die verfügbaren Gestalten ändern."
+    }
+  },
+  {
+    "name": "UPDATE_SHAPESHIFT_FORM",
+    "payload": [],
+    "description": {
+      "en": "Fires when the active shapeshift form changes.",
+      "de": "Wird ausgelöst, wenn sich die aktive Gestalt ändert."
+    }
+  },
+  {
+    "name": "BAG_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when the contents of a bag change (arg1 = bag id).",
+      "de": "Wird ausgelöst, wenn sich der Inhalt einer Tasche ändert (arg1 = Taschen-ID)."
+    }
+  },
+  {
+    "name": "BAG_UPDATE_COOLDOWN",
+    "payload": [],
+    "description": {
+      "en": "Fires when item cooldowns in bags change.",
+      "de": "Wird ausgelöst, wenn sich Gegenstands-Abklingzeiten in Taschen ändern."
+    }
+  },
+  {
+    "name": "ITEM_LOCK_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when an item is locked or unlocked.",
+      "de": "Wird ausgelöst, wenn ein Gegenstand gesperrt oder entsperrt wird."
+    }
+  },
+  {
+    "name": "UPDATE_INVENTORY_ALERTS",
+    "payload": [],
+    "description": {
+      "en": "Fires when equipment durability alerts change.",
+      "de": "Wird ausgelöst, wenn sich Haltbarkeits-Warnungen ändern."
+    }
+  },
+  {
+    "name": "PLAYERBANKSLOTS_CHANGED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when bank slots change.",
+      "de": "Wird ausgelöst, wenn sich Bankplätze ändern."
+    }
+  },
+  {
+    "name": "BANKFRAME_OPENED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the bank window opens.",
+      "de": "Wird ausgelöst, wenn das Bankfenster geöffnet wird."
+    }
+  },
+  {
+    "name": "BANKFRAME_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the bank window closes.",
+      "de": "Wird ausgelöst, wenn das Bankfenster geschlossen wird."
+    }
+  },
+  {
+    "name": "MERCHANT_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when a vendor window opens.",
+      "de": "Wird ausgelöst, wenn ein Händlerfenster geöffnet wird."
+    }
+  },
+  {
+    "name": "MERCHANT_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when vendor items change.",
+      "de": "Wird ausgelöst, wenn sich Händlerwaren ändern."
+    }
+  },
+  {
+    "name": "MERCHANT_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a vendor window closes.",
+      "de": "Wird ausgelöst, wenn ein Händlerfenster geschlossen wird."
+    }
+  },
+  {
+    "name": "LOOT_OPENED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a loot window opens.",
+      "de": "Wird ausgelöst, wenn ein Beutefenster geöffnet wird."
+    }
+  },
+  {
+    "name": "LOOT_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a loot window closes.",
+      "de": "Wird ausgelöst, wenn ein Beutefenster geschlossen wird."
+    }
+  },
+  {
+    "name": "LOOT_SLOT_CLEARED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when a loot slot is looted.",
+      "de": "Wird ausgelöst, wenn ein Beuteplatz geplündert wurde."
+    }
+  },
+  {
+    "name": "START_LOOT_ROLL",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      },
+      {
+        "name": "arg2",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when a loot roll starts (arg1 roll id, arg2 time in ms).",
+      "de": "Wird ausgelöst, wenn ein Beutewurf beginnt (arg1 Wurf-ID, arg2 Zeit in ms)."
+    }
+  },
+  {
+    "name": "PARTY_MEMBERS_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the party composition changes.",
+      "de": "Wird ausgelöst, wenn sich die Gruppenzusammensetzung ändert."
+    }
+  },
+  {
+    "name": "PARTY_LEADER_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the party leader changes.",
+      "de": "Wird ausgelöst, wenn sich der Gruppenleiter ändert."
+    }
+  },
+  {
+    "name": "PARTY_MEMBER_ENABLE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when a party member comes online or in range.",
+      "de": "Wird ausgelöst, wenn ein Gruppenmitglied online oder in Reichweite kommt."
+    }
+  },
+  {
+    "name": "PARTY_MEMBER_DISABLE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when a party member goes offline or out of range.",
+      "de": "Wird ausgelöst, wenn ein Gruppenmitglied offline oder außer Reichweite geht."
+    }
+  },
+  {
+    "name": "PARTY_INVITE_REQUEST",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when the player is invited to a party.",
+      "de": "Wird ausgelöst, wenn der Spieler in eine Gruppe eingeladen wird."
+    }
+  },
+  {
+    "name": "RAID_ROSTER_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the raid roster changes.",
+      "de": "Wird ausgelöst, wenn sich die Schlachtzugsliste ändert."
+    }
+  },
+  {
+    "name": "RAID_TARGET_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when raid target icons change.",
+      "de": "Wird ausgelöst, wenn sich Schlachtzugs-Symbole ändern."
+    }
+  },
+  {
+    "name": "READY_CHECK",
+    "payload": [],
+    "description": {
+      "en": "Fires when a ready check starts.",
+      "de": "Wird ausgelöst, wenn eine Bereitschaftsprüfung beginnt."
+    }
+  },
+  {
+    "name": "QUEST_LOG_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the quest log changes.",
+      "de": "Wird ausgelöst, wenn sich das Questlog ändert."
+    }
+  },
+  {
+    "name": "QUEST_DETAIL",
+    "payload": [],
+    "description": {
+      "en": "Fires when a quest offer is shown.",
+      "de": "Wird ausgelöst, wenn ein Questangebot angezeigt wird."
+    }
+  },
+  {
+    "name": "QUEST_PROGRESS",
+    "payload": [],
+    "description": {
+      "en": "Fires when the quest progress dialog is shown.",
+      "de": "Wird ausgelöst, wenn der Questfortschritt angezeigt wird."
+    }
+  },
+  {
+    "name": "QUEST_COMPLETE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the quest reward dialog is shown.",
+      "de": "Wird ausgelöst, wenn die Questbelohnung angezeigt wird."
+    }
+  },
+  {
+    "name": "QUEST_FINISHED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a quest dialog closes.",
+      "de": "Wird ausgelöst, wenn ein Quest-Dialog geschlossen wird."
+    }
+  },
+  {
+    "name": "QUEST_GREETING",
+    "payload": [],
+    "description": {
+      "en": "Fires when an NPC offers several quests.",
+      "de": "Wird ausgelöst, wenn ein NSC mehrere Quests anbietet."
+    }
+  },
+  {
+    "name": "QUEST_WATCH_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires when a watched quest changes (arg1 = quest log index).",
+      "de": "Wird ausgelöst, wenn sich eine verfolgte Quest ändert (arg1 = Questlog-Index)."
+    }
+  },
+  {
+    "name": "GOSSIP_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when a gossip window opens.",
+      "de": "Wird ausgelöst, wenn ein Gesprächsfenster geöffnet wird."
+    }
+  },
+  {
+    "name": "GOSSIP_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a gossip window closes.",
+      "de": "Wird ausgelöst, wenn ein Gesprächsfenster geschlossen wird."
+    }
+  },
+  {
+    "name": "CHAT_MSG_YELL",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when someone yells.",
+      "de": "Wird ausgelöst, wenn jemand schreit."
+    }
+  },
+  {
+    "name": "CHAT_MSG_WHISPER",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when the player receives a whisper.",
+      "de": "Wird ausgelöst, wenn der Spieler ein Flüstern erhält."
+    }
+  },
+  {
+    "name": "CHAT_MSG_WHISPER_INFORM",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when the player sends a whisper.",
+      "de": "Wird ausgelöst, wenn der Spieler flüstert."
+    }
+  },
+  {
+    "name": "CHAT_MSG_PARTY",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for party chat.",
+      "de": "Wird für den Gruppenchat ausgelöst."
+    }
+  },
+  {
+    "name": "CHAT_MSG_RAID",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for raid chat.",
+      "de": "Wird für den Schlachtzugschat ausgelöst."
+    }
+  },
+  {
+    "name": "CHAT_MSG_GUILD",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for guild chat.",
+      "de": "Wird für den Gildenchat ausgelöst."
+    }
+  },
+  {
+    "name": "CHAT_MSG_OFFICER",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for officer chat.",
+      "de": "Wird für den Offizierschat ausgelöst."
+    }
+  },
+  {
+    "name": "CHAT_MSG_CHANNEL",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "name": "arg3",
+        "type": "string"
+      },
+      {
+        "name": "arg4",
+        "type": "string"
+      },
+      {
+        "name": "arg8",
+        "type": "number"
+      },
+      {
+        "name": "arg9",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for channel chat (arg4 channel string, arg8 channel number, arg9 channel name).",
+      "de": "Wird für Kanal-Chat ausgelöst (arg4 Kanal-Text, arg8 Kanalnummer, arg9 Kanalname)."
+    }
+  },
+  {
+    "name": "CHAT_MSG_EMOTE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for custom emotes.",
+      "de": "Wird für eigene Emotes ausgelöst."
+    }
+  },
+  {
+    "name": "CHAT_MSG_TEXT_EMOTE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for text emotes.",
+      "de": "Wird für Text-Emotes ausgelöst."
+    }
+  },
+  {
+    "name": "CHAT_MSG_LOOT",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for loot messages.",
+      "de": "Wird für Beutemeldungen ausgelöst."
+    }
+  },
+  {
+    "name": "CHAT_MSG_MONEY",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for money loot messages.",
+      "de": "Wird für Geld-Beutemeldungen ausgelöst."
+    }
+  },
+  {
+    "name": "UPDATE_MOUSEOVER_UNIT",
+    "payload": [],
+    "description": {
+      "en": "Fires when the unit under the mouse changes.",
+      "de": "Wird ausgelöst, wenn sich die Einheit unter der Maus ändert."
+    }
+  },
+  {
+    "name": "UPDATE_FACTION",
+    "payload": [],
+    "description": {
+      "en": "Fires when reputation changes.",
+      "de": "Wird ausgelöst, wenn sich der Ruf ändert."
+    }
+  },
+  {
+    "name": "UPDATE_BINDINGS",
+    "payload": [],
+    "description": {
+      "en": "Fires when key bindings change.",
+      "de": "Wird ausgelöst, wenn sich Tastenbelegungen ändern."
+    }
+  },
+  {
+    "name": "UPDATE_BATTLEFIELD_STATUS",
+    "payload": [],
+    "description": {
+      "en": "Fires when the battleground queue status changes.",
+      "de": "Wird ausgelöst, wenn sich der Schlachtfeld-Status ändert."
+    }
+  },
+  {
+    "name": "UPDATE_BATTLEFIELD_SCORE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the battleground score changes.",
+      "de": "Wird ausgelöst, wenn sich die Schlachtfeld-Wertung ändert."
+    }
+  },
+  {
+    "name": "ZONE_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the sub-zone changes.",
+      "de": "Wird ausgelöst, wenn sich das Unterzonen-Gebiet ändert."
+    }
+  },
+  {
+    "name": "ZONE_CHANGED_INDOORS",
+    "payload": [],
+    "description": {
+      "en": "Fires when moving between indoor sub-zones.",
+      "de": "Wird ausgelöst, wenn zwischen Innen-Unterzonen gewechselt wird."
+    }
+  },
+  {
+    "name": "ZONE_CHANGED_NEW_AREA",
+    "payload": [],
+    "description": {
+      "en": "Fires when the zone changes.",
+      "de": "Wird ausgelöst, wenn sich die Zone ändert."
+    }
+  },
+  {
+    "name": "MINIMAP_ZONE_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the minimap zone text changes.",
+      "de": "Wird ausgelöst, wenn sich der Minikarten-Zonentext ändert."
+    }
+  },
+  {
+    "name": "WORLD_MAP_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the world map changes.",
+      "de": "Wird ausgelöst, wenn sich die Weltkarte ändert."
+    }
+  },
+  {
+    "name": "CVAR_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "name": "arg2",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when a console variable changes.",
+      "de": "Wird ausgelöst, wenn sich eine Konsolenvariable ändert."
+    }
+  },
+  {
+    "name": "DUEL_REQUESTED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when someone challenges the player to a duel.",
+      "de": "Wird ausgelöst, wenn jemand den Spieler zum Duell fordert."
+    }
+  },
+  {
+    "name": "DUEL_FINISHED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a duel ends.",
+      "de": "Wird ausgelöst, wenn ein Duell endet."
+    }
+  },
+  {
+    "name": "TRADE_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when the trade window opens.",
+      "de": "Wird ausgelöst, wenn das Handelsfenster geöffnet wird."
+    }
+  },
+  {
+    "name": "TRADE_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the trade window closes.",
+      "de": "Wird ausgelöst, wenn das Handelsfenster geschlossen wird."
+    }
+  },
+  {
+    "name": "TRADE_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the trade offer changes.",
+      "de": "Wird ausgelöst, wenn sich das Handelsangebot ändert."
+    }
+  },
+  {
+    "name": "MAIL_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when the mailbox opens.",
+      "de": "Wird ausgelöst, wenn der Briefkasten geöffnet wird."
+    }
+  },
+  {
+    "name": "MAIL_INBOX_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the inbox changes.",
+      "de": "Wird ausgelöst, wenn sich der Posteingang ändert."
+    }
+  },
+  {
+    "name": "MAIL_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the mailbox closes.",
+      "de": "Wird ausgelöst, wenn der Briefkasten geschlossen wird."
+    }
+  },
+  {
+    "name": "AUCTION_HOUSE_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when the auction house opens.",
+      "de": "Wird ausgelöst, wenn das Auktionshaus geöffnet wird."
+    }
+  },
+  {
+    "name": "AUCTION_HOUSE_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the auction house closes.",
+      "de": "Wird ausgelöst, wenn das Auktionshaus geschlossen wird."
+    }
+  },
+  {
+    "name": "AUCTION_ITEM_LIST_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the auction list changes.",
+      "de": "Wird ausgelöst, wenn sich die Auktionsliste ändert."
+    }
+  },
+  {
+    "name": "FRIENDLIST_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the friend list changes.",
+      "de": "Wird ausgelöst, wenn sich die Freundesliste ändert."
+    }
+  },
+  {
+    "name": "IGNORELIST_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the ignore list changes.",
+      "de": "Wird ausgelöst, wenn sich die Ignorierliste ändert."
+    }
+  },
+  {
+    "name": "GUILD_ROSTER_UPDATE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "boolean"
+      }
+    ],
+    "description": {
+      "en": "Fires when the guild roster changes.",
+      "de": "Wird ausgelöst, wenn sich die Gildenliste ändert."
+    }
+  },
+  {
+    "name": "WHO_LIST_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when /who results arrive.",
+      "de": "Wird ausgelöst, wenn /who-Ergebnisse eintreffen."
+    }
+  },
+  {
+    "name": "PET_BAR_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the pet bar changes.",
+      "de": "Wird ausgelöst, wenn sich die Tierleiste ändert."
+    }
+  },
+  {
+    "name": "PET_ATTACK_START",
+    "payload": [],
+    "description": {
+      "en": "Fires when the pet starts attacking.",
+      "de": "Wird ausgelöst, wenn das Tier angreift."
+    }
+  },
+  {
+    "name": "PET_ATTACK_STOP",
+    "payload": [],
+    "description": {
+      "en": "Fires when the pet stops attacking.",
+      "de": "Wird ausgelöst, wenn das Tier aufhört anzugreifen."
+    }
+  },
+  {
+    "name": "TIME_PLAYED_MSG",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "number"
+      },
+      {
+        "name": "arg2",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires with /played results (total, this level).",
+      "de": "Wird mit /played-Ergebnissen ausgelöst (gesamt, diese Stufe)."
+    }
+  },
+  {
+    "name": "TAXIMAP_OPENED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a flight map opens.",
+      "de": "Wird ausgelöst, wenn eine Flugkarte geöffnet wird."
+    }
+  },
+  {
+    "name": "TAXIMAP_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a flight map closes.",
+      "de": "Wird ausgelöst, wenn eine Flugkarte geschlossen wird."
+    }
+  },
+  {
+    "name": "UI_ERROR_MESSAGE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when an error message is shown (red text).",
+      "de": "Wird ausgelöst, wenn eine Fehlermeldung angezeigt wird (roter Text)."
+    }
+  },
+  {
+    "name": "UI_INFO_MESSAGE",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when an info message is shown (yellow text).",
+      "de": "Wird ausgelöst, wenn eine Info-Meldung angezeigt wird (gelber Text)."
+    }
+  },
+  {
+    "name": "TRAINER_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when a trainer window opens.",
+      "de": "Wird ausgelöst, wenn ein Lehrerfenster geöffnet wird."
+    }
+  },
+  {
+    "name": "TRAINER_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when trainer data changes.",
+      "de": "Wird ausgelöst, wenn sich Lehrerdaten ändern."
+    }
+  },
+  {
+    "name": "TRAINER_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when a trainer window closes.",
+      "de": "Wird ausgelöst, wenn ein Lehrerfenster geschlossen wird."
+    }
+  },
+  {
+    "name": "TRADE_SKILL_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when a profession window opens.",
+      "de": "Wird ausgelöst, wenn ein Berufsfenster geöffnet wird."
+    }
+  },
+  {
+    "name": "TRADE_SKILL_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when profession data changes.",
+      "de": "Wird ausgelöst, wenn sich Berufsdaten ändern."
+    }
+  },
+  {
+    "name": "TRADE_SKILL_CLOSE",
+    "payload": [],
+    "description": {
+      "en": "Fires when a profession window closes.",
+      "de": "Wird ausgelöst, wenn ein Berufsfenster geschlossen wird."
+    }
+  },
+  {
+    "name": "CRAFT_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when a craft window opens.",
+      "de": "Wird ausgelöst, wenn ein Herstellungsfenster geöffnet wird."
+    }
+  },
+  {
+    "name": "CRAFT_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when craft data changes.",
+      "de": "Wird ausgelöst, wenn sich Herstellungsdaten ändern."
+    }
+  },
+  {
+    "name": "CRAFT_CLOSE",
+    "payload": [],
+    "description": {
+      "en": "Fires when a craft window closes.",
+      "de": "Wird ausgelöst, wenn ein Herstellungsfenster geschlossen wird."
+    }
+  },
+  {
+    "name": "CONFIRM_SUMMON",
+    "payload": [],
+    "description": {
+      "en": "Fires when the player is summoned.",
+      "de": "Wird ausgelöst, wenn der Spieler beschworen wird."
+    }
+  },
+  {
+    "name": "RESURRECT_REQUEST",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires when someone offers a resurrection.",
+      "de": "Wird ausgelöst, wenn jemand eine Wiederbelebung anbietet."
+    }
   }
 ]

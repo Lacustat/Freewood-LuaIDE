@@ -8,7 +8,16 @@
       "OnShow",
       "OnHide",
       "OnMouseDown",
-      "OnMouseUp"
+      "OnMouseUp",
+      "OnDragStart",
+      "OnDragStop",
+      "OnReceiveDrag",
+      "OnEnter",
+      "OnLeave",
+      "OnMouseWheel",
+      "OnSizeChanged",
+      "OnKeyDown",
+      "OnKeyUp"
     ],
     "methods": [
       "SetPoint",
@@ -53,7 +62,6 @@
       "StartMoving",
       "StopMovingOrSizing",
       "SetClampedToScreen",
-      "IsEventRegistered",
       "UnregisterAllEvents",
       "Raise",
       "Lower",
@@ -66,7 +74,34 @@
       "GetObjectType",
       "SetID",
       "GetID",
-      "HasScript"
+      "HasScript",
+      "EnableKeyboard",
+      "EnableMouseWheel",
+      "DisableDrawLayer",
+      "EnableDrawLayer",
+      "GetBackdrop",
+      "GetBackdropColor",
+      "GetBackdropBorderColor",
+      "GetEffectiveScale",
+      "GetHitRectInsets",
+      "GetMaxResize",
+      "GetMinResize",
+      "GetNumChildren",
+      "GetNumRegions",
+      "IsClampedToScreen",
+      "IsKeyboardEnabled",
+      "IsMouseWheelEnabled",
+      "IsResizable",
+      "IsToplevel",
+      "IsUserPlaced",
+      "RegisterAllEvents",
+      "SetHitRectInsets",
+      "SetMaxResize",
+      "SetMinResize",
+      "SetResizable",
+      "SetUserPlaced",
+      "StartSizing",
+      "SetAllPoints"
     ],
     "description": {
       "en": "Basic container for other UI elements; receives events and scripts.",
@@ -79,7 +114,8 @@
     "scripts": [
       "OnClick",
       "OnEnter",
-      "OnLeave"
+      "OnLeave",
+      "OnDoubleClick"
     ],
     "methods": [
       "SetText",
@@ -91,7 +127,32 @@
       "GetNormalTexture",
       "SetFont",
       "Click",
-      "IsEnabled"
+      "IsEnabled",
+      "GetDisabledTexture",
+      "GetHighlightTexture",
+      "GetPushedTexture",
+      "GetFontString",
+      "GetButtonState",
+      "SetButtonState",
+      "LockHighlight",
+      "UnlockHighlight",
+      "SetDisabledTexture",
+      "SetHighlightTexture",
+      "SetPushedTexture",
+      "SetPushedTextOffset",
+      "GetPushedTextOffset",
+      "GetTextWidth",
+      "GetTextHeight",
+      "SetTextFontObject",
+      "GetTextFontObject",
+      "SetTextColor",
+      "GetTextColor",
+      "SetDisabledTextColor",
+      "GetDisabledTextColor",
+      "SetHighlightTextColor",
+      "GetHighlightTextColor",
+      "SetFontString",
+      "GetFont"
     ],
     "description": {
       "en": "A clickable frame.",
@@ -127,7 +188,29 @@
       "GetStringWidth",
       "GetStringHeight",
       "SetJustifyV",
-      "SetTextHeight"
+      "SetTextHeight",
+      "GetFont",
+      "SetFontObject",
+      "GetFontObject",
+      "SetShadowColor",
+      "GetShadowColor",
+      "SetShadowOffset",
+      "GetShadowOffset",
+      "SetSpacing",
+      "GetSpacing",
+      "GetJustifyH",
+      "GetJustifyV",
+      "GetTextColor",
+      "SetNonSpaceWrap",
+      "CanNonSpaceWrap",
+      "SetAllPoints",
+      "GetDrawLayer",
+      "GetNumPoints",
+      "GetCenter",
+      "GetLeft",
+      "GetRight",
+      "GetTop",
+      "GetBottom"
     ],
     "description": {
       "en": "Text drawn inside a frame.",
@@ -159,7 +242,21 @@
       "SetDrawLayer",
       "GetObjectType",
       "SetGradient",
-      "GetTexture"
+      "GetTexture",
+      "SetBlendMode",
+      "GetBlendMode",
+      "SetDesaturated",
+      "IsDesaturated",
+      "GetTexCoord",
+      "GetVertexColor",
+      "SetAllPoints",
+      "GetDrawLayer",
+      "GetNumPoints",
+      "GetCenter",
+      "GetLeft",
+      "GetRight",
+      "GetTop",
+      "GetBottom"
     ],
     "description": {
       "en": "An image drawn inside a frame.",
@@ -172,7 +269,11 @@
     "scripts": [],
     "methods": [
       "SetChecked",
-      "GetChecked"
+      "GetChecked",
+      "GetCheckedTexture",
+      "SetCheckedTexture",
+      "GetDisabledCheckedTexture",
+      "SetDisabledCheckedTexture"
     ],
     "description": {
       "en": "A button with a checked state.",
@@ -185,7 +286,12 @@
     "scripts": [
       "OnEnterPressed",
       "OnEscapePressed",
-      "OnTextChanged"
+      "OnTextChanged",
+      "OnTabPressed",
+      "OnSpacePressed",
+      "OnEditFocusGained",
+      "OnEditFocusLost",
+      "OnChar"
     ],
     "methods": [
       "SetText",
@@ -197,7 +303,30 @@
       "SetMultiLine",
       "HighlightText",
       "SetNumeric",
-      "GetNumber"
+      "GetNumber",
+      "AddHistoryLine",
+      "GetAltArrowKeyMode",
+      "GetBlinkSpeed",
+      "GetHistoryLines",
+      "GetInputLanguage",
+      "GetMaxBytes",
+      "GetMaxLetters",
+      "GetNumLetters",
+      "GetTextInsets",
+      "Insert",
+      "IsAutoFocus",
+      "IsMultiLine",
+      "IsNumeric",
+      "IsPassword",
+      "SetAltArrowKeyMode",
+      "SetBlinkSpeed",
+      "SetFont",
+      "SetHistoryLines",
+      "SetMaxBytes",
+      "SetNumber",
+      "SetPassword",
+      "SetTextInsets",
+      "ToggleInputLanguage"
     ],
     "description": {
       "en": "A text input field.",
@@ -215,11 +344,156 @@
       "SetValue",
       "GetValue",
       "SetStatusBarTexture",
-      "SetStatusBarColor"
+      "SetStatusBarColor",
+      "GetMinMaxValues",
+      "GetStatusBarTexture",
+      "GetStatusBarColor"
     ],
     "description": {
       "en": "A bar that shows a value, for example health.",
       "de": "Ein Balken, der einen Wert zeigt, zum Beispiel Leben."
+    }
+  },
+  {
+    "name": "Slider",
+    "inherits": "Frame",
+    "scripts": [
+      "OnValueChanged"
+    ],
+    "methods": [
+      "SetMinMaxValues",
+      "GetMinMaxValues",
+      "SetValue",
+      "GetValue",
+      "SetValueStep",
+      "GetValueStep",
+      "SetOrientation",
+      "GetOrientation",
+      "SetThumbTexture",
+      "GetThumbTexture",
+      "Enable",
+      "Disable",
+      "IsEnabled"
+    ],
+    "description": {
+      "en": "A draggable slider.",
+      "de": "Ein verschiebbarer Schieberegler."
+    }
+  },
+  {
+    "name": "ScrollFrame",
+    "inherits": "Frame",
+    "scripts": [
+      "OnScrollRangeChanged",
+      "OnVerticalScroll",
+      "OnHorizontalScroll"
+    ],
+    "methods": [
+      "SetScrollChild",
+      "GetScrollChild",
+      "SetHorizontalScroll",
+      "GetHorizontalScroll",
+      "SetVerticalScroll",
+      "GetVerticalScroll",
+      "GetHorizontalScrollRange",
+      "GetVerticalScrollRange",
+      "UpdateScrollChildRect"
+    ],
+    "description": {
+      "en": "A frame that scrolls a child frame.",
+      "de": "Ein Frame, der einen Kind-Frame scrollt."
+    }
+  },
+  {
+    "name": "MessageFrame",
+    "inherits": "Frame",
+    "scripts": [],
+    "methods": [
+      "AddMessage",
+      "Clear",
+      "SetFading",
+      "GetFading",
+      "SetFadeDuration",
+      "GetFadeDuration",
+      "SetTimeVisible",
+      "GetTimeVisible",
+      "SetFont",
+      "GetFont",
+      "SetJustifyH",
+      "SetMaxLines"
+    ],
+    "description": {
+      "en": "Shows short messages that fade out.",
+      "de": "Zeigt kurze Nachrichten, die ausblenden."
+    }
+  },
+  {
+    "name": "ScrollingMessageFrame",
+    "inherits": "MessageFrame",
+    "scripts": [],
+    "methods": [
+      "ScrollUp",
+      "ScrollDown",
+      "ScrollToTop",
+      "ScrollToBottom",
+      "PageUp",
+      "PageDown",
+      "AtTop",
+      "AtBottom",
+      "GetMaxLines",
+      "SetMaxLines"
+    ],
+    "description": {
+      "en": "A scrollable chat-like log.",
+      "de": "Ein scrollbares Chat-ähnliches Protokoll."
+    }
+  },
+  {
+    "name": "GameTooltip",
+    "inherits": "Frame",
+    "scripts": [],
+    "methods": [
+      "SetOwner",
+      "GetOwner",
+      "AddLine",
+      "AddDoubleLine",
+      "ClearLines",
+      "SetText",
+      "NumLines",
+      "SetBagItem",
+      "SetInventoryItem",
+      "SetHyperlink",
+      "SetUnit",
+      "SetSpell",
+      "SetAction",
+      "SetMerchantItem",
+      "SetLootItem",
+      "SetPlayerBuff",
+      "SetUnitBuff",
+      "SetUnitDebuff",
+      "FadeOut",
+      "AppendText",
+      "GetUnit",
+      "GetItem",
+      "GetSpell",
+      "IsOwned",
+      "SetFrameStack"
+    ],
+    "description": {
+      "en": "A tooltip frame.",
+      "de": "Ein Tooltip-Frame."
+    }
+  },
+  {
+    "name": "Cooldown",
+    "inherits": "Frame",
+    "scripts": [],
+    "methods": [
+      "SetCooldown"
+    ],
+    "description": {
+      "en": "Shows a cooldown sweep.",
+      "de": "Zeigt eine Abklingzeit-Animation."
     }
   }
 ]

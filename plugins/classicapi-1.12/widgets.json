@@ -1,12 +1,57 @@
 [
   {
     "name": "Frame",
-    "scripts": [],
+    "scripts": [
+      "OnEnable",
+      "OnDisable",
+      "OnMinMaxChanged",
+      "OnAttributeChanged",
+      "PreClick",
+      "PostClick"
+    ],
     "methods": [
       "HookScript",
       "SetShown",
       "SetSize",
-      "SetClipsChildren"
+      "SetClipsChildren",
+      "SetPoint",
+      "GetSize",
+      "GetRect",
+      "GetScaledRect",
+      "IsRectValid",
+      "GetPointByName",
+      "ClearPoint",
+      "GetDebugName",
+      "IsMouseOver",
+      "IsDragging",
+      "IsProtected",
+      "CanChangeProtectedState",
+      "SetClampRectInsets",
+      "GetClampRectInsets",
+      "SetResizeBounds",
+      "DoesClipChildren",
+      "GetBoundsRect",
+      "GetEffectiveAlpha",
+      "SetAlphaGradient",
+      "ClearAlphaGradient",
+      "HasAlphaGradient",
+      "DesaturateHierarchy",
+      "RegisterUnitEvent",
+      "IsEventRegistered",
+      "SetPropagateKeyboardInput",
+      "GetPropagateKeyboardInput",
+      "SetDontSavePosition",
+      "GetDontSavePosition",
+      "SetAttribute",
+      "SetAttributeNoHandler",
+      "ClearAttribute",
+      "GetAttribute",
+      "CanChangeAttribute",
+      "AllowAttributeChanges",
+      "CreateAnimationGroup",
+      "GetAnimationGroups",
+      "StopAnimating",
+      "CreateMaskTexture"
     ],
     "description": {
       "en": "Extra Frame methods added by ClassicAPI.",
@@ -21,11 +66,244 @@
     ],
     "methods": [
       "SetCooldown",
-      "Clear"
+      "Clear",
+      "SetCooldownDuration",
+      "SetCooldownFromExpirationTime",
+      "GetCooldownTimes",
+      "GetCooldownDuration",
+      "GetCooldownDisplayDuration",
+      "Pause",
+      "Resume",
+      "SetPaused",
+      "IsPaused",
+      "SetReverse",
+      "GetReverse",
+      "SetDrawEdge",
+      "GetDrawEdge",
+      "SetDrawSwipe",
+      "GetDrawSwipe",
+      "SetDrawBling",
+      "GetDrawBling",
+      "SetSwipeColor",
+      "SetEdgeColor",
+      "SetSwipeTexture",
+      "SetEdgeTexture",
+      "SetBlingTexture",
+      "SetRotation",
+      "GetRotation",
+      "SetHideCountdownNumbers",
+      "GetHideCountdownNumbers",
+      "GetCountdownFontString",
+      "SetCountdownAbbrevThreshold",
+      "GetCountdownAbbrevThreshold",
+      "SetCountdownMillisecondsThreshold",
+      "GetCountdownMillisecondsThreshold",
+      "SetMinimumCountdownDuration",
+      "GetMinimumCountdownDuration"
     ],
     "description": {
       "en": "A frame showing a cooldown sweep.",
       "de": "Ein Frame, der einen Abklingzeit-Sweep zeigt."
+    }
+  },
+  {
+    "name": "Button",
+    "scripts": [],
+    "methods": [
+      "SetEnabled",
+      "SetFormattedText",
+      "SetNormalFontObject",
+      "GetNormalFontObject",
+      "SetMotionScriptsWhileDisabled",
+      "GetMotionScriptsWhileDisabled",
+      "RegisterForMouse"
+    ],
+    "description": {
+      "en": "Extra Button methods added by ClassicAPI.",
+      "de": "Zusätzliche Button-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "FontString",
+    "scripts": [],
+    "methods": [
+      "GetStringHeight",
+      "GetUnboundedStringWidth",
+      "GetWrappedWidth",
+      "GetNumLines",
+      "GetLineHeight",
+      "GetFontHeight",
+      "SetFontHeight",
+      "GetFieldSize",
+      "IsTruncated",
+      "SetMaxLines",
+      "GetMaxLines",
+      "SetWordWrap",
+      "CanWordWrap",
+      "SetIndentedWordWrap",
+      "GetIndentedWordWrap",
+      "SetFormattedText",
+      "SetRotation",
+      "GetRotation"
+    ],
+    "description": {
+      "en": "Extra FontString methods added by ClassicAPI.",
+      "de": "Zusätzliche FontString-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "Texture",
+    "scripts": [],
+    "methods": [
+      "SetRotation",
+      "GetRotation",
+      "SetVertexOffset",
+      "GetVertexOffset",
+      "SetColorTexture",
+      "SetAtlas",
+      "GetAtlas",
+      "ResetTexCoord",
+      "SetSpriteSheetCell",
+      "SetDesaturation",
+      "GetDesaturation",
+      "IsDesaturateSupported",
+      "SetMask",
+      "AddMaskTexture",
+      "RemoveMaskTexture",
+      "GetNumMaskTextures",
+      "GetMaskTexture"
+    ],
+    "description": {
+      "en": "Extra Texture methods added by ClassicAPI.",
+      "de": "Zusätzliche Texture-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "EditBox",
+    "scripts": [
+      "OnCharComposition"
+    ],
+    "methods": [
+      "GetCursorPosition",
+      "SetCursorPosition",
+      "GetUTF8CursorPosition",
+      "ClearHighlightText",
+      "SetHighlightColor",
+      "GetHighlightColor",
+      "HasFocus",
+      "HasText",
+      "ClearHistory",
+      "Enable",
+      "Disable",
+      "IsEnabled",
+      "SetCountInvisibleLetters",
+      "IsCountInvisibleLetters",
+      "IsInIMECompositionMode"
+    ],
+    "description": {
+      "en": "Extra EditBox methods added by ClassicAPI.",
+      "de": "Zusätzliche EditBox-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "StatusBar",
+    "scripts": [],
+    "methods": [
+      "SetReverseFill",
+      "GetReverseFill",
+      "SetRotatesTexture",
+      "GetRotatesTexture",
+      "SetFillStyle",
+      "GetFillStyle",
+      "SetColorFill",
+      "SetStatusBarDesaturated",
+      "IsStatusBarDesaturated",
+      "SetStatusBarDesaturation",
+      "GetStatusBarDesaturation"
+    ],
+    "description": {
+      "en": "Extra StatusBar methods added by ClassicAPI.",
+      "de": "Zusätzliche StatusBar-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "Slider",
+    "scripts": [],
+    "methods": [
+      "Enable",
+      "Disable",
+      "IsEnabled"
+    ],
+    "description": {
+      "en": "Extra Slider methods added by ClassicAPI.",
+      "de": "Zusätzliche Slider-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "ScrollingMessageFrame",
+    "scripts": [],
+    "methods": [
+      "SetHyperlinksEnabled",
+      "GetHyperlinksEnabled",
+      "GetMessageInfo",
+      "AddMessage",
+      "BackFillMessage",
+      "RemoveMessagesByPredicate",
+      "SetScrollOffset",
+      "GetScrollOffset",
+      "GetMaxScrollRange",
+      "ScrollByAmount",
+      "SetInsertMode",
+      "GetInsertMode",
+      "AddOnDisplayRefreshedCallback"
+    ],
+    "description": {
+      "en": "Extra ScrollingMessageFrame methods added by ClassicAPI.",
+      "de": "Zusätzliche ScrollingMessageFrame-Methoden durch ClassicAPI."
+    }
+  },
+  {
+    "name": "GameTooltip",
+    "scripts": [
+      "OnTooltipSetItem",
+      "OnTooltipSetSpell",
+      "OnTooltipSetUnit",
+      "OnTooltipSetGameObject",
+      "OnTooltipSetFrameStack"
+    ],
+    "methods": [
+      "AddSpellByID",
+      "AddTexture",
+      "GetGameObject",
+      "GetItem",
+      "GetMinimumWidth",
+      "GetOwner",
+      "GetPadding",
+      "GetSpell",
+      "GetUnit",
+      "GetUnitGUID",
+      "HasGameObject",
+      "HasItem",
+      "HasSpell",
+      "HasUnit",
+      "IsEquippedItem",
+      "IsUnit",
+      "SetAnchorType",
+      "SetEquipmentSet",
+      "SetFrameStack",
+      "SetHyperlink",
+      "SetHyperlinkCompareItem",
+      "SetInventoryItemByID",
+      "SetItemByGUID",
+      "SetItemByID",
+      "SetSpellByID",
+      "SetTalentByID",
+      "SetTotem",
+      "SetUnitAura"
+    ],
+    "description": {
+      "en": "Extra GameTooltip methods added by ClassicAPI.",
+      "de": "Zusätzliche GameTooltip-Methoden durch ClassicAPI."
     }
   }
 ]

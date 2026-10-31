@@ -83,7 +83,7 @@ export function completeAt(source: string, cursor: number, target: ResolvedTarge
     for (const f of target.functions.values()) {
       if (f.name.startsWith(ns + ".")) {
         const member = f.name.slice(ns.length + 1);
-        if (!member.includes(".")) names.set(member, { label: member, kind: "function", detail: signatureText(f.name, f.params), doc: f.description, insert: member });
+        if (!member.includes(".")) names.set(member, { label: member, kind: "function", detail: signatureText(f.name, f.params, f.tags), doc: f.description, insert: member });
       }
     }
     const items = [...names.values()].filter((c) => c.label.toLowerCase().startsWith(prefix.toLowerCase())).sort((a, b) => a.label.localeCompare(b.label));
@@ -105,7 +105,7 @@ export function completeAt(source: string, cursor: number, target: ResolvedTarge
     if (!top.toLowerCase().startsWith(lower)) continue;
     if (f.name.includes(".")) {
       if (!items.has(top)) items.set(top, { label: top, kind: "namespace", insert: top });
-    } else items.set(top, { label: top, kind: "function", detail: signatureText(f.name, f.params), doc: f.description, insert: top });
+    } else items.set(top, { label: top, kind: "function", detail: signatureText(f.name, f.params, f.tags), doc: f.description, insert: top });
   }
   // identifiers already used in the document
   for (const w of source.match(/[A-Za-z_]\w*/g) ?? []) {
@@ -118,7 +118,8 @@ function rank(c: Completion): number {
   return { function: 0, namespace: 1, keyword: 2, variable: 3, method: 4, event: 4, script: 4 }[c.kind];
 }
 
-function signatureText(name: string, params: { name: string; optional?: boolean }[]): string {
+function signatureText(name: string, params: { name: string; optional?: boolean }[], tags?: string[]): string {
+  if (tags?.includes("signature-unknown")) return `${name}(...)`;
   return `${name}(${params.map((p) => (p.optional ? `[${p.name}]` : p.name)).join(", ")})`;
 }
 
@@ -148,7 +149,7 @@ export function signatureAt(source: string, cursor: number, target: ResolvedTarg
         const name = m[1]!.replace(/^.*:/, "");
         const f = target.functions.get(m[1]!) ?? target.functions.get(name);
         if (!f) return undefined;
-        return { name: f.name, label: signatureText(f.name, f.params), activeParam: commas, doc: f.description };
+        return { name: f.name, label: signatureText(f.name, f.params, f.tags), activeParam: commas, doc: f.description };
       }
       depth--;
     } else if (c === "," && depth === 0) commas++;

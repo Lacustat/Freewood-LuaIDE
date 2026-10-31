@@ -52,7 +52,7 @@ test("completion contexts", async () => {
   const t = await targets();
   let s = 'local f = CreateFrame("Frame")\nf:RegisterEvent("PLAYER_E|';
   let r = completeAt(strip(s), at(s), t.v!);
-  assert.deepEqual(r.items.map((i) => i.label), ["PLAYER_ENTERING_WORLD"]);
+  assert.deepEqual(r.items.map((i) => i.label).sort(), ["PLAYER_ENTERING_WORLD", "PLAYER_ENTER_COMBAT"]);
   assert.equal(strip(s).slice(r.from, at(s)), "PLAYER_E");
 
   s = "f:Set|";

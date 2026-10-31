@@ -1,10 +1,300 @@
 [
-  { "name": "PLAYER_FOCUS_CHANGED", "payload": [],
-    "description": { "en": "Fires when the focus target changes.", "de": "Wird ausgelöst, wenn sich das Fokusziel ändert." } },
-  { "name": "NAME_PLATE_UNIT_ADDED", "payload": [{ "name": "arg1", "type": "UnitId" }],
-    "description": { "en": "Fires when a nameplate appears.", "de": "Wird ausgelöst, wenn eine Namensplakette erscheint." } },
-  { "name": "UNIT_SPELLCAST_START", "payload": [{ "name": "arg1", "type": "UnitId" }],
-    "description": { "en": "Fires when a unit starts casting.", "de": "Wird ausgelöst, wenn eine Einheit zu zaubern beginnt." } },
-  { "name": "COMBAT_LOG_EVENT_UNFILTERED", "payload": [],
-    "description": { "en": "Fires for every combat log event.", "de": "Wird für jedes Kampflog-Ereignis ausgelöst." } }
+  {
+    "name": "PLAYER_FOCUS_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the focus target changes.",
+      "de": "Wird ausgelöst, wenn sich das Fokusziel ändert."
+    }
+  },
+  {
+    "name": "NAME_PLATE_UNIT_ADDED",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when a nameplate appears.",
+      "de": "Wird ausgelöst, wenn eine Namensplakette erscheint."
+    }
+  },
+  {
+    "name": "UNIT_SPELLCAST_START",
+    "payload": [
+      {
+        "name": "arg1",
+        "type": "UnitId"
+      }
+    ],
+    "description": {
+      "en": "Fires when a unit starts casting.",
+      "de": "Wird ausgelöst, wenn eine Einheit zu zaubern beginnt."
+    }
+  },
+  {
+    "name": "COMBAT_LOG_EVENT_UNFILTERED",
+    "payload": [],
+    "description": {
+      "en": "Fires for every combat log event.",
+      "de": "Wird für jedes Kampflog-Ereignis ausgelöst."
+    }
+  },
+  {
+    "name": "BAG_NEW_ITEMS_UPDATED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "BAG_UPDATE_DELAYED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "ITEM_DATA_LOAD_RESULT",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "INVENTORY_SEARCH_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "COMBAT_LOG_EVENT",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_SOFT_ENEMY_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_SOFT_FRIEND_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_SOFT_INTERACT_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "NAME_PLATE_CREATED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "NAME_PLATE_UNIT_REMOVED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "EQUIPMENT_SETS_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "EQUIPMENT_SWAP_PENDING",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "EQUIPMENT_SWAP_FINISHED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_EQUIPMENT_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_AVG_ITEM_LEVEL_READY",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "LOOT_HISTORY_ROLL_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "LOOT_HISTORY_ROLL_COMPLETE",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "LOOT_SCAN_COMPLETED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "LOSS_OF_CONTROL_ADDED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "LOSS_OF_CONTROL_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "CURSOR_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "FACTION_STANDING_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "GLOBAL_MOUSE_DOWN",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "GLOBAL_MOUSE_UP",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "HEARTHSTONE_BOUND",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "INCOMING_RESURRECT_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "LEARNED_SPELL_IN_SKILL_LINE",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "MAP_EXPLORATION_UPDATED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "MODIFIER_STATE_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_STARTED_LOOKING",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_STOPPED_LOOKING",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  },
+  {
+    "name": "PLAYER_STARTED_MOVING",
+    "payload": [],
+    "description": {
+      "en": "Event added by ClassicAPI. Arguments not documented yet.",
+      "de": "Event, das ClassicAPI ergänzt. Argumente noch nicht dokumentiert."
+    }
+  }
 ]
