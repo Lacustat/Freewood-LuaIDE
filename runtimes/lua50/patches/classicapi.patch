@@ -1,0 +1,100 @@
+diff --git a/lapi.c b/lapi.c
+index 78a9dd3..a2195b2 100644
+--- a/lapi.c
++++ b/lapi.c
+@@ -520,6 +520,12 @@ LUA_API void lua_newtable (lua_State *L) {
+ }
+ 
+ 
++extern Table *fw_strmt;
++
++LUA_API void fw_setstringmeta (lua_State *L, int idx) {  /* Freewood */
++  fw_strmt = (idx == 0) ? NULL : hvalue(luaA_index(L, idx));
++}
++
+ LUA_API int lua_getmetatable (lua_State *L, int objindex) {
+   const TObject *obj;
+   Table *mt = NULL;
+@@ -534,6 +540,9 @@ LUA_API int lua_getmetatable (lua_State *L, int objindex) {
+       case LUA_TUSERDATA:
+         mt = uvalue(obj)->uv.metatable;
+         break;
++      case LUA_TSTRING:
++        mt = fw_strmt;
++        break;
+     }
+   }
+   if (mt == NULL || mt == hvalue(defaultmeta(L)))
+diff --git a/llimits.h b/llimits.h
+index e5d0a7f..dc9d85a 100644
+--- a/llimits.h
++++ b/llimits.h
+@@ -150,8 +150,10 @@ typedef unsigned long Instruction;
+ 
+ 
+ /* maximum number of upvalues per function */
++/* Freewood: Array fuer ClassicAPI (60), Grenze zur Laufzeit in fw_maxups */
++extern int fw_maxups, fw_loopclose;
+ #ifndef MAXUPVALUES
+-#define MAXUPVALUES	32
++#define MAXUPVALUES	60
+ #endif
+ 
+ 
+diff --git a/lparser.c b/lparser.c
+index 0ebb1ee..d4a0ae8 100644
+--- a/lparser.c
++++ b/lparser.c
+@@ -189,7 +189,7 @@ static int indexupvalue (FuncState *fs, TString *name, expdesc *v) {
+     }
+   }
+   /* new one */
+-  luaX_checklimit(fs->ls, f->nups + 1, MAXUPVALUES, "upvalues");
++  luaX_checklimit(fs->ls, f->nups + 1, fw_maxups, "upvalues");
+   luaM_growvector(fs->L, fs->f->upvalues, f->nups, fs->f->sizeupvalues,
+                   TString *, MAX_INT, "");
+   fs->f->upvalues[f->nups] = name;
+diff --git a/ltm.c b/ltm.c
+index 5687e28..cd6f1f5 100644
+--- a/ltm.c
++++ b/ltm.c
+@@ -56,6 +56,9 @@ const TObject *luaT_gettm (Table *events, TMS event, TString *ename) {
+ }
+ 
+ 
++int fw_maxups = 32, fw_loopclose = 0;
++Table *fw_strmt = NULL;  /* Freewood: String-Metatabelle (ClassicAPI) */
++
+ const TObject *luaT_gettmbyobj (lua_State *L, const TObject *o, TMS event) {
+   TString *ename = G(L)->tmname[event];
+   switch (ttype(o)) {
+@@ -63,6 +66,9 @@ const TObject *luaT_gettmbyobj (lua_State *L, const TObject *o, TMS event) {
+       return luaH_getstr(hvalue(o)->metatable, ename);
+     case LUA_TUSERDATA:
+       return luaH_getstr(uvalue(o)->uv.metatable, ename);
++    case LUA_TSTRING:
++      if (fw_strmt) return luaH_getstr(fw_strmt, ename);
++      return &luaO_nilobject;
+     default:
+       return &luaO_nilobject;
+   }
+diff --git a/lvm.c b/lvm.c
+index 3e94d2f..5a6a811 100644
+--- a/lvm.c
++++ b/lvm.c
+@@ -698,6 +698,7 @@ StkId luaV_execute (lua_State *L) {
+         limit = nvalue(plimit);
+         if (step > 0 ? idx <= limit : idx >= limit) {
+           dojump(pc, GETARG_sBx(i));  /* jump back */
++          if (fw_loopclose && L->openupval) luaF_close(L, ra);  /* Freewood */
+           chgnvalue(ra, idx);  /* update index */
+         }
+         break;
+@@ -705,6 +706,7 @@ StkId luaV_execute (lua_State *L) {
+       case OP_TFORLOOP: {
+         int nvar = GETARG_C(i) + 1;
+         StkId cb = ra + nvar + 2;  /* call base */
++        if (fw_loopclose && L->openupval) luaF_close(L, ra + 2);  /* Freewood */
+         setobjs2s(cb, ra);
+         setobjs2s(cb+1, ra+1);
+         setobjs2s(cb+2, ra+2);

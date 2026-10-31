@@ -11,6 +11,8 @@ if [ ! -f wasi-libc/build/sysroot/lib/wasm32-wasi/libc.a ]; then
   mkdir -p wasi-libc/build && (cd wasi-libc/build && cmake .. -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_AR=/usr/bin/llvm-ar \
     -DCMAKE_C_COMPILER_TARGET=wasm32-wasi -DCMAKE_SYSTEM_NAME=WASI -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY -DTARGET_TRIPLE=wasm32-wasi >/dev/null && ninja >/dev/null)
 fi
+# ClassicAPI-Patch (Strings-Methoden, 60 Upvalues, Schleifenvariable je Durchlauf) idempotent anwenden · apply idempotently
+if ! git -C lua50 apply --check -R "$here/patches/classicapi.patch" >/dev/null 2>&1; then git -C lua50 apply "$here/patches/classicapi.patch"; fi
 SR="$work/wasi-libc/build/sysroot"; files=""
 for s in lapi lcode ldebug ldo ldump lfunc lgc llex lmem lobject lopcodes lparser lstate lstring ltable ltm lundump lvm lzio lauxlib lbaselib lmathlib lstrlib ltablib; do files="$files lua50/$s.c"; done
 clang --target=wasm32-wasi --sysroot="$SR" -O2 -Ilua50 -mexception-handling -mllvm -wasm-enable-sjlj -D_WASI_EMULATED_SIGNAL \

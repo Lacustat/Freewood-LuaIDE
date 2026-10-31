@@ -85,6 +85,7 @@ interface Exports {
   fw_alloc(n: number): number;
   fw_set_limit(n: number): void;
   fw_open(): void;
+  fw_classic(on: number): void;
   fw_register(name: number): void;
   fw_run(code: number, chunk: number): number;
   fw_set(name: number): void;
@@ -102,7 +103,7 @@ export class Wasm50Runtime implements LuaRuntime {
 
   private constructor() {}
 
-  static async create(module: WebAssembly.Module, instructionLimit = 20_000_000): Promise<Wasm50Runtime> {
+  static async create(module: WebAssembly.Module, instructionLimit = 20_000_000, classic = false): Promise<Wasm50Runtime> {
     const rt = new Wasm50Runtime();
     const wasi = {
       environ_get: () => 0,
@@ -131,6 +132,7 @@ export class Wasm50Runtime implements LuaRuntime {
     const inst = await WebAssembly.instantiate(module, imports as unknown as WebAssembly.Imports);
     rt.x = inst.exports as unknown as Exports;
     rt.x.fw_open();
+    rt.x.fw_classic(classic ? 1 : 0);
     rt.x.fw_set_limit(instructionLimit);
     return rt;
   }

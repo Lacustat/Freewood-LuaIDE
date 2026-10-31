@@ -17,7 +17,7 @@
 - **Web-Oberfläche (`web`)**: Editor, Graph, Forms und Simulation in einem Fenster; Projekt wird im Browser (localStorage) gespeichert. Starten mit `node scripts/serve.mjs 8123`.
 - **Einstellungen (`web/settings.ts`)**: Farbschema, Code-Schriftgröße, Tab-Breite, Auto-Speichern, Forms-Zoom (0 = einpassen) und Bühnengröße; gespeichert im Browser. Neue Einstellung = ein Eintrag in `SETTING_DEFS` plus Sprachschlüssel `settings.<key>`.
 - **Fehlermeldungen wie das Original**: Der Interpreter meldet im 5.0-Modus wie die echte 5.0-VM (``attempt to index local `x' (a nil value)``); abgesichert durch `tests/fixtures/lua50-oracle.json`, das aus echtem Lua 5.0 (WASM) erzeugt wurde.
-- **`runtimes/lua50` + `src/lua/wasm50.ts`**: echtes Lua 5.0 als WASM (`LuaRuntime`), Referenz für den Interpreter und echte Syntaxprüfung im Editor (Einstellung „realLua“).
+- **`runtimes/lua50` + `src/lua/wasm50.ts`**: echtes Lua 5.0 als WASM (`LuaRuntime`), Referenz für den Interpreter und echte Syntaxprüfung im Editor (Einstellung „realLua“). Für ClassicAPI wird die VM per `runtimes/lua50/patches/classicapi.patch` angepasst (String-Methoden, 60 Upvalues, Schleifenvariable je Durchlauf; Schalter `fw_classic`, Standard aus).
 - **Plugin-Daten**: Vanilla ca. 1060 Funktionen (ca. 310 mit Signatur, aus dem Gedächtnis erstellt und noch zu prüfen; Rest nur Name mit Tag `signature-unknown`), 160 Events, ClassicAPI ca. 735 Funktionen (ca. 80 mit Signatur) und zusätzliche Widget-Methoden. Quellen stehen in den Manifesten.
 - **Tests**: `npm test` (Einheitstests), `node scripts/ui-smoke.mjs` (UI-Rauchtest, braucht Playwright und laufenden Server).
 
@@ -34,6 +34,6 @@
 - **Web UI (`web`)**: editor, graph, forms and simulation in one window; the project is stored in the browser (localStorage). Start with `node scripts/serve.mjs 8123`.
 - **Settings (`web/settings.ts`)**: theme, code font size, tab width, autosave, forms zoom (0 = fit) and stage size; stored in the browser. A new setting is one entry in `SETTING_DEFS` plus a language key `settings.<key>`.
 - **Error messages like the original**: in 5.0 mode the interpreter reports like the real 5.0 VM (``attempt to index local `x' (a nil value)``); backed by `tests/fixtures/lua50-oracle.json`, generated from real Lua 5.0 (WASM).
-- **`runtimes/lua50` + `src/lua/wasm50.ts`**: real Lua 5.0 as WASM (`LuaRuntime`), reference for the interpreter and real syntax check in the editor (setting "realLua").
+- **`runtimes/lua50` + `src/lua/wasm50.ts`**: real Lua 5.0 as WASM (`LuaRuntime`), reference for the interpreter and real syntax check in the editor (setting "realLua"). For ClassicAPI the VM is patched by `runtimes/lua50/patches/classicapi.patch` (string methods, 60 upvalues, fresh loop variable per pass; switch `fw_classic`, off by default).
 - **Plugin data**: Vanilla about 1060 functions (about 310 with signature, written from memory and still to be verified; the rest are names only with tag `signature-unknown`), 160 events, ClassicAPI about 735 functions (about 80 with signature) plus extra widget methods. Sources are listed in the manifests.
 - **Tests**: `npm test` (unit tests), `node scripts/ui-smoke.mjs` (UI smoke test, needs Playwright and a running server).

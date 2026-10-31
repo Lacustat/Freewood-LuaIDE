@@ -24,9 +24,9 @@ export async function loadLuaWasm(): Promise<ArrayBuffer> {
 }
 
 /** DE: Neue Engine für die Simulation auf der echten VM; null, wenn nicht ladbar. EN: new engine for the simulation on the real VM; null if it cannot be loaded. */
-export async function createRealEngine(): Promise<SimEngine | null> {
+export async function createRealEngine(classic = false): Promise<SimEngine | null> {
   try {
-    return await createWasmEngine(loadLuaWasm);
+    return await createWasmEngine(loadLuaWasm, classic);
   } catch {
     return null;
   }

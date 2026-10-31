@@ -93,8 +93,24 @@ __attribute__((export_name("fw_out_clear"))) void fw_out_clear(void) { outlen = 
 __attribute__((export_name("fw_alloc"))) char *fw_alloc(int n) { return malloc(n); }
 __attribute__((export_name("fw_set_limit"))) void fw_set_limit(int n) { step_limit = n; }
 
+extern int fw_maxups, fw_loopclose;
+extern void fw_setstringmeta(lua_State *L, int idx);
+/* ClassicAPI-Verhalten ein/aus: String-Methoden, 60 Upvalues, Schleifenvariable je Durchlauf.
+   Nach fw_open aufrufen. · ClassicAPI behaviour on/off; call after fw_open. */
+__attribute__((export_name("fw_classic"))) void fw_classic(int on) {
+  fw_maxups = on ? 60 : 32; fw_loopclose = on ? 1 : 0;
+  if (on) {
+    lua_pushstring(L, "__fw_strmt"); lua_newtable(L);
+    lua_pushstring(L, "__index"); lua_getglobal(L, "string"); lua_rawset(L, -3);
+    lua_pushvalue(L, -1); lua_insert(L, -3);          /* tbl key tbl -> keep copy */
+    lua_rawset(L, LUA_REGISTRYINDEX);                  /* registry[key] = tbl */
+    fw_setstringmeta(L, -1); lua_pop(L, 1);
+  } else fw_setstringmeta(L, 0);
+}
+
 __attribute__((export_name("fw_open"))) void fw_open(void) {
   if (L) lua_close(L);
+  fw_setstringmeta(NULL, 0); fw_maxups = 32; fw_loopclose = 0;
   L = lua_open(); outlen = 0;
   lua_baselibopen(L); lua_tablibopen(L); lua_strlibopen(L); lua_mathlibopen(L);
   lua_register(L, "print", fw_print);

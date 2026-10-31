@@ -134,8 +134,9 @@ export function supportsRealVm(target: { luaVersion: LuaVersion; syntax: string 
 }
 
 /** DE: Erzeugt eine Engine auf der echten Lua-5.0-VM. EN: creates an engine on the real Lua 5.0 VM. */
-export async function createWasmEngine(load: () => Promise<BufferSource>): Promise<SimEngine> {
+/** DE: `classic` = ClassicAPI-Verhalten der VM (String-Methoden, 60 Upvalues, Schleifenvariable je Durchlauf). EN: `classic` = ClassicAPI VM behaviour. */
+export async function createWasmEngine(load: () => Promise<BufferSource>, classic = false): Promise<SimEngine> {
   const module = await WebAssembly.compile(await load());
-  const rt = await Wasm50Runtime.create(module);
+  const rt = await Wasm50Runtime.create(module, undefined, classic);
   return new WasmEngine(rt);
 }

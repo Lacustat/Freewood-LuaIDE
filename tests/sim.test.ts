@@ -34,7 +34,7 @@ for (const eng of ["interp", "wasm"] as const) {
 const test = (name: string, fn: () => Promise<void>): void => { nodeTest(`[${eng}] ${name}`, fn); };
 const mk = async (target: ResolvedTarget, scenario?: ConstructorParameters<typeof WowSim>[1]): Promise<WowSim> => {
   if (eng === "interp" || !supportsRealVm(target)) return new WowSim(target, scenario);
-  return new WowSim(target, scenario, await createWasmEngine(wasmBytes));
+  return new WowSim(target, scenario, await createWasmEngine(wasmBytes, target.syntax === "lua51-transpiled"));
 };
 
 // ===== [S2] Frames und Skripte · frames and scripts =====

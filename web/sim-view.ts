@@ -152,7 +152,7 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
     shownLog = 0;
     clear(log);
     const wantReal = ctx.settings.simRuntime === "real" && supportsRealVm(ctx.target);
-    const engine = wantReal ? await createRealEngine() : null;
+    const engine = wantReal ? await createRealEngine(ctx.target.syntax === "lua51-transpiled") : null;
     sim = new WowSim(ctx.target, persistedScenario, engine ?? undefined);
     const s = sim;
     s.addLog("info", ctx.t(engine ? "sim.runtimeReal" : wantReal ? "sim.runtimeFallback" : "sim.runtimeInterp"));
