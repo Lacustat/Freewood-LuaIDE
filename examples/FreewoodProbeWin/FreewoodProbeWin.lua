@@ -299,6 +299,11 @@ GetNumPetitionNames()
 FWP_each(3, function(i) return GetPetitionNameInfo(i) end)
 CanSignPetition()
 GetGuildCharterCost()
+== registrar | GUILD_REGISTRAR_SHOW
+GetGuildCharterCost()
+GetPetitionInfo()
+GetNumPetitionNames()
+CanSignPetition()
 == tabard | OPEN_TABARD_FRAME
 GetTabardCreationCost()
 GetTabardInfo()
@@ -429,13 +434,27 @@ end
 
 -- ===== [S3] Ablauf · runner =====
 
+-- DE: Gruppen, die sofort im Ereignis laufen (Fenster schließt sich von selbst, z. B. Auto-Loot). EN: groups that run right inside the event (the window closes by itself, e.g. auto loot).
+local SYNC = { loot = true, lootroll = true, itemtext = true }
+-- DE: Fallback: Fenster per Abfrage erkennen, falls ihr Ereignis auf diesem Client nicht kommt. EN: fallback: detect windows by query in case their event does not fire on this client.
+local POLL = {
+  tradeskill = "GetNumTradeSkills() > 0", craft = "GetNumCrafts() > 0", trainer = "GetNumTrainerServices() > 0",
+  merchant = "GetMerchantNumItems() > 0", itemtext = "ItemTextGetText() ~= nil", auction = "CanSendAuctionQuery() and AuctionFrame and AuctionFrame:IsVisible()",
+}
+local GUESS = {
+  { "^TRADE_SKILL.*SHOW", "tradeskill" }, { "^TRADE_SKILL.*OPEN", "tradeskill" }, { "^CRAFT.*SHOW", "craft" }, { "^TRAINER.*SHOW", "trainer" },
+  { "^MERCHANT.*SHOW", "merchant" }, { "^AUCTION.*SHOW", "auction" }, { "^MAIL.*SHOW", "mail" }, { "^BANK.*OPEN", "bank" }, { "^ITEM_TEXT.*READY", "itemtext" },
+}
+local SKIP = { "^UNIT_", "^COMBAT_", "^CHAT_MSG_", "^ACTIONBAR", "^BAG_", "^PLAYER_TARGET", "^SPELL_UPDATE", "^UPDATE_MOUSEOVER", "^CURSOR", "^PLAYER_REGEN", "^UPDATE_SHAPESHIFT", "^PARTY_", "^RAID_", "^PLAYER_AURAS", "^UPDATE_BONUS", "^SKILL_LINES", "^MINIMAP", "^WORLD_MAP", "^ADDON_LOADED", "^PLAYER_LOGIN", "^VARIABLES", "^UPDATE_FACTION", "^PLAYER_XP", "^PLAYER_ENTERING", "^UPDATE_INVENTORY", "^SPELLS_CHANGED", "^LEARNED_SPELL", "^PLAYER_LEAVING", "^UPDATE_BATTLEFIELD", "^PLAYER_UPDATE", "^PLAYER_FLAGS" }
+local WINDOWISH = { "SHOW$", "CLOSE$", "CLOSED$", "OPENED$", "OPEN$", "BEGIN$", "READY$", "_LIST_UPDATE$", "FINISHED$", "COMPLETE$", "PROGRESS$", "DETAIL$", "GREETING$", "_UPDATE$" }
+
 local EXTRA_EVENTS = {
   "MAIL_CLOSED", "MAIL_INBOX_UPDATE", "MAIL_SEND_INFO_UPDATE", "MAIL_SEND_SUCCESS", "MAIL_FAILED", "UPDATE_PENDING_MAIL",
   "AUCTION_HOUSE_CLOSED", "AUCTION_ITEM_LIST_UPDATE", "AUCTION_OWNED_LIST_UPDATE", "AUCTION_BIDDER_LIST_UPDATE", "NEW_AUCTION_UPDATE",
   "MERCHANT_CLOSED", "MERCHANT_UPDATE", "MERCHANT_FILTER_ITEM_UPDATE", "GOSSIP_CLOSED", "TRAINER_CLOSED", "TRAINER_UPDATE",
   "TRADE_SKILL_CLOSE", "TRADE_SKILL_UPDATE", "CRAFT_CLOSE", "CRAFT_UPDATE", "BANKFRAME_CLOSED", "PLAYERBANKSLOTS_CHANGED", "PLAYERBANKBAGSLOTS_CHANGED",
   "QUEST_FINISHED", "QUEST_ITEM_UPDATE", "QUEST_LOG_UPDATE", "QUEST_ACCEPT_CONFIRM", "PET_STABLE_CLOSED", "PET_STABLE_UPDATE", "PET_STABLE_UPDATE_PAPERDOLL",
-  "BATTLEFIELDS_CLOSED", "UPDATE_BATTLEFIELD_STATUS", "UPDATE_BATTLEFIELD_SCORE", "PETITION_CLOSED", "CLOSE_TABARD_FRAME", "TAXIMAP_CLOSED",
+  "BATTLEFIELDS_CLOSED", "UPDATE_BATTLEFIELD_STATUS", "UPDATE_BATTLEFIELD_SCORE", "PETITION_CLOSED", "CLOSE_GUILD_REGISTRAR", "CLOSE_TABARD_FRAME", "TAXIMAP_CLOSED",
   "LOOT_CLOSED", "LOOT_SLOT_CLEARED", "CANCEL_LOOT_ROLL", "TRADE_CLOSED", "TRADE_ACCEPT_UPDATE", "TRADE_MONEY_CHANGED", "TRADE_PLAYER_ITEM_CHANGED",
   "TRADE_TARGET_ITEM_CHANGED", "TRADE_REQUEST_CANCEL", "ITEM_TEXT_BEGIN", "ITEM_TEXT_CLOSED", "PLAYER_MONEY", "UI_ERROR_MESSAGE", "CHAT_MSG_SYSTEM",
   "UPDATE_INSTANCE_INFO", "UNIT_PET", "PET_BAR_UPDATE", "SPELLS_CHANGED", "CRAFT_SHOW", "UPDATE_TICKET", "UPDATE_CHAT_COLOR", "PLAYER_FLAGS_CHANGED",
@@ -450,8 +469,11 @@ local elapsed = 0
 
 local function currentId() return active and active.id or 0 end
 
+local evSeen, lastTrigger = {}, {}
+local runNow
 local function onEvent()
-  if evCount < 1200 then
+  evSeen[event] = (evSeen[event] or 0) + 1
+  if evCount < 1500 and (evSeen[event] <= 8 or TRIGGER[event]) then
     evCount = evCount + 1
     db.events[table.getn(db.events) + 1] = string.format("%.2f", GetTime() - startedAt) .. " [s" .. currentId() .. "] " .. tostring(event) .. "(" ..
       ser(arg1) .. ", " .. ser(arg2) .. ", " .. ser(arg3) .. ", " .. ser(arg4) .. ")"
@@ -459,7 +481,10 @@ local function onEvent()
   local g = TRIGGER[event]
   if g then
     perGroup[g] = (perGroup[g] or 0) + 1
-    if perGroup[g] <= 4 then
+    lastTrigger[g] = GetTime()
+    if perGroup[g] <= 4 and SYNC[g] then
+      runNow({ group = g, trigger = event, args = ser(arg1) .. ", " .. ser(arg2) .. ", " .. ser(arg3) .. ", " .. ser(arg4), a1 = arg1, a2 = arg2 })
+    elseif perGroup[g] <= 4 then
       push({ group = g, trigger = event, args = ser(arg1) .. ", " .. ser(arg2) .. ", " .. ser(arg3) .. ", " .. ser(arg4), a1 = arg1, a2 = arg2 })
     end
   end
@@ -474,11 +499,13 @@ local function launch(item)
   say(item.group .. ": " .. table.getn(active.lines) .. " tests")
 end
 
+local poll
 local function onUpdate()
   elapsed = elapsed + arg1
   if elapsed < 0.3 then return end
   local dt = elapsed
   elapsed = 0
+  if poll then poll(dt) end
   if not active then
     if phead <= ptail then
       local item = pending[phead]
@@ -505,6 +532,78 @@ local function onUpdate()
   active.session.results[table.getn(active.session.results) + 1] = r
 end
 
+-- DE: Führt alle Zeilen der Gruppe sofort aus (ohne Wartezeiten). EN: runs all lines of the group right away (no waits).
+function runNow(item)
+  db.sessionCount = (db.sessionCount or 0) + 1
+  local s = { id = db.sessionCount, window = item.group, trigger = item.trigger, args = item.args, t = string.format("%.2f", GetTime() - startedAt), results = {}, sync = true }
+  db.sessions[s.id] = s
+  FWP_ARG1, FWP_ARG2 = item.a1, item.a2
+  local lines = GROUPS[item.group].lines
+  for i = 1, table.getn(lines) do
+    if string.sub(lines[i], 1, 6) ~= "@wait " then
+      local r = record(lines[i])
+      r.t = string.format("%.2f", GetTime() - startedAt)
+      s.results[table.getn(s.results) + 1] = r
+    end
+  end
+end
+
+local pollFn, pollState, pollT = {}, {}, 0
+local function pollInit()
+  for g, code in pairs(POLL) do
+    local f = loadstring("return " .. code)
+    if f then pollFn[g] = f end
+  end
+end
+poll = function(dt)
+  pollT = pollT + dt
+  if pollT < 0.5 then return end
+  pollT = 0
+  for g, f in pairs(pollFn) do
+    local ok, v = pcall(f)
+    local open = ok and v and true or false
+    if open and not pollState[g] and (not lastTrigger[g] or GetTime() - lastTrigger[g] > 6) and (perGroup[g] or 0) < 4 then
+      perGroup[g] = (perGroup[g] or 0) + 1
+      lastTrigger[g] = GetTime()
+      local item = { group = g, trigger = "poll", args = "" }
+      if SYNC[g] then runNow(item) else push(item) end
+      db.polled = (db.polled or "") .. g .. ","
+    end
+    pollState[g] = open
+  end
+end
+
+-- DE: Merkt, welche Ereignisse welche Fenster-Rahmen registrieren, und registriert fensterartige Ereignisse mit. EN: remembers which events which window frames register, and registers window-like events too.
+local regLog = {}
+local regSeen = {}
+local function matchAny(list, e)
+  for i = 1, table.getn(list) do if string.find(e, list[i]) then return true end end
+  return false
+end
+do
+  local okm, mt = pcall(function() return getmetatable(CreateFrame("Frame")) end)
+  local idx = okm and mt and mt.__index
+  if type(idx) == "table" and type(idx.RegisterEvent) == "function" then
+    local orig = idx.RegisterEvent
+    idx.RegisterEvent = function(self, e, ...)
+      pcall(function()
+        if type(e) == "string" and table.getn(regLog) < 600 then
+          local nm = (self.GetName and self:GetName()) or "?"
+          regLog[table.getn(regLog) + 1] = tostring(nm) .. ": " .. e
+        end
+        if type(e) == "string" and not regSeen[e] and not TRIGGER[e] and not matchAny(SKIP, e) and matchAny(WINDOWISH, e) then
+          regSeen[e] = true
+          orig(frame, e)
+          for i = 1, table.getn(GUESS) do
+            if string.find(e, GUESS[i][1]) then TRIGGER[e] = GUESS[i][2] end
+          end
+        end
+      end)
+      return orig(self, e, ...)
+    end
+  end
+end
+
 local function init()
   db = { sessions = {}, events = {}, sessionCount = 0 }
   FreewoodProbeWinDB = db
@@ -512,6 +611,7 @@ local function init()
     started = date("%Y-%m-%d %H:%M:%S"), build = tostring((GetBuildInfo())), locale = GetLocale(), realm = GetRealmName(),
     player = UnitName("player"), lua = tostring(_VERSION), hasSelect = tostring(select ~= nil),
   }
+  db.registered = regLog
   startedAt = GetTime()
   evCount = 0
   pending, active, perGroup = {}, nil, {}
@@ -534,6 +634,7 @@ boot:RegisterEvent("PLAYER_ENTERING_WORLD")
 boot:SetScript("OnEvent", function()
   boot:UnregisterEvent("PLAYER_ENTERING_WORLD")
   init()
+  pollInit()
   for e in pairs(TRIGGER) do frame:RegisterEvent(e) end
   for i = 1, table.getn(EXTRA_EVENTS) do frame:RegisterEvent(EXTRA_EVENTS[i]) end
   frame:SetScript("OnEvent", onEvent)

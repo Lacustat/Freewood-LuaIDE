@@ -43,7 +43,7 @@ const LOYAL = ["Rebellious", "Unruly", "Submissive", "Dependable", "Faithful", "
 const petActions = (): [string, string, string][] => [["Attack", "", "Interface\\Icons\\Ability_GhoulFrenzy"], ["Follow", "", "Interface\\Icons\\Ability_Tracking"], ["Stay", "", "Interface\\Icons\\Spell_Nature_TimeStop"], ["Aggressive", "", "Interface\\Icons\\Ability_Racial_BloodRage"], ["Defensive", "", "Interface\\Icons\\Ability_Defend"], ["Passive", "", "Interface\\Icons\\Ability_Seal"]];
 
 export const PET_API: Record<string, Impl> = {
-  HasPetUI: (h) => w3(h).pet !== undefined,
+  HasPetUI: (h) => [w3(h).pet !== undefined, w3(h).pet !== undefined], // probe: 2 values
   PetHasActionBar: (h) => w3(h).pet !== undefined,
   GetPetHappiness: (h) => { const p = w3(h).pet; return p ? [p.happiness, [0.75, 1, 1.25][p.happiness - 1] ?? 1, Math.min(1, p.loyalty / 6)] : undefined; },
   GetPetLoyalty: (h) => { const p = w3(h).pet; return p ? LOYAL[p.loyalty - 1] : undefined; },
@@ -52,7 +52,7 @@ export const PET_API: Record<string, Impl> = {
   GetPetTrainingPoints: (h) => { const p = w3(h).pet; return p ? [p.points[0], p.points[1], p.points[0] - p.points[1]] : [0, 0, 0]; },
   GetPetIcon: (h) => w3(h).pet?.icon,
   GetPetTimeRemaining: () => undefined,
-  GetPetActionInfo: (h, a) => { if (!w3(h).pet) return undefined; const x = petActions()[(num(a[0]) ?? 0) - 1]; return x ? [x[0], x[1], x[2], true, false, false, false] : undefined; },
+  GetPetActionInfo: (h, a) => { if (!w3(h).pet) return [undefined, undefined, undefined, undefined, undefined, undefined, undefined]; const x = petActions()[(num(a[0]) ?? 0) - 1]; return x ? [x[0], x[1], x[2], true, false, false, false] : undefined; },
   GetPetActionCooldown: (h) => (w3(h).pet ? [0, 0, 1] : undefined),
   GetPetActionsUsable: (h) => w3(h).pet !== undefined,
   CastPetAction: (h, a) => { const x = petActions()[(num(a[0]) ?? 0) - 1]; if (w3(h).pet && x) h.fireIf("PET_BAR_UPDATE"); },
@@ -141,19 +141,27 @@ export const BATTLEFIELD_API: Record<string, Impl> = {
   GetNumBattlefieldPositions: () => 0, GetBattlefieldPosition: () => undefined, RequestBattlefieldPositions: () => undefined,
   GetNumBattlefieldFlagPositions: () => 0, GetBattlefieldFlagPosition: () => undefined,
   ToggleBattlefieldMinimap: () => undefined,
-  GetWorldStateUIInfo: (h, a) => (w3(h).bf.queues.some((x) => x?.status === "active") && a[0] === 1 ? [1, 1, "Alliance: 0/5  Horde: 0/5", 1, 1, 0, 0, 0, 0] : undefined),
+  GetWorldStateUIInfo: (h, a) => (w3(h).bf.queues.some((x) => x?.status === "active") && a[0] === 1 ? [1, 1, "Alliance: 0/5  Horde: 0/5", 1, 1, 0, 0, 0, 0] : a[0] === 1 ? [0, "Progress: 0", "", "", "", "", "CAPTUREPOINT", 0, 0, 0] : undefined), // probe: outside battlegrounds
   CheckSpiritHealerDist: (h) => w3(h).spirit !== undefined,
   GetAreaSpiritHealerTime: (h) => { const s = w3(h).spirit; return s ? Math.max(0, Math.round(s.ends - h.now)) : 0; },
   AcceptAreaSpiritHeal: () => undefined, CancelAreaSpiritHeal: (h) => { delete w3(h).spirit; },
 };
 
 export const PVP_API: Record<string, Impl> = {
-  GetPVPLifetimeStats: () => [0, 0, 0, 0],
+  GetPVPLifetimeStats: () => [0, 0, 0], // probe: 3 values
   GetPVPSessionStats: () => [0, 0],
   GetPVPThisWeekStats: () => [0, 0],
   GetPVPLastWeekStats: () => [0, 0, 0, 0],
   GetPVPYesterdayStats: () => [0, 0, 0],
-  GetPVPRankInfo: (h, a) => { const r = num(a[0]) ?? 0; void h; return r > 0 ? [`Rank ${r - 4}`, r] : undefined; },
+  // DE: Probe (Horde): GetPVPRankInfo(5) = "Scout " (mit Leerzeichen), 1. EN: probe (Horde): name with trailing space, rank number = input - 4.
+  GetPVPRankInfo: (h, a) => {
+    const r = (num(a[0]) ?? 0) - 4; if (r < 1 || r > 14) return undefined;
+    const horde = ["Orc", "Troll", "Tauren", "Undead", "Scourge"].some((x) => h.scenario.player.race.includes(x));
+    const names = horde
+      ? ["Scout", "Grunt", "Sergeant", "Senior Sergeant", "First Sergeant", "Stone Guard", "Blood Guard", "Legionnaire", "Centurion", "Champion", "Lieutenant General", "General", "Warlord", "High Warlord"]
+      : ["Private", "Corporal", "Sergeant", "Master Sergeant", "Sergeant Major", "Knight", "Knight-Lieutenant", "Knight-Captain", "Knight-Champion", "Lieutenant Commander", "Commander", "Marshal", "Field Marshal", "Grand Marshal"];
+    return [`${names[r - 1]} `, r];
+  },
   GetPVPRankProgress: () => 0,
   HasInspectHonorData: (h) => h.unit("target") !== undefined,
   RequestInspectHonorData: (h) => { if (h.unit("target")) h.later(0.3, () => h.fireIf("INSPECT_HONOR_UPDATE")); },
@@ -203,7 +211,7 @@ export const GUILDADMIN_API: Record<string, Impl> = {
 
 export const INSTANCE_API: Record<string, Impl> = {
   GetNumSavedInstances: (h) => w3(h).saved.length,
-  GetSavedInstanceInfo: (h, a) => { const s = w3(h).saved[(num(a[0]) ?? 0) - 1]; return s ? [s.name, s.id, s.remaining] : undefined; },
+  GetSavedInstanceInfo: (h, a) => { const s = w3(h).saved[(num(a[0]) ?? 0) - 1]; return s ? [s.name, s.id, s.remaining] : [undefined, 0, undefined]; }, // probe
   GetInstanceBootTimeRemaining: () => 0,
   CanShowResetInstances: (h) => h.unit("party1") === undefined && w3(h).saved.length > 0,
   ResetInstances: (h) => { const w = w3(h); if (w.saved.length) { w.saved = []; h.fire("CHAT_MSG_SYSTEM", "All instances have been reset.", "", "", ""); h.fireIf("UPDATE_INSTANCE_INFO"); } },

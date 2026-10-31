@@ -283,12 +283,12 @@ export const MERCHANT2_API: Record<string, Impl> = {
 };
 
 export const GM_API: Record<string, Impl> = {
-  GetGMTicket: (h) => { const t = win(h).ticket; return t ? [1, t.text, t.category] : undefined; },
+  GetGMTicket: (h) => { const t = win(h).ticket; return t ? [1, t.text, t.category] : []; }, // probe: no values without a ticket
   NewGMTicket: (h, a) => { win(h).ticket = { category: num(a[0]) ?? 0, text: str(a[1]) ?? "" }; h.later(0.3, () => h.fireIf("UPDATE_TICKET", 1, str(a[1]) ?? "", num(a[0]) ?? 0)); },
   UpdateGMTicket: (h, a) => { const t = win(h).ticket; if (t) { t.text = str(a[1]) ?? t.text; h.fireIf("UPDATE_TICKET", 1, t.text, t.category); } },
   DeleteGMTicket: (h) => { delete win(h).ticket; h.fireIf("UPDATE_TICKET"); },
-  GetGMTicketCategories: () => ["Stuck", "Behavior", "Harassment", "Item", "Quest", "Other"],
-  GetGMStatus: (h) => win(h).gmStatus,
+  GetGMTicketCategories: () => [1, "I want to report someone's behavior", 2, "I have an issue with my character"], // probe: id/name pairs
+  GetGMStatus: (h) => (win(h).gmStatus ? [true] : []), // probe: no values for non-GMs
   GMRequestPlayerInfo: () => undefined, GMSurveyAnswerSubmit: () => undefined, GMSurveyCommentSubmit: () => undefined, GMSurveyQuestion: () => undefined, GMSurveySubmit: () => undefined,
   Stuck: (h) => { h.note("info", "Stuck(): the unstuck request is not simulated."); },
 };

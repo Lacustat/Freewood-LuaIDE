@@ -4200,7 +4200,8 @@
       "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
     },
     "tags": [
-      "signature-unknown"
+      "signature-unknown",
+      "absent-on-octowoow-1.18.1"
     ]
   },
   {

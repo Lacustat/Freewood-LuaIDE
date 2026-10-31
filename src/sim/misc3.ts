@@ -63,15 +63,17 @@ export const QUESTDLG_API: Record<string, Impl> = {
   GetQuestBackgroundMaterial: () => "Parchment",
   GetRewardMoney: (h) => qd(h).quest?.money ?? 0,
   GetQuestMoneyToGet: () => 0,
-  GetRewardSpell: () => undefined,
+  GetRewardSpell: () => [undefined, undefined, undefined], // probe: 3 values
   GetNumQuestChoices: (h) => qd(h).quest?.choices.length ?? 0,
   GetNumQuestRewards: (h) => qd(h).quest?.rewards.length ?? 0,
   GetNumQuestItems: (h) => qd(h).quest?.need.length ?? 0,
   GetQuestItemInfo: (h, a) => {
-    const q = qd(h).quest; if (!q) return undefined;
+    // DE: Probe: ungültiger Index = ["", Fragezeichen, 1 (required: 0), 0, 1]. EN: probe: invalid index = default tuple.
+    const dflt = ["", "Interface\\Icons\\INV_Misc_QuestionMark", a[0] === "required" ? 0 : 1, 0, 1];
+    const q = qd(h).quest; if (!q) return dflt;
     const i = (num(a[1]) ?? 0) - 1;
-    if (a[0] === "required") { const x = q.need[i]; if (!x) return undefined; const m = im(h, x.id); return [m.name, m.icon, x.count, m.quality, true]; }
-    const id = rewardAt(q, a[0], a[1]); if (id === undefined) return undefined; const m = im(h, id); return [m.name, m.icon, 1, m.quality, true];
+    if (a[0] === "required") { const x = q.need[i]; if (!x) return dflt; const m = im(h, x.id); return [m.name, m.icon, x.count, -1, true]; }
+    const id = rewardAt(q, a[0], a[1]); if (id === undefined) return dflt; const m = im(h, id); return [m.name, m.icon, 1, m.quality, a[0] === "choice" && i === q.choices.length - 1 ? true : undefined];
   },
   IsQuestCompletable: (h) => { const q = qd(h).quest; return !!q && done(h, q); },
   IsUnitOnQuest: (h, a) => { void a; return active(h).length > 0 && h.unit("target") !== undefined; },
@@ -79,7 +81,8 @@ export const QUESTDLG_API: Record<string, Impl> = {
     const d = qd(h); const q = d.quest; if (d.stage !== "detail" || !q) return;
     const c = h.character();
     if (!c.quests.some((e) => e.questID === q.id)) c.quests.push({ questID: q.id, title: q.title, level: q.level, complete: q.need.length === 0, objectives: q.need.length || 1 });
-    h.fireIf("QUEST_LOG_UPDATE"); h.fireIf("UNIT_QUEST_LOG_CHANGED", "player"); finish(h);
+    // DE: Probe-Reihenfolge: QUEST_FINISHED, QUEST_LOG_UPDATE, Systemzeile. EN: probe order.
+    finish(h); h.fireIf("QUEST_LOG_UPDATE"); h.fire("CHAT_MSG_SYSTEM", `Quest accepted: ${q.title}`, "", "", ""); h.fireIf("UNIT_QUEST_LOG_CHANGED", "player");
   },
   ConfirmAcceptQuest: (h) => { qd(h).confirm = false; },
   DeclineQuest: (h) => finish(h),
@@ -87,7 +90,7 @@ export const QUESTDLG_API: Record<string, Impl> = {
   CompleteQuest: (h) => {
     const d = qd(h); const q = d.quest; if (!q || d.stage !== "progress") return;
     if (!done(h, q)) { h.fireIf("UI_ERROR_MESSAGE", "You do not have the required items"); return; }
-    d.stage = "complete"; h.fireIf("QUEST_COMPLETE");
+    d.stage = "complete"; h.fireIf("QUEST_FINISHED"); h.fireIf("QUEST_COMPLETE"); // probe: QUEST_FINISHED comes first
   },
   QuestChooseRewardError: (h) => { h.fireIf("UI_ERROR_MESSAGE", "You must choose a reward"); },
   GetQuestReward: (h, a) => {
@@ -97,7 +100,9 @@ export const QUESTDLG_API: Record<string, Impl> = {
     for (const id of [...q.rewards, ...(q.choices.length ? [rewardAt(q, "choice", a[0])!] : [])]) addItem(inv, id, 1);
     inv.money = (inv.money ?? 0) + q.money;
     const c = h.character(); c.quests = c.quests.filter((e) => e.questID !== q.id); c.completed.push(q.id);
-    h.fireIf("PLAYER_MONEY"); h.fireIf("BAG_UPDATE", 0); h.fireIf("QUEST_LOG_UPDATE"); finish(h);
+    // DE: Probe: QUEST_LOG_UPDATE, Systemzeilen, QUEST_FINISHED, PLAYER_MONEY. EN: probe order.
+    h.fireIf("QUEST_LOG_UPDATE"); h.fire("CHAT_MSG_SYSTEM", `Experience gained: ${q.xp}.`, "", "", ""); if (q.money > 0) h.fire("CHAT_MSG_SYSTEM", `Received ${q.money} Copper.`, "", "", "");
+    finish(h); h.fireIf("PLAYER_MONEY"); h.fireIf("BAG_UPDATE", 0);
   },
   QuestLogPushQuest: (h) => { if (h.unit("party1")) h.note("info", "QuestLogPushQuest: shared with the group (not simulated)."); },
   ToggleQuestLog: (h) => { h.note("info", "ToggleQuestLog: the quest log frame is not part of the simulation."); },
@@ -131,7 +136,8 @@ export const CAMERA_API: Record<string, Impl> = {
 
 // ===== [S3] Grafik · video =====
 
-const VIDEO_DEFAULTS: Record<string, number> = { Gamma: 1, Farclip: 477, BaseMip: 0, TerrainMip: 0, TexLodBias: 0, WaterDetail: 2, WorldDetail: 2, DoodadAnim: 1, CurrentMultisampleFormat: 1, CurrentResolution: 1 };
+// DE: Werte aus der Probe (OctoWoW). EN: values from the probe (OctoWoW).
+const VIDEO_DEFAULTS: Record<string, number> = { Gamma: 0, Farclip: 2200, BaseMip: 1, TerrainMip: 1, TexLodBias: 0, WaterDetail: 0, WorldDetail: 2, DoodadAnim: 1, CurrentMultisampleFormat: 7, CurrentResolution: 6 };
 const video = (h: SimHost): Record<string, number> => h.store("video", () => ({ ...VIDEO_DEFAULTS }));
 const videoApi = (): Record<string, Impl> => {
   const o: Record<string, Impl> = {};
@@ -142,12 +148,12 @@ export const VIDEO_API: Record<string, Impl> = {
   ...videoApi(),
   GetCurrentMultisampleFormat: (h) => video(h).CurrentMultisampleFormat,
   SetMultisampleFormat: (h, a) => { video(h).CurrentMultisampleFormat = num(a[0]) ?? 1; },
-  GetMultisampleFormats: () => [1, 1, 24, 0, 2, 1, 24, 0],
+  GetMultisampleFormats: () => [24, 16, 1, 24, 16, 2, 24, 16, 4, 24, 16, 8, 24, 24, 1, 24, 24, 2, 24, 24, 4, 24, 24, 8],
   GetCurrentResolution: (h) => video(h).CurrentResolution,
-  GetScreenResolutions: () => ["1024x768", "1280x720", "1920x1080"],
+  GetScreenResolutions: () => ["1680x720", "1920x820", "2310x990", "2560x1080", "3024x1296", "3440x1440"],
   SetScreenResolution: (h, a) => { video(h).CurrentResolution = num(a[0]) ?? 1; },
-  GetRefreshRates: () => [60, 75, 144],
-  GetVideoCaps: () => [true, true, true, true, true, true, true, true],
+  GetRefreshRates: () => [60, 100, 120, 144, 165],
+  GetVideoCaps: () => [1, 1, 1, 1, 1, 16, 1],
   SetLayoutMode: () => undefined, RestartGx: () => undefined, SetupFullscreenScale: () => undefined,
   ShowNameplates: () => undefined, HideNameplates: () => undefined, ShowFriendNameplates: () => undefined, HideFriendNameplates: () => undefined,
   ToggleCollision: () => undefined, ToggleCollisionDisplay: () => undefined, TogglePerformanceValues: () => undefined, TogglePlayerBounds: () => undefined,
@@ -160,7 +166,7 @@ export const VIDEO_API: Record<string, Impl> = {
 interface ChatWin { name: string; size: number; r: number; g: number; b: number; a: number; shown: boolean; locked: boolean; docked: boolean; messages: string[]; channels: string[] }
 const chat = (h: SimHost): ChatWin[] => h.store("chatwin", (): ChatWin[] => Array.from({ length: 7 }, (_, i) => ({ name: ["General", "Combat Log", "", "", "", "", ""][i]!, size: 14, r: 0, g: 0, b: 0, a: 0.25, shown: i < 2, locked: false, docked: i < 2, messages: i === 0 ? ["SAY", "YELL", "GUILD", "PARTY", "WHISPER", "SYSTEM"] : [], channels: i === 0 ? ["General", "Trade"] : [] })));
 const cw = (h: SimHost, i: unknown): ChatWin | undefined => chat(h)[(num(i) ?? 0) - 1];
-const CHAT_TYPES = ["SAY", "YELL", "EMOTE", "WHISPER", "PARTY", "GUILD", "OFFICER", "RAID", "SYSTEM", "CHANNEL"];
+const CHAT_TYPES = ["SAY", "PARTY", "RAID", "GUILD", "OFFICER", "YELL", "WHISPER", "EMOTE", "TEXT_EMOTE"]; // probe: SAY = 1, PARTY = 2
 const cnote = (what: string): Impl => (h, a) => { h.note("info", `${what}(${a.filter((x) => x !== undefined).map(String).join(", ")}): sent to the server (not simulated).`); };
 
 export const CHATWIN_API: Record<string, Impl> = {
@@ -175,7 +181,7 @@ export const CHATWIN_API: Record<string, Impl> = {
   GetChatWindowMessages: (h, a) => cw(h, a[0])?.messages ?? [],
   AddChatWindowMessages: (h, a) => { const w = cw(h, a[0]); const t = str(a[1]); if (w && t && !w.messages.includes(t)) w.messages.push(t); },
   RemoveChatWindowMessages: (h, a) => { const w = cw(h, a[0]); if (w) w.messages = w.messages.filter((x) => x !== a[1]); },
-  GetChatWindowChannels: (h, a) => cw(h, a[0])?.channels ?? [],
+  GetChatWindowChannels: (h, a) => (cw(h, a[0])?.channels ?? []).flatMap((n, i) => [n, i + 1]), // probe: name/id pairs
   AddChatWindowChannel: (h, a) => { const w = cw(h, a[0]); const t = str(a[1]); if (w && t && !w.channels.includes(t)) w.channels.push(t); },
   RemoveChatWindowChannel: (h, a) => { const w = cw(h, a[0]); if (w) w.channels = w.channels.filter((x) => x !== a[1]); },
   GetChatTypeIndex: (_h, a) => Math.max(0, CHAT_TYPES.indexOf(String(a[0]).toUpperCase())) + 1,
@@ -193,8 +199,8 @@ export const CHATWIN_API: Record<string, Impl> = {
 
 const cls = (h: SimHost): string => h.scenario.player.classToken;
 export const STATS_API: Record<string, Impl> = {
-  GetBlockChance: (h) => (["WARRIOR", "PALADIN", "SHAMAN"].includes(cls(h)) ? 5 : 0),
-  GetParryChance: (h) => (["WARRIOR", "PALADIN", "ROGUE", "HUNTER"].includes(cls(h)) ? 5 : 0),
+  GetBlockChance: (h) => (["WARRIOR", "PALADIN", "SHAMAN"].includes(cls(h)) ? 4.88 : 0),
+  GetParryChance: (h) => (["WARRIOR", "PALADIN", "ROGUE", "HUNTER"].includes(cls(h)) ? 4.88 : 0),
   GetDodgeChance: () => 3.8638,
   GetCombatRating: () => undefined,
   GetCombatRatingBonus: () => undefined,
@@ -246,7 +252,7 @@ const faction = (h: SimHost, i: unknown) => h.character().factions[(num(i) ?? 0)
 
 export const REST_API: Record<string, Impl> = {
   // ----- Karte · map -----
-  GetNumMapLandmarks: () => 0, GetMapLandmarkInfo: () => undefined, GetNumMapOverlays: () => 0, GetMapOverlayInfo: () => undefined,
+  GetNumMapLandmarks: () => 0, GetMapLandmarkInfo: () => undefined, GetNumMapOverlays: () => 0, GetMapOverlayInfo: () => [undefined, 0, 0, 0, 0, 0, 0], // probe: default tuple
   GetCorpseMapPosition: () => [0, 0],
   GetWorldLocMapPosition: (h, a) => { void h; void a; return [0, 0]; },
   ProcessMapClick: () => undefined, UpdateMapHighlight: () => undefined,
