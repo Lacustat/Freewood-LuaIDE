@@ -12,11 +12,14 @@
  */
 
 import type { LuaVersion } from "../plugin-api/types.js";
-import { LuaSyntaxError, tokenize, type Token, quote50 } from "./lexer.js";
+import { LuaSyntaxError, tokenize, type LexInfo, type Token, quote50 } from "./lexer.js";
 
 // ===== [S1] AST-Typen · AST types =====
 
-export type Expr =
+/** DE: `lo`/`hi` = Index des ersten/letzten Tokens (für den Umschreiber). EN: index of first/last token (for the rewriter). */
+export type Expr = ExprNode & { lo?: number; hi?: number };
+
+type ExprNode =
   | { t: "Nil"; line: number }
   | { t: "True"; line: number }
   | { t: "False"; line: number }
@@ -377,12 +380,15 @@ class Parser {
 
   expr(limit = 0): Expr {
     let left: Expr;
+    const lo = this.p;
     const t = this.tok;
     if ((t.type === "keyword" && t.value === "not") || (t.type === "op" && (t.value === "-" || t.value === "#"))) {
       this.p++;
       const a = this.expr(UNARY_PRI);
       left = { t: "Un", op: t.value as string, a, line: t.line };
     } else left = this.simpleExpr();
+    left.lo = lo;
+    left.hi = this.p - 1;
     for (;;) {
       const o = this.tok;
       const op = o.type === "op" || o.type === "keyword" ? (o.value as string) : "";
@@ -390,12 +396,18 @@ class Parser {
       if (!pri || pri[0] <= limit) return left;
       this.p++;
       const right = this.expr(pri[1]);
-      left = { t: "Bin", op, a: left, b: right, line: o.line };
+      left = { t: "Bin", op, a: left, b: right, line: o.line, lo, hi: this.p - 1 };
     }
   }
 }
 
 // ===== [S3] parse =====
+
+/** DE: Wie `parse`, liefert aber auch die Tokens (Umschreiber). EN: like `parse`, but also returns the tokens (rewriter). */
+export function parseWithTokens(src: string, chunk: string, version: LuaVersion, info?: LexInfo): { ast: FuncBody; tokens: Token[] } {
+  const tokens = tokenize(src, chunk, version, info);
+  return { ast: new Parser(tokens, chunk, version).chunkBody(), tokens };
+}
 
 export function parse(src: string, chunk: string, version: LuaVersion): FuncBody {
   try {

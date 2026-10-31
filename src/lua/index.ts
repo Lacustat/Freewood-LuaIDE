@@ -15,3 +15,4 @@ export * from "./interp.js";
 export * from "./stdlib.js";
 export * from "./runtime.js";
 export * from "./wasm50.js";
+export * from "./rewrite50.js";

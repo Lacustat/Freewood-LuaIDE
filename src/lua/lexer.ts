@@ -23,6 +23,15 @@ export interface Token {
   type: TokenType;
   value: string | number;
   line: number;
+  /** DE: Zeichenposition im Quelltext (Anfang, Ende exklusiv). EN: character offsets in the source (start, end exclusive). */
+  start: number;
+  end: number;
+}
+
+/** DE: Zusatzinfos des Lexers (für den Umschreiber). EN: extra lexer info (for the rewriter). */
+export interface LexInfo {
+  /** Kommentare mit Gleichheitszeichen-Klammern `--[=[ … ]=]` · leveled long comments */
+  leveledComments: Array<{ start: number; end: number }>;
 }
 
 const KEYWORDS = new Set([
@@ -49,7 +58,7 @@ const isDigit = (c: string) => c >= "0" && c <= "9";
 const isHex = (c: string) => /[0-9a-fA-F]/.test(c);
 const isAlpha = (c: string) => (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c === "_";
 
-export function tokenize(src: string, chunk: string, version: LuaVersion): Token[] {
+export function tokenize(src: string, chunk: string, version: LuaVersion, info?: LexInfo): Token[] {
   const out: Token[] = [];
   let i = 0;
   let line = 1;
@@ -98,15 +107,18 @@ export function tokenize(src: string, chunk: string, version: LuaVersion): Token
     } else if (c === " " || c === "\t" || c === "\r") {
       i++;
     } else if (c === "-" && src[i + 1] === "-") {
+      const cStart = i;
       i += 2;
       const lvl = longBracketLevel(i);
-      if (lvl >= 0) readLong(lvl);
-      else while (i < src.length && src[i] !== "\n") i++;
+      if (lvl >= 0) {
+        readLong(lvl);
+        if (lvl > 0) info?.leveledComments.push({ start: cStart, end: i });
+      } else while (i < src.length && src[i] !== "\n") i++;
     } else if (isAlpha(c)) {
       let j = i + 1;
       while (j < src.length && (isAlpha(src[j]!) || isDigit(src[j]!))) j++;
       const word = src.slice(i, j);
-      out.push({ type: KEYWORDS.has(word) ? "keyword" : "name", value: word, line });
+      out.push({ type: KEYWORDS.has(word) ? "keyword" : "name", value: word, line, start: i, end: j });
       i = j;
     } else if (isDigit(c) || (c === "." && isDigit(src[i + 1] ?? ""))) {
       let j = i;
@@ -115,7 +127,7 @@ export function tokenize(src: string, chunk: string, version: LuaVersion): Token
         while (j < src.length && isHex(src[j]!)) j++;
         const n = Number(src.slice(i, j));
         if (Number.isNaN(n)) err("malformed number near '" + src.slice(i, j) + "'");
-        out.push({ type: "number", value: n, line });
+        out.push({ type: "number", value: n, line, start: i, end: j });
       } else {
         while (j < src.length && (isDigit(src[j]!) || src[j] === ".")) j++;
         if (src[j] === "e" || src[j] === "E") {
@@ -126,11 +138,12 @@ export function tokenize(src: string, chunk: string, version: LuaVersion): Token
         const text = src.slice(i, j);
         const n = Number(text);
         if (Number.isNaN(n) || /\.\..*/.test(text)) err("malformed number near '" + text + "'");
-        out.push({ type: "number", value: n, line });
+        out.push({ type: "number", value: n, line, start: i, end: j });
       }
       i = j;
     } else if (c === '"' || c === "'") {
       const q = c;
+      const sStart = i;
       i++;
       let s = "";
       for (;;) {
@@ -168,11 +181,12 @@ export function tokenize(src: string, chunk: string, version: LuaVersion): Token
           i++;
         }
       }
-      out.push({ type: "string", value: s, line });
+      out.push({ type: "string", value: s, line, start: sStart, end: i });
     } else if (c === "[" && longBracketLevel(i) >= 0) {
       const startLine = line;
+      const lStart = i;
       const text = readLong(longBracketLevel(i));
-      out.push({ type: "string", value: text, line: startLine });
+      out.push({ type: "string", value: text, line: startLine, start: lStart, end: i });
     } else {
       const three = src.slice(i, i + 3);
       const two = src.slice(i, i + 2);
@@ -183,10 +197,10 @@ export function tokenize(src: string, chunk: string, version: LuaVersion): Token
       else if (c === "%" && version === "5.1") op = c;
       else if (c === "#" && version === "5.1") op = c;
       else return err(`unexpected symbol near '${c}'`);
-      out.push({ type: "op", value: op, line });
+      out.push({ type: "op", value: op, line, start: i, end: i + op.length });
       i += op.length;
     }
   }
-  out.push({ type: "eof", value: "<eof>", line });
+  out.push({ type: "eof", value: "<eof>", line, start: src.length, end: src.length });
   return out;
 }

@@ -4,7 +4,7 @@
  * Copyright (C) 2026 Lacustat
  *
  * INHALT / CONTENTS
- *   [S1] Kennungen · refs ....... Format der Werte zwischen Lua und Host
+ *   [S1] Kennungen · refs ....... Format der Werte zwischen Lua und Host (+ CLASSIC_HELPERS)
  *   [S2] buildPrelude ........... erzeugt das Lua-Programm, das die simulierte WoW-Welt in der VM aufbaut
  *
  * DE: Das Prelude läuft IN der Lua-VM (eigener Interpreter oder echte Lua-5.0-VM) und baut Frames,
@@ -32,6 +32,26 @@ export const LIB_ALIASES: Record<string, string> = {
   floor: "math.floor", ceil: "math.ceil", abs: "math.abs", max: "math.max", min: "math.min", mod: "math.mod", sqrt: "math.sqrt",
   random: "math.random",
 };
+
+/**
+ * DE: Hilfsfunktionen des Umschreibers (`#` → __len, `%` → __mod), wie bei ClassicAPI.
+ * EN: helper functions of the rewriter (`#` → __len, `%` → __mod), like ClassicAPI.
+ */
+export const CLASSIC_HELPERS = `
+function __mod(a, b) return a - math.floor(a / b) * b end
+function __len(x)
+  local t = type(x)
+  if t == "string" then return string.len(x) end
+  if t ~= "table" then error("attempt to get length of a " .. t .. " value", 2) end
+  local i, j = 0, 1
+  while rawget(x, j) ~= nil do i = j; j = j * 2 end
+  while j - i > 1 do
+    local m = math.floor((i + j) / 2)
+    if rawget(x, m) == nil then j = m else i = m end
+  end
+  return i
+end
+`;
 
 // ===== [S2] buildPrelude =====
 
@@ -75,6 +95,7 @@ G.os, G.io, G.debug, G.loadlib, G.dofile, G.loadfile, G.require, G._TRACEBACK = 
     : "";
 
   return `-- Freewood simulation prelude (generated)
+${target.syntax === "lua51-transpiled" ? CLASSIC_HELPERS : ""}
 local G = _G
 local type, tostring, tonumber, pairs, ipairs, error, pcall, setmetatable = type, tostring, tonumber, pairs, ipairs, error, pcall, setmetatable
 local sfind, ssub, slower, sgsub = string.find, string.sub, string.lower, string.gsub
