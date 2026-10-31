@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: Freewood Probe Windows
+## Notes: Waits for NPC windows (mail, auction, merchant, trainer, ...) and records read-only API results and events into FreewoodProbeWinDB. / Wartet auf NPC-Fenster und schreibt schreibgeschützte API-Ergebnisse und Ereignisse in FreewoodProbeWinDB.
+## Author: Lacustat
+## SavedVariables: FreewoodProbeWinDB
+FreewoodProbeWin.lua

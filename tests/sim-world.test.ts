@@ -308,3 +308,37 @@ engines("FreewoodProbe example addon runs through in the simulation", async (mk)
     assert.equal(v[3], "", `${id}: syntax errors in the probe list:\n${String(v[3])}`);
   }
 });
+
+engines("FreewoodProbeWin addon: detects simulated windows and records their sessions", async (mk) => {
+  const { readFileSync } = await import("node:fs");
+  const code = readFileSync("examples/FreewoodProbeWin/FreewoodProbeWin.lua", "utf8");
+  const t = await targets();
+  const sim = await mk(t.c!);
+  sim.loadSource(code, "FreewoodProbeWin.lua");
+  sim.login("FreewoodProbeWin");
+  sim.advance(30);
+  for (const w of ["mail", "auction", "merchant", "trainer", "tradeskill", "craft", "bank", "questgiver", "stable", "battlefield", "charter", "trade", "itemtext", "lootroll"]) {
+    if (w === "merchant") sim.openMerchant(); else sim.openWindow(w);
+    sim.advance(3);
+  }
+  sim.advance(200);
+  const v = run(sim, `
+    local db = FreewoodProbeWinDB
+    local seen, bad = {}, ""
+    for i = 1, db.sessionCount do
+      local s = db.sessions[i]
+      seen[s.window] = table.getn(s.results)
+      for j = 1, table.getn(s.results) do
+        local r = s.results[j]
+        if not r.ok and string.find(r.err, "syntax", 1, true) then bad = bad .. r.name .. " => " .. r.err .. "\\n" end
+      end
+    end
+    local names = ""
+    for k in pairs(seen) do names = names .. k .. "," end
+    FW_NAMES = names
+    return db.sessionCount, seen.general, seen.mail, seen.auction, seen.merchant, seen.trainer, seen.stable, seen.lootroll, bad
+  `);
+  assert.ok((v[0] as number) >= 12, `sessions: ${String(v[0])} ${String(run(sim, 'return FW_NAMES')[0])}`);
+  for (const k of [1, 2, 3, 4, 5, 6, 7]) assert.ok((v[k] as number) >= 3, `group ${k} too small: ${String(v[k])}`);
+  assert.equal(v[8], "", `syntax errors:\n${String(v[8])}`);
+});

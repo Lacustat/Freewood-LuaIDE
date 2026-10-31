@@ -30,6 +30,7 @@
 | `runtimes/lua51/*` | Echtes Lua 5.1 als WASM (Retail) · real Lua 5.1 as WASM (Retail) |
 | `src/sim/{host,extras,map,misc,misc2,gear,items,spells,playerbuffs,unitinfo,social,uiworld}.ts` | Simulations-Module · simulation modules |
 | `examples/FreewoodProbe/*` | Test-Addon fürs Spiel · in-game test addon |
+| `examples/FreewoodProbeWin/*` | Zweite Probe für NPC-Fenster · second probe for NPC windows |
 | `src/sim/windows1.ts`, `windows2.ts`, `windows3.ts`, `misc3.ts` | NPC-Fenster und Rest-Funktionen · NPC windows and remaining functions |
 | `tests/fixtures/octowoow-probe-results.txt` | Echte Probe-Ergebnisse von OctoWoW · real probe results |
 | `scripts/serve.mjs`, `scripts/ui-smoke.mjs` | Server, UI-Rauchtest · static server, UI smoke test |

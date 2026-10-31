@@ -1806,5 +1806,348 @@
       "en": "Fires after RequestRaidInfo() (OctoWoW probe).",
       "de": "Wird nach RequestRaidInfo() ausgelöst (OctoWoW-Probe)."
     }
+  },
+  {
+    "name": "AUCTION_BIDDER_LIST_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires for the auction bidder list update window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands auction bidder list update ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "AUCTION_OWNED_LIST_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires for the auction owned list update window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands auction owned list update ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "BATTLEFIELDS_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the battlefields closed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands battlefields closed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "BATTLEFIELDS_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires for the battlefields show window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands battlefields show ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "CANCEL_LOOT_ROLL",
+    "payload": [
+      {
+        "name": "rollID",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires for the cancel loot roll window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands cancel loot roll ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "CLOSE_GUILD_REGISTRAR",
+    "payload": [],
+    "description": {
+      "en": "Fires for the close guild registrar window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands close guild registrar ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "CLOSE_TABARD_FRAME",
+    "payload": [],
+    "description": {
+      "en": "Fires for the close tabard frame window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands close tabard frame ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "GUILD_INVITE_REQUEST",
+    "payload": [
+      {
+        "name": "inviter",
+        "type": "string"
+      },
+      {
+        "name": "guildName",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for the guild invite request window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands guild invite request ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "INSPECT_HONOR_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires for the inspect honor update window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands inspect honor update ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "ITEM_TEXT_BEGIN",
+    "payload": [],
+    "description": {
+      "en": "Fires for the item text begin window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands item text begin ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "ITEM_TEXT_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the item text closed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands item text closed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "ITEM_TEXT_READY",
+    "payload": [],
+    "description": {
+      "en": "Fires for the item text ready window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands item text ready ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "MAIL_FAILED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the mail failed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands mail failed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "MAIL_SEND_INFO_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires for the mail send info update window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands mail send info update ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "MAIL_SEND_SUCCESS",
+    "payload": [],
+    "description": {
+      "en": "Fires for the mail send success window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands mail send success ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "NEW_AUCTION_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires for the new auction update window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands new auction update ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "OPEN_TABARD_FRAME",
+    "payload": [],
+    "description": {
+      "en": "Fires for the open tabard frame window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands open tabard frame ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "PETITION_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the petition closed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands petition closed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "PETITION_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires for the petition show window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands petition show ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "PET_BAR_HIDEGRID",
+    "payload": [],
+    "description": {
+      "en": "Fires for the pet bar hidegrid window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands pet bar hidegrid ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "PET_STABLE_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the pet stable closed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands pet stable closed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "PET_STABLE_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires for the pet stable show window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands pet stable show ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "PET_STABLE_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires for the pet stable update window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands pet stable update ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "PLAYERBANKBAGSLOTS_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the playerbankbagslots changed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands playerbankbagslots changed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "QUEST_QUERY_COMPLETE",
+    "payload": [],
+    "description": {
+      "en": "Fires for the quest query complete window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands quest query complete ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "SCREENSHOT_SUCCEEDED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the screenshot succeeded window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands screenshot succeeded ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "TRADE_ACCEPT_UPDATE",
+    "payload": [
+      {
+        "name": "playerAccepted",
+        "type": "number"
+      },
+      {
+        "name": "targetAccepted",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires for the trade accept update window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands trade accept update ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "TRADE_MONEY_CHANGED",
+    "payload": [],
+    "description": {
+      "en": "Fires for the trade money changed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands trade money changed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "TRADE_PLAYER_ITEM_CHANGED",
+    "payload": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires for the trade player item changed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands trade player item changed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "TRADE_REQUEST_CANCEL",
+    "payload": [],
+    "description": {
+      "en": "Fires for the trade request cancel window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands trade request cancel ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "TRADE_TARGET_ITEM_CHANGED",
+    "payload": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires for the trade target item changed window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands trade target item changed ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "UNIT_PET_TRAINING_POINTS",
+    "payload": [
+      {
+        "name": "unit",
+        "type": "string"
+      }
+    ],
+    "description": {
+      "en": "Fires for the unit pet training points window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands unit pet training points ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "UPDATE_CHAT_COLOR",
+    "payload": [
+      {
+        "name": "chatType",
+        "type": "string"
+      },
+      {
+        "name": "r",
+        "type": "number"
+      },
+      {
+        "name": "g",
+        "type": "number"
+      },
+      {
+        "name": "b",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Fires for the update chat color window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands update chat color ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "UPDATE_INVENTORY_DURABILITY",
+    "payload": [],
+    "description": {
+      "en": "Fires for the update inventory durability window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands update inventory durability ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "UPDATE_PENDING_MAIL",
+    "payload": [],
+    "description": {
+      "en": "Fires for the update pending mail window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands update pending mail ausgelöst (ungeprüft)."
+    }
+  },
+  {
+    "name": "UPDATE_TICKET",
+    "payload": [],
+    "description": {
+      "en": "Fires for the update ticket window/state change (unverified).",
+      "de": "Wird bei Änderung des Fensters/Zustands update ticket ausgelöst (ungeprüft)."
+    }
   }
 ]
