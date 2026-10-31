@@ -1,0 +1,331 @@
+# Name | params (name:type, ? = optional) | returns | EN | DE        (aus dem Gedächtnis · from memory, tag "unverified")
+CanEditMOTD||canEdit:boolean|Whether you may edit the guild message of the day.|Ob du die Gildennachricht des Tages ändern darfst.
+CanEditPublicNote||canEdit:boolean|Whether you may edit public guild notes.|Ob du öffentliche Gildennotizen ändern darfst.
+CanEditOfficerNote||canEdit:boolean|Whether you may edit officer notes.|Ob du Offiziersnotizen ändern darfst.
+CanViewOfficerNote||canView:boolean|Whether you may view officer notes.|Ob du Offiziersnotizen sehen darfst.
+CanGuildInvite||canInvite:boolean|Whether you may invite to the guild.|Ob du in die Gilde einladen darfst.
+CanGuildPromote||canPromote:boolean|Whether you may promote guild members.|Ob du Gildenmitglieder befördern darfst.
+CanGuildDemote||canDemote:boolean|Whether you may demote guild members.|Ob du Gildenmitglieder degradieren darfst.
+CanGuildRemove||canRemove:boolean|Whether you may remove guild members.|Ob du Gildenmitglieder entfernen darfst.
+IsGuildLeader|name:string?|isLeader:boolean|Whether you (or the named player) are the guild leader.|Ob du (oder der genannte Spieler) Gildenleiter bist.
+GuildInfo||guildName:string,guildRankName:string,guildRankIndex:number|Your guild name, rank name and rank index.|Gildenname, Rangname und Rangindex.
+GuildLeave|||Leaves your guild.|Verlässt deine Gilde.
+GuildDisband|||Disbands your guild.|Löst deine Gilde auf.
+GuildSetMOTD|text:string||Sets the guild message of the day.|Setzt die Gildennachricht des Tages.
+GuildPromoteByName|name:string||Promotes a guild member.|Befördert ein Gildenmitglied.
+GuildDemoteByName|name:string||Demotes a guild member.|Degradiert ein Gildenmitglied.
+GuildUninviteByName|name:string||Removes a member from the guild.|Entfernt ein Mitglied aus der Gilde.
+GuildSetLeaderByName|name:string||Transfers guild leadership.|Überträgt die Gildenleitung.
+GuildControlGetNumRanks||numRanks:number|Number of guild ranks.|Anzahl der Gildenränge.
+GuildControlGetRankName|index:number|name:string|Name of a guild rank.|Name eines Gildenrangs.
+GetGuildRosterMOTD||motd:string|Guild message of the day from the roster.|Gildennachricht des Tages aus der Mitgliederliste.
+GetGuildInfoText||text:string|Guild information text.|Gildeninformationstext.
+SetGuildInfoText|text:string||Sets the guild information text.|Setzt den Gildeninformationstext.
+GetGuildRosterSelection||index:number|Selected roster index.|Gewählter Listenindex.
+SetGuildRosterSelection|index:number||Selects a roster entry.|Wählt einen Eintrag der Liste.
+GetGuildRosterShowOffline||show:boolean|Whether offline members are shown.|Ob Offline-Mitglieder angezeigt werden.
+SetGuildRosterShowOffline|show:boolean||Shows or hides offline members.|Zeigt oder verbirgt Offline-Mitglieder.
+SortGuildRoster|sort:string||Sorts the guild roster.|Sortiert die Gildenliste.
+GuildRosterSetPublicNote|index:number,note:string||Sets a public note.|Setzt eine öffentliche Notiz.
+GuildRosterSetOfficerNote|index:number,note:string||Sets an officer note.|Setzt eine Offiziersnotiz.
+AcceptGuild|||Accepts a guild invitation.|Nimmt eine Gildeneinladung an.
+DeclineGuild|||Declines a guild invitation.|Lehnt eine Gildeneinladung ab.
+GetNumStablePets||numPets:number|Number of stabled pets.|Anzahl der eingestallten Tiere.
+GetNumStableSlots||numSlots:number|Number of stable slots.|Anzahl der Stallplätze.
+GetNextStableSlotCost||cost:number|Cost of the next stable slot in copper.|Kosten des nächsten Stallplatzes in Kupfer.
+BuyStableSlot|||Buys the next stable slot.|Kauft den nächsten Stallplatz.
+GetPetHappiness||happiness:number,damagePercentage:number,loyaltyRate:number|Pet happiness (1-3), damage modifier and loyalty rate.|Zufriedenheit des Tiers (1-3), Schadensmodifikator und Loyalitätsrate.
+GetPetLoyalty||loyalty:string|Pet loyalty description.|Beschreibung der Tierloyalität.
+GetPetExperience||currXP:number,nextXP:number|Pet experience and experience needed.|Erfahrung des Tiers und benötigte Erfahrung.
+GetPetFoodTypes||...:string|Food types the pet eats.|Nahrungsarten des Tiers.
+GetPetIcon||texture:string|Pet icon texture.|Symboltextur des Tiers.
+GetPetTrainingPoints||total:number,spent:number|Pet training points total and spent.|Trainingspunkte des Tiers gesamt und ausgegeben.
+HasPetUI||hasUI:boolean,isHunterPet:boolean|Whether a pet UI exists.|Ob eine Tier-Oberfläche existiert.
+HasPetSpells||hasSpells:number,petType:string|Whether the pet has spells.|Ob das Tier Zauber hat.
+PetAttack|||Orders the pet to attack your target.|Befiehlt dem Tier, dein Ziel anzugreifen.
+PetStopAttack|||Orders the pet to stop attacking.|Befiehlt dem Tier, den Angriff zu beenden.
+PetFollow|||Orders the pet to follow you.|Befiehlt dem Tier, dir zu folgen.
+PetWait|||Orders the pet to stay.|Befiehlt dem Tier zu warten.
+PetPassiveMode|||Sets the pet to passive.|Setzt das Tier auf passiv.
+PetDefensiveMode|||Sets the pet to defensive.|Setzt das Tier auf defensiv.
+PetAggressiveMode|||Sets the pet to aggressive.|Setzt das Tier auf aggressiv.
+PetDismiss|||Dismisses the pet.|Entlässt das Tier.
+PetAbandon|||Abandons the pet.|Gibt das Tier auf.
+PetRename|name:string||Renames the pet.|Benennt das Tier um.
+PetCanBeAbandoned||canAbandon:boolean|Whether the pet can be abandoned.|Ob das Tier aufgegeben werden kann.
+PetCanBeRenamed||canRename:boolean|Whether the pet can be renamed.|Ob das Tier umbenannt werden kann.
+PetHasActionBar||hasBar:boolean|Whether the pet has an action bar.|Ob das Tier eine Aktionsleiste hat.
+CastPetAction|index:number,target:string?||Uses a pet action.|Verwendet eine Tieraktion.
+GetPetActionCooldown|index:number|start:number,duration:number,enable:number|Cooldown of a pet action.|Abklingzeit einer Tieraktion.
+GetPetActionsUsable||usable:boolean|Whether pet actions are usable.|Ob Tieraktionen nutzbar sind.
+CloseQuest|||Closes the quest dialog.|Schließt den Questdialog.
+ExpandQuestHeader|index:number||Expands a quest log header.|Klappt eine Questlog-Überschrift auf.
+CollapseQuestHeader|index:number||Collapses a quest log header.|Klappt eine Questlog-Überschrift zu.
+GetNumQuestChoices||numChoices:number|Number of reward choices of the open quest.|Anzahl der Belohnungsauswahlen der offenen Quest.
+GetNumQuestRewards||numRewards:number|Number of rewards of the open quest.|Anzahl der Belohnungen der offenen Quest.
+GetNumQuestItems||numItems:number|Number of required items of the open quest.|Anzahl der benötigten Gegenstände der offenen Quest.
+GetNumQuestLogChoices||numChoices:number|Reward choices of the selected log quest.|Belohnungsauswahlen der gewählten Logquest.
+GetNumQuestLogRewards||numRewards:number|Rewards of the selected log quest.|Belohnungen der gewählten Logquest.
+GetQuestLogRewardMoney||money:number|Money reward of the selected log quest.|Geldbelohnung der gewählten Logquest.
+GetQuestLogRequiredMoney||money:number|Money required for the selected log quest.|Benötigtes Geld der gewählten Logquest.
+GetRewardMoney||money:number|Money reward of the open quest.|Geldbelohnung der offenen Quest.
+GetQuestMoneyToGet||money:number|Money required for the open quest.|Benötigtes Geld der offenen Quest.
+GetQuestLogPushable||pushable:boolean|Whether the selected quest can be shared.|Ob die gewählte Quest geteilt werden kann.
+QuestLogPushQuest|||Shares the selected quest.|Teilt die gewählte Quest.
+GetQuestGreenRange||range:number|Level range for green quests.|Levelbereich für grüne Quests.
+GetQuestLogTimeLeft||seconds:number|Time left of the selected timed quest.|Restzeit der gewählten Zeit-Quest.
+IsQuestCompletable||completable:boolean|Whether the open quest can be completed.|Ob die offene Quest abgeschlossen werden kann.
+IsCurrentQuestFailed||failed:boolean|Whether the current quest failed.|Ob die aktuelle Quest fehlgeschlagen ist.
+IsUnitOnQuest|questIndex:number,unit:string|isOnQuest:boolean|Whether the unit is on the quest.|Ob die Einheit die Quest hat.
+GetAbandonQuestName||name:string|Name of the quest about to be abandoned.|Name der Quest, die abgebrochen wird.
+GetActiveLevel|index:number|level:number|Level of an active gossip quest.|Stufe einer aktiven Gossip-Quest.
+GetAvailableLevel|index:number|level:number|Level of an available gossip quest.|Stufe einer verfügbaren Gossip-Quest.
+GetQuestLogItemLink|type:string,index:number|link:string|Item link of a log quest item.|Gegenstandslink eines Logquest-Gegenstands.
+GetQuestItemLink|type:string,index:number|link:string|Item link of an open quest item.|Gegenstandslink eines Gegenstands der offenen Quest.
+ConfirmAcceptQuest|||Confirms accepting a shared quest.|Bestätigt die Annahme einer geteilten Quest.
+GetGossipText||text:string|Gossip text.|Gossip-Text.
+GetGossipOptions||...:string|Gossip option texts and types.|Gossip-Optionstexte und -typen.
+GetGossipAvailableQuests||...:any|Available quests of the gossip window.|Verfügbare Quests des Gossip-Fensters.
+GetGossipActiveQuests||...:any|Active quests of the gossip window.|Aktive Quests des Gossip-Fensters.
+SelectGossipOption|index:number||Selects a gossip option.|Wählt eine Gossip-Option.
+SelectGossipAvailableQuest|index:number||Selects an available quest.|Wählt eine verfügbare Quest.
+SelectGossipActiveQuest|index:number||Selects an active quest.|Wählt eine aktive Quest.
+CloseGossip|||Closes the gossip window.|Schließt das Gossip-Fenster.
+CheckInbox|||Requests the mailbox contents.|Fragt den Briefkasteninhalt an.
+GetInboxNumItems||numItems:number,totalItems:number|Number of mails in the inbox.|Anzahl der Briefe im Posteingang.
+HasNewMail||hasMail:boolean|Whether new mail is waiting.|Ob neue Post wartet.
+GetInboxText|index:number|bodyText:string,texture:string,isTakeable:boolean,isInvoice:boolean|Body text of a mail.|Text eines Briefes.
+TakeInboxMoney|index:number||Takes the money of a mail.|Nimmt das Geld eines Briefes.
+TakeInboxItem|index:number||Takes the item of a mail.|Nimmt den Gegenstand eines Briefes.
+DeleteInboxItem|index:number||Deletes a mail.|Löscht einen Brief.
+ReturnInboxItem|index:number||Returns a mail to the sender.|Sendet einen Brief zurück.
+InboxItemCanDelete|index:number|canDelete:boolean|Whether a mail can be deleted.|Ob ein Brief gelöscht werden kann.
+CloseMail|||Closes the mail window.|Schließt das Postfenster.
+ClearSendMail|||Clears the outgoing mail.|Leert den ausgehenden Brief.
+SendMail|recipient:string,subject:string,body:string?||Sends a mail.|Sendet einen Brief.
+GetSendMailMoney||money:number|Money attached to the outgoing mail.|Dem ausgehenden Brief beigefügtes Geld.
+SetSendMailMoney|amount:number||Attaches money to the outgoing mail.|Fügt dem Brief Geld bei.
+GetSendMailCOD||cod:number|Cash on delivery amount.|Nachnahmebetrag.
+SetSendMailCOD|amount:number||Sets the cash on delivery amount.|Setzt den Nachnahmebetrag.
+GetSendMailPrice||price:number|Postage of the outgoing mail.|Porto des ausgehenden Briefes.
+GetSendMailItem||name:string,texture:string,count:number,quality:number|Attached item of the outgoing mail.|Angehängter Gegenstand des ausgehenden Briefes.
+ClickSendMailItemButton|||Clicks the mail item button.|Klickt auf die Gegenstandsschaltfläche.
+AcceptGroup|||Accepts a party invitation.|Nimmt eine Gruppeneinladung an.
+DeclineGroup|||Declines a party invitation.|Lehnt eine Gruppeneinladung ab.
+InviteToParty|name:string||Invites a player to the party.|Lädt einen Spieler in die Gruppe ein.
+UninviteFromParty|name:string||Removes a player from the party.|Entfernt einen Spieler aus der Gruppe.
+UninviteByName|name:string||Removes a player from the party by name.|Entfernt einen Spieler per Namen aus der Gruppe.
+PromoteByName|name:string||Promotes a player to leader.|Macht einen Spieler zum Anführer.
+PromoteToPartyLeader|unit:string||Makes a unit the party leader.|Macht eine Einheit zum Gruppenanführer.
+GetPartyLeaderIndex||index:number|Party index of the leader (0 = you).|Gruppenindex des Anführers (0 = du).
+ConvertToRaid|||Converts the party to a raid.|Wandelt die Gruppe in einen Schlachtzug um.
+GetLootThreshold||threshold:number|Loot quality threshold.|Beuteschwelle (Qualität).
+SetLootThreshold|threshold:number||Sets the loot threshold.|Setzt die Beuteschwelle.
+SetLootMethod|method:string,master:string?,threshold:number?||Sets the loot method.|Setzt die Beuteverteilung.
+DoReadyCheck|||Starts a ready check.|Startet eine Bereitschaftsprüfung.
+ConfirmReadyCheck|ready:boolean||Answers a ready check.|Antwortet auf eine Bereitschaftsprüfung.
+GetNumLootItems||numItems:number|Number of items in the loot window.|Anzahl Gegenstände im Beutefenster.
+GetLootSlotInfo|slot:number|icon:string,name:string,quantity:number,quality:number|Information about a loot slot.|Informationen zu einem Beuteplatz.
+GetLootSlotLink|slot:number|link:string|Item link of a loot slot.|Gegenstandslink eines Beuteplatzes.
+LootSlot|slot:number||Loots a slot.|Nimmt einen Beuteplatz.
+LootSlotIsItem|slot:number|isItem:boolean|Whether the slot holds an item.|Ob der Platz einen Gegenstand enthält.
+LootSlotIsCoin|slot:number|isCoin:boolean|Whether the slot holds money.|Ob der Platz Geld enthält.
+CloseLoot|||Closes the loot window.|Schließt das Beutefenster.
+RollOnLoot|rollID:number,rollType:number||Rolls on an item.|Würfelt auf einen Gegenstand.
+GetLootRollItemInfo|rollID:number|texture:string,name:string,count:number,quality:number|Information about a rolled item.|Informationen zu einem gewürfelten Gegenstand.
+GetLootRollItemLink|rollID:number|link:string|Item link of a rolled item.|Gegenstandslink eines gewürfelten Gegenstands.
+GetLootRollTimeLeft|rollID:number|timeLeft:number|Time left to roll.|Restzeit zum Würfeln.
+ConfirmLootRoll|rollID:number,rollType:number||Confirms a roll.|Bestätigt einen Wurf.
+GiveMasterLoot|slot:number,candidate:number||Gives loot to a candidate.|Gibt Beute an einen Kandidaten.
+GetMasterLootCandidate|index:number|name:string|Name of a master-loot candidate.|Name eines Meisterplünderer-Kandidaten.
+IsFishingLoot||isFishing:boolean|Whether the loot is from fishing.|Ob die Beute vom Angeln stammt.
+ContainerIDToInventoryID|bagID:number|invSlot:number|Inventory slot of a bag.|Inventarplatz einer Tasche.
+OpenAllBags|||Opens all bags.|Öffnet alle Taschen.
+ToggleBag|bagID:number||Toggles a bag.|Schaltet eine Tasche um.
+ToggleBackpack|||Toggles the backpack.|Schaltet den Rucksack um.
+PutItemInBag|slot:number||Puts the cursor item into a bag slot.|Legt den Cursor-Gegenstand in einen Taschenplatz.
+PutItemInBackpack|||Puts the cursor item into the backpack.|Legt den Cursor-Gegenstand in den Rucksack.
+PickupBagFromSlot|slot:number||Picks up a bag.|Nimmt eine Tasche auf.
+HasKey||hasKey:boolean|Whether you have a key ring key.|Ob du einen Schlüssel im Schlüsselbund hast.
+BuybackItem|index:number||Buys back an item.|Kauft einen Gegenstand zurück.
+CloseMerchant|||Closes the merchant window.|Schließt das Händlerfenster.
+GetMerchantItemMaxStack|index:number|maxStack:number|Maximum purchasable stack.|Maximal kaufbarer Stapel.
+GetBuybackItemInfo|index:number|name:string,texture:string,price:number,quantity:number|Buyback item information.|Informationen zu Rückkauf-Gegenständen.
+IsInInstance||isInstance:boolean,instanceType:string|Whether you are in an instance.|Ob du in einer Instanz bist.
+ResetInstances|||Resets your instances.|Setzt deine Instanzen zurück.
+GetNumSavedInstances||num:number|Number of saved instances.|Anzahl gespeicherter Instanzen.
+GetSavedInstanceInfo|index:number|name:string,id:number,reset:number|Saved instance information.|Informationen zu gespeicherten Instanzen.
+CanShowResetInstances||canReset:boolean|Whether instances can be reset.|Ob Instanzen zurückgesetzt werden können.
+DisableAllAddOns|||Disables all addons.|Deaktiviert alle Addons.
+EnableAllAddOns|||Enables all addons.|Aktiviert alle Addons.
+IsAddOnLoadOnDemand|addon:string|loadOnDemand:boolean|Whether an addon is load-on-demand.|Ob ein Addon bei Bedarf geladen wird.
+ResetDisabledAddOns|||Resets the disabled addon list.|Setzt die Liste deaktivierter Addons zurück.
+AcceptTrade|||Accepts the trade.|Akzeptiert den Handel.
+CancelTrade|||Cancels the trade.|Bricht den Handel ab.
+CloseTrade|||Closes the trade window.|Schließt das Handelsfenster.
+InitiateTrade|unit:string||Starts a trade with a unit.|Beginnt einen Handel mit einer Einheit.
+GetPlayerTradeMoney||money:number|Money you offer.|Geld, das du anbietest.
+GetTargetTradeMoney||money:number|Money offered to you.|Geld, das dir angeboten wird.
+SetTradeMoney|amount:number||Sets the money you offer.|Setzt das Geld, das du anbietest.
+GetTradePlayerItemInfo|index:number|name:string,texture:string,numItems:number,quality:number|Item you offer.|Gegenstand, den du anbietest.
+GetTradeTargetItemInfo|index:number|name:string,texture:string,numItems:number,quality:number|Item offered to you.|Gegenstand, der dir angeboten wird.
+GetTradePlayerItemLink|index:number|link:string|Link of an item you offer.|Link eines Gegenstands, den du anbietest.
+GetTradeTargetItemLink|index:number|link:string|Link of an item offered to you.|Link eines Gegenstands, der dir angeboten wird.
+GetTradeSkillItemLink|index:number|link:string|Item link of a trade skill recipe.|Gegenstandslink eines Berufsrezepts.
+GetTradeSkillReagentItemLink|skillIndex:number,reagentIndex:number|link:string|Item link of a reagent.|Gegenstandslink einer Zutat.
+GetNumBankSlots||numSlots:number,full:boolean|Purchased bank bag slots.|Gekaufte Bankfächer.
+GetBankSlotCost|numSlots:number|cost:number|Cost of the next bank slot.|Kosten des nächsten Bankfachs.
+PurchaseSlot|||Buys the next bank slot.|Kauft das nächste Bankfach.
+CloseBankFrame|||Closes the bank.|Schließt die Bank.
+BankButtonIDToInvSlotID|buttonID:number,isBag:number?|invSlot:number|Inventory slot of a bank button.|Inventarplatz einer Bankschaltfläche.
+NumTaxiNodes||num:number|Number of flight nodes.|Anzahl der Flugpunkte.
+TakeTaxiNode|index:number||Takes a flight.|Nimmt einen Flug.
+TaxiNodeName|index:number|name:string|Name of a flight node.|Name eines Flugpunkts.
+TaxiNodeCost|index:number|cost:number|Cost of a flight.|Kosten eines Flugs.
+TaxiNodeGetType|index:number|type:string|Type of a flight node.|Typ eines Flugpunkts.
+TaxiNodePosition|index:number|x:number,y:number|Map position of a flight node.|Kartenposition eines Flugpunkts.
+CloseTaxiMap|||Closes the flight map.|Schließt die Flugkarte.
+Jump|||Jumps.|Springt.
+ToggleAutoRun|||Toggles auto-run.|Schaltet Autorun um.
+ToggleRun|||Toggles run/walk.|Schaltet Laufen/Gehen um.
+FollowByName|name:string,exact:boolean?||Follows a player by name.|Folgt einem Spieler per Namen.
+MoveForwardStart|||Starts moving forward.|Beginnt vorwärts zu laufen.
+MoveForwardStop|||Stops moving forward.|Beendet das Vorwärtslaufen.
+MoveBackwardStart|||Starts moving backward.|Beginnt rückwärts zu laufen.
+MoveBackwardStop|||Stops moving backward.|Beendet das Rückwärtslaufen.
+StrafeLeftStart|||Starts strafing left.|Beginnt nach links zu gleiten.
+StrafeLeftStop|||Stops strafing left.|Beendet das Gleiten nach links.
+StrafeRightStart|||Starts strafing right.|Beginnt nach rechts zu gleiten.
+StrafeRightStop|||Stops strafing right.|Beendet das Gleiten nach rechts.
+TurnLeftStart|||Starts turning left.|Beginnt sich nach links zu drehen.
+TurnLeftStop|||Stops turning left.|Beendet die Linksdrehung.
+TurnRightStart|||Starts turning right.|Beginnt sich nach rechts zu drehen.
+TurnRightStop|||Stops turning right.|Beendet die Rechtsdrehung.
+GetCursorMoney||money:number|Money held on the cursor.|Geld am Cursor.
+CursorHasMoney||hasMoney:boolean|Whether the cursor holds money.|Ob der Cursor Geld hält.
+CursorHasSpell||hasSpell:boolean|Whether the cursor holds a spell.|Ob der Cursor einen Zauber hält.
+DropCursorMoney|||Drops the money on the cursor.|Legt das Geld vom Cursor ab.
+DeleteCursorItem|||Deletes the cursor item.|Löscht den Cursor-Gegenstand.
+EquipCursorItem|slot:number||Equips the cursor item.|Rüstet den Cursor-Gegenstand aus.
+AutoEquipCursorItem|||Auto-equips the cursor item.|Rüstet den Cursor-Gegenstand automatisch aus.
+ResetCursor|||Resets the cursor.|Setzt den Cursor zurück.
+SetCursor|cursor:string||Sets the cursor shape.|Setzt die Cursorform.
+InRepairMode||inRepair:boolean|Whether repair mode is active.|Ob der Reparaturmodus aktiv ist.
+GetBlockChance||chance:number|Block chance in percent.|Blockchance in Prozent.
+GetDodgeChance||chance:number|Dodge chance in percent.|Ausweichchance in Prozent.
+GetParryChance||chance:number|Parry chance in percent.|Parierchance in Prozent.
+GetCorpseRecoveryDelay||seconds:number|Seconds until you may resurrect.|Sekunden bis zur Wiederbelebung.
+GetReleaseTimeRemaining||seconds:number|Time until forced release.|Zeit bis zur erzwungenen Freilassung.
+GetResSicknessDuration||seconds:number|Resurrection sickness duration.|Dauer der Wiederbelebungsschwäche.
+GetTimeToWellRested||seconds:number|Time until well rested.|Zeit bis zum Ausgeruhtsein.
+HasSoulstone||text:string|Soulstone text if you have one.|Seelenstein-Text, falls vorhanden.
+AcceptResurrect|||Accepts a resurrection.|Nimmt eine Wiederbelebung an.
+DeclineResurrect|||Declines a resurrection.|Lehnt eine Wiederbelebung ab.
+RetrieveCorpse|||Resurrects at your corpse.|Belebt dich an deiner Leiche wieder.
+RepopMe|||Releases your spirit.|Gibt deinen Geist frei.
+ConfirmBinder|||Confirms binding at the innkeeper.|Bestätigt das Binden beim Gastwirt.
+CheckBinderDist||ok:boolean|Checks distance to the binder.|Prüft den Abstand zum Gastwirt.
+RequestTimePlayed|||Requests played time (TIME_PLAYED_MSG).|Fragt die Spielzeit an (TIME_PLAYED_MSG).
+ConsoleExec|command:string||Executes a console command.|Führt einen Konsolenbefehl aus.
+GetText|token:string,gender:number?|text:string|Looks up a localized text.|Sucht einen lokalisierten Text.
+Screenshot|||Takes a screenshot.|Macht einen Screenshot.
+InCinematic||inCinematic:boolean|Whether a cinematic plays.|Ob eine Zwischensequenz läuft.
+StopCinematic|||Stops the cinematic.|Beendet die Zwischensequenz.
+PlayMusic|file:string||Plays a music file.|Spielt eine Musikdatei.
+StopMusic|||Stops music.|Stoppt die Musik.
+IsWindowsClient||isWindows:boolean|Whether the client runs on Windows.|Ob der Client unter Windows läuft.
+IsMacClient||isMac:boolean|Whether the client runs on macOS.|Ob der Client unter macOS läuft.
+IsLinuxClient||isLinux:boolean|Whether the client runs on Linux.|Ob der Client unter Linux läuft.
+MouseIsOver|frame:table,topOffset:number?,bottomOffset:number?,leftOffset:number?,rightOffset:number?|isOver:boolean|Whether the mouse is over a frame.|Ob die Maus über einem Frame ist.
+GetNumMapLandmarks||num:number|Number of map landmarks.|Anzahl der Kartenmarkierungen.
+GetMapContinents||...:string|Names of the continents.|Namen der Kontinente.
+GetMapZones|continent:number|...:string|Zone names of a continent.|Zonennamen eines Kontinents.
+GetNumMapOverlays||num:number|Number of map overlays.|Anzahl der Kartenüberlagerungen.
+ToggleWorldMap|||Toggles the world map.|Schaltet die Weltkarte um.
+ToggleMinimap|||Toggles the minimap.|Schaltet die Minikarte um.
+ToggleCharacter|tab:string||Toggles the character window.|Schaltet das Charakterfenster um.
+ToggleGameMenu|||Toggles the game menu.|Schaltet das Spielmenü um.
+ToggleTalentFrame|||Toggles the talent window.|Schaltet das Talentfenster um.
+ToggleSpellBook|bookType:string||Toggles the spellbook.|Schaltet das Zauberbuch um.
+ToggleQuestLog|||Toggles the quest log.|Schaltet das Questlog um.
+ToggleFriendsFrame|tab:string?||Toggles the friends window.|Schaltet das Freundesfenster um.
+ToggleKeyRing|||Toggles the key ring.|Schaltet den Schlüsselbund um.
+ToggleFramerate|||Toggles the framerate display.|Schaltet die Bildrate um.
+ToggleCombatLog|||Toggles the combat log.|Schaltet das Kampflog um.
+ToggleHelpFrame|||Toggles the help window.|Schaltet das Hilfefenster um.
+ShowFriends|||Requests the friends list.|Fragt die Freundesliste an.
+GetSelectedFriend||index:number|Selected friend index.|Index des gewählten Freundes.
+SetSelectedFriend|index:number||Selects a friend.|Wählt einen Freund.
+GetSelectedIgnore||index:number|Selected ignore index.|Index des gewählten Ignorierten.
+SetSelectedIgnore|index:number||Selects an ignored player.|Wählt einen ignorierten Spieler.
+AddOrDelIgnore|name:string||Adds or removes an ignore entry.|Fügt einen Ignoriereintrag hinzu oder entfernt ihn.
+SetWhoToUI|toUI:number||Sends /who results to the UI.|Sendet /who-Ergebnisse an die Oberfläche.
+SortWho|sort:string||Sorts the /who results.|Sortiert die /who-Ergebnisse.
+GetSelectedFaction||index:number|Selected faction index.|Index der gewählten Fraktion.
+SetSelectedFaction|index:number||Selects a faction.|Wählt eine Fraktion.
+ExpandFactionHeader|index:number||Expands a faction header.|Klappt eine Fraktionsüberschrift auf.
+CollapseFactionHeader|index:number||Collapses a faction header.|Klappt eine Fraktionsüberschrift zu.
+FactionToggleAtWar|index:number||Toggles at-war for a faction.|Schaltet Krieg für eine Fraktion um.
+IsFactionInactive|index:number|inactive:boolean|Whether a faction is inactive.|Ob eine Fraktion inaktiv ist.
+SetFactionActive|index:number||Marks a faction active.|Markiert eine Fraktion als aktiv.
+SetFactionInactive|index:number||Marks a faction inactive.|Markiert eine Fraktion als inaktiv.
+GetSelectedSkill||index:number|Selected skill index.|Index der gewählten Fertigkeit.
+SetSelectedSkill|index:number||Selects a skill.|Wählt eine Fertigkeit.
+ExpandSkillHeader|index:number||Expands a skill header.|Klappt eine Fertigkeitsüberschrift auf.
+CollapseSkillHeader|index:number||Collapses a skill header.|Klappt eine Fertigkeitsüberschrift zu.
+AbandonSkill|index:number||Unlearns a skill.|Verlernt eine Fertigkeit.
+GetNumMacroIcons||num:number|Number of macro icons.|Anzahl der Makrosymbole.
+GetMacroIconInfo|index:number|texture:string|Macro icon texture.|Textur eines Makrosymbols.
+GetBindingText|key:string,prefix:string,returnAbbr:boolean?|text:string|Display text for a key binding.|Anzeigetext einer Tastenbelegung.
+GetCurrentBindingSet||set:number|Current binding set.|Aktueller Tastenbelegungssatz.
+RunBinding|command:string,up:string?||Runs a binding command.|Führt einen Belegungsbefehl aus.
+TargetLastEnemy|||Targets the last enemy.|Wählt den letzten Feind als Ziel.
+TargetNearestPartyMember|reverse:boolean?||Targets the nearest party member.|Wählt das nächste Gruppenmitglied.
+TargetNearestRaidMember|reverse:boolean?||Targets the nearest raid member.|Wählt das nächste Schlachtzugsmitglied.
+IsCurrentCast|spell:string|isCurrent:boolean|Whether a spell is the current cast.|Ob ein Zauber der aktuelle Zauber ist.
+IsSpellPassive|spellID:number,bookType:string|isPassive:boolean|Whether a spell is passive.|Ob ein Zauber passiv ist.
+GetSpellAutocast|spellID:number,bookType:string|autocastable:number,autostate:number|Autocast state of a spell.|Autocast-Status eines Zaubers.
+ToggleSpellAutocast|spellID:number,bookType:string||Toggles spell autocast.|Schaltet Autocast um.
+OffhandHasWeapon||hasWeapon:boolean|Whether a weapon is in the off hand.|Ob eine Waffe in der Nebenhand ist.
+HasWandEquipped||hasWand:boolean|Whether a wand is equipped.|Ob ein Zauberstab angelegt ist.
+IsInventoryItemLocked|slot:number|locked:boolean|Whether an inventory slot is locked.|Ob ein Inventarplatz gesperrt ist.
+GetInventoryItemBroken|unit:string,slot:number|broken:boolean|Whether an equipped item is broken.|Ob ein ausgerüsteter Gegenstand kaputt ist.
+GetWeaponEnchantInfo||hasMainHandEnchant:boolean,mainHandExpiration:number,mainHandCharges:number,hasOffHandEnchant:boolean,offHandExpiration:number,offHandCharges:number|Temporary weapon enchants.|Temporäre Waffenverzauberungen.
+CancelTrackingBuff|||Cancels the tracking buff.|Bricht den Tracking-Effekt ab.
+GetNumBattlefields||num:number|Number of battlefield instances listed.|Anzahl der gelisteten Schlachtfeldinstanzen.
+JoinBattlefield|index:number,asGroup:boolean?||Joins a battlefield queue.|Betritt eine Schlachtfeld-Warteschlange.
+LeaveBattlefield|||Leaves the battlefield.|Verlässt das Schlachtfeld.
+AcceptBattlefieldPort|index:number,accept:boolean||Accepts or declines a battlefield invitation.|Nimmt eine Schlachtfeldeinladung an oder lehnt ab.
+GetBattlefieldWinner||winner:number|Winning faction of the battlefield.|Siegerfraktion des Schlachtfelds.
+GetNumBattlefieldScores||num:number|Number of score entries.|Anzahl der Punkteeinträge.
+RequestBattlefieldScoreData|||Requests the score data.|Fragt die Punktedaten an.
+GetNumAuctionItems|list:string|batch:number,total:number|Number of auction items in a list.|Anzahl der Auktionsgegenstände in einer Liste.
+GetAuctionItemInfo|type:string,index:number|name:string,texture:string,count:number,quality:number,canUse:boolean,level:number,minBid:number,minIncrement:number,buyoutPrice:number,bidAmount:number,highBidder:string,owner:string|Auction item information.|Informationen zu einem Auktionsgegenstand.
+GetAuctionItemLink|type:string,index:number|link:string|Item link of an auction.|Gegenstandslink einer Auktion.
+GetAuctionItemTimeLeft|type:string,index:number|timeLeft:number|Time left of an auction (1-4).|Restzeit einer Auktion (1-4).
+PlaceAuctionBid|type:string,index:number,bid:number||Bids on or buys out an auction.|Bietet auf eine Auktion oder kauft sie sofort.
+CancelAuction|index:number||Cancels your auction.|Bricht deine Auktion ab.
+CloseAuctionHouse|||Closes the auction house.|Schließt das Auktionshaus.
+CanSendAuctionQuery||canQuery:boolean|Whether an auction query may be sent.|Ob eine Auktionssuche gesendet werden darf.
+GetSelectedAuctionItem|type:string|index:number|Selected auction index.|Index der gewählten Auktion.
+SetSelectedAuctionItem|type:string,index:number||Selects an auction.|Wählt eine Auktion.
+ChannelInvite|channel:string,name:string||Invites a player to a channel.|Lädt einen Spieler in einen Kanal ein.
+ChannelKick|channel:string,name:string||Kicks a player from a channel.|Wirft einen Spieler aus einem Kanal.
+ChannelBan|channel:string,name:string||Bans a player from a channel.|Sperrt einen Spieler im Kanal.
+ChannelUnban|channel:string,name:string||Unbans a player.|Hebt die Sperre eines Spielers auf.
+ChannelModerator|channel:string,name:string||Makes a player moderator.|Macht einen Spieler zum Moderator.
+ChannelUnmoderator|channel:string,name:string||Removes moderator status.|Entzieht den Moderatorstatus.
+ChannelMute|channel:string,name:string||Mutes a player.|Schaltet einen Spieler stumm.
+ChannelUnmute|channel:string,name:string||Unmutes a player.|Hebt die Stummschaltung auf.
+ChannelToggleAnnouncements|channel:string||Toggles channel announcements.|Schaltet Kanalankündigungen um.
+ListChannelByName|channel:string||Lists the members of a channel.|Listet die Mitglieder eines Kanals.
+ListChannels|||Lists your channels.|Listet deine Kanäle.
+SetChannelPassword|channel:string,password:string||Sets a channel password.|Setzt ein Kanalpasswort.
+SetChannelOwner|channel:string,name:string||Transfers channel ownership.|Überträgt den Kanalbesitz.
+DisplayChannelOwner|channel:string||Shows the channel owner.|Zeigt den Kanalbesitzer.
+GetChannelList||...:any|Your channels (id, name, ...).|Deine Kanäle (ID, Name, ...).
+GetPVPRankInfo|rank:number,unit:string?|name:string,number:number|Name and number of a PvP rank.|Name und Nummer eines PvP-Ranges.
+GetPVPRankProgress||progress:number|Progress to the next PvP rank.|Fortschritt zum nächsten PvP-Rang.
+UnitIsCivilian|unit:string|isCivilian:boolean|Whether the unit is a civilian (no honor).|Ob die Einheit ein Zivilist ist (keine Ehre).
+GetZonePVPInfo||pvpType:string,isFFA:boolean,faction:string|PvP type of the current zone.|PvP-Typ der aktuellen Zone.
+TakeScreenshot|||Takes a screenshot.|Macht einen Screenshot.

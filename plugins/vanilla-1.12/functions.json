@@ -1292,13 +1292,18 @@
     "name": "PetHasActionBar",
     "system": "Action",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasBar",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Action). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Action). Signatur noch nicht dokumentiert."
+      "en": "Whether the pet has an action bar.",
+      "de": "Ob das Tier eine Aktionsleiste hat."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -1721,11 +1726,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (AddOn). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (AddOn). Signatur noch nicht dokumentiert."
+      "en": "Disables all addons.",
+      "de": "Deaktiviert alle Addons."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -1749,11 +1754,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (AddOn). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (AddOn). Signatur noch nicht dokumentiert."
+      "en": "Enables all addons.",
+      "de": "Aktiviert alle Addons."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -1875,14 +1880,24 @@
   {
     "name": "IsAddOnLoadOnDemand",
     "system": "AddOn",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "addon",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "loadOnDemand",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (AddOn). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (AddOn). Signatur noch nicht dokumentiert."
+      "en": "Whether an addon is load-on-demand.",
+      "de": "Ob ein Addon bei Bedarf geladen wird."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -1915,11 +1930,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (AddOn). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (AddOn). Signatur noch nicht dokumentiert."
+      "en": "Resets the disabled addon list.",
+      "de": "Setzt die Liste deaktivierter Addons zurück."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -1939,26 +1954,36 @@
     "name": "CanSendAuctionQuery",
     "system": "Auction",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canQuery",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Whether an auction query may be sent.",
+      "de": "Ob eine Auktionssuche gesendet werden darf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CancelAuction",
     "system": "Auction",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Cancels your auction.",
+      "de": "Bricht deine Auktion ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -1980,11 +2005,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Closes the auction house.",
+      "de": "Schließt das Auktionshaus."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2029,27 +2054,99 @@
   {
     "name": "GetAuctionItemInfo",
     "system": "Auction",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "number"
+      },
+      {
+        "name": "quality",
+        "type": "number"
+      },
+      {
+        "name": "canUse",
+        "type": "boolean"
+      },
+      {
+        "name": "level",
+        "type": "number"
+      },
+      {
+        "name": "minBid",
+        "type": "number"
+      },
+      {
+        "name": "minIncrement",
+        "type": "number"
+      },
+      {
+        "name": "buyoutPrice",
+        "type": "number"
+      },
+      {
+        "name": "bidAmount",
+        "type": "number"
+      },
+      {
+        "name": "highBidder",
+        "type": "string"
+      },
+      {
+        "name": "owner",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Auction item information.",
+      "de": "Informationen zu einem Auktionsgegenstand."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetAuctionItemLink",
     "system": "Auction",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Item link of an auction.",
+      "de": "Gegenstandslink einer Auktion."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2068,14 +2165,28 @@
   {
     "name": "GetAuctionItemTimeLeft",
     "system": "Auction",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "timeLeft",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Time left of an auction (1-4).",
+      "de": "Restzeit einer Auktion (1-4)."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2107,14 +2218,28 @@
   {
     "name": "GetNumAuctionItems",
     "system": "Auction",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "list",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "batch",
+        "type": "number"
+      },
+      {
+        "name": "total",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Number of auction items in a list.",
+      "de": "Anzahl der Auktionsgegenstände in einer Liste."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2133,14 +2258,24 @@
   {
     "name": "GetSelectedAuctionItem",
     "system": "Auction",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Selected auction index.",
+      "de": "Index der gewählten Auktion."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2159,14 +2294,27 @@
   {
     "name": "PlaceAuctionBid",
     "system": "Auction",
-    "params": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      },
+      {
+        "name": "bid",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Bids on or buys out an auction.",
+      "de": "Bietet auf eine Auktion oder kauft sie sofort."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2185,14 +2333,23 @@
   {
     "name": "SetSelectedAuctionItem",
     "system": "Auction",
-    "params": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Auction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Auction). Signatur noch nicht dokumentiert."
+      "en": "Selects an auction.",
+      "de": "Wählt eine Auktion."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2224,14 +2381,29 @@
   {
     "name": "BankButtonIDToInvSlotID",
     "system": "Bank",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "buttonID",
+        "type": "number"
+      },
+      {
+        "name": "isBag",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "invSlot",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Bank). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Bank). Signatur noch nicht dokumentiert."
+      "en": "Inventory slot of a bank button.",
+      "de": "Inventarplatz einer Bankschaltfläche."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2240,37 +2412,56 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Bank). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Bank). Signatur noch nicht dokumentiert."
+      "en": "Closes the bank.",
+      "de": "Schließt die Bank."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetBankSlotCost",
     "system": "Bank",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "numSlots",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "cost",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Bank). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Bank). Signatur noch nicht dokumentiert."
+      "en": "Cost of the next bank slot.",
+      "de": "Kosten des nächsten Bankfachs."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumBankSlots",
     "system": "Bank",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numSlots",
+        "type": "number"
+      },
+      {
+        "name": "full",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Bank). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Bank). Signatur noch nicht dokumentiert."
+      "en": "Purchased bank bag slots.",
+      "de": "Gekaufte Bankfächer."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2279,11 +2470,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Bank). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Bank). Signatur noch nicht dokumentiert."
+      "en": "Buys the next bank slot.",
+      "de": "Kauft das nächste Bankfach."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2328,14 +2519,23 @@
   {
     "name": "AcceptBattlefieldPort",
     "system": "Battlefield",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      },
+      {
+        "name": "accept",
+        "type": "boolean"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Battlefield). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Battlefield). Signatur noch nicht dokumentiert."
+      "en": "Accepts or declines a battlefield invitation.",
+      "de": "Nimmt eine Schlachtfeldeinladung an oder lehnt ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2565,13 +2765,18 @@
     "name": "GetBattlefieldWinner",
     "system": "Battlefield",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "winner",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Battlefield). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Battlefield). Signatur noch nicht dokumentiert."
+      "en": "Winning faction of the battlefield.",
+      "de": "Siegerfraktion des Schlachtfelds."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2604,13 +2809,18 @@
     "name": "GetNumBattlefieldScores",
     "system": "Battlefield",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Battlefield). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Battlefield). Signatur noch nicht dokumentiert."
+      "en": "Number of score entries.",
+      "de": "Anzahl der Punkteeinträge."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2630,13 +2840,18 @@
     "name": "GetNumBattlefields",
     "system": "Battlefield",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Battlefield). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Battlefield). Signatur noch nicht dokumentiert."
+      "en": "Number of battlefield instances listed.",
+      "de": "Anzahl der gelisteten Schlachtfeldinstanzen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2668,14 +2883,24 @@
   {
     "name": "JoinBattlefield",
     "system": "Battlefield",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      },
+      {
+        "name": "asGroup",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Battlefield). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Battlefield). Signatur noch nicht dokumentiert."
+      "en": "Joins a battlefield queue.",
+      "de": "Betritt eine Schlachtfeld-Warteschlange."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2684,11 +2909,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Battlefield). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Battlefield). Signatur noch nicht dokumentiert."
+      "en": "Leaves the battlefield.",
+      "de": "Verlässt das Schlachtfeld."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2710,11 +2935,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Battlefield). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Battlefield). Signatur noch nicht dokumentiert."
+      "en": "Requests the score data.",
+      "de": "Fragt die Punktedaten an."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2790,11 +3015,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Buff). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Buff). Signatur noch nicht dokumentiert."
+      "en": "Cancels the tracking buff.",
+      "de": "Bricht den Tracking-Effekt ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -2903,13 +3128,38 @@
     "name": "GetWeaponEnchantInfo",
     "system": "Buff",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasMainHandEnchant",
+        "type": "boolean"
+      },
+      {
+        "name": "mainHandExpiration",
+        "type": "number"
+      },
+      {
+        "name": "mainHandCharges",
+        "type": "number"
+      },
+      {
+        "name": "hasOffHandEnchant",
+        "type": "boolean"
+      },
+      {
+        "name": "offHandExpiration",
+        "type": "number"
+      },
+      {
+        "name": "offHandCharges",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Buff). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Buff). Signatur noch nicht dokumentiert."
+      "en": "Temporary weapon enchants.",
+      "de": "Temporäre Waffenverzauberungen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3349,40 +3599,67 @@
   {
     "name": "ChannelBan",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Bans a player from a channel.",
+      "de": "Sperrt einen Spieler im Kanal."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ChannelInvite",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Invites a player to a channel.",
+      "de": "Lädt einen Spieler in einen Kanal ein."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ChannelKick",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Kicks a player from a channel.",
+      "de": "Wirft einen Spieler aus einem Kanal."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3401,92 +3678,147 @@
   {
     "name": "ChannelModerator",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Makes a player moderator.",
+      "de": "Macht einen Spieler zum Moderator."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ChannelMute",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Mutes a player.",
+      "de": "Schaltet einen Spieler stumm."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ChannelToggleAnnouncements",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Toggles channel announcements.",
+      "de": "Schaltet Kanalankündigungen um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ChannelUnban",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Unbans a player.",
+      "de": "Hebt die Sperre eines Spielers auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ChannelUnmoderator",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Removes moderator status.",
+      "de": "Entzieht den Moderatorstatus."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ChannelUnmute",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Unmutes a player.",
+      "de": "Hebt die Stummschaltung auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "DisplayChannelOwner",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Shows the channel owner.",
+      "de": "Zeigt den Kanalbesitzer."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3506,13 +3838,18 @@
     "name": "GetChannelList",
     "system": "Channel",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "...",
+        "type": "any"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Your channels (id, name, ...).",
+      "de": "Deine Kanäle (ID, Name, ...)."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3595,14 +3932,19 @@
   {
     "name": "ListChannelByName",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Lists the members of a channel.",
+      "de": "Listet die Mitglieder eines Kanals."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3611,11 +3953,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Lists your channels.",
+      "de": "Listet deine Kanäle."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3634,40 +3976,63 @@
   {
     "name": "SetChannelOwner",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Transfers channel ownership.",
+      "de": "Überträgt den Kanalbesitz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetChannelPassword",
     "system": "Channel",
-    "params": [],
+    "params": [
+      {
+        "name": "channel",
+        "type": "string"
+      },
+      {
+        "name": "password",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Channel). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Channel). Signatur noch nicht dokumentiert."
+      "en": "Sets a channel password.",
+      "de": "Setzt ein Kanalpasswort."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "AbandonSkill",
     "system": "Character",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Unlearns a skill.",
+      "de": "Verlernt eine Fertigkeit."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3676,11 +4041,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Accepts a resurrection.",
+      "de": "Nimmt eine Wiederbelebung an."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3752,13 +4117,18 @@
     "name": "CheckBinderDist",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "ok",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Checks distance to the binder.",
+      "de": "Prüft den Abstand zum Gastwirt."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3767,11 +4137,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Confirms binding at the innkeeper.",
+      "de": "Bestätigt das Binden beim Gastwirt."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3780,11 +4150,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Declines a resurrection.",
+      "de": "Lehnt eine Wiederbelebung ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3806,13 +4176,18 @@
     "name": "GetBlockChance",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "chance",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Block chance in percent.",
+      "de": "Blockchance in Prozent."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3860,13 +4235,18 @@
     "name": "GetCorpseRecoveryDelay",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "seconds",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Seconds until you may resurrect.",
+      "de": "Sekunden bis zur Wiederbelebung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3886,13 +4266,18 @@
     "name": "GetDodgeChance",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "chance",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Dodge chance in percent.",
+      "de": "Ausweichchance in Prozent."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3914,39 +4299,54 @@
     "name": "GetParryChance",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "chance",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Parry chance in percent.",
+      "de": "Parierchance in Prozent."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetReleaseTimeRemaining",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "seconds",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Time until forced release.",
+      "de": "Zeit bis zur erzwungenen Freilassung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetResSicknessDuration",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "seconds",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Resurrection sickness duration.",
+      "de": "Dauer der Wiederbelebungsschwäche."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -3976,13 +4376,18 @@
     "name": "GetTimeToWellRested",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "seconds",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Time until well rested.",
+      "de": "Zeit bis zum Ausgeruhtsein."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4019,13 +4424,18 @@
     "name": "HasSoulstone",
     "system": "Character",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Soulstone text if you have one.",
+      "de": "Seelenstein-Text, falls vorhanden."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4101,24 +4511,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Resurrects at your corpse.",
+      "de": "Belebt dich an deiner Leiche wieder."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetSelectedSkill",
     "system": "Character",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Character). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Character). Signatur noch nicht dokumentiert."
+      "en": "Selects a skill.",
+      "de": "Wählt eine Fertigkeit."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4414,14 +4829,24 @@
   {
     "name": "ContainerIDToInventoryID",
     "system": "Container",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "bagID",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "invSlot",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Inventory slot of a bag.",
+      "de": "Inventarplatz einer Tasche."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4564,13 +4989,18 @@
     "name": "HasKey",
     "system": "Container",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasKey",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Whether you have a key ring key.",
+      "de": "Ob du einen Schlüssel im Schlüsselbund hast."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4579,24 +5009,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Opens all bags.",
+      "de": "Öffnet alle Taschen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "PickupBagFromSlot",
     "system": "Container",
-    "params": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Picks up a bag.",
+      "de": "Nimmt eine Tasche auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4624,24 +5059,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Puts the cursor item into the backpack.",
+      "de": "Legt den Cursor-Gegenstand in den Rucksack."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "PutItemInBag",
     "system": "Container",
-    "params": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Puts the cursor item into a bag slot.",
+      "de": "Legt den Cursor-Gegenstand in einen Taschenplatz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4673,24 +5113,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Toggles the backpack.",
+      "de": "Schaltet den Rucksack um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ToggleBag",
     "system": "Container",
-    "params": [],
+    "params": [
+      {
+        "name": "bagID",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Container). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Container). Signatur noch nicht dokumentiert."
+      "en": "Toggles a bag.",
+      "de": "Schaltet eine Tasche um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -4970,11 +5415,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Auto-equips the cursor item.",
+      "de": "Rüstet den Cursor-Gegenstand automatisch aus."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5019,26 +5464,36 @@
     "name": "CursorHasMoney",
     "system": "Cursor",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasMoney",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Whether the cursor holds money.",
+      "de": "Ob der Cursor Geld hält."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CursorHasSpell",
     "system": "Cursor",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasSpell",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Whether the cursor holds a spell.",
+      "de": "Ob der Cursor einen Zauber hält."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5047,11 +5502,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Deletes the cursor item.",
+      "de": "Löscht den Cursor-Gegenstand."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5060,11 +5515,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Drops the money on the cursor.",
+      "de": "Legt das Geld vom Cursor ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5083,27 +5538,37 @@
   {
     "name": "EquipCursorItem",
     "system": "Cursor",
-    "params": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Equips the cursor item.",
+      "de": "Rüstet den Cursor-Gegenstand aus."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetCursorMoney",
     "system": "Cursor",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Money held on the cursor.",
+      "de": "Geld am Cursor."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5142,13 +5607,18 @@
     "name": "InRepairMode",
     "system": "Cursor",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "inRepair",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Whether repair mode is active.",
+      "de": "Ob der Reparaturmodus aktiv ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5256,24 +5726,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Resets the cursor.",
+      "de": "Setzt den Cursor zurück."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetCursor",
     "system": "Cursor",
-    "params": [],
+    "params": [
+      {
+        "name": "cursor",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Cursor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Cursor). Signatur noch nicht dokumentiert."
+      "en": "Sets the cursor shape.",
+      "de": "Setzt die Cursorform."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5491,40 +5966,55 @@
   {
     "name": "CollapseFactionHeader",
     "system": "Faction",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Collapses a faction header.",
+      "de": "Klappt eine Fraktionsüberschrift zu."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ExpandFactionHeader",
     "system": "Faction",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Expands a faction header.",
+      "de": "Klappt eine Fraktionsüberschrift auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "FactionToggleAtWar",
     "system": "Faction",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Toggles at-war for a faction.",
+      "de": "Schaltet Krieg für eine Fraktion um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5606,13 +6096,18 @@
     "name": "GetSelectedFaction",
     "system": "Faction",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Selected faction index.",
+      "de": "Index der gewählten Fraktion."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5649,53 +6144,78 @@
   {
     "name": "IsFactionInactive",
     "system": "Faction",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "inactive",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Whether a faction is inactive.",
+      "de": "Ob eine Fraktion inaktiv ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetFactionActive",
     "system": "Faction",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Marks a faction active.",
+      "de": "Markiert eine Fraktion als aktiv."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetFactionInactive",
     "system": "Faction",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Marks a faction inactive.",
+      "de": "Markiert eine Fraktion als inaktiv."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetSelectedFaction",
     "system": "Faction",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Faction). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Faction). Signatur noch nicht dokumentiert."
+      "en": "Selects a faction.",
+      "de": "Wählt eine Fraktion."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5811,14 +6331,44 @@
   {
     "name": "MouseIsOver",
     "system": "Frame",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "frame",
+        "type": "table"
+      },
+      {
+        "name": "topOffset",
+        "type": "number",
+        "optional": true
+      },
+      {
+        "name": "bottomOffset",
+        "type": "number",
+        "optional": true
+      },
+      {
+        "name": "leftOffset",
+        "type": "number",
+        "optional": true
+      },
+      {
+        "name": "rightOffset",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "isOver",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Frame). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Frame). Signatur noch nicht dokumentiert."
+      "en": "Whether the mouse is over a frame.",
+      "de": "Ob die Maus über einem Frame ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5895,13 +6445,18 @@
     "name": "GetSelectedFriend",
     "system": "Friend",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Friend). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Friend). Signatur noch nicht dokumentiert."
+      "en": "Selected friend index.",
+      "de": "Index des gewählten Freundes."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5922,14 +6477,19 @@
   {
     "name": "SetSelectedFriend",
     "system": "Friend",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Friend). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Friend). Signatur noch nicht dokumentiert."
+      "en": "Selects a friend.",
+      "de": "Wählt einen Freund."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -5938,24 +6498,30 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Friend). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Friend). Signatur noch nicht dokumentiert."
+      "en": "Requests the friends list.",
+      "de": "Fragt die Freundesliste an."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ToggleFriendsFrame",
     "system": "Friend",
-    "params": [],
+    "params": [
+      {
+        "name": "tab",
+        "type": "string",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Friend). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Friend). Signatur noch nicht dokumentiert."
+      "en": "Toggles the friends window.",
+      "de": "Schaltet das Freundesfenster um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6120,102 +6686,137 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Closes the gossip window.",
+      "de": "Schließt das Gossip-Fenster."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetGossipActiveQuests",
     "system": "Gossip",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "...",
+        "type": "any"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Active quests of the gossip window.",
+      "de": "Aktive Quests des Gossip-Fensters."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetGossipAvailableQuests",
     "system": "Gossip",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "...",
+        "type": "any"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Available quests of the gossip window.",
+      "de": "Verfügbare Quests des Gossip-Fensters."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetGossipOptions",
     "system": "Gossip",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "...",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Gossip option texts and types.",
+      "de": "Gossip-Optionstexte und -typen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetGossipText",
     "system": "Gossip",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Gossip text.",
+      "de": "Gossip-Text."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SelectGossipActiveQuest",
     "system": "Gossip",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Selects an active quest.",
+      "de": "Wählt eine aktive Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SelectGossipAvailableQuest",
     "system": "Gossip",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Selects an available quest.",
+      "de": "Wählt eine verfügbare Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SelectGossipOption",
     "system": "Gossip",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Gossip). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Gossip). Signatur noch nicht dokumentiert."
+      "en": "Selects a gossip option.",
+      "de": "Wählt eine Gossip-Option."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6224,11 +6825,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Accepts a party invitation.",
+      "de": "Nimmt eine Gruppeneinladung an."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6247,14 +6848,19 @@
   {
     "name": "ConfirmReadyCheck",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "ready",
+        "type": "boolean"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Answers a ready check.",
+      "de": "Antwortet auf eine Bereitschaftsprüfung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6263,11 +6869,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Converts the party to a raid.",
+      "de": "Wandelt die Gruppe in einen Schlachtzug um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6276,11 +6882,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Declines a party invitation.",
+      "de": "Lehnt eine Gruppeneinladung ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6289,11 +6895,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Starts a ready check.",
+      "de": "Startet eine Bereitschaftsprüfung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6336,39 +6942,59 @@
     "name": "GetLootThreshold",
     "system": "Group",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "threshold",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Loot quality threshold.",
+      "de": "Beuteschwelle (Qualität)."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetMasterLootCandidate",
     "system": "Group",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Name of a master-loot candidate.",
+      "de": "Name eines Meisterplünderer-Kandidaten."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPartyLeaderIndex",
     "system": "Group",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Party index of the leader (0 = you).",
+      "de": "Gruppenindex des Anführers (0 = du)."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6409,14 +7035,19 @@
   {
     "name": "InviteToParty",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Invites a player to the party.",
+      "de": "Lädt einen Spieler in die Gruppe ein."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6447,27 +7078,37 @@
   {
     "name": "PromoteByName",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Promotes a player to leader.",
+      "de": "Macht einen Spieler zum Anführer."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "PromoteToPartyLeader",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Makes a unit the party leader.",
+      "de": "Macht eine Einheit zum Gruppenanführer."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6486,53 +7127,83 @@
   {
     "name": "SetLootMethod",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "method",
+        "type": "string"
+      },
+      {
+        "name": "master",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "threshold",
+        "type": "number",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Sets the loot method.",
+      "de": "Setzt die Beuteverteilung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetLootThreshold",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "threshold",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Sets the loot threshold.",
+      "de": "Setzt die Beuteschwelle."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "UninviteByName",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Removes a player from the party by name.",
+      "de": "Entfernt einen Spieler per Namen aus der Gruppe."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "UninviteFromParty",
     "system": "Group",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Group). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Group). Signatur noch nicht dokumentiert."
+      "en": "Removes a player from the party.",
+      "de": "Entfernt einen Spieler aus der Gruppe."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6581,11 +7252,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Accepts a guild invitation.",
+      "de": "Nimmt eine Gildeneinladung an."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6618,104 +7289,144 @@
     "name": "CanEditMOTD",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canEdit",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may edit the guild message of the day.",
+      "de": "Ob du die Gildennachricht des Tages ändern darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CanEditOfficerNote",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canEdit",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may edit officer notes.",
+      "de": "Ob du Offiziersnotizen ändern darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CanEditPublicNote",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canEdit",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may edit public guild notes.",
+      "de": "Ob du öffentliche Gildennotizen ändern darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CanGuildDemote",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canDemote",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may demote guild members.",
+      "de": "Ob du Gildenmitglieder degradieren darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CanGuildInvite",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canInvite",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may invite to the guild.",
+      "de": "Ob du in die Gilde einladen darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CanGuildPromote",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canPromote",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may promote guild members.",
+      "de": "Ob du Gildenmitglieder befördern darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CanGuildRemove",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canRemove",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may remove guild members.",
+      "de": "Ob du Gildenmitglieder entfernen darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CanViewOfficerNote",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canView",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you may view officer notes.",
+      "de": "Ob du Offiziersnotizen sehen darfst."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6763,11 +7474,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Declines a guild invitation.",
+      "de": "Lehnt eine Gildeneinladung ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6815,13 +7526,18 @@
     "name": "GetGuildInfoText",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Guild information text.",
+      "de": "Gildeninformationstext."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -6893,39 +7609,54 @@
     "name": "GetGuildRosterMOTD",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "motd",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Guild message of the day from the roster.",
+      "de": "Gildennachricht des Tages aus der Mitgliederliste."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetGuildRosterSelection",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Selected roster index.",
+      "de": "Gewählter Listenindex."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetGuildRosterShowOffline",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "show",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether offline members are shown.",
+      "de": "Ob Offline-Mitglieder angezeigt werden."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7009,13 +7740,18 @@
     "name": "GuildControlGetNumRanks",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numRanks",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Number of guild ranks.",
+      "de": "Anzahl der Gildenränge."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7034,14 +7770,24 @@
   {
     "name": "GuildControlGetRankName",
     "system": "Guild",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Name of a guild rank.",
+      "de": "Name eines Gildenrangs."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7086,14 +7832,19 @@
   {
     "name": "GuildDemoteByName",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Demotes a guild member.",
+      "de": "Degradiert ein Gildenmitglied."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7102,24 +7853,37 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Disbands your guild.",
+      "de": "Löst deine Gilde auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GuildInfo",
     "system": "Guild",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "guildName",
+        "type": "string"
+      },
+      {
+        "name": "guildRankName",
+        "type": "string"
+      },
+      {
+        "name": "guildRankIndex",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Your guild name, rank name and rank index.",
+      "de": "Gildenname, Rangname und Rangindex."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7143,24 +7907,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Leaves your guild.",
+      "de": "Verlässt deine Gilde."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GuildPromoteByName",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Promotes a guild member.",
+      "de": "Befördert ein Gildenmitglied."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7176,79 +7945,123 @@
   {
     "name": "GuildRosterSetOfficerNote",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      },
+      {
+        "name": "note",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Sets an officer note.",
+      "de": "Setzt eine Offiziersnotiz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GuildRosterSetPublicNote",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      },
+      {
+        "name": "note",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Sets a public note.",
+      "de": "Setzt eine öffentliche Notiz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GuildSetLeaderByName",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Transfers guild leadership.",
+      "de": "Überträgt die Gildenleitung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GuildSetMOTD",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Sets the guild message of the day.",
+      "de": "Setzt die Gildennachricht des Tages."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GuildUninviteByName",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Removes a member from the guild.",
+      "de": "Entfernt ein Mitglied aus der Gilde."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "IsGuildLeader",
     "system": "Guild",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "isLeader",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Whether you (or the named player) are the guild leader.",
+      "de": "Ob du (oder der genannte Spieler) Gildenleiter bist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7269,53 +8082,73 @@
   {
     "name": "SetGuildInfoText",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Sets the guild information text.",
+      "de": "Setzt den Gildeninformationstext."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetGuildRosterSelection",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Selects a roster entry.",
+      "de": "Wählt einen Eintrag der Liste."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetGuildRosterShowOffline",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "show",
+        "type": "boolean"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Shows or hides offline members.",
+      "de": "Zeigt oder verbirgt Offline-Mitglieder."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SortGuildRoster",
     "system": "Guild",
-    "params": [],
+    "params": [
+      {
+        "name": "sort",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Guild). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Guild). Signatur noch nicht dokumentiert."
+      "en": "Sorts the guild roster.",
+      "de": "Sortiert die Gildenliste."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7386,27 +8219,51 @@
   {
     "name": "GetPVPRankInfo",
     "system": "Honor",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "rank",
+        "type": "number"
+      },
+      {
+        "name": "unit",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "number",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Honor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Honor). Signatur noch nicht dokumentiert."
+      "en": "Name and number of a PvP rank.",
+      "de": "Name und Nummer eines PvP-Ranges."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPVPRankProgress",
     "system": "Honor",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "progress",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Honor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Honor). Signatur noch nicht dokumentiert."
+      "en": "Progress to the next PvP rank.",
+      "de": "Fortschritt zum nächsten PvP-Rang."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7477,14 +8334,24 @@
   {
     "name": "UnitIsCivilian",
     "system": "Honor",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isCivilian",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Honor). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Honor). Signatur noch nicht dokumentiert."
+      "en": "Whether the unit is a civilian (no honor).",
+      "de": "Ob die Einheit ein Zivilist ist (keine Ehre)."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7545,14 +8412,19 @@
   {
     "name": "AddOrDelIgnore",
     "system": "Ignore",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Ignore). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Ignore). Signatur noch nicht dokumentiert."
+      "en": "Adds or removes an ignore entry.",
+      "de": "Fügt einen Ignoriereintrag hinzu oder entfernt ihn."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7609,26 +8481,36 @@
     "name": "GetSelectedIgnore",
     "system": "Ignore",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Ignore). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Ignore). Signatur noch nicht dokumentiert."
+      "en": "Selected ignore index.",
+      "de": "Index des gewählten Ignorierten."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetSelectedIgnore",
     "system": "Ignore",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Ignore). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Ignore). Signatur noch nicht dokumentiert."
+      "en": "Selects an ignored player.",
+      "de": "Wählt einen ignorierten Spieler."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7702,13 +8584,18 @@
     "name": "CanShowResetInstances",
     "system": "Instance",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canReset",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Instance). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Instance). Signatur noch nicht dokumentiert."
+      "en": "Whether instances can be reset.",
+      "de": "Ob Instanzen zurückgesetzt werden können."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7728,39 +8615,71 @@
     "name": "GetNumSavedInstances",
     "system": "Instance",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Instance). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Instance). Signatur noch nicht dokumentiert."
+      "en": "Number of saved instances.",
+      "de": "Anzahl gespeicherter Instanzen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetSavedInstanceInfo",
     "system": "Instance",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "number"
+      },
+      {
+        "name": "reset",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Instance). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Instance). Signatur noch nicht dokumentiert."
+      "en": "Saved instance information.",
+      "de": "Informationen zu gespeicherten Instanzen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "IsInInstance",
     "system": "Instance",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isInstance",
+        "type": "boolean"
+      },
+      {
+        "name": "instanceType",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Instance). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Instance). Signatur noch nicht dokumentiert."
+      "en": "Whether you are in an instance.",
+      "de": "Ob du in einer Instanz bist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7769,11 +8688,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Instance). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Instance). Signatur noch nicht dokumentiert."
+      "en": "Resets your instances.",
+      "de": "Setzt deine Instanzen zurück."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7831,14 +8750,28 @@
   {
     "name": "GetInventoryItemBroken",
     "system": "Inventory",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "string"
+      },
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "broken",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Inventory). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Inventory). Signatur noch nicht dokumentiert."
+      "en": "Whether an equipped item is broken.",
+      "de": "Ob ein ausgerüsteter Gegenstand kaputt ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -7997,26 +8930,41 @@
     "name": "HasWandEquipped",
     "system": "Inventory",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasWand",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Inventory). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Inventory). Signatur noch nicht dokumentiert."
+      "en": "Whether a wand is equipped.",
+      "de": "Ob ein Zauberstab angelegt ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "IsInventoryItemLocked",
     "system": "Inventory",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "locked",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Inventory). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Inventory). Signatur noch nicht dokumentiert."
+      "en": "Whether an inventory slot is locked.",
+      "de": "Ob ein Inventarplatz gesperrt ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -8180,92 +9128,169 @@
   {
     "name": "GetQuestItemLink",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Item). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Item). Signatur noch nicht dokumentiert."
+      "en": "Item link of an open quest item.",
+      "de": "Gegenstandslink eines Gegenstands der offenen Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetQuestLogItemLink",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Item). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Item). Signatur noch nicht dokumentiert."
+      "en": "Item link of a log quest item.",
+      "de": "Gegenstandslink eines Logquest-Gegenstands."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetTradePlayerItemLink",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Item). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Item). Signatur noch nicht dokumentiert."
+      "en": "Link of an item you offer.",
+      "de": "Link eines Gegenstands, den du anbietest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetTradeSkillItemLink",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Item). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Item). Signatur noch nicht dokumentiert."
+      "en": "Item link of a trade skill recipe.",
+      "de": "Gegenstandslink eines Berufsrezepts."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetTradeSkillReagentItemLink",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "skillIndex",
+        "type": "number"
+      },
+      {
+        "name": "reagentIndex",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Item). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Item). Signatur noch nicht dokumentiert."
+      "en": "Item link of a reagent.",
+      "de": "Gegenstandslink einer Zutat."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetTradeTargetItemLink",
     "system": "Item",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Item). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Item). Signatur noch nicht dokumentiert."
+      "en": "Link of an item offered to you.",
+      "de": "Link eines Gegenstands, der dir angeboten wird."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "OffhandHasWeapon",
     "system": "Item",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasWeapon",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Item). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Item). Signatur noch nicht dokumentiert."
+      "en": "Whether a weapon is in the off hand.",
+      "de": "Ob eine Waffe in der Nebenhand ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -8473,27 +9498,51 @@
   {
     "name": "GetBindingText",
     "system": "KeyBinding",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "key",
+        "type": "string"
+      },
+      {
+        "name": "prefix",
+        "type": "string"
+      },
+      {
+        "name": "returnAbbr",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (KeyBinding). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (KeyBinding). Signatur noch nicht dokumentiert."
+      "en": "Display text for a key binding.",
+      "de": "Anzeigetext einer Tastenbelegung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetCurrentBindingSet",
     "system": "KeyBinding",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "set",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (KeyBinding). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (KeyBinding). Signatur noch nicht dokumentiert."
+      "en": "Current binding set.",
+      "de": "Aktueller Tastenbelegungssatz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -8527,14 +9576,24 @@
   {
     "name": "RunBinding",
     "system": "KeyBinding",
-    "params": [],
+    "params": [
+      {
+        "name": "command",
+        "type": "string"
+      },
+      {
+        "name": "up",
+        "type": "string",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (KeyBinding). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (KeyBinding). Signatur noch nicht dokumentiert."
+      "en": "Runs a binding command.",
+      "de": "Führt einen Belegungsbefehl aus."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -8639,13 +9698,26 @@
     "name": "GetZonePVPInfo",
     "system": "Location",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "pvpType",
+        "type": "string"
+      },
+      {
+        "name": "isFFA",
+        "type": "boolean"
+      },
+      {
+        "name": "faction",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Location). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Location). Signatur noch nicht dokumentiert."
+      "en": "PvP type of the current zone.",
+      "de": "PvP-Typ der aktuellen Zone."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -8669,180 +9741,316 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Closes the loot window.",
+      "de": "Schließt das Beutefenster."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ConfirmLootRoll",
     "system": "Loot",
-    "params": [],
+    "params": [
+      {
+        "name": "rollID",
+        "type": "number"
+      },
+      {
+        "name": "rollType",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Confirms a roll.",
+      "de": "Bestätigt einen Wurf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetLootRollItemInfo",
     "system": "Loot",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "rollID",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "number"
+      },
+      {
+        "name": "quality",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Information about a rolled item.",
+      "de": "Informationen zu einem gewürfelten Gegenstand."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetLootRollItemLink",
     "system": "Loot",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "rollID",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Item link of a rolled item.",
+      "de": "Gegenstandslink eines gewürfelten Gegenstands."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetLootRollTimeLeft",
     "system": "Loot",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "rollID",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "timeLeft",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Time left to roll.",
+      "de": "Restzeit zum Würfeln."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetLootSlotInfo",
     "system": "Loot",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "icon",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "quantity",
+        "type": "number"
+      },
+      {
+        "name": "quality",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Information about a loot slot.",
+      "de": "Informationen zu einem Beuteplatz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetLootSlotLink",
     "system": "Loot",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "link",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Item link of a loot slot.",
+      "de": "Gegenstandslink eines Beuteplatzes."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumLootItems",
     "system": "Loot",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numItems",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Number of items in the loot window.",
+      "de": "Anzahl Gegenstände im Beutefenster."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GiveMasterLoot",
     "system": "Loot",
-    "params": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      },
+      {
+        "name": "candidate",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Gives loot to a candidate.",
+      "de": "Gibt Beute an einen Kandidaten."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "IsFishingLoot",
     "system": "Loot",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isFishing",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Whether the loot is from fishing.",
+      "de": "Ob die Beute vom Angeln stammt."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "LootSlot",
     "system": "Loot",
-    "params": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Loots a slot.",
+      "de": "Nimmt einen Beuteplatz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "LootSlotIsCoin",
     "system": "Loot",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isCoin",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Whether the slot holds money.",
+      "de": "Ob der Platz Geld enthält."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "LootSlotIsItem",
     "system": "Loot",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "slot",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isItem",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Whether the slot holds an item.",
+      "de": "Ob der Platz einen Gegenstand enthält."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "RollOnLoot",
     "system": "Loot",
-    "params": [],
+    "params": [
+      {
+        "name": "rollID",
+        "type": "number"
+      },
+      {
+        "name": "rollType",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Loot). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Loot). Signatur noch nicht dokumentiert."
+      "en": "Rolls on an item.",
+      "de": "Würfelt auf einen Gegenstand."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -8944,14 +10152,24 @@
   {
     "name": "GetMacroIconInfo",
     "system": "Macro",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "texture",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Macro). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Macro). Signatur noch nicht dokumentiert."
+      "en": "Macro icon texture.",
+      "de": "Textur eines Makrosymbols."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9010,13 +10228,18 @@
     "name": "GetNumMacroIcons",
     "system": "Macro",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Macro). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Macro). Signatur noch nicht dokumentiert."
+      "en": "Number of macro icons.",
+      "de": "Anzahl der Makrosymbole."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9044,11 +10267,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Requests the mailbox contents.",
+      "de": "Fragt den Briefkasteninhalt an."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9057,11 +10280,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Clears the outgoing mail.",
+      "de": "Leert den ausgehenden Brief."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9070,11 +10293,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Clicks the mail item button.",
+      "de": "Klickt auf die Gegenstandsschaltfläche."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9083,24 +10306,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Closes the mail window.",
+      "de": "Schließt das Postfenster."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "DeleteInboxItem",
     "system": "Mail",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Deletes a mail.",
+      "de": "Löscht einen Brief."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9146,26 +10374,57 @@
     "name": "GetInboxNumItems",
     "system": "Mail",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numItems",
+        "type": "number"
+      },
+      {
+        "name": "totalItems",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Number of mails in the inbox.",
+      "de": "Anzahl der Briefe im Posteingang."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetInboxText",
     "system": "Mail",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "bodyText",
+        "type": "string"
+      },
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "isTakeable",
+        "type": "boolean"
+      },
+      {
+        "name": "isInvoice",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Body text of a mail.",
+      "de": "Text eines Briefes."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9237,52 +10496,84 @@
     "name": "GetSendMailCOD",
     "system": "Mail",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "cod",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Cash on delivery amount.",
+      "de": "Nachnahmebetrag."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetSendMailItem",
     "system": "Mail",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "number"
+      },
+      {
+        "name": "quality",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Attached item of the outgoing mail.",
+      "de": "Angehängter Gegenstand des ausgehenden Briefes."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetSendMailMoney",
     "system": "Mail",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Money attached to the outgoing mail.",
+      "de": "Dem ausgehenden Brief beigefügtes Geld."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetSendMailPrice",
     "system": "Mail",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "price",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Postage of the outgoing mail.",
+      "de": "Porto des ausgehenden Briefes."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9302,39 +10593,59 @@
     "name": "HasNewMail",
     "system": "Mail",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasMail",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Whether new mail is waiting.",
+      "de": "Ob neue Post wartet."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "InboxItemCanDelete",
     "system": "Mail",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "canDelete",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Whether a mail can be deleted.",
+      "de": "Ob ein Brief gelöscht werden kann."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ReturnInboxItem",
     "system": "Mail",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Returns a mail to the sender.",
+      "de": "Sendet einen Brief zurück."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9366,66 +10677,100 @@
   {
     "name": "SendMail",
     "system": "Mail",
-    "params": [],
+    "params": [
+      {
+        "name": "recipient",
+        "type": "string"
+      },
+      {
+        "name": "subject",
+        "type": "string"
+      },
+      {
+        "name": "body",
+        "type": "string",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Sends a mail.",
+      "de": "Sendet einen Brief."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetSendMailCOD",
     "system": "Mail",
-    "params": [],
+    "params": [
+      {
+        "name": "amount",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Sets the cash on delivery amount.",
+      "de": "Setzt den Nachnahmebetrag."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetSendMailMoney",
     "system": "Mail",
-    "params": [],
+    "params": [
+      {
+        "name": "amount",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Attaches money to the outgoing mail.",
+      "de": "Fügt dem Brief Geld bei."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "TakeInboxItem",
     "system": "Mail",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Takes the item of a mail.",
+      "de": "Nimmt den Gegenstand eines Briefes."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "TakeInboxMoney",
     "system": "Mail",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Mail). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Mail). Signatur noch nicht dokumentiert."
+      "en": "Takes the money of a mail.",
+      "de": "Nimmt das Geld eines Briefes."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9488,13 +10833,18 @@
     "name": "GetMapContinents",
     "system": "Map",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "...",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Map). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Map). Signatur noch nicht dokumentiert."
+      "en": "Names of the continents.",
+      "de": "Namen der Kontinente."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9539,40 +10889,60 @@
   {
     "name": "GetMapZones",
     "system": "Map",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "continent",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "...",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Map). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Map). Signatur noch nicht dokumentiert."
+      "en": "Zone names of a continent.",
+      "de": "Zonennamen eines Kontinents."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumMapLandmarks",
     "system": "Map",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Map). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Map). Signatur noch nicht dokumentiert."
+      "en": "Number of map landmarks.",
+      "de": "Anzahl der Kartenmarkierungen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumMapOverlays",
     "system": "Map",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Map). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Map). Signatur noch nicht dokumentiert."
+      "en": "Number of map overlays.",
+      "de": "Anzahl der Kartenüberlagerungen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9674,11 +11044,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Map). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Map). Signatur noch nicht dokumentiert."
+      "en": "Toggles the minimap.",
+      "de": "Schaltet die Minikarte um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9687,11 +11057,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Map). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Map). Signatur noch nicht dokumentiert."
+      "en": "Toggles the world map.",
+      "de": "Schaltet die Weltkarte um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9730,14 +11100,19 @@
   {
     "name": "BuybackItem",
     "system": "Merchant",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Merchant). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Merchant). Signatur noch nicht dokumentiert."
+      "en": "Buys back an item.",
+      "de": "Kauft einen Gegenstand zurück."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9761,24 +11136,46 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Merchant). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Merchant). Signatur noch nicht dokumentiert."
+      "en": "Closes the merchant window.",
+      "de": "Schließt das Händlerfenster."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetBuybackItemInfo",
     "system": "Merchant",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "quantity",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Merchant). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Merchant). Signatur noch nicht dokumentiert."
+      "en": "Buyback item information.",
+      "de": "Informationen zu Rückkauf-Gegenständen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9824,14 +11221,24 @@
   {
     "name": "GetMerchantItemMaxStack",
     "system": "Merchant",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "maxStack",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Merchant). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Merchant). Signatur noch nicht dokumentiert."
+      "en": "Maximum purchasable stack.",
+      "de": "Maximal kaufbarer Stapel."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9881,14 +11288,24 @@
   {
     "name": "FollowByName",
     "system": "Movement",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "exact",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Follows a player by name.",
+      "de": "Folgt einem Spieler per Namen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9912,11 +11329,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Jumps.",
+      "de": "Springt."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9925,11 +11342,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Starts moving backward.",
+      "de": "Beginnt rückwärts zu laufen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9938,11 +11355,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Stops moving backward.",
+      "de": "Beendet das Rückwärtslaufen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9951,11 +11368,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Starts moving forward.",
+      "de": "Beginnt vorwärts zu laufen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9964,11 +11381,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Stops moving forward.",
+      "de": "Beendet das Vorwärtslaufen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9977,11 +11394,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Starts strafing left.",
+      "de": "Beginnt nach links zu gleiten."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -9990,11 +11407,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Stops strafing left.",
+      "de": "Beendet das Gleiten nach links."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10003,11 +11420,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Starts strafing right.",
+      "de": "Beginnt nach rechts zu gleiten."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10016,11 +11433,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Stops strafing right.",
+      "de": "Beendet das Gleiten nach rechts."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10029,11 +11446,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Toggles auto-run.",
+      "de": "Schaltet Autorun um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10055,11 +11472,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Toggles run/walk.",
+      "de": "Schaltet Laufen/Gehen um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10068,11 +11485,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Starts turning left.",
+      "de": "Beginnt sich nach links zu drehen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10081,11 +11498,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Stops turning left.",
+      "de": "Beendet die Linksdrehung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10094,11 +11511,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Starts turning right.",
+      "de": "Beginnt sich nach rechts zu drehen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10107,11 +11524,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Movement). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Movement). Signatur noch nicht dokumentiert."
+      "en": "Stops turning right.",
+      "de": "Beendet die Rechtsdrehung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10120,24 +11537,34 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Buys the next stable slot.",
+      "de": "Kauft den nächsten Stallplatz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CastPetAction",
     "system": "Pet",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Uses a pet action.",
+      "de": "Verwendet eine Tieraktion."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10196,52 +11623,85 @@
     "name": "GetNextStableSlotCost",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "cost",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Cost of the next stable slot in copper.",
+      "de": "Kosten des nächsten Stallplatzes in Kupfer."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumStablePets",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numPets",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Number of stabled pets.",
+      "de": "Anzahl der eingestallten Tiere."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumStableSlots",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numSlots",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Number of stable slots.",
+      "de": "Anzahl der Stallplätze."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPetActionCooldown",
     "system": "Pet",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "start",
+        "type": "number"
+      },
+      {
+        "name": "duration",
+        "type": "number"
+      },
+      {
+        "name": "enable",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Cooldown of a pet action.",
+      "de": "Abklingzeit einer Tieraktion."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10261,78 +11721,120 @@
     "name": "GetPetActionsUsable",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "usable",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Whether pet actions are usable.",
+      "de": "Ob Tieraktionen nutzbar sind."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPetExperience",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "currXP",
+        "type": "number"
+      },
+      {
+        "name": "nextXP",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Pet experience and experience needed.",
+      "de": "Erfahrung des Tiers und benötigte Erfahrung."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPetFoodTypes",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "...",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Food types the pet eats.",
+      "de": "Nahrungsarten des Tiers."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPetHappiness",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "happiness",
+        "type": "number"
+      },
+      {
+        "name": "damagePercentage",
+        "type": "number"
+      },
+      {
+        "name": "loyaltyRate",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Pet happiness (1-3), damage modifier and loyalty rate.",
+      "de": "Zufriedenheit des Tiers (1-3), Schadensmodifikator und Loyalitätsrate."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPetIcon",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "texture",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Pet icon texture.",
+      "de": "Symboltextur des Tiers."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPetLoyalty",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "loyalty",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Pet loyalty description.",
+      "de": "Beschreibung der Tierloyalität."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10352,13 +11854,22 @@
     "name": "GetPetTrainingPoints",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "total",
+        "type": "number"
+      },
+      {
+        "name": "spent",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Pet training points total and spent.",
+      "de": "Trainingspunkte des Tiers gesamt und ausgegeben."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10404,26 +11915,44 @@
     "name": "HasPetSpells",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasSpells",
+        "type": "number"
+      },
+      {
+        "name": "petType",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Whether the pet has spells.",
+      "de": "Ob das Tier Zauber hat."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "HasPetUI",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "hasUI",
+        "type": "boolean"
+      },
+      {
+        "name": "isHunterPet",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Whether a pet UI exists.",
+      "de": "Ob eine Tier-Oberfläche existiert."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10432,11 +11961,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Abandons the pet.",
+      "de": "Gibt das Tier auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10445,11 +11974,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Sets the pet to aggressive.",
+      "de": "Setzt das Tier auf aggressiv."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10458,11 +11987,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Orders the pet to attack your target.",
+      "de": "Befiehlt dem Tier, dein Ziel anzugreifen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10484,37 +12013,47 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Orders the pet to stop attacking.",
+      "de": "Befiehlt dem Tier, den Angriff zu beenden."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "PetCanBeAbandoned",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canAbandon",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Whether the pet can be abandoned.",
+      "de": "Ob das Tier aufgegeben werden kann."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "PetCanBeRenamed",
     "system": "Pet",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "canRename",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Whether the pet can be renamed.",
+      "de": "Ob das Tier umbenannt werden kann."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10523,11 +12062,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Sets the pet to defensive.",
+      "de": "Setzt das Tier auf defensiv."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10536,11 +12075,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Dismisses the pet.",
+      "de": "Entlässt das Tier."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10549,11 +12088,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Orders the pet to follow you.",
+      "de": "Befiehlt dem Tier, dir zu folgen."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10562,24 +12101,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Sets the pet to passive.",
+      "de": "Setzt das Tier auf passiv."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "PetRename",
     "system": "Pet",
-    "params": [],
+    "params": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Renames the pet.",
+      "de": "Benennt das Tier um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10588,11 +12132,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Orders the pet to stay.",
+      "de": "Befiehlt dem Tier zu warten."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10637,27 +12181,54 @@
   {
     "name": "ToggleSpellAutocast",
     "system": "Pet",
-    "params": [],
+    "params": [
+      {
+        "name": "spellID",
+        "type": "number"
+      },
+      {
+        "name": "bookType",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Toggles spell autocast.",
+      "de": "Schaltet Autocast um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetSpellAutocast",
     "system": "Pet",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spellID",
+        "type": "number"
+      },
+      {
+        "name": "bookType",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "autocastable",
+        "type": "number"
+      },
+      {
+        "name": "autostate",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Pet). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Pet). Signatur noch nicht dokumentiert."
+      "en": "Autocast state of a spell.",
+      "de": "Autocast-Status eines Zaubers."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10818,24 +12389,29 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Closes the quest dialog.",
+      "de": "Schließt den Questdialog."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "CollapseQuestHeader",
     "system": "Quest",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Collapses a quest log header.",
+      "de": "Klappt eine Questlog-Überschrift zu."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10854,11 +12430,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Confirms accepting a shared quest.",
+      "de": "Bestätigt die Annahme einer geteilten Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10874,40 +12450,60 @@
   {
     "name": "ExpandQuestHeader",
     "system": "Quest",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Expands a quest log header.",
+      "de": "Klappt eine Questlog-Überschrift auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetAbandonQuestName",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Name of the quest about to be abandoned.",
+      "de": "Name der Quest, die abgebrochen wird."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetActiveLevel",
     "system": "Quest",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "level",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Level of an active gossip quest.",
+      "de": "Stufe einer aktiven Gossip-Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -10933,14 +12529,24 @@
   {
     "name": "GetAvailableLevel",
     "system": "Quest",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "level",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Level of an available gossip quest.",
+      "de": "Stufe einer verfügbaren Gossip-Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11012,26 +12618,36 @@
     "name": "GetNumQuestChoices",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numChoices",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Number of reward choices of the open quest.",
+      "de": "Anzahl der Belohnungsauswahlen der offenen Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumQuestItems",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numItems",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Number of required items of the open quest.",
+      "de": "Anzahl der benötigten Gegenstände der offenen Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11059,13 +12675,18 @@
     "name": "GetNumQuestLogChoices",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numChoices",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Reward choices of the selected log quest.",
+      "de": "Belohnungsauswahlen der gewählten Logquest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11091,26 +12712,36 @@
     "name": "GetNumQuestLogRewards",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numRewards",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Rewards of the selected log quest.",
+      "de": "Belohnungen der gewählten Logquest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetNumQuestRewards",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "numRewards",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Number of rewards of the open quest.",
+      "de": "Anzahl der Belohnungen der offenen Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11175,13 +12806,18 @@
     "name": "GetQuestGreenRange",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "range",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Level range for green quests.",
+      "de": "Levelbereich für grüne Quests."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11273,13 +12909,18 @@
     "name": "GetQuestLogPushable",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "pushable",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Whether the selected quest can be shared.",
+      "de": "Ob die gewählte Quest geteilt werden kann."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11305,13 +12946,18 @@
     "name": "GetQuestLogRequiredMoney",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Money required for the selected log quest.",
+      "de": "Benötigtes Geld der gewählten Logquest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11331,13 +12977,18 @@
     "name": "GetQuestLogRewardMoney",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Money reward of the selected log quest.",
+      "de": "Geldbelohnung der gewählten Logquest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11372,13 +13023,18 @@
     "name": "GetQuestLogTimeLeft",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "seconds",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Time left of the selected timed quest.",
+      "de": "Restzeit der gewählten Zeit-Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11425,13 +13081,18 @@
     "name": "GetQuestMoneyToGet",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Money required for the open quest.",
+      "de": "Benötigtes Geld der offenen Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11481,13 +13142,18 @@
     "name": "GetRewardMoney",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Money reward of the open quest.",
+      "de": "Geldbelohnung der offenen Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11537,26 +13203,36 @@
     "name": "IsCurrentQuestFailed",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "failed",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Whether the current quest failed.",
+      "de": "Ob die aktuelle Quest fehlgeschlagen ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "IsQuestCompletable",
     "system": "Quest",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "completable",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Whether the open quest can be completed.",
+      "de": "Ob die offene Quest abgeschlossen werden kann."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11582,14 +13258,28 @@
   {
     "name": "IsUnitOnQuest",
     "system": "Quest",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "questIndex",
+        "type": "number"
+      },
+      {
+        "name": "unit",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isOnQuest",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Whether the unit is on the quest.",
+      "de": "Ob die Einheit die Quest hat."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11611,11 +13301,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Shares the selected quest.",
+      "de": "Teilt die gewählte Quest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -11664,11 +13354,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Quest). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Quest). Signatur noch nicht dokumentiert."
+      "en": "Toggles the quest log.",
+      "de": "Schaltet das Questlog um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -12555,27 +14245,37 @@
   {
     "name": "CollapseSkillHeader",
     "system": "Skill",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Skill). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Skill). Signatur noch nicht dokumentiert."
+      "en": "Collapses a skill header.",
+      "de": "Klappt eine Fertigkeitsüberschrift zu."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "ExpandSkillHeader",
     "system": "Skill",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Skill). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Skill). Signatur noch nicht dokumentiert."
+      "en": "Expands a skill header.",
+      "de": "Klappt eine Fertigkeitsüberschrift auf."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -12610,13 +14310,18 @@
     "name": "GetSelectedSkill",
     "system": "Skill",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Skill). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Skill). Signatur noch nicht dokumentiert."
+      "en": "Selected skill index.",
+      "de": "Index der gewählten Fertigkeit."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -12943,27 +14648,51 @@
   {
     "name": "IsCurrentCast",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spell",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isCurrent",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Spell). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Spell). Signatur noch nicht dokumentiert."
+      "en": "Whether a spell is the current cast.",
+      "de": "Ob ein Zauber der aktuelle Zauber ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "IsSpellPassive",
     "system": "Spell",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "spellID",
+        "type": "number"
+      },
+      {
+        "name": "bookType",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "isPassive",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Spell). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Spell). Signatur noch nicht dokumentiert."
+      "en": "Whether a spell is passive.",
+      "de": "Ob ein Zauber passiv ist."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13065,14 +14794,19 @@
   {
     "name": "ToggleSpellBook",
     "system": "Spell",
-    "params": [],
+    "params": [
+      {
+        "name": "bookType",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Spell). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Spell). Signatur noch nicht dokumentiert."
+      "en": "Toggles the spellbook.",
+      "de": "Schaltet das Zauberbuch um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13091,14 +14825,19 @@
   {
     "name": "ConsoleExec",
     "system": "System",
-    "params": [],
+    "params": [
+      {
+        "name": "command",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Executes a console command.",
+      "de": "Führt einen Konsolenbefehl aus."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13229,27 +14968,47 @@
   {
     "name": "GetText",
     "system": "System",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "token",
+        "type": "string"
+      },
+      {
+        "name": "gender",
+        "type": "number",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Looks up a localized text.",
+      "de": "Sucht einen lokalisierten Text."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "InCinematic",
     "system": "System",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "inCinematic",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Whether a cinematic plays.",
+      "de": "Ob eine Zwischensequenz läuft."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13286,26 +15045,36 @@
     "name": "IsLinuxClient",
     "system": "System",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isLinux",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Whether the client runs on Linux.",
+      "de": "Ob der Client unter Linux läuft."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "IsMacClient",
     "system": "System",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isMac",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Whether the client runs on macOS.",
+      "de": "Ob der Client unter macOS läuft."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13327,13 +15096,18 @@
     "name": "IsWindowsClient",
     "system": "System",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "isWindows",
+        "type": "boolean"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Whether the client runs on Windows.",
+      "de": "Ob der Client unter Windows läuft."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13352,14 +15126,19 @@
   {
     "name": "PlayMusic",
     "system": "System",
-    "params": [],
+    "params": [
+      {
+        "name": "file",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Plays a music file.",
+      "de": "Spielt eine Musikdatei."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13408,11 +15187,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Releases your spirit.",
+      "de": "Gibt deinen Geist frei."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13421,11 +15200,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Requests played time (TIME_PLAYED_MSG).",
+      "de": "Fragt die Spielzeit an (TIME_PLAYED_MSG)."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13462,11 +15241,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Takes a screenshot.",
+      "de": "Macht einen Screenshot."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13515,11 +15294,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Stops the cinematic.",
+      "de": "Beendet die Zwischensequenz."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13528,11 +15307,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Stops music.",
+      "de": "Stoppt die Musik."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13554,11 +15333,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (System). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (System). Signatur noch nicht dokumentiert."
+      "en": "Takes a screenshot.",
+      "de": "Macht einen Screenshot."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13853,11 +15632,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Targeting). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Targeting). Signatur noch nicht dokumentiert."
+      "en": "Targets the last enemy.",
+      "de": "Wählt den letzten Feind als Ziel."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13905,27 +15684,39 @@
   {
     "name": "TargetNearestPartyMember",
     "system": "Targeting",
-    "params": [],
+    "params": [
+      {
+        "name": "reverse",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Targeting). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Targeting). Signatur noch nicht dokumentiert."
+      "en": "Targets the nearest party member.",
+      "de": "Wählt das nächste Gruppenmitglied."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "TargetNearestRaidMember",
     "system": "Targeting",
-    "params": [],
+    "params": [
+      {
+        "name": "reverse",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Targeting). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Targeting). Signatur noch nicht dokumentiert."
+      "en": "Targets the nearest raid member.",
+      "de": "Wählt das nächste Schlachtzugsmitglied."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13949,11 +15740,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Taxi). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Taxi). Signatur noch nicht dokumentiert."
+      "en": "Closes the flight map.",
+      "de": "Schließt die Flugkarte."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -13986,13 +15777,18 @@
     "name": "NumTaxiNodes",
     "system": "Taxi",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "num",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Taxi). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Taxi). Signatur noch nicht dokumentiert."
+      "en": "Number of flight nodes.",
+      "de": "Anzahl der Flugpunkte."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14011,40 +15807,65 @@
   {
     "name": "TakeTaxiNode",
     "system": "Taxi",
-    "params": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Taxi). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Taxi). Signatur noch nicht dokumentiert."
+      "en": "Takes a flight.",
+      "de": "Nimmt einen Flug."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "TaxiNodeCost",
     "system": "Taxi",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "cost",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Taxi). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Taxi). Signatur noch nicht dokumentiert."
+      "en": "Cost of a flight.",
+      "de": "Kosten eines Flugs."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "TaxiNodeGetType",
     "system": "Taxi",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "type",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Taxi). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Taxi). Signatur noch nicht dokumentiert."
+      "en": "Type of a flight node.",
+      "de": "Typ eines Flugpunkts."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14115,27 +15936,51 @@
   {
     "name": "TaxiNodeName",
     "system": "Taxi",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Taxi). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Taxi). Signatur noch nicht dokumentiert."
+      "en": "Name of a flight node.",
+      "de": "Name eines Flugpunkts."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "TaxiNodePosition",
     "system": "Taxi",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "x",
+        "type": "number"
+      },
+      {
+        "name": "y",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Taxi). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Taxi). Signatur noch nicht dokumentiert."
+      "en": "Map position of a flight node.",
+      "de": "Kartenposition eines Flugpunkts."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14161,14 +16006,19 @@
   {
     "name": "ToggleCharacter",
     "system": "Toggle",
-    "params": [],
+    "params": [
+      {
+        "name": "tab",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Toggle). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Toggle). Signatur noch nicht dokumentiert."
+      "en": "Toggles the character window.",
+      "de": "Schaltet das Charakterfenster um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14177,11 +16027,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Toggle). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Toggle). Signatur noch nicht dokumentiert."
+      "en": "Toggles the combat log.",
+      "de": "Schaltet das Kampflog um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14190,11 +16040,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Toggle). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Toggle). Signatur noch nicht dokumentiert."
+      "en": "Toggles the framerate display.",
+      "de": "Schaltet die Bildrate um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14203,11 +16053,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Toggle). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Toggle). Signatur noch nicht dokumentiert."
+      "en": "Toggles the game menu.",
+      "de": "Schaltet das Spielmenü um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14216,11 +16066,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Toggle). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Toggle). Signatur noch nicht dokumentiert."
+      "en": "Toggles the help window.",
+      "de": "Schaltet das Hilfefenster um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14229,11 +16079,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Toggle). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Toggle). Signatur noch nicht dokumentiert."
+      "en": "Toggles the key ring.",
+      "de": "Schaltet den Schlüsselbund um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14242,11 +16092,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Toggle). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Toggle). Signatur noch nicht dokumentiert."
+      "en": "Toggles the talent window.",
+      "de": "Schaltet das Talentfenster um."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14593,11 +16443,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Accepts the trade.",
+      "de": "Akzeptiert den Handel."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14632,11 +16482,11 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Cancels the trade.",
+      "de": "Bricht den Handel ab."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -14671,89 +16521,153 @@
     "params": [],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Closes the trade window.",
+      "de": "Schließt das Handelsfenster."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetPlayerTradeMoney",
     "system": "Trade",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Money you offer.",
+      "de": "Geld, das du anbietest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetTargetTradeMoney",
     "system": "Trade",
     "params": [],
-    "returns": [],
+    "returns": [
+      {
+        "name": "money",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Money offered to you.",
+      "de": "Geld, das dir angeboten wird."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetTradePlayerItemInfo",
     "system": "Trade",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "numItems",
+        "type": "number"
+      },
+      {
+        "name": "quality",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Item you offer.",
+      "de": "Gegenstand, den du anbietest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "GetTradeTargetItemInfo",
     "system": "Trade",
-    "params": [],
-    "returns": [],
+    "params": [
+      {
+        "name": "index",
+        "type": "number"
+      }
+    ],
+    "returns": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "texture",
+        "type": "string"
+      },
+      {
+        "name": "numItems",
+        "type": "number"
+      },
+      {
+        "name": "quality",
+        "type": "number"
+      }
+    ],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Item offered to you.",
+      "de": "Gegenstand, der dir angeboten wird."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "InitiateTrade",
     "system": "Trade",
-    "params": [],
+    "params": [
+      {
+        "name": "unit",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Starts a trade with a unit.",
+      "de": "Beginnt einen Handel mit einer Einheit."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SetTradeMoney",
     "system": "Trade",
-    "params": [],
+    "params": [
+      {
+        "name": "amount",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Trade). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Trade). Signatur noch nicht dokumentiert."
+      "en": "Sets the money you offer.",
+      "de": "Setzt das Geld, das du anbietest."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
@@ -16245,27 +18159,37 @@
   {
     "name": "SetWhoToUI",
     "system": "Who",
-    "params": [],
+    "params": [
+      {
+        "name": "toUI",
+        "type": "number"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Who). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Who). Signatur noch nicht dokumentiert."
+      "en": "Sends /who results to the UI.",
+      "de": "Sendet /who-Ergebnisse an die Oberfläche."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   },
   {
     "name": "SortWho",
     "system": "Who",
-    "params": [],
+    "params": [
+      {
+        "name": "sort",
+        "type": "string"
+      }
+    ],
     "returns": [],
     "description": {
-      "en": "Vanilla 1.12 API function (Who). Signature not documented yet.",
-      "de": "Vanilla-1.12-API-Funktion (Who). Signatur noch nicht dokumentiert."
+      "en": "Sorts the /who results.",
+      "de": "Sortiert die /who-Ergebnisse."
     },
     "tags": [
-      "signature-unknown"
+      "unverified"
     ]
   }
 ]
