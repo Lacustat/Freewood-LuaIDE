@@ -285,6 +285,30 @@ API.BreakUpLargeNumbers = function(n)
   if a == math.floor(a) or a >= 1000 then return sign .. groups(string.format("%d", math.floor(a))) end
   return sign .. string.format("%.1f", math.floor(a * 10 + 0.5) / 10)
 end
+-- ---- Taschen und Zauber als Tabellen (Hilfen liefern primitive Werte) · bags and spells as tables ----
+local hBagItem, hSpellInfo, hFreeList = apiw("__bag_item"), apiw("__spell_info"), apiw("__bag_free_list")
+API["C_Container.GetContainerItemInfo"] = function(bag, slot, buf)
+  local id, count, icon, quality, link, name, noValue = hBagItem(bag, slot)
+  if id == nil then return nil end
+  local t = buf
+  if type(t) ~= "table" then t = {} else for k in pairs(t) do t[k] = nil end end
+  t.iconFileID, t.stackCount, t.isLocked, t.quality = icon, count, false, quality
+  t.isReadable, t.hasLoot, t.hyperlink, t.isFiltered = false, false, link, false
+  t.hasNoValue, t.itemID, t.isBound, t.itemName = noValue, id, false, name
+  return t
+end
+API["C_Container.GetContainerFreeSlots"] = function(bag)
+  local r = pack(hFreeList(bag))
+  if r[1] ~= true then return nil end
+  local t = {}
+  for i = 2, r.n do t[i - 1] = r[i] end
+  return t
+end
+API["C_Spell.GetSpellInfo"] = function(id)
+  local name, icon, cast, minR, maxR, sid, rank, cost, funnel, power = hSpellInfo(id)
+  if name == nil then return nil end
+  return { name = name, iconID = icon, castTime = cast, minRange = minR, maxRange = maxR, spellID = sid, rank = rank, cost = cost, isFunnel = funnel, powerType = power }
+end
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then
   for k in pairs(API) do

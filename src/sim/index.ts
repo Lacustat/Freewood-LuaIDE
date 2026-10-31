@@ -12,3 +12,4 @@ export * from "./engine.js";
 export * from "./prelude.js";
 export * from "./scenario.js";
 export * from "./world.js";
+export * from "./inventory.js";

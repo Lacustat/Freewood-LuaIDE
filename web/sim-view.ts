@@ -10,7 +10,7 @@
  */
 
 import { createRealEngine } from "./real-lua.js";
-import { DEFAULT_SCENARIO, supportsRealVm, FormModel, Graph, WowSim, generateFormLua, generateLua, importFormXml, type Project, type ResolvedTarget, type Scenario, type SnapshotNode } from "../src/index.js";
+import { DEFAULT_SCENARIO, supportsRealVm, FormModel, Graph, WowSim, generateFormLua, generateLua, importFormXml, type InventoryState, type Project, type ResolvedTarget, type Scenario, type SnapshotNode } from "../src/index.js";
 import { clear, h, select } from "./dom.js";
 import type { Ctx } from "./ctx.js";
 
@@ -223,6 +223,20 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
     const hasTarget = h("input", { type: "checkbox", checked: !!s.scenario.target });
     hasTarget.addEventListener("change", () => { s.setTarget(hasTarget.checked ? structuredClone(DEFAULT_SCENARIO.target) : undefined); renderControls(); refresh(); });
     controls.append(h("label", { class: "field inline" }, hasTarget, h("span", { text: ctx.t("sim.target") })));
+    // Gegenstände, Taschen, Zauber als JSON · items, bags, spells as JSON
+    const invText = h("textarea", { rows: "6", spellcheck: "false", "aria-label": ctx.t("sim.inventory") });
+    invText.value = JSON.stringify(s.inventory(), null, 1);
+    const invMsg = h("div", { class: "muted" });
+    controls.append(h("h4", { text: ctx.t("sim.inventory") }), invText, h("button", { class: "btn", onclick: () => {
+      try {
+        const parsed = JSON.parse(invText.value) as InventoryState;
+        if (typeof parsed !== "object" || parsed === null || typeof parsed.items !== "object" || typeof parsed.bags !== "object" || typeof parsed.spells !== "object" || !Array.isArray(parsed.known)) throw new Error("shape");
+        persistedScenario.inventory = parsed;
+        void start();
+      } catch {
+        invMsg.textContent = ctx.t("sim.inventoryInvalid");
+      }
+    } }, ctx.t("sim.inventoryApply")), invMsg);
     for (const unit of ["player", "target"]) {
       const u = s.unit(unit);
       if (!u) continue;

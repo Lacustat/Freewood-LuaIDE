@@ -28,6 +28,7 @@ import { LuaTable, tonum, tostr, type LuaFunction, type LuaValue } from "../lua/
 import type { ExecResult } from "../runtime/types.js";
 import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
 import { buildPrelude, REF_MARK } from "./prelude.js";
+import { DEFAULT_INVENTORY, INVENTORY_API, type InventoryState } from "./inventory.js";
 import { rewrite51to50 } from "../lua/rewrite50.js";
 import { DEFAULT_SCENARIO, type LogEntry, type Scenario, type UnitData } from "./scenario.js";
 import { FormModel, type AnchorPoint } from "../forms/model.js";
@@ -297,6 +298,10 @@ export class WowSim {
     if (!u) return;
     u.health = Math.max(0, Math.min(u.healthMax, health));
     this.fireEvent("UNIT_HEALTH", unit);
+  }
+
+  inventory(): InventoryState {
+    return this.scenario.inventory ?? DEFAULT_INVENTORY;
   }
 
   unit(id: unknown): UnitData | undefined {
@@ -711,3 +716,4 @@ const API: Record<string, ApiImpl> = {
     return x < y ? -1 : x > y ? 1 : 0;
   },
 };
+for (const [k, f] of Object.entries(INVENTORY_API)) API[k] = (sim, a) => f(sim.inventory(), a);

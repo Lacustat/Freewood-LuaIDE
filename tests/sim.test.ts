@@ -288,6 +288,27 @@ test("ClassicAPI: colour, text, number and expansion helpers follow the docs", a
     "1.2K", "12K", "1.9M", "-12345", "15", "1,234,567", "123.5", "-1,234,567", "5", 60, false, true, false]);
 });
 
+test("ClassicAPI: bags, items and spells answer from the scenario", async () => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const r = sim.exec(`
+    local info = C_Container.GetContainerItemInfo(0, 2)
+    local free = C_Container.GetContainerFreeSlots(0)
+    local empty = C_Container.GetContainerItemInfo(0, 9)
+    local sp = C_Spell.GetSpellInfo(78)
+    local n, bt = C_Container.GetContainerNumFreeSlots(0)
+    local nm, link, q = C_Item.GetItemInfo("Linen Cloth")
+    local tex, cnt = GetContainerItemInfo(0, 2)
+    return info.itemID, info.stackCount, info.hasNoValue, info.itemName, table.getn(free), free[1], empty,
+      sp.name, sp.rank, sp.powerType, n, bt, C_Container.CalculateTotalNumberOfFreeBagSlots(),
+      nm, link, q, C_Item.GetItemCount(2589), C_Item.GetItemMaxStackSizeByID(2589), C_Spell.DoesSpellExist(133),
+      IsSpellKnown(78), IsSpellKnown(133), C_Spell.GetSpellLink(133), cnt, GetContainerNumSlots(1)
+  `);
+  assert.equal(r.ok, true, String(r.error?.message));
+  assert.deepEqual(r.values, [2589, 7, false, "Linen Cloth", 14, 3, undefined, "Heroic Strike", "Rank 1", 1, 14, 0, 20,
+    "Linen Cloth", "|cffffffff|Hitem:2589:0:0:0|h[Linen Cloth]|h|r", 1, 7, 20, true, true, false, "|cff71d5ff|Hspell:133:0|h[Fireball]|h|r", 7, 6]);
+});
+
 // ===== [S5] Ende-zu-Ende · end to end =====
 test("graph output runs in the simulation (vanilla and retail)", async () => {
   const t = await targets();

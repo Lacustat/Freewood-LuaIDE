@@ -1,0 +1,202 @@
+/*
+ * Freewood LUA IDE
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * Copyright (C) 2026 Lacustat
+ *
+ * INHALT / CONTENTS
+ *   [S1] Datentypen · data types ..... ItemData, BagData, SpellData, InventoryState
+ *   [S2] Beispieldaten · sample data . DEFAULT_INVENTORY (Sandbox, keine echten Serverdaten)
+ *   [S3] Abfragen · queries .......... Gegenstand/Tasche/Zauber nachschlagen
+ *   [S4] API-Funktionen · API impls .. Rückgaben als primitive Werte (Tabellen baut das Lua-Prelude)
+ *
+ * DE: Zustand für Gegenstände, Taschen und Zauber im Szenario. Die Werte sind erfundene Beispieldaten
+ *     und frei änderbar; die Rückgabeformen folgen der Vanilla-API und der ClassicAPI-Dokumentation.
+ * EN: item, bag and spell state of the scenario. Values are made-up sample data and freely editable;
+ *     return shapes follow the Vanilla API and the ClassicAPI docs.
+ */
+
+// ===== [S1] Datentypen · data types =====
+
+export interface ItemData {
+  name: string;
+  quality: number;
+  level?: number;
+  minLevel?: number;
+  type?: string;
+  subType?: string;
+  classID?: number;
+  subclassID?: number;
+  stack?: number;
+  equipLoc?: string;
+  icon?: string;
+  sellPrice?: number;
+  bindType?: number;
+}
+
+export interface BagSlot { id: number; count: number }
+
+export interface BagData {
+  /** DE: Anzahl Plätze. EN: number of slots. */
+  size: number;
+  /** DE: Gegenstand der Tasche selbst (nicht beim Rucksack). EN: the bag item itself (not for the backpack). */
+  itemID?: number;
+  /** DE: Taschenfamilie (0 = allgemein). EN: bag family (0 = general). */
+  family?: number;
+  /** DE: Belegte Plätze, 1-basiert. EN: filled slots, 1-based. */
+  slots: Record<string, BagSlot>;
+}
+
+export interface SpellData {
+  name: string;
+  rank?: string;
+  icon?: string;
+  castTime?: number;
+  minRange?: number;
+  maxRange?: number;
+  cost?: number;
+  powerType?: number;
+}
+
+export interface InventoryState {
+  items: Record<string, ItemData>;
+  /** DE: Taschen 0 (Rucksack) bis 4. EN: bags 0 (backpack) to 4. */
+  bags: Record<string, BagData>;
+  spells: Record<string, SpellData>;
+  /** DE: Bekannte Zauber-IDs. EN: known spell IDs. */
+  known: number[];
+}
+
+// ===== [S2] Beispieldaten · sample data =====
+
+export const DEFAULT_INVENTORY: InventoryState = {
+  items: {
+    "6948": { name: "Hearthstone", quality: 1, level: 1, type: "Miscellaneous", subType: "Junk", classID: 15, subclassID: 0, stack: 1, icon: "Interface\\Icons\\INV_Misc_Rune_01", sellPrice: 0, bindType: 1 },
+    "2589": { name: "Linen Cloth", quality: 1, level: 5, type: "Trade Goods", subType: "Cloth", classID: 7, subclassID: 5, stack: 20, icon: "Interface\\Icons\\INV_Fabric_Linen_01", sellPrice: 25, bindType: 0 },
+    "4496": { name: "Small Brown Pouch", quality: 1, level: 1, type: "Container", subType: "Bag", classID: 1, subclassID: 0, stack: 1, icon: "Interface\\Icons\\INV_Misc_Bag_09", sellPrice: 25, bindType: 0 },
+  },
+  bags: {
+    "0": { size: 16, slots: { "1": { id: 6948, count: 1 }, "2": { id: 2589, count: 7 } } },
+    "1": { size: 6, itemID: 4496, family: 0, slots: {} },
+  },
+  spells: {
+    "78": { name: "Heroic Strike", rank: "Rank 1", icon: "Interface\\Icons\\Ability_Rogue_Ambush", castTime: 0, cost: 15, powerType: 1 },
+    "6673": { name: "Battle Shout", rank: "Rank 1", icon: "Interface\\Icons\\Ability_Warrior_BattleShout", castTime: 0, cost: 10, powerType: 1 },
+    "133": { name: "Fireball", rank: "Rank 1", icon: "Interface\\Icons\\Spell_Fire_FlameBolt", castTime: 1500, maxRange: 35, cost: 30, powerType: 0 },
+  },
+  known: [78, 6673],
+};
+
+// ===== [S3] Abfragen · queries =====
+
+const QUALITY_COLOR = ["9d9d9d", "ffffff", "1eff00", "0070dd", "a335ee", "ff8000"];
+
+export function resolveItemID(inv: InventoryState, item: unknown): number | undefined {
+  if (typeof item === "number") return item > 0 ? Math.floor(item) : undefined;
+  if (typeof item !== "string") return undefined;
+  const m = /item:(\d+)/.exec(item);
+  if (m) return Number(m[1]);
+  const t = item.trim();
+  if (/^\d+$/.test(t)) return Number(t);
+  const lower = t.toLowerCase();
+  for (const [id, it] of Object.entries(inv.items)) if (it.name.toLowerCase() === lower) return Number(id);
+  return undefined;
+}
+
+export function itemLink(id: number, it: ItemData): string {
+  return `|cff${QUALITY_COLOR[it.quality] ?? "ffffff"}|Hitem:${id}:0:0:0|h[${it.name}]|h|r`;
+}
+
+function slotAt(inv: InventoryState, bag: unknown, slot: unknown): BagSlot | undefined {
+  if (typeof bag !== "number" || typeof slot !== "number") return undefined;
+  const b = inv.bags[String(bag)];
+  if (!b || slot < 1 || slot > b.size) return undefined;
+  return b.slots[String(slot)];
+}
+
+function freeSlots(inv: InventoryState, bag: unknown): number[] | undefined {
+  if (typeof bag !== "number") return undefined;
+  const b = inv.bags[String(bag)];
+  if (!b) return undefined;
+  const out: number[] = [];
+  for (let i = 1; i <= b.size; i++) if (!b.slots[String(i)]) out.push(i);
+  return out;
+}
+
+// ===== [S4] API-Funktionen · API impls =====
+
+type Impl = (inv: InventoryState, a: unknown[]) => unknown;
+
+export const INVENTORY_API: Record<string, Impl> = {
+  // Vanilla
+  GetContainerNumSlots: (inv, a) => inv.bags[String(a[0])]?.size ?? 0,
+  GetContainerItemInfo: (inv, a) => {
+    const s = slotAt(inv, a[0], a[1]);
+    if (!s) return undefined;
+    const it = inv.items[String(s.id)];
+    return [it?.icon, s.count, false, it?.quality, false];
+  },
+  GetContainerItemLink: (inv, a) => {
+    const s = slotAt(inv, a[0], a[1]);
+    const it = s ? inv.items[String(s.id)] : undefined;
+    return s && it ? itemLink(s.id, it) : undefined;
+  },
+  GetItemInfo: (inv, a) => {
+    const id = resolveItemID(inv, a[0]);
+    const it = id === undefined ? undefined : inv.items[String(id)];
+    if (id === undefined || !it) return undefined;
+    return [it.name, itemLink(id, it), it.quality, it.level ?? 1, it.minLevel ?? 0, it.type ?? "", it.subType ?? "", it.stack ?? 1, it.equipLoc ?? "", it.icon ?? ""];
+  },
+  GetItemCount: (inv, a) => {
+    const id = resolveItemID(inv, a[0]);
+    if (id === undefined) return 0;
+    let n = 0;
+    for (const b of Object.values(inv.bags)) for (const s of Object.values(b.slots)) if (s.id === id) n += s.count;
+    return n;
+  },
+  // ClassicAPI (primitive Rückgaben · primitive returns)
+  "C_Item.GetItemCount": (inv, a) => INVENTORY_API.GetItemCount!(inv, a),
+  "C_Item.GetItemInfo": (inv, a) => {
+    const id = resolveItemID(inv, a[0]);
+    const it = id === undefined ? undefined : inv.items[String(id)];
+    if (id === undefined || !it) return undefined;
+    return [it.name, itemLink(id, it), it.quality, it.level ?? 1, it.minLevel ?? 0, it.type ?? "", it.subType ?? "", it.stack ?? 1, it.equipLoc ?? "",
+      it.icon ?? "", it.sellPrice ?? 0, it.classID ?? 0, it.subclassID ?? 0, it.bindType ?? 0, 0, undefined, false, ""];
+  },
+  "C_Item.GetItemNameByID": (inv, a) => inv.items[String(resolveItemID(inv, a[0]))]?.name,
+  "C_Item.GetItemIconByID": (inv, a) => inv.items[String(resolveItemID(inv, a[0]))]?.icon,
+  "C_Item.GetItemQualityByID": (inv, a) => inv.items[String(resolveItemID(inv, a[0]))]?.quality,
+  "C_Item.GetItemMaxStackSizeByID": (inv, a) => { const it = inv.items[String(resolveItemID(inv, a[0]))]; return it ? it.stack ?? 1 : undefined; },
+  "C_Item.GetItemSellPriceByID": (inv, a) => { const it = inv.items[String(resolveItemID(inv, a[0]))]; return it ? it.sellPrice ?? 0 : undefined; },
+  "C_Item.DoesItemExistByID": (inv, a) => { const id = resolveItemID(inv, a[0]); return id !== undefined && id > 0; },
+  GetItemIcon: (inv, a) => inv.items[String(resolveItemID(inv, a[0]))]?.icon,
+  "C_Container.GetContainerItemID": (inv, a) => slotAt(inv, a[0], a[1])?.id,
+  "C_Container.HasContainerItem": (inv, a) => slotAt(inv, a[0], a[1]) !== undefined,
+  "C_Container.GetContainerNumFreeSlots": (inv, a) => {
+    const f = freeSlots(inv, a[0]);
+    return [f ? f.length : 0, inv.bags[String(a[0])]?.family ?? 0];
+  },
+  "C_Container.CalculateTotalNumberOfFreeBagSlots": (inv) => {
+    let n = 0;
+    for (let b = 0; b <= 4; b++) if ((inv.bags[String(b)]?.family ?? 0) === 0) n += freeSlots(inv, b)?.length ?? 0;
+    return n;
+  },
+  // Hilfen für Prelude-Tabellen · helpers for prelude-built tables
+  __bag_item: (inv, a) => {
+    const s = slotAt(inv, a[0], a[1]);
+    if (!s) return undefined;
+    const it = inv.items[String(s.id)];
+    return [s.id, s.count, it?.icon, it?.quality, it ? itemLink(s.id, it) : undefined, it?.name, it ? (it.sellPrice ?? 0) === 0 : undefined];
+  },
+  __bag_free_list: (inv, a) => { const f = freeSlots(inv, a[0]); return f ? [true, ...f] : [false]; },
+  // Zauber · spells
+  "C_Spell.DoesSpellExist": (inv, a) => inv.spells[String(a[0])] !== undefined,
+  "C_Spell.GetSpellName": (inv, a) => inv.spells[String(a[0])]?.name,
+  "C_Spell.GetSpellTexture": (inv, a) => inv.spells[String(a[0])]?.icon,
+  "C_Spell.GetSpellLink": (inv, a) => { const s = inv.spells[String(a[0])]; return s ? `|cff71d5ff|Hspell:${a[0]}:0|h[${s.name}]|h|r` : undefined; },
+  IsSpellKnown: (inv, a) => typeof a[0] === "number" && a[1] !== true && inv.known.includes(a[0]),
+  __spell_info: (inv, a) => {
+    const s = inv.spells[String(a[0])];
+    if (!s) return undefined;
+    return [s.name, s.icon, s.castTime ?? 0, s.minRange ?? 0, s.maxRange ?? 0, a[0], s.rank ?? "", s.cost ?? 0, false, s.powerType ?? 0];
+  },
+};

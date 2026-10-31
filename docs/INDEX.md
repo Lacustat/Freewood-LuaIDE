@@ -24,7 +24,7 @@
 | `src/editor/*.ts` | Hervorhebung, Vervollständigung · highlighting, completion |
 | `src/graph/*.ts` | Node-Graph-Modell und Lua-Erzeugung · graph model and Lua generation |
 | `src/forms/*.ts` | Forms-Modell, Layout, Lua/XML · forms model, layout, Lua/XML |
-| `src/sim/*.ts` | Simulation: Welt (`world.ts`), Motoren (`engine.ts`), Lua-Prelude (`prelude.ts`), Szenario · simulation: world, engines, Lua prelude, scenario |
+| `src/sim/*.ts` | Simulation: Welt (`world.ts`), Motoren (`engine.ts`), Lua-Prelude (`prelude.ts`), Szenario, Gegenstände/Taschen/Zauber (`inventory.ts`) · simulation: world, engines, Lua prelude, scenario, items/bags/spells (`inventory.ts`) |
 | `web/*.ts`, `web/index.html`, `web/style.css` | Web-Oberfläche · web UI |
 | `runtimes/lua50/*`, `src/lua/wasm50.ts`, `web/real-lua.ts` | Echtes Lua 5.0 als WASM · real Lua 5.0 as WASM |
 | `scripts/serve.mjs`, `scripts/ui-smoke.mjs` | Server, UI-Rauchtest · static server, UI smoke test |

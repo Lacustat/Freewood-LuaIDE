@@ -14,6 +14,8 @@
  *     It is plain JSON and can be saved.
  */
 
+import type { InventoryState } from "./inventory.js";
+
 // ===== [S1] UnitData, Scenario =====
 
 export interface UnitData {
@@ -37,6 +39,8 @@ export interface Scenario {
   party: UnitData[];
   raidCount?: number;
   inCombat: boolean;
+  /** DE: Gegenstände, Taschen, Zauber (optional, sonst Beispieldaten). EN: items, bags, spells (optional, else sample data). */
+  inventory?: InventoryState;
 }
 
 // ===== [S2] DEFAULT_SCENARIO =====
