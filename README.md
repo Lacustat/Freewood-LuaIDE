@@ -45,4 +45,4 @@ node scripts/serve.mjs 8123   # then http://127.0.0.1:8123/
 
 ## Lizenz · License
 
-GPL-3.0-only, Copyright (C) 2026 Lacustat. Siehe/See [LICENSE](LICENSE), [NOTICE.md](NOTICE.md).
+GPL-3.0-or-later, Copyright (C) 2026 Lacustat. Siehe/See [LICENSE](LICENSE), [NOTICE.md](NOTICE.md).

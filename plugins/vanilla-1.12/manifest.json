@@ -8,7 +8,7 @@
     "de": "Beispieldaten für den 1.12.1-Client mit reinem Lua 5.0 ohne DLL. Nicht vollständig."
   },
   "author": "Lacustat",
-  "license": "GPL-3.0-only",
+  "license": "GPL-3.0-or-later",
   "luaVersion": "5.0",
   "syntax": "lua50",
   "scriptArgs": "globals",

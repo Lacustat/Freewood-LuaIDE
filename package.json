@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Freewood LUA IDE – modular web IDE for WoW addons (Phase 1: core and plugin skeleton) / modulare Web-IDE für WoW-Addons (Phase 1: Kern und Plugin-Gerüst)",
   "author": "Lacustat",
-  "license": "GPL-3.0-only",
+  "license": "GPL-3.0-or-later",
   "private": true,
   "type": "module",
   "scripts": {

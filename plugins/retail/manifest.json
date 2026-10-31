@@ -8,7 +8,7 @@
     "de": "Beispieldaten für den aktuellen Retail-Client. Später aus öffentlichen Quellen generiert."
   },
   "author": "Lacustat",
-  "license": "GPL-3.0-only",
+  "license": "GPL-3.0-or-later",
   "luaVersion": "5.1",
   "syntax": "lua51",
   "scriptArgs": "arguments",

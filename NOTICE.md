@@ -2,7 +2,7 @@
 
 **Freewood LUA IDE** – Copyright (C) 2026 Lacustat
 
-Lizenz · License: GNU General Public License v3 (`GPL-3.0-only`), siehe/see `LICENSE`.
+Lizenz · License: GNU General Public License v3 (`GPL-3.0-or-later`), siehe/see `LICENSE`.
 
 ## Hinweise zu Quellen · Notes on sources
 

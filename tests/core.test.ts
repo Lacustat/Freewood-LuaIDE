@@ -1,6 +1,6 @@
 /*
  * Freewood LUA IDE
- * SPDX-License-Identifier: GPL-3.0-only
+ * SPDX-License-Identifier: GPL-3.0-or-later
  * Copyright (C) 2026 Lacustat
  *
  * INHALT / CONTENTS
@@ -119,7 +119,7 @@ async function walk(dir: string): Promise<string[]> {
 test("every source file has SPDX header and contents index", async () => {
   for (const f of (await walk(join(ROOT, "src"))).filter((x) => x.endsWith(".ts"))) {
     const text = await readFile(f, "utf8");
-    assert.match(text, /SPDX-License-Identifier: GPL-3\.0-only/, f);
+    assert.match(text, /SPDX-License-Identifier: GPL-3\.0-or-later/, f);
     assert.match(text, /INHALT \/ CONTENTS/, f);
     assert.match(text, /Copyright \(C\) 2026 Lacustat/, f);
   }

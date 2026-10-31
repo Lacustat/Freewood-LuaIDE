@@ -8,7 +8,7 @@
     "de": "Vanilla 1.12 plus das, was die ClassicAPI-DLL ergänzt: Lua-5.1-Syntax (auf der 5.0-VM umgeschrieben), C_Timer und mehr. Beispieldaten, nicht vollständig."
   },
   "author": "Lacustat",
-  "license": "GPL-3.0-only",
+  "license": "GPL-3.0-or-later",
   "luaVersion": "5.1",
   "syntax": "lua51-transpiled",
   "scriptArgs": "both",

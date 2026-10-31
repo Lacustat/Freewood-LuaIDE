@@ -1,5 +1,5 @@
 /*
- * SPDX-License-Identifier: GPL-3.0-only
+ * SPDX-License-Identifier: GPL-3.0-or-later
  * ## Author: Lacustat
  *
  * Inhalt · Contents
@@ -41,7 +41,7 @@ test("every t(\"…\") key used in web/*.ts exists in all locales", () => {
 test("web/*.ts have SPDX header, Lacustat author and a contents index", () => {
   for (const f of readdirSync(path.join(root, "web")).filter((x) => x.endsWith(".ts"))) {
     const head = read("web/" + f).slice(0, 1200);
-    assert.match(head, /SPDX-License-Identifier: GPL-3\.0-only/, f);
+    assert.match(head, /SPDX-License-Identifier: GPL-3\.0-or-later/, f);
     assert.match(head, /Lacustat/, f);
     assert.match(head, /INHALT \/ CONTENTS|Inhalt · Contents/, f);
   }
