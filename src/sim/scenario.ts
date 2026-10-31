@@ -51,6 +51,27 @@ export interface UnitData {
   y?: number;
   z?: number;
   auras?: AuraEntry[];
+  /** DE: Weitere optionale Werte (Beispieldaten). EN: more optional values (sample data). */
+  sex?: number; // 1 unknown, 2 male, 3 female
+  dead?: boolean;
+  ghost?: boolean;
+  connected?: boolean;
+  pvp?: boolean;
+  ffa?: boolean;
+  inCombat?: boolean;
+  reaction?: number; // 1 hated .. 4 neutral .. 7 exalted
+  classification?: string; // normal, elite, rare, rareelite, worldboss
+  creatureType?: string;
+  creatureTypeID?: number;
+  creatureFamily?: string;
+  factionGroup?: string;
+  xp?: number;
+  xpMax?: number;
+  guild?: string;
+  guildRank?: string;
+  guildRankIndex?: number;
+  tapped?: boolean;
+  zone?: string;
 }
 
 export interface Scenario {
@@ -59,6 +80,10 @@ export interface Scenario {
   player: UnitData;
   target?: UnitData;
   pet?: UnitData;
+  focus?: UnitData;
+  /** DE: Weitere Einheiten in der Nähe (für Zielwahl). EN: more nearby units (for targeting). */
+  nearby?: UnitData[];
+  mouseover?: UnitData;
   party: UnitData[];
   raidCount?: number;
   inCombat: boolean;

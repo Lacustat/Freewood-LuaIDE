@@ -309,6 +309,9 @@ export class WowSim {
     this.fireEvent("PLAYER_TARGET_CHANGED");
   }
 
+  /** DE: Taste oder Maustaste drücken/loslassen (LSHIFT, RCTRL, LALT, LeftButton ...). EN: press/release a key or mouse button. */
+  setKey(name: string, down: boolean): void { this.store("keys", () => ({} as Record<string, boolean>))[name] = down; }
+
   setHealth(unit: string, health: number): void {
     const u = this.unit(unit);
     if (!u) return;
@@ -366,6 +369,9 @@ export class WowSim {
     if (id === "player") return s.player;
     if (id === "target") return s.target;
     if (id === "pet") return s.pet;
+    if (id === "focus") return s.focus;
+    if (id === "mouseover") return s.mouseover;
+    if (id === "targettarget") return s.target ? s.player : undefined;
     const m = /^party(\d)$/.exec(id);
     if (m) return s.party[Number(m[1]) - 1];
     return undefined;

@@ -45,7 +45,7 @@ export function primaryPower(u: UnitData): number {
   return u.classToken === "WARRIOR" ? 1 : u.classToken === "ROGUE" ? 3 : 0;
 }
 
-function powerOf(u: UnitData, type: unknown, max: boolean): number {
+export function powerOf(u: UnitData, type: unknown, max: boolean): number {
   const t = typeof type === "number" && type >= 0 && type <= 4 ? type : primaryPower(u);
   if (t !== primaryPower(u)) return 0;
   const cap = u.powerMax ?? (t === 1 || t === 3 ? 100 : 0);

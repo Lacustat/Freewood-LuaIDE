@@ -205,3 +205,67 @@ engines("C_UnitAuras: positional, slots, instance ids, player buffs", async (mk)
   assert.equal(v[4], "number");
   assert.equal(v[5], undefined);
 });
+
+engines("world: zones, time, keys, sound, targeting, bar, quests, talents, taxi", async (mk) => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  sim.setKey("LSHIFT", true);
+  const v = run(sim, `
+    local z, rz = GetZoneText(), GetRealZoneText()
+    local h, m = GetGameTime()
+    TargetUnit("party1")
+    local name1 = UnitName("target")
+    ClearTarget()
+    local none = UnitExists("target") and 1 or 0
+    TargetLastTarget()
+    local back = UnitName("target")
+    TargetNearestEnemy()
+    PlaySound("igMainMenuOpen")
+    local recent = C_Sound.GetRecentSoundFiles()
+    return z, rz, (h >= 0 and h < 24) and 1 or 0, IsShiftKeyDown() and 1 or 0, IsControlKeyDown() and 1 or 0, IsModifiedClick("CHATLINK") and 1 or 0,
+      name1, none, back, UnitName("target"), type(recent), HasAction(1) and 1 or 0, UnitIsDead("target") and 1 or 0, UnitReaction("target", "player"), UnitCanAttack("player", "target") and 1 or 0
+  `);
+  assert.equal(v[0], "Elwynn Forest");
+  assert.equal(v[1], "Elwynn Forest");
+  assert.deepEqual(v.slice(2, 9), [1, 1, 0, 1, "Helper", 0, "Helper"]);
+  assert.equal(v[9], "Defias Pillager");
+  assert.deepEqual(v.slice(10), ["table", 1, 0, 2, 1]);
+  const w = run(sim, `
+    AddFriend("Newbie")
+    local nf = GetNumFriends()
+    local n1 = GetFriendInfo(1)
+    local fi = C_FriendList.GetFriendInfo("aldenbrook")
+    InviteByName("Zed")
+    local np = GetNumPartyMembers()
+    PromoteByName("Zed")
+    local lead = GetPartyLeaderIndex()
+    SetLootMethod("master")
+    local lm = GetLootMethod()
+    SetRaidTarget("party1", 3)
+    ConvertToRaid()
+    local raid = IsInRaid() and 1 or 0
+    SendWho("mage")
+    return nf, n1, fi.className, np, lead, lm, GetRaidTargetIndex("party1"), raid, GetNumIgnores(), GetIgnoreName(1), C_PlayerInfo.GUIDIsPlayer(UnitGUID("player")) and 1 or 0
+  `);
+  assert.deepEqual(w.slice(0, 4), [4, "Aldenbrook", "Mage", 2]);
+  assert.deepEqual(w.slice(4), [2, "master", 3, 1, 1, "Spammerson", 1]);
+  sim.advance(1);
+  const x = run(sim, `
+    local n = GetNumWhoResults()
+    local q = GetNumQuestLogEntries()
+    SelectQuestLogEntry(2)
+    AddQuestWatch(2)
+    local w = GetNumQuestWatches()
+    AbandonQuest()
+    SetAbandonQuest()
+    local pts = UnitCharacterPoints("player")
+    LearnTalent(1, 1)
+    local pts2 = UnitCharacterPoints("player")
+    local nm, ic, spent = GetTalentTabInfo(1)
+    local c = NumTaxiNodes()
+    return n, w, pts, pts2, nm, spent, c, GetNumFriends(), (GetFramerate() > 0) and 1 or 0, SecondsToTime(3725)
+  `);
+  assert.equal(x[0], 1);
+  assert.deepEqual(x.slice(2, 7), [51, 50, "Arms", 1, 2]);
+  assert.equal(x[9], "1 Hr 2 Min 5 Sec");
+});

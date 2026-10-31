@@ -17,7 +17,7 @@ import type { InventoryState } from "./inventory.js";
 import type { CharacterState } from "./character.js";
 import type { InteractionState } from "./interaction.js";
 import type { CvarStore } from "./system.js";
-import type { UnitData } from "./scenario.js";
+import type { Scenario, UnitData } from "./scenario.js";
 import type { ResolvedTarget } from "../core/plugins.js";
 
 // ===== [S1] SimHost =====
@@ -39,6 +39,8 @@ export interface SimHost {
   later(seconds: number, fn: () => void): { cancel(): void };
   /** DE: Löst das Ereignis nur aus, wenn das Ziel es kennt. EN: fires the event only if the target knows it. */
   fireIf(event: string, ...args: (string | number | boolean)[]): void;
+  readonly scenario: Scenario;
+  setTarget(t: UnitData | undefined): void;
   /** DE: Zustand je Simulation. EN: state per simulation. */
   store<T>(key: string, init: () => T): T;
 }

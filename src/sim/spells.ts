@@ -38,7 +38,7 @@ interface SpellState {
   autoRepeat?: number;
   fallback: boolean;
 }
-const st = (h: SimHost): SpellState => h.store("spells", () => ({ cooldowns: new Map(), forms: [], form: 0, fallback: false }));
+export const st = (h: SimHost): SpellState => h.store("spells", () => ({ cooldowns: new Map(), forms: [], form: 0, fallback: false }));
 
 // ===== [S2] Auflösen · resolving =====
 
@@ -79,7 +79,7 @@ const harmful = (sp: SpellData): boolean => sp.harmful === true;
 
 // ===== [S3] Wirken · casting =====
 
-function cooldownOf(h: SimHost, id: number, sp: SpellData): { start: number; duration: number; gcd: boolean } {
+export function cooldownOf(h: SimHost, id: number, sp: SpellData): { start: number; duration: number; gcd: boolean } {
   const s = st(h); const c = s.cooldowns.get(id);
   if (c && c.start + c.duration > h.now + 1e-9) return { start: h.baseTime + c.start, duration: c.duration, gcd: false };
   if (!sp.noGcd && s.gcd && s.gcd.start + s.gcd.duration > h.now + 1e-9) return { start: h.baseTime + s.gcd.start, duration: s.gcd.duration, gcd: true };
