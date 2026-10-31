@@ -28,6 +28,7 @@ import { LuaTable, tonum, tostr, type LuaFunction, type LuaValue } from "../lua/
 import type { ExecResult } from "../runtime/types.js";
 import { InterpEngine, type Prim, type SimEngine } from "./engine.js";
 import { buildPrelude, REF_MARK } from "./prelude.js";
+import { EXTRA_API } from "./extras.js";
 import { CHARACTER_API, DEFAULT_CHARACTER, type CharacterState } from "./character.js";
 import { INTERACTION_API, SAMPLE_GOSSIP, SAMPLE_LOOT, SAMPLE_MERCHANT, type GossipState, type InteractionState, type LootState, type MerchantState } from "./interaction.js";
 import { AURA_API } from "./auras.js";
@@ -100,7 +101,9 @@ class HandlerRef {
 class TableRef {}
 
 function encodeRef(v: unknown): unknown {
-  return v instanceof FrameState ? `${REF_MARK}F${v.id}:${v.kind}:${v.name}` : v;
+  if (v instanceof FrameState) return `${REF_MARK}F${v.id}:${v.kind}:${v.name}`;
+  if (typeof v === "object" && v !== null) return `${REF_MARK}J${JSON.stringify(v)}`; // DE/EN: nested value -> JSON, the VM builds a table
+  return v;
 }
 
 export class WowSim {
@@ -317,6 +320,13 @@ export class WowSim {
 
   private inter: InteractionState = { buyback: [] };
 
+  private stores = new Map<string, unknown>();
+  /** DE: Zustand je Simulation für die Sim-Module (`host.ts`). EN: per-simulation state for the sim modules. */
+  store<T>(key: string, init: () => T): T {
+    if (!this.stores.has(key)) this.stores.set(key, init());
+    return this.stores.get(key) as T;
+  }
+
   interaction(): InteractionState { return this.inter; }
   fire(event: string, ...args: (string | number | boolean)[]): void { this.fireEvent(event, ...args); }
   note(kind: "info" | "warn", text: string): void { this.addLog(kind, text); }
@@ -359,6 +369,7 @@ export class WowSim {
   // ----- Brücke zur VM · bridge to the VM -----
   private decode(v: unknown): unknown {
     if (typeof v !== "string" || v.charCodeAt(0) !== 1) return v;
+    if (v.charAt(1) === "J") { try { return JSON.parse(v.slice(2)); } catch { return new TableRef(); } }
     const m = /^\u0001([FHT])(\d*)/.exec(v);
     if (!m) return v;
     if (m[1] === "F") return this.byId.get(Number(m[2])) ?? undefined;
@@ -392,7 +403,7 @@ export class WowSim {
     const reply = (fn: () => unknown): Prim[] => {
       try {
         const r = fn();
-        const list = Array.isArray(r) ? r : r === undefined ? [] : [r];
+        const list = Array.isArray(r) ? r : r === undefined ? [] : [r]; // DE/EN: an array = several return values; a plain object = one table
         return [true, ...list.map((x) => encodeRef(x) as Prim)];
       } catch (err) {
         return [false, (err as Error).message];
@@ -589,7 +600,7 @@ const FRAME_METHODS: Record<string, Impl> = {
   StopMovingOrSizing: () => undefined,
   SetClampedToScreen: () => undefined,
   SetClipsChildren: () => undefined,
-  SetBackdrop: (_s, f, a) => { f.backdrop = a[0] instanceof TableRef; },
+  SetBackdrop: (_s, f, a) => { f.backdrop = a[0] instanceof TableRef || (typeof a[0] === "object" && a[0] !== null); },
   SetBackdropColor: () => undefined,
   SetBackdropBorderColor: () => undefined,
   RegisterEvent: (sim, f, a) => {
@@ -749,6 +760,7 @@ const API: Record<string, ApiImpl> = {
 for (const [k, f] of Object.entries(UNIT_API)) API[k] = (sim, a) => f(sim, a);
 API.UnitHealthMissing = (sim, a) => { const u = sim.unit(a[0]); return u ? Math.max(0, healthShown(sim, a[0], u, true) - healthShown(sim, a[0], u, false)) : 0; };
 for (const [k, f] of Object.entries(INTERACTION_API)) API[k] = (sim, a) => f(sim, a);
+for (const [k, f] of Object.entries(EXTRA_API)) API[k] = (sim, a) => f(sim, a);
 for (const [k, f] of Object.entries(AURA_API)) API[k] = (sim, a) => f(sim, a);
 for (const [k, f] of Object.entries(SYSTEM_API)) API[k] = (sim, a) => f(sim, a);
 for (const [k, f] of Object.entries(CHARACTER_API)) API[k] = (sim, a) => f(sim.character(), sim.inventory(), a);

@@ -38,6 +38,112 @@ export const LIB_ALIASES: Record<string, string> = {
 };
 
 /**
+ * DE: JSON zwischen Host und VM: der Host liefert verschachtelte Werte als Text, die VM baut Tabellen daraus
+ *     (und umgekehrt für Tabellen als Argumente). Gültiges Lua 5.0, ohne `%`-Operator und `#`.
+ * EN: JSON between host and VM: the host hands nested values over as text, the VM builds tables from it
+ *     (and vice versa for table arguments). Valid Lua 5.0, no `%` operator, no `#`.
+ */
+const JSON_LUA = String.raw`
+local JESC = { ['"'] = '\\"', ["\\"] = "\\\\", ["\n"] = "\\n", ["\r"] = "\\r", ["\t"] = "\\t" }
+local function jesc(c) return JESC[c] or string.format("\\u%04x", string.byte(c)) end
+local jenc
+jenc = function(v, d)
+  local t = type(v)
+  if t == "string" then return '"' .. (sgsub(v, '[%c"\\]', jesc)) .. '"' end
+  if t == "number" then
+    if v ~= v or v == 1 / 0 or v == -1 / 0 then return "null" end
+    return tostring(v)
+  end
+  if t == "boolean" then if v then return "true" end return "false" end
+  if t ~= "table" or d > 6 then return "null" end
+  local n = 0
+  for _ in pairs(v) do n = n + 1 end
+  if n > 0 and table.getn(v) == n then
+    local parts = {}
+    for i = 1, n do parts[i] = jenc(v[i], d + 1) end
+    return "[" .. tconcat(parts, ",") .. "]"
+  end
+  local parts, k = {}, 0
+  for key, val in pairs(v) do
+    local tv = type(val)
+    if tv ~= "function" and tv ~= "userdata" and tv ~= "thread" then
+      k = k + 1
+      parts[k] = jenc(tostring(key), d + 1) .. ":" .. jenc(val, d + 1)
+    end
+  end
+  return "{" .. tconcat(parts, ",") .. "}"
+end
+local function jutf8(c)
+  if c < 128 then return string.char(c) end
+  if c < 2048 then return string.char(192 + math.floor(c / 64), 128 + (c - math.floor(c / 64) * 64)) end
+  local a = math.floor(c / 4096)
+  local b = math.floor((c - a * 4096) / 64)
+  return string.char(224 + a, 128 + b, 128 + (c - a * 4096 - b * 64))
+end
+local JUNESC = { n = "\n", r = "\r", t = "\t", b = "\b", f = "\f" }
+local jdec, jhook
+jdec = function(s, i)
+  local c = ssub(s, i, i)
+  if c == "{" then
+    local t = {}
+    i = i + 1
+    if ssub(s, i, i) == "}" then return t, i + 1 end
+    while true do
+      local key, val
+      key, i = jdec(s, i)
+      i = i + 1
+      val, i = jdec(s, i)
+      if type(key) == "string" and sfind(key, "^%d+$") then key = tonumber(key) end
+      t[key] = val
+      c = ssub(s, i, i)
+      i = i + 1
+      if c ~= "," then
+        if jhook then jhook(t) end
+        return t, i
+      end
+    end
+  elseif c == "[" then
+    local t, n = {}, 0
+    i = i + 1
+    if ssub(s, i, i) == "]" then return t, i + 1 end
+    while true do
+      local val
+      val, i = jdec(s, i)
+      n = n + 1
+      t[n] = val
+      c = ssub(s, i, i)
+      i = i + 1
+      if c ~= "," then return t, i end
+    end
+  elseif c == '"' then
+    local parts, np, pos = {}, 0, i + 1
+    while true do
+      local a = sfind(s, '["\\]', pos)
+      if not a then return tconcat(parts), string.len(s) + 1 end
+      np = np + 1
+      parts[np] = ssub(s, pos, a - 1)
+      if ssub(s, a, a) == '"' then return tconcat(parts), a + 1 end
+      local e = ssub(s, a + 1, a + 1)
+      np = np + 1
+      if e == "u" then
+        parts[np] = jutf8(tonumber(ssub(s, a + 2, a + 5), 16) or 63)
+        pos = a + 6
+      else
+        parts[np] = JUNESC[e] or e
+        pos = a + 2
+      end
+    end
+  elseif c == "t" then return true, i + 4
+  elseif c == "f" then return false, i + 5
+  elseif c == "n" then return nil, i + 4
+  end
+  local _, e = sfind(s, "^-?[%d%.eE+-]+", i)
+  if not e then return nil, i + 1 end
+  return tonumber(ssub(s, i, e)), e + 1
+end
+`;
+
+/**
  * DE: Hilfsfunktionen des Umschreibers (`#` → __len, `%` → __mod), wie bei ClassicAPI.
  * EN: helper functions of the rewriter (`#` → __len, `%` → __mod), like ClassicAPI.
  */
@@ -438,6 +544,106 @@ local function gossipQuests(kind)
 end
 API["C_GossipInfo.GetAvailableQuests"] = function() return gossipQuests("available") end
 API["C_GossipInfo.GetActiveQuests"] = function() return gossipQuests("active") end
+-- ---- Mixin, Vektoren, Enums · mixins, vectors, enums ----
+API.Mixin = function(obj, ...)
+  local a = @ARGS@
+  for i = 1, a.n do
+    local m = a[i]
+    if type(m) == "table" then for k, v in pairs(m) do obj[k] = v end end
+  end
+  return obj
+end
+API.CreateFromMixins = function(...)
+  local a = @ARGS@
+  local obj = {}
+  for i = 1, a.n do
+    local m = a[i]
+    if type(m) == "table" then for k, v in pairs(m) do obj[k] = v end end
+  end
+  return obj
+end
+local Vector2DMixin = {}
+Vector2DMixin.GetXY = function(self) return self.x, self.y end
+Vector2DMixin.SetXY = function(self, x, y) self.x, self.y = x, y end
+Vector2DMixin.IsEqualTo = function(self, o) return self.x == o.x and self.y == o.y end
+Vector2DMixin.Clone = function(self) return G.CreateVector2D(self.x, self.y) end
+Vector2DMixin.ScaleBy = function(self, f) self.x, self.y = self.x * f, self.y * f end
+Vector2DMixin.Add = function(self, dx, dy) self.x, self.y = self.x + dx, self.y + dy end
+Vector2DMixin.Subtract = function(self, dx, dy) self.x, self.y = self.x - dx, self.y - dy end
+Vector2DMixin.DivideBy = function(self, f) self.x, self.y = self.x / f, self.y / f end
+local VEC_META = { __index = Vector2DMixin }
+G.Vector2DMixin = Vector2DMixin
+G.CreateVector2D = function(x, y) return setmetatable({ x = x, y = y }, VEC_META) end
+jhook = function(t)
+  if type(t.x) == "number" and type(t.y) == "number" then
+    local n = 0
+    for _ in pairs(t) do n = n + 1 end
+    if n == 2 then setmetatable(t, VEC_META) end
+  end
+end
+G.UiMapPoint = {
+  CreateFromCoordinates = function(id, x, y, z) return { uiMapID = id, position = G.CreateVector2D(x, y), z = z } end,
+  CreateFromVector2D = function(id, pos, z) return { uiMapID = id, position = G.CreateVector2D(pos.x, pos.y), z = z } end,
+}
+G.Enum = G.Enum or {}
+G.Enum.UIMapType = { Cosmic = 0, World = 1, Continent = 2, Zone = 3, Dungeon = 4, Micro = 5, Orphan = 6 }
+G.Enum.FlightPathFaction = { Neutral = 0, Horde = 1, Alliance = 2 }
+G.Enum.FlightPathState = { Reachable = 0, Current = 1, Unreachable = 2 }
+-- ---- Farben, JSON, kleine Tabellen · colors, JSON, small tables ----
+local ColorMixin = {}
+ColorMixin.GetRGB = function(self) return self.r, self.g, self.b end
+ColorMixin.GetRGBA = function(self) return self.r, self.g, self.b, self.a end
+ColorMixin.SetRGBA = function(self, r, g, b, a) self.r, self.g, self.b, self.a = r, g, b, a end
+ColorMixin.SetRGB = function(self, r, g, b) self.r, self.g, self.b = r, g, b end
+ColorMixin.IsEqualTo = function(self, o) return self.r == o.r and self.g == o.g and self.b == o.b and (self.a or 1) == (o.a or 1) end
+ColorMixin.GenerateHexColor = function(self)
+  return string.format("ff%02x%02x%02x", math.floor(self.r * 255 + 0.5), math.floor(self.g * 255 + 0.5), math.floor(self.b * 255 + 0.5))
+end
+ColorMixin.GenerateHexColorMarkup = function(self) return "|c" .. self:GenerateHexColor() end
+ColorMixin.WrapTextInColorCode = function(self, text) return self:GenerateHexColorMarkup() .. text .. "|r" end
+ColorMixin.Clone = function(self) return G.CreateColor(self.r, self.g, self.b, self.a) end
+local COLOR_META = { __index = ColorMixin }
+G.ColorMixin = ColorMixin
+G.CreateColor = function(r, g, b, a) return setmetatable({ r = r, g = g, b = b, a = a or 1 }, COLOR_META) end
+G.CreateColorFromBytes = function(r, g, b, a) return G.CreateColor(r / 255, g / 255, b / 255, (a or 255) / 255) end
+G.RAID_CLASS_COLORS = {
+  WARRIOR = G.CreateColor(0.78, 0.61, 0.43), PALADIN = G.CreateColor(0.96, 0.55, 0.73), HUNTER = G.CreateColor(0.67, 0.83, 0.45),
+  ROGUE = G.CreateColor(1, 0.96, 0.41), PRIEST = G.CreateColor(1, 1, 1), SHAMAN = G.CreateColor(0.96, 0.55, 0.73),
+  MAGE = G.CreateColor(0.41, 0.8, 0.94), WARLOCK = G.CreateColor(0.58, 0.51, 0.79), DRUID = G.CreateColor(1, 0.49, 0.04),
+}
+API["C_ClassColor.GetClassColor"] = function(token)
+  local c = G.RAID_CLASS_COLORS[token]
+  if c then return c end
+end
+API["C_UIColor.GetColors"] = function()
+  return {
+    { baseTag = "NORMAL_FONT_COLOR", color = G.CreateColor(1, 0.82, 0) },
+    { baseTag = "HIGHLIGHT_FONT_COLOR", color = G.CreateColor(1, 1, 1) },
+    { baseTag = "RED_FONT_COLOR", color = G.CreateColor(1, 0.1, 0.1) },
+    { baseTag = "GREEN_FONT_COLOR", color = G.CreateColor(0.1, 1, 0.1) },
+    { baseTag = "GRAY_FONT_COLOR", color = G.CreateColor(0.5, 0.5, 0.5) },
+  }
+end
+API["C_StringUtil.GetDefaultAbbreviationBreakpoints"] = function()
+  local out = {}
+  for i = table.getn(ABBR), 1, -1 do
+    local b = ABBR[i]
+    out[table.getn(out) + 1] = { breakpoint = b[1], abbreviation = b[2], significandDivisor = b[3], fractionDivisor = b[4] }
+  end
+  return out
+end
+API["C_EncodingUtil.SerializeJSON"] = function(v)
+  if type(v) == "function" then error("Usage: C_EncodingUtil.SerializeJSON(value): functions cannot be serialized", 2) end
+  return jenc(v, 0)
+end
+API["C_EncodingUtil.DeserializeJSON"] = function(s)
+  if type(s) ~= "string" then error("Usage: C_EncodingUtil.DeserializeJSON(json)", 2) end
+  return (jdec(s, 1))
+end
+API["C_EncodingUtil.SerializeCBOR"] = function(v) return "FWCBOR:" .. jenc(v, 0) end
+API["C_EncodingUtil.DeserializeCBOR"] = function(s)
+  if type(s) == "string" and ssub(s, 1, 7) == "FWCBOR:" then return (jdec(ssub(s, 8), 1)) end
+end
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then
   for k in pairs(API) do
@@ -581,7 +787,12 @@ local function frame(id, kind, name)
   return f
 end
 
+${JSON_LUA}
+local PJ = MK .. "J"
 local function un1(v)
+  if type(v) == "string" and ssub(v, 1, 2) == PJ then
+    return (jdec(ssub(v, 3), 1))
+  end
   if type(v) == "string" and ssub(v, 1, 2) == PF then
     local _, _, id, kind, name = sfind(v, "^" .. PF .. "(%d+):([^:]*):(.*)$")
     return frame(tonumber(id), kind, name)
@@ -594,7 +805,7 @@ local function w(v)
   if t == "table" then
     local id = ID[v]
     if id then return PF .. id end
-    return PT
+    return PJ .. jenc(v, 0)
   elseif t == "function" then
     local id = HI[v]
     if not id then

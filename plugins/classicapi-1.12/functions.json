@@ -14301,5 +14301,707 @@
     "tags": [
       "unverified"
     ]
+  },
+  {
+    "name": "C_ActionBar.ShouldShowKeyring",
+    "system": "ActionBar",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (ActionBar). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (ActionBar). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "_classicapi_UndocumentedAPI",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "CanCancelAuction",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "CombatLogAddFilter",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "CombatLogResetFilter",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "CombatLog_Object_IsA",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_Container.PickupContainerItem",
+    "system": "Container",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Container). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Container). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ContainerFrame_GetContainerNumSlots",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "AddSourceLocationExclude",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "IsDesaturateSupported",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "SetModernScriptArgs",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "GetModernScriptArgs",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "SecureCmdOptionParse",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_Glue.IsFirstLoadThisSession",
+    "system": "Glue",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Glue). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Glue). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "securecall",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "securecallfunction",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "securecallmethod",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "secureexecuterange",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_Item.GetItemIDForItemInfo",
+    "system": "Item",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Item). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Item). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "IsEquippableItem",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemHasRange",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.GetItemDetails",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.GetItemHyperlink",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.PickupBagItem",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.IterateBagSlots",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.IterateInventorySlots",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.IteratePlayerInventory",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.IteratePlayerInventoryAndEquipment",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.FilterOwnedItems",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.TransformItemIDsToItems",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.GetValidatedItemLocation",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.GetEquipSlotTexture",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.GetEmptyEquipSlotTooltip",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.GetEmptyEquipSlotTooltipForSlotName",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "ItemUtil.DisplayEquipSlotTooltip",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_Macro.GetMacroIcon",
+    "system": "Macro",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Macro). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Macro). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_PaperDollInfo.GetInventorySlotInfoForInvSlot",
+    "system": "PaperDollInfo",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (PaperDollInfo). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (PaperDollInfo). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_PaperDollInfo.GetTemporaryEnchantmentInfo",
+    "system": "PaperDollInfo",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (PaperDollInfo). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (PaperDollInfo). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "SetPVP",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_PvP.SetPVP",
+    "system": "PvP",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (PvP). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (PvP). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "GetPVPDesired",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "IsPVPTimerRunning",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "GetPVPTimer",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "_classicapi_LuaHeapAudit",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "_classicapi_GcTagOf",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_Spell.IsSpellDataCached",
+    "system": "Spell",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Spell). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_Spell.RequestLoadSpellData",
+    "system": "Spell",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Spell). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "C_Spell.GetSpellDescriptionForItemLocation",
+    "system": "Spell",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Spell). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Spell). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "AdjustTimeByMinutes",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "GetTradeSkillListLink",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "GetCraftListLink",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "IsCraftLinked",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "GetDebuffDataByIndex",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
+  },
+  {
+    "name": "UnitAuraBySlot",
+    "system": "Misc",
+    "params": [],
+    "returns": [],
+    "description": {
+      "en": "ClassicAPI function (Misc). Signature not documented yet.",
+      "de": "ClassicAPI-Funktion (Misc). Signatur noch nicht dokumentiert."
+    },
+    "tags": [
+      "signature-unknown"
+    ]
   }
 ]
