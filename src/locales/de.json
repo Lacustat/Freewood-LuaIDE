@@ -116,5 +116,6 @@
   "settings.close": "Schließen",
   "app.settings": "Einstellungen",
   "app.saveBrowser": "Im Browser speichern",
-  "app.saved": "Gespeichert"
+  "app.saved": "Gespeichert",
+  "settings.realLua": "Syntax mit der echten Lua-5.0-VM prüfen (WASM)"
 }

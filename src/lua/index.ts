@@ -14,3 +14,4 @@ export * from "./parser.js";
 export * from "./interp.js";
 export * from "./stdlib.js";
 export * from "./runtime.js";
+export * from "./wasm50.js";

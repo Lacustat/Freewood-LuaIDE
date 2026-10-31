@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const port = Number(process.argv[2] ?? 8080);
-const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png" };
+const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".wasm": "application/wasm" };
 
 const server = createServer(async (req, res) => {
   try {
@@ -31,7 +31,7 @@ const server = createServer(async (req, res) => {
       res.writeHead(403).end("Forbidden");
       return;
     }
-    const allowed = ["/web/", "/dist/", "/plugins/", "/src/locales/"];
+    const allowed = ["/web/", "/dist/", "/plugins/", "/src/locales/", "/runtimes/lua50/lua50.wasm"];
     if (!allowed.some((p) => path.startsWith(p))) {
       res.writeHead(404).end("Not found");
       return;

@@ -14,5 +14,5 @@ fi
 SR="$work/wasi-libc/build/sysroot"; files=""
 for s in lapi lcode ldebug ldo ldump lfunc lgc llex lmem lobject lopcodes lparser lstate lstring ltable ltm lundump lvm lzio lauxlib lbaselib lmathlib lstrlib ltablib; do files="$files lua50/$s.c"; done
 clang --target=wasm32-wasi --sysroot="$SR" -O2 -Ilua50 -mexception-handling -mllvm -wasm-enable-sjlj -D_WASI_EMULATED_SIGNAL \
-  -nostartfiles -nodefaultlibs -Wl,--no-entry -Wl,--export=realloc $files "$here/fw_wrap.c" "$here/rt_shim.c" -o "$here/lua50.wasm" -lc -lsetjmp
+  -nostartfiles -nodefaultlibs -Wl,--no-entry -Wl,--export=realloc $files "$here/fw_host.c" "$here/rt_shim.c" -o "$here/lua50.wasm" -lc -lsetjmp
 echo "built $here/lua50.wasm"

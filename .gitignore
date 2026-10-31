@@ -1,4 +1,3 @@
 node_modules
 dist/
-spikes/lua50-wasm/.build
-spikes/lua50-wasm/lua50.wasm
+runtimes/lua50/.build

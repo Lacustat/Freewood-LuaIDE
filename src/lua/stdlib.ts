@@ -81,13 +81,13 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
   });
   reg(G, "tonumber", (a) => {
     const base = a[1] === undefined ? 10 : checkInt("tonumber", a, 2);
-    if (base === 10) return tonum(a[0]);
+    if (base === 10) return [tonum(a[0])];
     const s = checkStr("tonumber", a, 1).trim().toLowerCase();
-    if (!/^[0-9a-z]+$/.test(s)) return undefined;
+    if (!/^[0-9a-z]+$/.test(s)) return [undefined];
     let n = 0;
     for (const ch of s) {
       const d = ch >= "a" ? ch.charCodeAt(0) - 87 : ch.charCodeAt(0) - 48;
-      if (d >= base) return undefined;
+      if (d >= base) return [undefined];
       n = n * base + d;
     }
     return n;
@@ -113,7 +113,7 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
     if (mm !== undefined && it.version === "5.1") return it.call(mm, [t]).slice(0, 3);
     return [nextFn, t, undefined];
   });
-  reg(G, "rawget", (a) => checkTable("rawget", a, 1).get(a[1]));
+  reg(G, "rawget", (a) => [checkTable("rawget", a, 1).get(a[1])]);
   reg(G, "rawset", (a) => {
     checkTable("rawset", a, 1).set(a[1], a[2]);
     return a[0];
@@ -129,7 +129,7 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
   reg(G, "getmetatable", (a) => {
     const m = it.metatable(a[0]);
     const prot = m?.get("__metatable");
-    return prot !== undefined ? prot : m;
+    return [prot !== undefined ? prot : m];
   });
   reg(G, "assert", (a) => {
     if (a[0] === undefined || a[0] === false) {
@@ -662,7 +662,12 @@ export function installStdlib(it: Interpreter, opts: StdlibOptions = {}): void {
   if (it.version !== "5.0") it.stringMeta.set("__index", S); // DE: Lua 5.0 hat keine String-Methoden (s:upper()). EN: Lua 5.0 has no string methods.
   G.set("table", installTable(it));
   G.set("math", installMath(it));
-  G.set("os", installOs(opts.now ?? (() => Date.now())));
+  const osLib = installOs(opts.now ?? (() => Date.now()));
+  if (it.version === "5.0") {
+    // DE: WoW 1.12 hat keine os-Tabelle, nur die Globals date/time/difftime. EN: WoW 1.12 has no os table, only the globals date/time/difftime.
+    for (const n of ["date", "time", "difftime"]) G.set(n, osLib.get(n));
+    reg(G, "gcinfo", () => [100, 200]);
+  } else G.set("os", osLib);
   if (opts.compat50 && it.version === "5.1") {
     const ref50 = new Interpreter50Shim(it);
     ref50.install();

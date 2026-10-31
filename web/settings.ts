@@ -23,6 +23,8 @@ export interface Settings {
   codeFontSize: number;
   tabWidth: number;
   autosave: boolean;
+  /** DE: Syntax zusätzlich mit der echten Lua-5.0-VM prüfen. EN: also check syntax with the real Lua 5.0 VM. */
+  realLua: boolean;
   /** 0 = einpassen · fit, sonst Prozent · otherwise percent */
   formsZoom: number;
   stageWidth: number;
@@ -34,6 +36,7 @@ export const DEFAULT_SETTINGS: Settings = {
   codeFontSize: 13,
   tabWidth: 2,
   autosave: true,
+  realLua: true,
   formsZoom: 0,
   stageWidth: 1024,
   stageHeight: 768,
@@ -49,6 +52,7 @@ export const SETTING_DEFS: Def[] = [
   { key: "codeFontSize", kind: "number", min: 9, max: 28, step: 1 },
   { key: "tabWidth", kind: "number", min: 1, max: 8, step: 1 },
   { key: "autosave", kind: "bool" },
+  { key: "realLua", kind: "bool" },
   { key: "formsZoom", kind: "number", min: 0, max: 400, step: 5 },
   { key: "stageWidth", kind: "number", min: 320, max: 3840, step: 1 },
   { key: "stageHeight", kind: "number", min: 240, max: 2160, step: 1 },

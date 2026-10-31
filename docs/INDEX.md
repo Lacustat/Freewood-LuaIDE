@@ -26,7 +26,7 @@
 | `src/forms/*.ts` | Forms-Modell, Layout, Lua/XML · forms model, layout, Lua/XML |
 | `src/sim/*.ts` | Simulation: Welt, Szenario, Frames · simulation |
 | `web/*.ts`, `web/index.html`, `web/style.css` | Web-Oberfläche · web UI |
-| `spikes/lua50-wasm/*` | Spike: echtes Lua 5.0 als WASM · real Lua 5.0 as WASM |
+| `runtimes/lua50/*`, `src/lua/wasm50.ts`, `web/real-lua.ts` | Echtes Lua 5.0 als WASM · real Lua 5.0 as WASM |
 | `scripts/serve.mjs`, `scripts/ui-smoke.mjs` | Server, UI-Rauchtest · static server, UI smoke test |
 | `src/locales/*.json` | Sprachdateien · language files |
 | `plugins/*` | Beispiel-Plugins · sample plugins |

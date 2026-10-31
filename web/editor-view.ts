@@ -12,6 +12,7 @@
  *     (Monaco can be added later as an adapter.)
  */
 
+import { realLua50Syntax } from "./real-lua.js";
 import { checkSource, completeAt, highlightLua, highlightXml, parseXml, signatureAt, toHtml, type Completion, type Diagnostic } from "../src/index.js";
 import { clear, h } from "./dom.js";
 import type { Ctx } from "./ctx.js";
@@ -65,6 +66,14 @@ export function renderCodeView(root: HTMLElement, ctx: Ctx, path: string): void 
     ta.style.width = `${Math.max(scroller.clientWidth, hl.scrollWidth)}px`;
   }
 
+  function renderProblems(): void {
+    clear(problems);
+    if (diags.length === 0) problems.append(h("li", { class: "ok", text: ctx.t("editor.noProblems") }));
+    for (const d of diags) {
+      problems.append(h("li", { class: d.severity, onclick: () => gotoLine(d.line) }, h("span", { class: "sev", text: d.severity === "error" ? "✖" : d.severity === "warning" ? "⚠" : "ℹ" }), ` ${ctx.t("editor.line")} ${d.line}: ${ctx.text(d.message)}`));
+    }
+  }
+
   function analyze(): void {
     const text = ta.value;
     if (kind === "lua") diags = checkSource(text, ctx.target, path);
@@ -78,10 +87,15 @@ export function renderCodeView(root: HTMLElement, ctx: Ctx, path: string): void 
         diags.push({ severity: "error", line, code: "LUA_SYNTAX", message: { en: msg, de: msg } });
       }
     } else diags = [];
-    clear(problems);
-    if (diags.length === 0) problems.append(h("li", { class: "ok", text: ctx.t("editor.noProblems") }));
-    for (const d of diags) {
-      problems.append(h("li", { class: d.severity, onclick: () => gotoLine(d.line) }, h("span", { class: "sev", text: d.severity === "error" ? "✖" : d.severity === "warning" ? "⚠" : "ℹ" }), ` ${ctx.t("editor.line")} ${d.line}: ${ctx.text(d.message)}`));
+    renderProblems();
+    if (kind === "lua" && ctx.settings.realLua && ctx.target.luaVersion === "5.0" && ctx.target.syntax === "lua50") {
+      const snapshot = text;
+      void realLua50Syntax(text, path).then((real) => {
+        if (!real || ta.value !== snapshot || diags.some((d) => d.code === "LUA_SYNTAX" && d.line === real.line)) return;
+        diags.push({ severity: "error", line: real.line, code: "LUA_SYNTAX", message: { en: `Lua 5.0 VM: ${real.message}`, de: `Lua-5.0-VM: ${real.message}` } });
+        renderProblems();
+        paint();
+      });
     }
     paint();
   }
