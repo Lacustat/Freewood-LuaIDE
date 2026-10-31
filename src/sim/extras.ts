@@ -12,7 +12,8 @@ import { MAP_API } from "./map.js";
 import { MISC_API } from "./misc.js";
 import { GEAR_API } from "./gear.js";
 import { ITEMS_API } from "./items.js";
+import { SPELLS_API } from "./spells.js";
 
 // ===== [S1] EXTRA_API =====
 
-export const EXTRA_API: Record<string, Impl> = { ...MAP_API, ...MISC_API, ...GEAR_API, ...ITEMS_API };
+export const EXTRA_API: Record<string, Impl> = { ...MAP_API, ...MISC_API, ...GEAR_API, ...ITEMS_API, ...SPELLS_API };

@@ -68,6 +68,29 @@ export interface SpellData {
   passive?: boolean;
   /** DE: Stufe, ab der man den Zauber lernt. EN: level at which the spell is learned. */
   level?: number;
+  /** DE: Schule 0 Körperlich, 1 Heilig, 2 Feuer, 3 Natur, 4 Frost, 5 Schatten, 6 Arkan. EN: school 0 physical … 6 arcane. */
+  school?: number;
+  harmful?: boolean;
+  helpful?: boolean;
+  /** DE: 1 Magie, 2 Fluch, 3 Krankheit, 4 Gift. EN: dispel type. */
+  dispel?: number;
+  mechanic?: number;
+  /** DE: Abklingzeit in Millisekunden. EN: cooldown in milliseconds. */
+  cooldown?: number;
+  /** DE: Kein globaler Cooldown. EN: no global cooldown. */
+  noGcd?: boolean;
+  /** DE: Kanalisierungsdauer (ms). EN: channel duration (ms). */
+  channel?: number;
+  reagents?: { itemID: number; count: number }[];
+  description?: string;
+  radius?: number;
+  nextMelee?: boolean;
+  resetsSwing?: boolean;
+  autoAttack?: boolean;
+  autoShot?: boolean;
+  skillLine?: number;
+  /** DE: Ergebnis beim Wirken: Aura auf Ziel (target) oder sich selbst (self). EN: aura applied on a successful cast. */
+  aura?: { duration: number; helpful: boolean; onSelf?: boolean; dispelName?: "Magic" | "Curse" | "Disease" | "Poison" };
 }
 
 export interface InventoryState {
@@ -96,11 +119,14 @@ export const DEFAULT_INVENTORY: InventoryState = {
     "1": { size: 6, itemID: 4496, family: 0, slots: {} },
   },
   spells: {
-    "78": { name: "Heroic Strike", rank: "Rank 1", icon: "Interface\\Icons\\Ability_Rogue_Ambush", castTime: 0, cost: 15, powerType: 1 },
-    "6673": { name: "Battle Shout", rank: "Rank 1", icon: "Interface\\Icons\\Ability_Warrior_BattleShout", castTime: 0, cost: 10, powerType: 1 },
-    "133": { name: "Fireball", rank: "Rank 1", icon: "Interface\\Icons\\Spell_Fire_FlameBolt", castTime: 1500, maxRange: 35, cost: 30, powerType: 0 },
+    "78": { name: "Heroic Strike", rank: "Rank 1", icon: "Interface\\Icons\\Ability_Rogue_Ambush", castTime: 0, cost: 15, powerType: 1, harmful: true, nextMelee: true, cooldown: 0, skillLine: 26, level: 1, description: "A strong attack that increases melee damage by 11 and causes a high amount of threat." },
+    "6673": { name: "Battle Shout", rank: "Rank 1", icon: "Interface\\Icons\\Ability_Warrior_BattleShout", castTime: 0, cost: 10, powerType: 1, helpful: true, aura: { duration: 120, helpful: true, onSelf: true }, skillLine: 26, level: 1, description: "The warrior shouts, increasing attack power of all party members within 20 yards by 15." },
+    "133": { name: "Fireball", rank: "Rank 1", icon: "Interface\\Icons\\Spell_Fire_FlameBolt", castTime: 1500, maxRange: 35, cost: 30, powerType: 0, school: 2, harmful: true, resetsSwing: true, skillLine: 8, level: 1, description: "Hurls a fiery ball that causes 14 to 22 Fire damage." },
+    "6603": { name: "Auto Attack", rank: "", icon: "Interface\\Icons\\Ability_MeleeDamage", castTime: 0, cost: 0, powerType: 1, harmful: true, autoAttack: true, noGcd: true, level: 1, description: "Attacks with your weapon." },
+    "8690": { name: "Hearthstone", rank: "", icon: "Interface\\Icons\\INV_Misc_Rune_01", castTime: 10000, cost: 0, powerType: 0, helpful: true, cooldown: 3600000, level: 1, description: "Returns you to your home location." },
+    "439": { name: "Healing Potion", rank: "", icon: "Interface\\Icons\\INV_Potion_54", castTime: 0, cost: 0, powerType: 0, helpful: true, noGcd: true, cooldown: 60000, level: 1, description: "Restores 70 health." },
   },
-  known: [78, 6673],
+  known: [78, 6673, 6603, 133, 8690],
   money: 25000,
   equipped: { "4": 6125, "7": 6124, "8": 6126, "16": 25 },
 };

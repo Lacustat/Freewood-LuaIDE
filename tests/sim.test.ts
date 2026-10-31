@@ -306,7 +306,7 @@ test("ClassicAPI: bags, items and spells answer from the scenario", async () => 
   `);
   assert.equal(r.ok, true, String(r.error?.message));
   assert.deepEqual(r.values, [2589, 7, false, "Linen Cloth", 14, 3, undefined, "Heroic Strike", "Rank 1", 1, 14, 0, 20,
-    "Linen Cloth", "|cffffffff|Hitem:2589:0:0:0|h[Linen Cloth]|h|r", 1, 7, 20, true, true, false, "|cff71d5ff|Hspell:133:0|h[Fireball]|h|r", 7, 6]);
+    "Linen Cloth", "|cffffffff|Hitem:2589:0:0:0|h[Linen Cloth]|h|r", 1, 7, 20, true, true, true, "|cff71d5ff|Hspell:133:0|h[Fireball]|h|r", 7, 6]);
 });
 
 test("ClassicAPI: unit helpers answer from the scenario units", async () => {
@@ -349,7 +349,7 @@ test("ClassicAPI: quest log, reputation and spellbook answer from the scenario",
   `);
   assert.equal(r.ok, true, String(r.error?.message));
   assert.deepEqual(r.values, [3, 2, "Kobold Camp Cleanup", 7, false, "A Threat Within", 1, 1, true, 1, 3, 5, "Stormwind", 6, 9000, 21000, 9500, 6, true, "Stormwind", 1200,
-    "Battle Shout", "Rank 1", 2, 2, "spell", "Heroic Strike", true, false, 469, true]);
+    "Battle Shout", "Rank 1", 5, 2, "spell", "Heroic Strike", true, false, 469, true]);
 });
 
 test("ClassicAPI: CVars and calendar time follow the docs", async () => {

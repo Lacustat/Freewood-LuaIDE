@@ -269,6 +269,14 @@ export class WowSim {
       left -= dt;
       this.now += dt;
       this.tick++;
+      // host timers (casts, cooldown ends) in order of their due time
+      for (;;) {
+        this.hostTimers = this.hostTimers.filter((t) => !t.dead);
+        const next = this.hostTimers.filter((t) => t.due <= this.now + 1e-9).sort((a, b) => a.due - b.due)[0];
+        if (!next) break;
+        next.dead = true;
+        next.fn();
+      }
       // timers in order of their due time
       for (;;) {
         const due = this.timers.filter((t) => !t.cancelled && t.due <= this.now + 1e-9).sort((a, b) => a.due - b.due)[0];
@@ -329,6 +337,14 @@ export class WowSim {
 
   interaction(): InteractionState { return this.inter; }
   fire(event: string, ...args: (string | number | boolean)[]): void { this.fireEvent(event, ...args); }
+  fireIf(event: string, ...args: (string | number | boolean)[]): void { if (this.target.events.has(event)) this.fireEvent(event, ...args); }
+
+  private hostTimers: { due: number; fn: () => void; dead: boolean }[] = [];
+  later(seconds: number, fn: () => void): { cancel(): void } {
+    const t = { due: this.now + Math.max(0, seconds), fn, dead: false };
+    this.hostTimers.push(t);
+    return { cancel: () => { t.dead = true; } };
+  }
   note(kind: "info" | "warn", text: string): void { this.addLog(kind, text); }
 
   /** DE: Öffnet das Beutefenster (Beispieldaten, wenn nichts übergeben wird). EN: opens the loot window. */

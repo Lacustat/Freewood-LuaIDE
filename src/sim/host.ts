@@ -34,6 +34,11 @@ export interface SimHost {
   addonName: string;
   serverEpoch(): number;
   now: number;
+  readonly baseTime: number;
+  /** DE: Ruft `fn` nach `seconds` Spielzeit auf (Host-Zeitgeber). EN: calls `fn` after `seconds` of sim time (host timer). */
+  later(seconds: number, fn: () => void): { cancel(): void };
+  /** DE: Löst das Ereignis nur aus, wenn das Ziel es kennt. EN: fires the event only if the target knows it. */
+  fireIf(event: string, ...args: (string | number | boolean)[]): void;
   /** DE: Zustand je Simulation. EN: state per simulation. */
   store<T>(key: string, init: () => T): T;
 }

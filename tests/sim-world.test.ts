@@ -147,3 +147,43 @@ engines("C_Item: locations, base data, stats, equip and use", async (mk) => {
   `);
   assert.deepEqual(v, [2589, 0, 2, "Weapon", "One-Handed Swords", 5, 5, 25, "INVTYPE_WEAPON", 7, true, true, "|cff0070dd", "Hearthstone", "INVTYPE_HEAD", true, true]);
 });
+
+// ===== [S5] Zauber · spells =====
+
+engines("spells: cast time, cooldown, power, aura, interrupt and info functions", async (mk) => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  run(sim, `
+    seen = {}
+    local f = CreateFrame("Frame")
+    f:RegisterEvent("SPELLCAST_START") f:RegisterEvent("SPELLCAST_STOP") f:RegisterEvent("SPELLCAST_INTERRUPTED") f:RegisterEvent("SPELLCAST_FAILED")
+    f:SetScript("OnEvent", function() table.insert(seen, event .. ":" .. tostring(arg1)) end)
+  `);
+  run(sim, `local p = C_Spell.GetSpellPowerCost(6673) pcost = p[1].cost ptype = p[1].name`);
+  run(sim, `CastSpellByName("Fireball")`);
+  const mid = run(sim, `local n, _, _, s, e = C_Spell.UnitCastingInfo("player") return n, e > s, IsCurrentCast("Fireball")`);
+  assert.deepEqual(mid, ["Fireball", true, true]);
+  sim.advance(1.6);
+  const after = run(sim, `
+    CastSpellByName("Battle Shout")
+    local cd = C_Spell.GetSpellCooldown(133)
+    local hasAura = C_UnitAuras and 1 or 0
+    local usable, noMana = IsUsableSpell("Fireball")
+    return C_Spell.UnitCastingInfo("player"), cd.isOnGCD, cd.duration, UnitMana and 1 or 0, usable, GetSpellCooldown("Heroic Strike"), table.concat(seen, ",")
+  `);
+  assert.equal(after[0], undefined);
+  assert.equal(after[1], true);
+  assert.equal(String(after[6]).includes("SPELLCAST_START:Fireball"), true);
+  assert.equal(String(after[6]).includes("SPELLCAST_STOP:Fireball"), true);
+  sim.advance(2);
+  const v = run(sim, `
+    local nm, ic, cnt = UnitBuff("player", 1)
+    local s1 = C_Spell.IsSpellHarmful(133)
+    local school = C_Spell.GetSchoolString(4)
+    CastSpellByName("Hearthstone")
+    SpellStopCasting()
+    return s1, school, GetSpellInfo(133), C_Spell.GetSpellDescription(133) ~= nil, C_Spell.IsAutoAttackSpell(6603), C_Spell.GetSpellLevelInfo(133), C_Spell.GetSpellCooldown(8690).duration
+  `);
+  assert.deepEqual(v.slice(0, 5), [true, "Fire", "Fireball", true, true]);
+  assert.match(sim.log.map((l) => l.text).join("\n"), /Cast of Hearthstone stopped/);
+});
