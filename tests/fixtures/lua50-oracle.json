@@ -1,0 +1,189 @@
+{
+ "_comment": "Messages from real Lua 5.0 (github.com/lua/lua tag v5.0) compiled to WASM, see spikes/lua50-wasm. Chunk name is 'input'.",
+ "cases": [
+  {
+   "code": "local x=nil; return x.y",
+   "message": "input:1: attempt to index local `x' (a nil value)"
+  },
+  {
+   "code": "foo()",
+   "message": "input:1: attempt to call global `foo' (a nil value)"
+  },
+  {
+   "code": "local t={} t.a.b=1",
+   "message": "input:1: attempt to index field `a' (a nil value)"
+  },
+  {
+   "code": "local t={} t:nope()",
+   "message": "input:1: attempt to call method `nope' (a nil value)"
+  },
+  {
+   "code": "return 1+{}",
+   "message": "input:1: attempt to perform arithmetic on a table value"
+  },
+  {
+   "code": "return 'a'+1",
+   "message": "input:1: attempt to perform arithmetic on a string value"
+  },
+  {
+   "code": "return {}..'x'",
+   "message": "input:1: attempt to concatenate a table value"
+  },
+  {
+   "code": "return 1<{}",
+   "message": "input:1: attempt to compare number with table"
+  },
+  {
+   "code": "return {}<{}",
+   "message": "input:1: attempt to compare two table values"
+  },
+  {
+   "code": "local t={} t.x.y()",
+   "message": "input:1: attempt to index field `x' (a nil value)"
+  },
+  {
+   "code": "string.rep()",
+   "message": "input:1: bad argument #1 to `rep' (string expected, got no value)"
+  },
+  {
+   "code": "string.rep('a','b')",
+   "message": "input:1: bad argument #2 to `rep' (number expected, got string)"
+  },
+  {
+   "code": "return #nil",
+   "message": "input:1: unexpected symbol near `#'"
+  },
+  {
+   "code": "local s='x' s()",
+   "message": "input:1: attempt to call local `s' (a string value)"
+  },
+  {
+   "code": "a.b=1",
+   "message": "input:1: attempt to index global `a' (a nil value)"
+  },
+  {
+   "code": "undefinedfn(1)",
+   "message": "input:1: attempt to call global `undefinedfn' (a nil value)"
+  },
+  {
+   "code": "local t={} return t.x.y.z",
+   "message": "input:1: attempt to index field `x' (a nil value)"
+  },
+  {
+   "code": "return math.floor('x')",
+   "message": "input:1: bad argument #1 to `floor' (number expected, got string)"
+  },
+  {
+   "code": "setmetatable(1,{})",
+   "message": "input:1: bad argument #1 to `setmetatable' (table expected, got number)"
+  },
+  {
+   "code": "error('x',0)",
+   "message": "x"
+  },
+  {
+   "code": "error('x',2)",
+   "message": "x"
+  },
+  {
+   "code": "for i=1,'x' do end",
+   "message": "input:1: `for' limit must be a number"
+  },
+  {
+   "code": "local a; a()",
+   "message": "input:1: attempt to call local `a' (a nil value)"
+  },
+  {
+   "code": "tostring()",
+   "message": "input:1: bad argument #1 to `tostring' (value expected)"
+  },
+  {
+   "code": "ipairs()",
+   "message": "input:1: bad argument #1 to `ipairs' (table expected, got no value)"
+  },
+  {
+   "code": "table.insert(1,2)",
+   "message": "input:1: bad argument #1 to `insert' (table expected, got number)"
+  },
+  {
+   "code": "string.format('%d','x')",
+   "message": "input:1: bad argument #2 to `format' (number expected, got string)"
+  },
+  {
+   "code": "return 2^{}",
+   "message": "input:1: attempt to perform arithmetic on a table value"
+  },
+  {
+   "code": "return -{}",
+   "message": "input:1: attempt to perform arithmetic on a table value"
+  },
+  {
+   "code": "local t = {} t[nil]=1",
+   "message": "input:1: table index is nil"
+  },
+  {
+   "code": "local x; return x+1",
+   "message": "input:1: attempt to perform arithmetic on local `x' (a nil value)"
+  },
+  {
+   "code": "local x; return x..'a'",
+   "message": "input:1: attempt to concatenate local `x' (a nil value)"
+  },
+  {
+   "code": "local t={} return t.a+1",
+   "message": "input:1: attempt to perform arithmetic on field `a' (a nil value)"
+  },
+  {
+   "code": "local x; return -x",
+   "message": "input:1: attempt to perform arithmetic on local `x' (a nil value)"
+  },
+  {
+   "code": "local x; return x<1",
+   "message": "input:1: attempt to compare nil with number"
+  },
+  {
+   "code": "local x; local function f() return x.y end f()",
+   "message": "input:1: attempt to index a nil value"
+  },
+  {
+   "code": "return zz+1",
+   "message": "input:1: attempt to perform arithmetic on global `zz' (a nil value)"
+  },
+  {
+   "code": "return zz..'a'",
+   "message": "input:1: attempt to concatenate global `zz' (a nil value)"
+  },
+  {
+   "code": "local x; local function f() x() end f()",
+   "message": "input:1: attempt to call a nil value"
+  },
+  {
+   "code": "local t={} t.a.b.c=1",
+   "message": "input:1: attempt to index field `a' (a nil value)"
+  },
+  {
+   "code": "local t={} t[1][2]=3",
+   "message": "input:1: attempt to index field `?' (a nil value)"
+  },
+  {
+   "code": "local t={} return t[1].x",
+   "message": "input:1: attempt to index field `?' (a nil value)"
+  },
+  {
+   "code": "local t={} t.f.g()",
+   "message": "input:1: attempt to index field `f' (a nil value)"
+  },
+  {
+   "code": "return (nil)()",
+   "message": "input:1: attempt to call a nil value"
+  },
+  {
+   "code": "local s=1; return s.x",
+   "message": "input:1: attempt to index local `s' (a number value)"
+  },
+  {
+   "code": "local t={} t.x:y()",
+   "message": "input:1: attempt to index field `x' (a nil value)"
+  }
+ ]
+}

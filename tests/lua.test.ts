@@ -69,8 +69,11 @@ test("pcall / error with values and positions", () => {
   assert.equal(out("print(pcall(error, {code=1}))").startsWith("false\ttable"), true);
   assert.equal(out("local ok,e=pcall(function() error('boom') end) print(ok,e)"), "false\tchunk:1: boom");
   assert.equal(out("local ok,e=pcall(function() error('boom',0) end) print(e)"), "boom");
-  assert.equal(out("print(select(2, pcall(function() local x=nil; return x.y end)))"), "chunk:1: attempt to index a nil value (local 'x')");
-  assert.equal(out("print(select(2, pcall(function() foo() end)))"), "chunk:1: attempt to call a nil value (global 'foo')");
+  assert.equal(out("print(select(2, pcall(function() local x=nil; return x.y end)))"), "chunk:1: attempt to index local 'x' (a nil value)");
+  assert.equal(out("local ok, e = pcall(function() local x=nil; return x.y end) print(e)", "5.0"), "chunk:1: attempt to index local `x' (a nil value)");
+  assert.equal(out("print(select(2, pcall(function() foo() end)))"), "chunk:1: attempt to call global 'foo' (a nil value)");
+  assert.equal(out("local ok, e = pcall(function() local t={} t.a.b=1 end) print(e)", "5.0"), "chunk:1: attempt to index field `a' (a nil value)");
+  assert.equal(out("local ok, e = pcall(function() local x; local function f() return x.y end return f() end) print(e)", "5.0"), "chunk:1: attempt to index a nil value");
   assert.equal(out("print(select(2, pcall(function() return 1+{} end)))"), "chunk:1: attempt to perform arithmetic on a table value");
 });
 
@@ -153,4 +156,20 @@ test("runtime registerFunction bridge", () => {
   rt.registerFunction("C_Test.Add", (a, b) => (a as number) + (b as number));
   const r = rt.executeSync("return GetTime(), C_Test.Add(2,3)");
   assert.deepEqual(r.values, [12.5, 5]);
+});
+
+// ===== [S9] Orakel: echtes Lua 5.0 · oracle: real Lua 5.0 =====
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
+test("error messages match real Lua 5.0 (WASM oracle fixture)", () => {
+  const fx = JSON.parse(readFileSync(path.join(process.cwd(), "tests/fixtures/lua50-oracle.json"), "utf8")) as { cases: { code: string; message: string }[] };
+  const bad: string[] = [];
+  for (const c of fx.cases) {
+    const rt = new InterpRuntime("5.0");
+    const r = rt.executeSync(c.code, "input");
+    const got = r.ok ? "" : String(r.error?.message);
+    if (got !== c.message) bad.push(`${c.code}\n  real: ${c.message}\n  ours: ${got}`);
+  }
+  assert.deepEqual(bad, []);
 });

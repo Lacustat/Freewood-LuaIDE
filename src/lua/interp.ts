@@ -16,6 +16,7 @@
 
 import type { LuaVersion } from "../plugin-api/types.js";
 import type { Expr, FuncBody, Stat } from "./parser.js";
+import { quote50 } from "./lexer.js";
 import { parse } from "./parser.js";
 import { LuaError, LuaFunction, LuaTable, luaType, tonum, tostr, type LuaValue } from "./value.js";
 
@@ -27,6 +28,8 @@ interface Ref {
 
 class Scope {
   vars = new Map<string, Ref>();
+  /** DE: Oberster Scope einer Funktion (Grenze für „upvalue“). EN: top scope of a function (upvalue boundary). */
+  isFn = false;
   varargs?: LuaValue[];
   constructor(public parent?: Scope) {}
   find(name: string): Ref | undefined {
@@ -86,7 +89,7 @@ export class Interpreter {
         } catch (e) {
           // errors raised by library code get the position of the call, like luaL_error
           if (e instanceof LuaError) {
-            if (e.line === undefined && !e.raw && typeof e.value === "string") throw this.rt(e.value, line);
+            if (e.line === undefined && !e.raw && typeof e.value === "string") throw this.rt(this.version === "5.0" ? quote50(e.value) : e.value, line);
             throw e;
           }
           if (e instanceof RangeError) throw e;
@@ -118,6 +121,7 @@ export class Interpreter {
     this.callLines.push(line);
     this.chunk = c.chunk;
     const scope = new Scope(c.scope);
+    scope.isFn = true;
     const { params, vararg } = c.body;
     for (let i = 0; i < params.length; i++) scope.vars.set(params[i]!, { v: args[i] });
     if (vararg) {
@@ -174,12 +178,12 @@ export class Interpreter {
         }
         // evaluate target sub-expressions first, then values, then assign
         const prepared = s.targets.map((t) =>
-          t.t === "Index" ? ({ obj: this.eval(t.obj, scope, env), key: this.eval(t.key, scope, env), line: t.line } as const) : undefined,
+          t.t === "Index" ? ({ obj: this.eval(t.obj, scope, env), key: this.eval(t.key, scope, env), line: t.line, expr: t.obj } as const) : undefined,
         );
         const vals = this.evalList(s.exprs, scope, env);
         s.targets.forEach((t, i) => {
           const p = prepared[i];
-          if (p) this.setIndex(p.obj, p.key, vals[i], p.line);
+          if (p) this.setIndex(p.obj, p.key, vals[i], p.line, p.expr, scope);
           else this.assign(t, vals[i], scope, env);
         });
         return;
@@ -219,7 +223,7 @@ export class Interpreter {
         const a = this.forNum(this.eval(s.a, scope, env), "initial", s.line);
         const b = this.forNum(this.eval(s.b, scope, env), "limit", s.line);
         const c = s.c ? this.forNum(this.eval(s.c, scope, env), "step", s.line) : 1;
-        if (c === 0) throw this.rt("'for' step is zero", s.line);
+        if (c === 0) throw this.rt(`${this.q("for")} step is zero`, s.line);
         for (let i = a; c > 0 ? i <= b : i >= b; i += c) {
           if (++this.steps > this.stepLimit) throw this.rt("script exceeded the instruction limit (endless loop?)", s.line);
           const inner = new Scope(scope);
@@ -266,7 +270,7 @@ export class Interpreter {
 
   private forNum(v: LuaValue, what: string, line: number): number {
     const n = tonum(v);
-    if (n === undefined) throw this.rt(`'for' ${what} value must be a number`, line);
+    if (n === undefined) throw this.rt(`${this.q("for")} ${what === "initial" ? "initial value" : what} must be a number`, line);
     return n;
   }
 
@@ -280,7 +284,7 @@ export class Interpreter {
       if (ref) ref.v = v;
       else this.setIndex(env, t.name, v, t.line);
     } else if (t.t === "Index") {
-      this.setIndex(this.eval(t.obj, scope, env), this.eval(t.key, scope, env), v, t.line);
+      this.setIndex(this.eval(t.obj, scope, env), this.eval(t.key, scope, env), v, t.line, t.obj, scope);
     }
   }
 
@@ -299,11 +303,32 @@ export class Interpreter {
     return out;
   }
 
-  private describe(e: Expr, scope: Scope): string {
-    if (e.t === "Name") return scope.find(e.name) ? ` (local '${e.name}')` : ` (global '${e.name}')`;
-    if (e.t === "Index" && e.key.t === "Str") return ` (field '${e.key.v}')`;
-    if (e.t === "Method") return ` (method '${e.name}')`;
-    return "";
+  /** DE: Art und Name eines Ausdrucks für Fehlermeldungen (wie luaG_typeerror). EN: kind and name of an expression for error messages. */
+  private describe(e: Expr, scope: Scope): { kind: string; name: string } | undefined {
+    if (e.t === "Name") {
+      let crossed = false;
+      for (let s: Scope | undefined = scope; s; s = s.parent) {
+        if (s.vars.has(e.name)) return { kind: crossed ? "upvalue" : "local", name: e.name };
+        if (s.isFn) crossed = true;
+      }
+      return { kind: "global", name: e.name };
+    }
+    if (e.t === "Index") return { kind: "field", name: e.key.t === "Str" ? e.key.v : "?" };
+    if (e.t === "Method") return { kind: "method", name: e.name };
+    return undefined;
+  }
+
+  private q(name: string): string {
+    return this.version === "5.0" ? `\`${name}'` : `'${name}'`;
+  }
+
+  /** DE: Baut „attempt to <op> …“. 5.0 nennt Upvalues nicht. EN: builds "attempt to <op> …"; 5.0 does not name upvalues. */
+  typeErr(op: string, v: LuaValue, line: number, e?: Expr, scope?: Scope): LuaError {
+    const d = e && scope ? this.describe(e, scope) : undefined;
+    if (d && !(d.kind === "upvalue" && this.version === "5.0")) {
+      return this.rt(`attempt to ${op} ${d.kind} ${this.q(d.name)} (a ${luaType(v)} value)`, line);
+    }
+    return this.rt(`attempt to ${op} a ${luaType(v)} value`, line);
   }
 
   private evalMulti(e: Expr, scope: Scope, env: LuaTable): LuaValue[] {
@@ -313,17 +338,17 @@ export class Interpreter {
         const args = this.evalList(e.args, scope, env);
         this.line = e.line;
         if (!(fn instanceof LuaFunction) && this.metamethod(fn, "__call") === undefined) {
-          throw this.rt(`attempt to call a ${luaType(fn)} value${this.describe(e.fn, scope)}`, e.line);
+          throw this.typeErr("call", fn, e.line, e.fn, scope);
         }
         return this.call(fn, args, e.line);
       }
       case "Method": {
         const obj = this.eval(e.obj, scope, env);
-        const fn = this.index(obj, e.name, e.line);
+        const fn = this.index(obj, e.name, e.line, e.obj, scope);
         const args = [obj, ...this.evalList(e.args, scope, env)];
         this.line = e.line;
         if (!(fn instanceof LuaFunction) && this.metamethod(fn, "__call") === undefined) {
-          throw this.rt(`attempt to call method '${e.name}' (a ${luaType(fn)} value)`, e.line);
+          throw this.typeErr("call", fn, e.line, e, scope);
         }
         return this.call(fn, args, e.line);
       }
@@ -380,7 +405,7 @@ export class Interpreter {
           if (n !== undefined) return -n;
           const mm = this.metamethod(v, "__unm");
           if (mm !== undefined) return this.call(mm, [v, v], e.line)[0];
-          throw this.rt(`attempt to perform arithmetic on a ${luaType(v)} value${this.describe(e.a, scope)}`, e.line);
+          throw this.typeErr("perform arithmetic on", v, e.line, e.a, scope);
         }
         return this.len(v, e.line, e.a, scope);
       }
@@ -435,8 +460,7 @@ export class Interpreter {
       } else {
         const h = this.metamethod(obj, "__index");
         if (h === undefined) {
-          const what = objExpr && scope ? this.describe(objExpr, scope) : "";
-          throw this.rt(`attempt to index a ${luaType(obj)} value${what}`, line);
+          throw this.typeErr("index", obj, line, objExpr, scope);
         }
         if (h instanceof LuaFunction) return this.call(h, [obj, key], line)[0];
         obj = h;
@@ -445,7 +469,7 @@ export class Interpreter {
     throw this.rt("loop in gettable", line);
   }
 
-  setIndex(obj: LuaValue, key: LuaValue, value: LuaValue, line = this.line): void {
+  setIndex(obj: LuaValue, key: LuaValue, value: LuaValue, line = this.line, objExpr?: Expr, scope?: Scope): void {
     for (let loop = 0; loop < 100; loop++) {
       if (obj instanceof LuaTable) {
         const h = obj.meta?.get("__newindex");
@@ -464,7 +488,13 @@ export class Interpreter {
         }
         obj = h;
       } else {
-        throw this.rt(`attempt to index a ${luaType(obj)} value`, line);
+        const h = this.metamethod(obj, "__newindex");
+        if (h === undefined) throw this.typeErr("index", obj, line, objExpr, scope);
+        if (h instanceof LuaFunction) {
+          this.call(h, [obj, key, value], line);
+          return;
+        }
+        obj = h;
       }
     }
     throw this.rt("loop in settable", line);
@@ -520,9 +550,7 @@ export class Interpreter {
     const mm = this.metamethod(a, names[op]!) ?? this.metamethod(b, names[op]!);
     if (mm !== undefined) return this.call(mm, [a, b], line)[0];
     const bad = x === undefined ? a : b;
-    let what = "";
-    if (e && e.t === "Bin" && scope) what = this.describe(x === undefined ? e.a : e.b, scope);
-    throw this.rt(`attempt to perform arithmetic on a ${luaType(bad)} value${what}`, line);
+    throw this.typeErr("perform arithmetic on", bad, line, e && e.t === "Bin" ? (x === undefined ? e.a : e.b) : undefined, scope);
   }
 
   concat(a: LuaValue, b: LuaValue, line: number, e?: Expr, scope?: Scope): LuaValue {
@@ -532,14 +560,12 @@ export class Interpreter {
     const mm = this.metamethod(a, "__concat") ?? this.metamethod(b, "__concat");
     if (mm !== undefined) return this.call(mm, [a, b], line)[0];
     const bad = okA ? b : a;
-    let what = "";
-    if (e && e.t === "Bin" && scope) what = this.describe(okA ? e.b : e.a, scope);
-    throw this.rt(`attempt to concatenate a ${luaType(bad)} value${what}`, line);
+    throw this.typeErr("concatenate", bad, line, e && e.t === "Bin" ? (okA ? e.b : e.a) : undefined, scope);
   }
 
   len(v: LuaValue, line: number, e?: Expr, scope?: Scope): LuaValue {
     if (typeof v === "string") return v.length;
     if (v instanceof LuaTable) return v.length();
-    throw this.rt(`attempt to get length of a ${luaType(v)} value${e && scope ? this.describe(e, scope) : ""}`, line);
+    throw this.typeErr("get length of", v, line, e, scope);
   }
 }

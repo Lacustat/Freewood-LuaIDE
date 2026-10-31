@@ -5,7 +5,7 @@
 import { readFileSync } from "node:fs";
 import { WASI } from "node:wasi";
 const wasi = new WASI({ version: "preview1" });
-const mod = await WebAssembly.compile(readFileSync("lua50.wasm"));
+const mod = await WebAssembly.compile(readFileSync(new URL("./lua50.wasm", import.meta.url)));
 let ex, setjmpId = 0, tempRet0 = 0;
 const env = {
   getTempRet0: () => tempRet0,

@@ -33,9 +33,14 @@ const KEYWORDS = new Set([
 // ===== [S2] LuaSyntaxError =====
 
 export class LuaSyntaxError extends Error {
-  constructor(public chunk: string, public line: number, message: string) {
-    super(`${chunk}:${line}: ${message}`);
+  constructor(public chunk: string, public line: number, public detail: string) {
+    super(`${chunk}:${line}: ${detail}`);
   }
+}
+
+/** DE: Lua 5.0 setzt Namen in `…' (Gravis/Apostroph), 5.1 in '…'. EN: Lua 5.0 quotes as `…', 5.1 as '…'. */
+export function quote50(msg: string): string {
+  return msg.replace(/'([^'\n]*)'/g, "`$1'");
 }
 
 // ===== [S3] tokenize =====

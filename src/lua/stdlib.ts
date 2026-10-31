@@ -74,6 +74,7 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
     return luaType(a[0]);
   });
   reg(G, "tostring", (a) => {
+    if (a.length === 0) throw argErr("tostring", 1, "value expected");
     const mm = it.metamethod(a[0], "__tostring");
     if (mm !== undefined) return it.call(mm, [a[0]])[0];
     return tostr(a[0]);
@@ -143,8 +144,8 @@ function installBase(it: Interpreter, out: (s: string) => void): void {
     const level = a[1] === undefined ? 1 : checkInt("error", a, 2);
     const v = a[0];
     if (typeof v === "string" && level > 0) {
-      const line = level === 1 ? it.line : it.callLines[it.callLines.length - (level - 1)] ?? it.line;
-      throw new LuaError(`${it.chunk}:${line}: ${v}`, line, it.chunk);
+      const line = level === 1 ? it.line : it.callLines[it.callLines.length - (level - 1)];
+      if (line !== undefined && line > 0) throw new LuaError(`${it.chunk}:${line}: ${v}`, line, it.chunk);
     }
     const err = new LuaError(v);
     err.raw = true;
@@ -324,8 +325,9 @@ function installString(it: Interpreter): LuaTable {
   reg(S, "upper", (a) => checkStr("upper", a, 1).toUpperCase());
   reg(S, "lower", (a) => checkStr("lower", a, 1).toLowerCase());
   reg(S, "rep", (a) => {
+    const str = checkStr("rep", a, 1);
     const n = checkInt("rep", a, 2);
-    return n > 0 ? checkStr("rep", a, 1).repeat(n) : "";
+    return n > 0 ? str.repeat(n) : "";
   });
   reg(S, "reverse", (a) => [...checkStr("reverse", a, 1)].reverse().join(""));
   reg(S, "byte", (a) => {

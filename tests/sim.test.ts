@@ -62,7 +62,7 @@ test("methods exist only where the target data says so", async () => {
   const v = new WowSim(t.v!);
   const rv = v.loadSource(code);
   assert.equal(rv.ok, false);
-  assert.match(rv.error!.message, /attempt to call method 'SetSize' \(a nil value\)/);
+  assert.match(rv.error!.message, /attempt to call method `SetSize' \(a nil value\)/);
   const c = new WowSim(t.c!);
   assert.ok(c.loadSource(code).ok);
   assert.deepEqual(texts(c, "chat"), ["10"]);
@@ -136,7 +136,7 @@ test("OnUpdate, C_Timer.After, tickers and cancel", async () => {
   assert.equal(sim.rt.interp.globals.get("ticks"), 2);
   assert.ok((sim.rt.interp.globals.get("updates") as number) > 100);
   const v = new WowSim(t.v!);
-  assert.match(v.loadSource(`C_Timer.After(1, function() end)`).error!.message, /global 'C_Timer'/);
+  assert.match(v.loadSource(`C_Timer.After(1, function() end)`).error!.message, /global `C_Timer'/);
 });
 
 test("slash commands", async () => {

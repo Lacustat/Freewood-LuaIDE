@@ -12,7 +12,7 @@
  */
 
 import type { LuaVersion } from "../plugin-api/types.js";
-import { LuaSyntaxError, tokenize, type Token } from "./lexer.js";
+import { LuaSyntaxError, tokenize, type Token, quote50 } from "./lexer.js";
 
 // ===== [S1] AST-Typen · AST types =====
 
@@ -398,6 +398,11 @@ class Parser {
 // ===== [S3] parse =====
 
 export function parse(src: string, chunk: string, version: LuaVersion): FuncBody {
-  const toks = tokenize(src, chunk, version);
-  return new Parser(toks, chunk, version).chunkBody();
+  try {
+    const toks = tokenize(src, chunk, version);
+    return new Parser(toks, chunk, version).chunkBody();
+  } catch (e) {
+    if (version === "5.0" && e instanceof LuaSyntaxError) throw new LuaSyntaxError(e.chunk, e.line, quote50(e.detail));
+    throw e;
+  }
 }
