@@ -644,6 +644,33 @@ API["C_EncodingUtil.SerializeCBOR"] = function(v) return "FWCBOR:" .. jenc(v, 0)
 API["C_EncodingUtil.DeserializeCBOR"] = function(s)
   if type(s) == "string" and ssub(s, 1, 7) == "FWCBOR:" then return (jdec(ssub(s, 8), 1)) end
 end
+-- ---- Ausrüstung: Tabelle füllen · equipment: fill a table ----
+local hInvSlot = apiw("__inventory_for_slot")
+API.GetInventoryItemsForSlot = function(slot, t)
+  if type(t) ~= "table" then t = {} end
+  local r = pack(hInvSlot(slot))
+  local i = 1
+  while i < r.n do
+    t[r[i]] = r[i + 1]
+    i = i + 2
+  end
+  return t
+end
+-- ---- ItemLocation ----
+local ItemLocationMixin = {}
+ItemLocationMixin.GetBagAndSlot = function(self) return self.bagID, self.slotIndex end
+ItemLocationMixin.GetEquipmentSlot = function(self) return self.equipmentSlotIndex end
+ItemLocationMixin.IsBagAndSlot = function(self) return self.bagID ~= nil end
+ItemLocationMixin.IsEquipmentSlot = function(self) return self.equipmentSlotIndex ~= nil end
+ItemLocationMixin.HasAnyLocation = function(self) return self.bagID ~= nil or self.equipmentSlotIndex ~= nil end
+ItemLocationMixin.Clear = function(self) self.bagID, self.slotIndex, self.equipmentSlotIndex = nil, nil, nil end
+local LOC_META = { __index = ItemLocationMixin }
+G.ItemLocationMixin = ItemLocationMixin
+G.ItemLocation = {
+  CreateEmpty = function() return setmetatable({}, LOC_META) end,
+  CreateFromBagAndSlot = function(_, bag, slot) return setmetatable({ bagID = bag, slotIndex = slot }, LOC_META) end,
+  CreateFromEquipmentSlot = function(_, slot) return setmetatable({ equipmentSlotIndex = slot }, LOC_META) end,
+}
 -- DE: Was die VM schon kann (eigener Interpreter), bleibt unberührt. EN: what the VM already has (own interpreter) stays untouched.
 if @NATIVE@ then
   for k in pairs(API) do

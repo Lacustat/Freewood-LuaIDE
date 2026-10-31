@@ -82,3 +82,68 @@ engines("small namespaces: addons, coin text, colors, JSON, encoding, atlas, mac
   `);
   assert.deepEqual(v, [false, 1, true, "ff69ccf0", 1, 3, 'x"y', "SGVsbG8=", "Hello", "4142", "zip me", "12 Gold, 34 Silver, 56 Copper", 64, 0.5, true, "Interface\\Icons\\INV_Misc_Bone_01", true, false]);
 });
+
+// ===== [S3] Ausrüstung, Cursor, Sets · equipment, cursor, sets =====
+
+engines("equipment, cursor, bag moves and equipment sets", async (mk) => {
+  const t = await targets();
+  for (const target of [t.v!, t.c!]) {
+    const sim = await mk(target);
+    const v = run(sim, `
+      local slot, tex = GetInventorySlotInfo("MainHandSlot")
+      local link = GetInventoryItemLink("player", 16)
+      local before = GetInventoryItemTexture("player", 4)
+      PickupInventoryItem(16)
+      local holds = CursorHasItem()
+      PickupContainerItem(0, 5)
+      local back = GetContainerItemInfo(0, 5)
+      PickupContainerItem(0, 2)
+      ClearCursor()
+      local stillThere = GetContainerItemInfo(0, 2)
+      return slot, string.find(link, "Worn Shortsword") ~= nil, before ~= nil, holds, back ~= nil, stillThere ~= nil, CursorHasItem(), GetBagName(0), ContainerIDToInventoryID(1)
+    `);
+    assert.deepEqual(v, [16, true, true, true, true, true, false, "Backpack", 20]);
+  }
+  const sim = await mk(t.c!);
+  const v = run(sim, `
+    local dur, max = GetInventoryItemDurability(7)
+    local id = C_EquipmentSet.CreateEquipmentSet("Starter", "INV_Misc_Bone_01")
+    local name, icon, sid, isEq, numItems, numEq = C_EquipmentSet.GetEquipmentSetInfo(id)
+    PickupInventoryItem(16)
+    PickupContainerItem(0, 6)
+    local _, _, _, eq2 = C_EquipmentSet.GetEquipmentSetInfo(id)
+    local used = C_EquipmentSet.UseEquipmentSet(id)
+    local _, _, _, eq3 = C_EquipmentSet.GetEquipmentSetInfo(id)
+    local ids = C_EquipmentSet.GetItemIDs(id)
+    local tbl = GetInventoryItemsForSlot(16, {})
+    local n = 0
+    for _ in pairs(tbl) do n = n + 1 end
+    local moved = C_Container.MoveItem(0, 2, 0, 9, 3)
+    local a = C_Container.GetContainerItemInfo(0, 9)
+    return dur, max, name, isEq, numItems, numEq, eq2, used, eq3, ids[16], ids[1], n > 0, moved, a and a.stackCount, C_Container.SwapItems(0, 9, 0, 10), IsDualWielding(), GetAverageItemLevel() >= 0
+  `);
+  assert.deepEqual(v, [20, 20, "Starter", true, 4, 4, false, true, true, 25, 0, true, true, 3, true, false, true]);
+});
+
+// ===== [S4] Gegenstände · items =====
+
+engines("C_Item: locations, base data, stats, equip and use", async (mk) => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const v = run(sim, `
+    local loc = ItemLocation:CreateFromBagAndSlot(0, 2)
+    local id = C_Item.GetItemID(loc)
+    local guid = C_Item.GetItemGUID(loc)
+    local back = C_Item.GetItemLocation(guid)
+    local cls, sub = C_Item.GetItemClassInfo(2), C_Item.GetItemSubClassInfo(2, 7)
+    local stats = C_Item.GetItemStats(6124)
+    local d = C_Item.GetItemStatDelta(6124, 25)
+    local instant1, instant2, instant3, equipLoc = C_Item.GetItemInfoInstant(25)
+    C_Item.EquipItemByName(2092)
+    local eq = C_Item.IsEquippedItem(2092)
+    local r, g, b, hex = GetItemQualityColor(3)
+    local data = C_Item.GetItemDataByID(6948)
+    return id, back.bagID, back.slotIndex, cls, sub, stats.RESISTANCE0_NAME, d.RESISTANCE0_NAME, instant1, equipLoc, C_Item.GetStackCount(loc), C_Item.IsEquippableItem(25), C_Item.IsEquippedItem(25), hex, data.name, C_Item.GetItemInventorySlotKey(1), C_Item.IsConsumableItem(5742), IsEquippedItemType("Weapon")
+  `);
+  assert.deepEqual(v, [2589, 0, 2, "Weapon", "One-Handed Swords", 5, 5, 25, "INVTYPE_WEAPON", 7, true, true, "|cff0070dd", "Hearthstone", "INVTYPE_HEAD", true, true]);
+});

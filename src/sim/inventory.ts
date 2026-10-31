@@ -31,6 +31,16 @@ export interface ItemData {
   icon?: string;
   sellPrice?: number;
   bindType?: number;
+  /** DE: Werte wie "ITEM_MOD_STAMINA_SHORT". EN: stats like "ITEM_MOD_STAMINA_SHORT". */
+  stats?: Record<string, number>;
+  /** DE: Haltbarkeit (aktuell/maximal) beim Anlegen. EN: durability (current/max) when equipped. */
+  durability?: [number, number];
+  spellID?: number;
+  /** DE: 1 = einzigartig, n = höchstens n. EN: 1 = unique, n = at most n. */
+  unique?: number;
+  setID?: number;
+  /** DE: Zeichen ("Use:"-Gegenstände) oder nutzbar. EN: usable on its own (potions, food). */
+  usable?: boolean;
 }
 
 export interface BagSlot { id: number; count: number }
@@ -69,6 +79,8 @@ export interface InventoryState {
   known: number[];
   /** DE: Geld in Kupfer. EN: money in copper. */
   money?: number;
+  /** DE: Angelegte Ausrüstung: Platz 1..19 → Gegenstand. EN: worn equipment: slot 1..19 → item. */
+  equipped?: Record<string, number>;
 }
 
 // ===== [S2] Beispieldaten · sample data =====
@@ -90,7 +102,16 @@ export const DEFAULT_INVENTORY: InventoryState = {
   },
   known: [78, 6673],
   money: 25000,
+  equipped: { "4": 6125, "7": 6124, "8": 6126, "16": 25 },
 };
+
+// Ausrüstung (Beispiele, IDs nur Beispielwerte) · equipment (samples, IDs are sample values)
+DEFAULT_INVENTORY.items["25"] = { name: "Worn Shortsword", quality: 1, level: 1, type: "Weapon", subType: "One-Handed Swords", classID: 2, subclassID: 7, stack: 1, equipLoc: "INVTYPE_WEAPON", icon: "Interface\\Icons\\INV_Sword_04", sellPrice: 7, bindType: 0, durability: [30, 30] };
+DEFAULT_INVENTORY.items["6125"] = { name: "Brawler's Harness", quality: 1, level: 1, type: "Armor", subType: "Miscellaneous", classID: 4, subclassID: 0, stack: 1, equipLoc: "INVTYPE_BODY", icon: "Interface\\Icons\\INV_Shirt_01", sellPrice: 1, bindType: 0 };
+DEFAULT_INVENTORY.items["6124"] = { name: "Recruit's Pants", quality: 1, level: 1, type: "Armor", subType: "Cloth", classID: 4, subclassID: 1, stack: 1, equipLoc: "INVTYPE_LEGS", icon: "Interface\\Icons\\INV_Pants_01", sellPrice: 1, bindType: 0, durability: [20, 20], stats: { RESISTANCE0_NAME: 5 } };
+DEFAULT_INVENTORY.items["6126"] = { name: "Recruit's Boots", quality: 1, level: 1, type: "Armor", subType: "Cloth", classID: 4, subclassID: 1, stack: 1, equipLoc: "INVTYPE_FEET", icon: "Interface\\Icons\\INV_Boots_Cloth_01", sellPrice: 1, bindType: 0, durability: [20, 20] };
+DEFAULT_INVENTORY.items["2092"] = { name: "Worn Dagger", quality: 1, level: 1, type: "Weapon", subType: "Daggers", classID: 2, subclassID: 15, stack: 1, equipLoc: "INVTYPE_WEAPONOFFHAND", icon: "Interface\\Icons\\INV_Weapon_ShortBlade_01", sellPrice: 6, bindType: 0, durability: [25, 25] };
+DEFAULT_INVENTORY.items["5742"] = { name: "Sample Potion", quality: 1, level: 1, type: "Consumable", subType: "Potion", classID: 0, subclassID: 1, stack: 5, icon: "Interface\\Icons\\INV_Potion_54", sellPrice: 5, bindType: 0, usable: true, spellID: 439 };
 
 // Zusätzliche Beispielgegenstände für Beute, Händler und Müll · extra sample items for loot, vendor and junk
 DEFAULT_INVENTORY.items["117"] = { name: "Tough Jerky", quality: 1, level: 1, type: "Consumable", subType: "Food & Drink", classID: 0, subclassID: 5, stack: 20, icon: "Interface\\Icons\\INV_Misc_Food_54", sellPrice: 1, bindType: 0 };

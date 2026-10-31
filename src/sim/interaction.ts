@@ -18,6 +18,8 @@
  */
 
 import { addItem, itemLink, takeSlot, type InventoryState } from "./inventory.js";
+import type { SimHost } from "./host.js";
+import { useBagItem } from "./gear.js";
 
 // ===== [S1] Datentypen · data types =====
 
@@ -139,8 +141,9 @@ export const INTERACTION_API: Record<string, Impl> = {
     h.fire("PLAYER_MONEY");
   },
   UseContainerItem: (h, a) => {
-    if (!h.interaction().merchant) { h.note("warn", "UseContainerItem: using items is not simulated (only selling at a vendor)."); return; }
-    if (typeof a[0] === "number" && typeof a[1] === "number") sellSlot(h, a[0], a[1]);
+    if (typeof a[0] !== "number" || typeof a[1] !== "number") return;
+    if (h.interaction().merchant) sellSlot(h, a[0], a[1]);
+    else useBagItem(h as unknown as SimHost, a[0], a[1]);
   },
   CloseMerchant: (h) => {
     const st = h.interaction();
