@@ -156,7 +156,7 @@ export const INTERACTION_API: Record<string, Impl> = {
     const b = h.interaction().buyback[(num(a[0]) ?? 0) - 1];
     if (!b) return undefined;
     const m = meta(h, b.id);
-    return [m.name, m.icon, b.price, b.count];
+    return [m.name, m.icon, b.price, b.count, 0, true];
   },
   GetBuybackItemLink: (h, a) => { const b = h.interaction().buyback[(num(a[0]) ?? 0) - 1]; return b ? meta(h, b.id).link : undefined; },
   "C_MerchantFrame.GetBuybackItemID": (h, a) => h.interaction().buyback[(num(a[0]) ?? 0) - 1]?.id,

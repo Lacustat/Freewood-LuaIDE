@@ -106,7 +106,7 @@ const fireStatus = (h: SimHost): void => { h.fireIf("UPDATE_BATTLEFIELD_STATUS")
 
 export const BATTLEFIELD_API: Record<string, Impl> = {
   GetNumBattlefields: (h) => (w3(h).bf.open ? 1 : 0),
-  GetBattlefieldInfo: (h) => { const b = w3(h).bf; const s = b.list[b.sel]; return b.open && s ? [s.name, `Battleground for levels ${s.min}-${s.max}.`, s.min, s.max, true] : undefined; },
+  GetBattlefieldInfo: (h) => { const b = w3(h).bf; const s = b.list[b.sel]; return b.open && s ? [s.name, `Battleground for levels ${s.min}-${s.max}.`, s.min, s.max, -1, 0, 0, 20, 29] : undefined; },
   GetBattlefieldInstanceInfo: (h, a) => (w3(h).bf.open && num(a[0]) === 1 ? 1 : undefined),
   GetSelectedBattlefield: (h) => w3(h).bf.sel + 1,
   SetSelectedBattlefield: (h, a) => { const b = w3(h).bf; b.sel = Math.max(0, (num(a[0]) ?? 1) - 1); },
@@ -126,7 +126,7 @@ export const BATTLEFIELD_API: Record<string, Impl> = {
     else b.queues[k] = undefined;
     fireStatus(h);
   },
-  GetBattlefieldStatus: (h, a) => { const x = q(h, a[0]); return x ? [x.status, x.map, x.id, 1, 60, 0, false] : ["none", "", 0, 0, 0, 0, false]; },
+  GetBattlefieldStatus: (h, a) => { const x = q(h, a[0]); return x ? [x.status, x.map, x.id, 1, 60, 0, false] : ["none", "Eastern Kingdoms", 0, 0, 0]; },
   GetBattlefieldEstimatedWaitTime: (h, a) => (q(h, a[0]) ? 60000 : 0),
   GetBattlefieldTimeWaited: (h, a) => { const x = q(h, a[0]); return x ? Math.round((h.now - x.started) * 1000) : 0; },
   GetBattlefieldPortExpiration: (h, a) => { const x = q(h, a[0]); return x?.ends ? Math.max(0, Math.round((x.ends - h.now) * 1000)) : 0; },

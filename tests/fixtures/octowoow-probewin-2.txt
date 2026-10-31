@@ -1,0 +1,2427 @@
+
+FreewoodProbeWinDB = {
+	["polled"] = "trainer,",
+	["events"] = {
+		[1] = "0.01 [s0] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[2] = "0.01 [s0] PET_BAR_UPDATE(nil, nil, nil, nil)",
+		[3] = "0.05 [s0] PLAYER_FLAGS_CHANGED('0x000000003B9F55B9', nil, nil, nil)",
+		[4] = "0.05 [s0] CHAT_MSG_SYSTEM('XP gain is ON', '', '', '')",
+		[5] = "0.07 [s1] UPDATE_INSTANCE_INFO(nil, nil, nil, nil)",
+		[6] = "0.07 [s1] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[7] = "0.07 [s1] UPDATE_TICKET(0, '', -1.#QNAN, 2.1219957904712e-314)",
+		[8] = "0.07 [s1] UPDATE_PENDING_MAIL(nil, nil, nil, nil)",
+		[9] = "0.07 [s1] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[10] = "9.96 [s1] GOSSIP_SHOW(nil, nil, nil, nil)",
+		[11] = "11.04 [s1] GOSSIP_CLOSED(nil, nil, nil, nil)",
+		[12] = "11.04 [s1] TRAINER_UPDATE('Blizzard_TrainerUI', nil, nil, nil)",
+		[13] = "11.04 [s1] TRAINER_UPDATE('Blizzard_TrainerUI', nil, nil, nil)",
+		[14] = "11.04 [s1] TRAINER_UPDATE('Blizzard_TrainerUI', nil, nil, nil)",
+		[15] = "11.04 [s1] TRAINER_UPDATE(nil, nil, nil, nil)",
+		[16] = "11.04 [s1] TRAINER_UPDATE(nil, nil, nil, nil)",
+		[17] = "11.04 [s1] TRAINER_UPDATE(nil, nil, nil, nil)",
+		[18] = "11.05 [s1] TRAINER_SHOW(nil, nil, nil, nil)",
+		[19] = "11.12 [s1] UNIT_PET('0x000000003B9F7CEF', nil, nil, nil)",
+		[20] = "11.58 [s1] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[21] = "11.58 [s1] UPDATE_TICKET(0, '', -1.#QNAN, 2.1219957904712e-314)",
+		[22] = "13.63 [s1] PLAYER_FLAGS_CHANGED('0x000000003B9F018B', nil, nil, nil)",
+		[23] = "28.70 [s2] PLAYER_FLAGS_CHANGED('0x000000003B9E5C64', nil, nil, nil)",
+		[24] = "29.55 [s3] PLAYER_FLAGS_CHANGED('0x000000003B9F31EE', nil, nil, nil)",
+		[25] = "31.40 [s3] PLAYER_FLAGS_CHANGED('0x000000003B9F2DFA', nil, nil, nil)",
+		[26] = "32.25 [s0] TRAINER_CLOSED(nil, nil, nil, nil)",
+		[27] = "32.25 [s0] TRAINER_CLOSED(nil, nil, nil, nil)",
+		[28] = "35.86 [s4] PLAYER_FLAGS_CHANGED('0x000000003B9FF829', nil, nil, nil)",
+		[29] = "36.63 [s4] GOSSIP_SHOW(nil, nil, nil, nil)",
+		[30] = "37.72 [s4] GOSSIP_CLOSED(nil, nil, nil, nil)",
+		[31] = "37.72 [s4] TRAINER_UPDATE(nil, nil, nil, nil)",
+		[32] = "37.72 [s4] TRAINER_UPDATE(nil, nil, nil, nil)",
+		[33] = "37.72 [s4] TRAINER_SHOW(nil, nil, nil, nil)",
+		[34] = "49.10 [s6] PLAYER_FLAGS_CHANGED('0x000000003BA03370', nil, nil, nil)",
+		[35] = "51.21 [s0] TRAINER_CLOSED('LeftButton', nil, nil, nil)",
+		[36] = "51.21 [s0] TRAINER_CLOSED('LeftButton', nil, nil, nil)",
+		[37] = "57.89 [s0] UNIT_PET('0x000000003B9FAC8E', nil, nil, nil)",
+		[38] = "57.89 [s0] UNIT_PET('0x000000003BA0102B', nil, nil, nil)",
+		[39] = "66.58 [s0] MAIL_SEND_SUCCESS(nil, nil, nil, nil)",
+		[40] = "66.59 [s0] MAIL_SHOW(nil, nil, nil, nil)",
+		[41] = "66.65 [s7] MAIL_INBOX_UPDATE(nil, nil, nil, nil)",
+		[42] = "74.62 [s0] MAIL_CLOSED('LeftButton', nil, nil, nil)",
+		[43] = "74.62 [s0] MAIL_CLOSED('LeftButton', nil, nil, nil)",
+		[44] = "92.86 [s0] BATTLEFIELDS_SHOW(nil, nil, nil, nil)",
+		[45] = "93.66 [s8] BATTLEFIELDS_CLOSED(nil, nil, nil, nil)",
+		[46] = "100.49 [s0] UNIT_PET('0x000000003BA03362', nil, nil, nil)",
+		[47] = "108.75 [s0] UI_ERROR_MESSAGE('You must wait 7 Seconds before speaking again.', nil, nil, nil)",
+		[48] = "123.71 [s0] GOSSIP_SHOW(nil, nil, nil, nil)",
+		[49] = "124.55 [s9] GOSSIP_CLOSED(nil, nil, nil, nil)",
+		[50] = "124.58 [s9] TRAINER_SHOW(nil, nil, nil, nil)",
+		[51] = "135.58 [s0] TRAINER_CLOSED('LeftButton', nil, nil, nil)",
+		[52] = "135.58 [s0] TRAINER_CLOSED('LeftButton', nil, nil, nil)",
+		[53] = "146.69 [s0] CHAT_MSG_SYSTEM('You have requested to trade with Partner.', '', '', '')",
+		[54] = "146.84 [s0] TRADE_SHOW(nil, nil, nil, nil)",
+		[55] = "153.48 [s0] TRADE_CLOSED('LeftButton', nil, nil, nil)",
+		[56] = "153.48 [s0] TRADE_CLOSED('LeftButton', nil, nil, nil)",
+		[57] = "153.58 [s0] PLAYER_MONEY(nil, nil, nil, nil)",
+		[58] = "153.58 [s0] TRADE_REQUEST_CANCEL(nil, nil, nil, nil)",
+		[59] = "170.33 [s0] UNIT_PET('0x000000003B9FE3AB', nil, nil, nil)",
+		[60] = "170.69 [s0] UNIT_PET('0x000000003BA0102B', nil, nil, nil)",
+		[61] = "173.69 [s0] UNIT_PET('0x000000003B9FAC8E', nil, nil, nil)",
+		[62] = "173.69 [s0] UNIT_PET('0x000000003B9F26E0', nil, nil, nil)",
+		[63] = "200.42 [s0] PLAYER_FLAGS_CHANGED('0x0000000000000D96', nil, nil, nil)",
+		[64] = "209.57 [s0] CHAT_MSG_SYSTEM('Arathi Basin [40-49] started!', '', '', '')",
+		[65] = "214.08 [s0] UI_ERROR_MESSAGE('You must wait 6 Seconds before speaking again.', nil, nil, nil)",
+		[66] = "217.44 [s0] GOSSIP_SHOW(nil, nil, nil, nil)",
+		[67] = "218.99 [s12] GOSSIP_CLOSED(nil, nil, nil, nil)",
+		[68] = "219.00 [s12] TAXIMAP_OPENED(nil, nil, nil, nil)",
+		[69] = "224.77 [s0] TAXIMAP_CLOSED('LeftButton', nil, nil, nil)",
+		[70] = "224.77 [s0] TAXIMAP_CLOSED('LeftButton', nil, nil, nil)",
+		[71] = "247.95 [s0] GOSSIP_SHOW(nil, nil, nil, nil)",
+		[72] = "248.74 [s0] GOSSIP_CLOSED(nil, nil, nil, nil)",
+		[73] = "248.74 [s0] BANKFRAME_OPENED(nil, nil, nil, nil)",
+		[74] = "253.43 [s0] BANKFRAME_CLOSED('LeftButton', nil, nil, nil)",
+		[75] = "253.43 [s0] BANKFRAME_CLOSED('LeftButton', nil, nil, nil)",
+		[76] = "273.97 [s0] AUCTION_HOUSE_SHOW(nil, nil, nil, nil)",
+		[77] = "274.06 [s15] AUCTION_BIDDER_LIST_UPDATE(nil, nil, nil, nil)",
+		[78] = "279.06 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[79] = "279.10 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[80] = "279.10 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[81] = "279.10 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[82] = "279.10 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[83] = "279.10 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[84] = "279.10 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[85] = "279.10 [s15] AUCTION_ITEM_LIST_UPDATE(nil, nil, nil, nil)",
+		[86] = "287.68 [s0] AUCTION_HOUSE_CLOSED('LeftButton', nil, nil, nil)",
+		[87] = "287.68 [s0] AUCTION_HOUSE_CLOSED('LeftButton', nil, nil, nil)",
+	},
+	["registered"] = {
+	},
+	["meta"] = {
+		["hasSelect"] = "true",
+		["started"] = "2026-11-01 00:29:59",
+		["locale"] = "enUS",
+		["player"] = "Probechar",
+		["lua"] = "nil",
+		["realm"] = "Realm",
+		["build"] = "1.18.1",
+	},
+	["sessions"] = {
+		[1] = {
+			["trigger"] = "-",
+			["args"] = "",
+			["id"] = 1,
+			["window"] = "general",
+			["t"] = "0.06",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumSavedInstances()",
+					["t"] = "0.96",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | nil  ;;  2: nil | 0 | nil  ;;  3: nil | 0 | nil'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetSavedInstanceInfo(i) end)",
+					["t"] = "1.26",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetInstanceBootTimeRemaining()",
+					["t"] = "1.57",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "CanShowResetInstances()",
+					["t"] = "1.87",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+						[3] = "0",
+					},
+					["name"] = "GetPVPLifetimeStats()",
+					["t"] = "2.18",
+					["ok"] = true,
+					["n"] = 3,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetPVPSessionStats()",
+					["t"] = "2.48",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetPVPThisWeekStats()",
+					["t"] = "2.78",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+						[3] = "0",
+						[4] = "0",
+					},
+					["name"] = "GetPVPLastWeekStats()",
+					["t"] = "3.09",
+					["ok"] = true,
+					["n"] = 4,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+						[3] = "0",
+					},
+					["name"] = "GetPVPYesterdayStats()",
+					["t"] = "3.39",
+					["ok"] = true,
+					["n"] = 3,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetPVPRankProgress()",
+					["t"] = "3.69",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "'1: 'Scout ' | 1  ;;  2: 'Grunt ' | 2  ;;  3: 'Sergeant ' | 3  ;;  4: 'Senior Sergeant ' | 4'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetPVPRankInfo(i + 4) end)",
+					["t"] = "3.99",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "'1: '' | 0 | 0 | 0 | 0 | 1.000000059139 | 1 | nil | 1  ;;  2: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | 2  ;;  3: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  4: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  5: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  6: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  7: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil'",
+					},
+					["name"] = "FWP_each(7, function(i) return GetChatWindowInfo(i) end)",
+					["t"] = "4.29",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "'1: 'SAY' | 'CREATURE' | 'CHANNEL' | 'SKILL' | 'LOOT' | 'COMBAT_XP_GAIN' | 'COMBAT_HONOR_GAIN' | 'COMBAT_FACTION_CHANGE'  ;;  2: 'CREATURE' | 'SKILL' | 'LOOT' | 'COMBAT_MISC_INFO' | 'COMBAT_SELF_HITS' | 'COMBAT_SELF_MISSES' | 'COMBAT_PET_HITS' | 'COMBAT_PET_MISSES' | 'COMBAT_HOSTILEPLAYER_HITS' | 'COMBAT_HOSTILEPLAYER_MISSES' | 'COMBAT_CREATURE_VS_SELF_HITS' | 'COMBAT_CREATURE_VS_SELF_MISSES' | 'COMBAT_FRIENDLY_DEATH' | 'COMBAT_HOSTILE_DEATH' | 'COMBAT_XP_GAIN' | 'SPELL_SELF_DAMAGE' | 'SPELL_SELF_BUFF' | 'SPELL_PET_DAMAGE' | 'SPELL_PET_BUFF' | 'SPELL_HOSTILEPLAYER_DAMAGE' | 'SPELL_HOSTILEPLAYER_BUFF' | 'SPELL_CREATURE_VS_SELF_DAMAGE' | 'SPELL_CREATURE_VS_SELF_BUFF' | 'SPELL_TRADESKILLS' | 'SPELL_DAMAGESHIELDS_ON_SELF' | 'SPELL_AURA_GONE_SELF' | 'SPELL_ITEM_ENCHANTMENTS' | 'SPELL_BREAK_AURA' | 'SPELL_PERIODIC_SELF_DAMAGE'  ;;  3: '",
+					},
+					["name"] = "FWP_each(3, function(i) return GetChatWindowMessages(i) end)",
+					["t"] = "4.60",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "'1: 'GuildRecruitment' | 25  ;;  2:   ;;  3: '",
+					},
+					["name"] = "FWP_each(3, function(i) return GetChatWindowChannels(i) end)",
+					["t"] = "4.90",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetChatTypeIndex(\"SAY\")",
+					["t"] = "5.21",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetChatTypeIndex(\"PARTY\")",
+					["t"] = "5.52",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "6",
+					},
+					["name"] = "GetCurrentResolution()",
+					["t"] = "5.82",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+						[1] = "'1680x720'",
+						[2] = "'1920x820'",
+						[3] = "'2310x990'",
+						[4] = "'2560x1080'",
+						[5] = "'3024x1296'",
+						[6] = "'3440x1440'",
+					},
+					["name"] = "GetScreenResolutions()",
+					["t"] = "6.12",
+					["ok"] = true,
+					["n"] = 6,
+				},
+				[19] = {
+					["ret"] = {
+						[1] = "60",
+						[2] = "100",
+						[3] = "120",
+						[4] = "144",
+						[5] = "165",
+					},
+					["name"] = "GetRefreshRates()",
+					["t"] = "6.44",
+					["ok"] = true,
+					["n"] = 5,
+				},
+				[20] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetGamma()",
+					["t"] = "6.73",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[21] = {
+					["ret"] = {
+						[1] = "2200",
+					},
+					["name"] = "GetFarclip()",
+					["t"] = "7.03",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[22] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetBaseMip()",
+					["t"] = "7.33",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[23] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTerrainMip()",
+					["t"] = "7.64",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[24] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetTexLodBias()",
+					["t"] = "7.94",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[25] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetWaterDetail()",
+					["t"] = "8.24",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[26] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetWorldDetail()",
+					["t"] = "8.55",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[27] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetDoodadAnim()",
+					["t"] = "8.85",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[28] = {
+					["ret"] = {
+						[1] = "7",
+					},
+					["name"] = "GetCurrentMultisampleFormat()",
+					["t"] = "9.15",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[29] = {
+					["ret"] = {
+						[1] = "24",
+						[2] = "16",
+						[3] = "1",
+						[4] = "24",
+						[5] = "16",
+						[6] = "2",
+						[7] = "24",
+						[8] = "16",
+						[9] = "4",
+						[10] = "24",
+						[11] = "16",
+						[12] = "8",
+						[13] = "24",
+						[14] = "24",
+						[15] = "1",
+						[16] = "24",
+						[17] = "24",
+						[18] = "2",
+						[19] = "24",
+						[20] = "24",
+						[21] = "4",
+						[22] = "24",
+						[23] = "24",
+						[24] = "8",
+					},
+					["name"] = "GetMultisampleFormats()",
+					["t"] = "9.45",
+					["ok"] = true,
+					["n"] = 24,
+				},
+				[30] = {
+					["ret"] = {
+						[1] = "1",
+						[2] = "1",
+						[3] = "1",
+						[4] = "1",
+						[5] = "1",
+						[6] = "16",
+						[7] = "1",
+					},
+					["name"] = "GetVideoCaps()",
+					["t"] = "9.97",
+					["ok"] = true,
+					["n"] = 7,
+				},
+				[31] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "IsMouselooking()",
+					["t"] = "10.27",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[32] = {
+					["ret"] = {
+						[1] = "5108",
+					},
+					["name"] = "GetNumFrames()",
+					["t"] = "10.57",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[33] = {
+					["ret"] = {
+						[1] = "<function>",
+					},
+					["name"] = "geterrorhandler()",
+					["t"] = "10.88",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[34] = {
+					["ret"] = {
+					},
+					["name"] = "GetGMStatus()",
+					["t"] = "11.18",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[35] = {
+					["ret"] = {
+					},
+					["name"] = "GetGMTicket()",
+					["t"] = "11.48",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[36] = {
+					["ret"] = {
+						[1] = "1",
+						[2] = "'I want to report someone's behavior'",
+						[3] = "2",
+						[4] = "'I have an issue with my character'",
+					},
+					["name"] = "GetGMTicketCategories()",
+					["t"] = "11.79",
+					["ok"] = true,
+					["n"] = 4,
+				},
+				[37] = {
+					["ret"] = {
+						[1] = "4.9200000762939",
+					},
+					["name"] = "GetBlockChance()",
+					["t"] = "12.09",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[38] = {
+					["ret"] = {
+						[1] = "4.9200000762939",
+					},
+					["name"] = "GetParryChance()",
+					["t"] = "12.39",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[39] = {
+					["ret"] = {
+						[1] = "4.8727569580078",
+					},
+					["name"] = "GetDodgeChance()",
+					["t"] = "12.69",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[40] = {
+					["ok"] = false,
+					["name"] = "GetCombatRating(1)",
+					["t"] = "12.99",
+					["err"] = "[string \"return GetCombatRating(1)\"]:1: attempt to call global `GetCombatRating' (a nil value)",
+				},
+				[41] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetDamageBonusStat()",
+					["t"] = "13.29",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[42] = {
+					["ret"] = {
+						[1] = "'4 minutes'",
+					},
+					["name"] = "GetResSicknessDuration()",
+					["t"] = "13.60",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[43] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetTimeToWellRested()",
+					["t"] = "13.90",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[44] = {
+					["ret"] = {
+						[1] = "nil",
+						[2] = "nil",
+					},
+					["name"] = "HasPetUI()",
+					["t"] = "14.20",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[45] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "PetHasActionBar()",
+					["t"] = "14.50",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[46] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | nil | nil | nil | nil | nil  ;;  2: nil | nil | nil | nil | nil | nil | nil  ;;  3: nil | nil | nil | nil | nil | nil | nil  ;;  4: nil | nil | nil | nil | nil | nil | nil  ;;  5: nil | nil | nil | nil | nil | nil | nil  ;;  6: nil | nil | nil | nil | nil | nil | nil  ;;  7: nil | nil | nil | nil | nil | nil | nil  ;;  8: nil | nil | nil | nil | nil | nil | nil  ;;  9: nil | nil | nil | nil | nil | nil | nil  ;;  10: nil | nil | nil | nil | nil | nil | nil'",
+					},
+					["name"] = "FWP_each(10, function(i) return GetPetActionInfo(i) end)",
+					["t"] = "14.81",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[47] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPetActionsUsable()",
+					["t"] = "15.11",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[48] = {
+					["ok"] = false,
+					["name"] = "IsPetAttackActive()",
+					["t"] = "15.41",
+					["err"] = "[string \"return IsPetAttackActive()\"]:1: Usage: IsPetAttackActive(index)",
+				},
+				[49] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "PetCanBeAbandoned()",
+					["t"] = "15.72",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[50] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "PetCanBeRenamed()",
+					["t"] = "16.02",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[51] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPetIcon()",
+					["t"] = "16.32",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[52] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPetTimeRemaining()",
+					["t"] = "16.63",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[53] = {
+					["ret"] = {
+						[1] = "false",
+					},
+					["name"] = "GetTotemInfo and GetTotemInfo(1)",
+					["t"] = "16.93",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[54] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "UnitIsCorpse(\"player\")",
+					["t"] = "17.23",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[55] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetCorpseMapPosition()",
+					["t"] = "17.54",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[56] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetNumMapLandmarks()",
+					["t"] = "17.84",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[57] = {
+					["ret"] = {
+						[1] = "'1: 'Orgrimmar' | '' | 15 | 0.47610533237457 | 0.65349251031876  ;;  2: nil | nil | 0 | 0 | 0  ;;  3: nil | nil | 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetMapLandmarkInfo(i) end)",
+					["t"] = "18.15",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[58] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumMapOverlays()",
+					["t"] = "18.45",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[59] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | 0 | 0 | 0 | 0 | 0  ;;  2: nil | 0 | 0 | 0 | 0 | 0 | 0  ;;  3: nil | 0 | 0 | 0 | 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetMapOverlayInfo(i) end)",
+					["t"] = "18.75",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[60] = {
+					["ok"] = false,
+					["name"] = "GetWorldLocMapPosition and GetWorldLocMapPosition(0, 0)",
+					["t"] = "19.06",
+					["err"] = "[string \"return GetWorldLocMapPosition and GetWorldL...\"]:1: Usage: GetWorldLocMapPosition(continent, x, y)",
+				},
+				[61] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetInventoryAlertStatus(1)",
+					["t"] = "19.36",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[62] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumBattlefieldScores()",
+					["t"] = "19.67",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[63] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumBattlefieldPositions()",
+					["t"] = "19.97",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[64] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "'Progress: 0'",
+						[3] = "''",
+						[4] = "''",
+						[5] = "''",
+						[6] = "''",
+						[7] = "'CAPTUREPOINT'",
+						[8] = "0",
+						[9] = "0",
+						[10] = "0",
+					},
+					["name"] = "GetWorldStateUIInfo(1)",
+					["t"] = "20.27",
+					["ok"] = true,
+					["n"] = 10,
+				},
+				[65] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "TutorialsEnabled()",
+					["t"] = "20.58",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[66] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPVPDesired and GetPVPDesired()",
+					["t"] = "20.88",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[67] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "IsPVPTimerRunning and IsPVPTimerRunning()",
+					["t"] = "21.18",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[68] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPVPTimer and GetPVPTimer()",
+					["t"] = "21.49",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[2] = {
+			["trigger"] = "poll",
+			["args"] = "",
+			["id"] = 2,
+			["window"] = "trainer",
+			["t"] = "22.09",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "10",
+					},
+					["name"] = "GetNumTrainerServices()",
+					["t"] = "23.00",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'Hello! Ready for some training?'",
+					},
+					["name"] = "GetTrainerGreetingText()",
+					["t"] = "23.31",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: 'Recipes' | '' | 'header' | 1  ;;  2: 'Handstitched Leather Pants' | '' | 'unavailable' | 1  ;;  3: 'Handstitched Leather Belt' | '' | 'unavailable' | 1  ;;  4: 'Light Leather Quiver' | '' | 'unavailable' | 1  ;;  5: 'Small Leather Ammo Pouch' | '' | 'unavailable' | 1  ;;  6: 'Cured Light Hide' | '' | 'unavailable' | 1  ;;  7: 'Embossed Leather Vest' | '' | 'unavailable' | 1  ;;  8: 'Embossed Leather Boots' | '' | 'unavailable' | 1'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceInfo(i) end)",
+					["t"] = "23.61",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 10 | 0 | 1  ;;  2: 50 | 0 | 0  ;;  3: 75 | 0 | 0  ;;  4: 100 | 0 | 0  ;;  5: 100 | 0 | 0  ;;  6: 50 | 0 | 0  ;;  7: 100 | 0 | 0  ;;  8: 100 | 0 | 0'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceCost(i) end)",
+					["t"] = "23.91",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: 'Interface\\Icons\\INV_Pants_Wolf'  ;;  3: 'Interface\\Icons\\INV_Belt_04'  ;;  4: 'Interface\\Icons\\INV_Misc_Quiver_01''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceIcon(i) end)",
+					["t"] = "24.22",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceDescription(i) end)",
+					["t"] = "24.52",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'1: 5  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceLevelReq(i) end)",
+					["t"] = "24.82",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | 1  ;;  2: 'Leatherworking' | 15 | nil  ;;  3: 'Leatherworking' | 25 | nil  ;;  4: 'Leatherworking' | 30 | nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillReq(i) end)",
+					["t"] = "25.12",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: 'Leatherworking'  ;;  3: 'Leatherworking'  ;;  4: 'Leatherworking''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillLine(i) end)",
+					["t"] = "25.43",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceNumAbilityReq(i) end)",
+					["t"] = "25.73",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "'1: nil | 1  ;;  2: nil | 1  ;;  3: nil | 1  ;;  4: nil | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceAbilityReq(i, 1) end)",
+					["t"] = "26.03",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return IsTrainerServiceSkillStep(i) end)",
+					["t"] = "26.34",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"available\")",
+					["t"] = "26.64",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"unavailable\")",
+					["t"] = "26.94",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"used\")",
+					["t"] = "27.24",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetTrainerSelectionIndex()",
+					["t"] = "27.55",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "IsTradeskillTrainer()",
+					["t"] = "27.85",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+						[1] = "nil",
+						[2] = "nil",
+					},
+					["name"] = "GetTrainerSkillLines()",
+					["t"] = "28.15",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[19] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerSkillLineFilter(1)",
+					["t"] = "28.46",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[3] = {
+			["trigger"] = "GOSSIP_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 3,
+			["window"] = "gossip",
+			["t"] = "29.06",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "'You like the rug? I killed and skinned the beast myself. May all the centaur fall as easily.'",
+					},
+					["name"] = "GetGossipText()",
+					["t"] = "29.96",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipOptions and GetNumGossipOptions()",
+					["t"] = "30.27",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipOptions()",
+					["t"] = "30.57",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[4] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipAvailableQuests()",
+					["t"] = "30.87",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[5] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipActiveQuests()",
+					["t"] = "31.18",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipAvailableQuests and GetNumGossipAvailableQuests()",
+					["t"] = "31.48",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipActiveQuests and GetNumGossipActiveQuests()",
+					["t"] = "31.78",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[4] = {
+			["trigger"] = "TRAINER_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 4,
+			["window"] = "trainer",
+			["t"] = "32.39",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "10",
+					},
+					["name"] = "GetNumTrainerServices()",
+					["t"] = "33.29",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'Hello! Ready for some training?'",
+					},
+					["name"] = "GetTrainerGreetingText()",
+					["t"] = "33.60",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | nil | 1  ;;  2: nil | nil | nil | 1  ;;  3: nil | nil | nil | 1  ;;  4: nil | nil | nil | 1  ;;  5: nil | nil | nil | 1  ;;  6: nil | nil | nil | 1  ;;  7: nil | nil | nil | 1  ;;  8: nil | nil | nil | 1'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceInfo(i) end)",
+					["t"] = "33.90",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 0 | 0 | 0  ;;  2: 0 | 0 | 0  ;;  3: 0 | 0 | 0  ;;  4: 0 | 0 | 0  ;;  5: 0 | 0 | 0  ;;  6: 0 | 0 | 0  ;;  7: 0 | 0 | 0  ;;  8: 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceCost(i) end)",
+					["t"] = "34.20",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceIcon(i) end)",
+					["t"] = "34.50",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceDescription(i) end)",
+					["t"] = "34.81",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceLevelReq(i) end)",
+					["t"] = "35.11",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | 1  ;;  2: nil | 0 | 1  ;;  3: nil | 0 | 1  ;;  4: nil | 0 | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillReq(i) end)",
+					["t"] = "35.42",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillLine(i) end)",
+					["t"] = "35.72",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceNumAbilityReq(i) end)",
+					["t"] = "36.02",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "'1: nil | 1  ;;  2: nil | 1  ;;  3: nil | 1  ;;  4: nil | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceAbilityReq(i, 1) end)",
+					["t"] = "36.32",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return IsTrainerServiceSkillStep(i) end)",
+					["t"] = "36.63",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"available\")",
+					["t"] = "36.93",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"unavailable\")",
+					["t"] = "37.24",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"used\")",
+					["t"] = "37.54",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetTrainerSelectionIndex()",
+					["t"] = "37.84",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "IsTradeskillTrainer()",
+					["t"] = "38.14",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+						[1] = "nil",
+						[2] = "nil",
+					},
+					["name"] = "GetTrainerSkillLines()",
+					["t"] = "38.45",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[19] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerSkillLineFilter(1)",
+					["t"] = "38.75",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[5] = {
+			["trigger"] = "GOSSIP_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 5,
+			["window"] = "gossip",
+			["t"] = "39.35",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "'You like the rug? I killed and skinned the beast myself. May all the centaur fall as easily.'",
+					},
+					["name"] = "GetGossipText()",
+					["t"] = "40.26",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipOptions and GetNumGossipOptions()",
+					["t"] = "40.56",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipOptions()",
+					["t"] = "40.86",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[4] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipAvailableQuests()",
+					["t"] = "41.16",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[5] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipActiveQuests()",
+					["t"] = "41.47",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipAvailableQuests and GetNumGossipAvailableQuests()",
+					["t"] = "41.77",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipActiveQuests and GetNumGossipActiveQuests()",
+					["t"] = "42.07",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[6] = {
+			["trigger"] = "TRAINER_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 6,
+			["window"] = "trainer",
+			["t"] = "42.68",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "10",
+					},
+					["name"] = "GetNumTrainerServices()",
+					["t"] = "43.59",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'Hello! Ready for some training?'",
+					},
+					["name"] = "GetTrainerGreetingText()",
+					["t"] = "43.89",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: 'Recipes' | '' | 'header' | 1  ;;  2: 'Handstitched Leather Pants' | '' | 'unavailable' | 1  ;;  3: 'Handstitched Leather Belt' | '' | 'unavailable' | 1  ;;  4: 'Light Leather Quiver' | '' | 'unavailable' | 1  ;;  5: 'Small Leather Ammo Pouch' | '' | 'unavailable' | 1  ;;  6: 'Cured Light Hide' | '' | 'unavailable' | 1  ;;  7: 'Embossed Leather Vest' | '' | 'unavailable' | 1  ;;  8: 'Embossed Leather Boots' | '' | 'unavailable' | 1'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceInfo(i) end)",
+					["t"] = "44.19",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 664479116 | 0 | 5356880  ;;  2: 50 | 0 | 0  ;;  3: 75 | 0 | 0  ;;  4: 100 | 0 | 0  ;;  5: 100 | 0 | 0  ;;  6: 50 | 0 | 0  ;;  7: 100 | 0 | 0  ;;  8: 100 | 0 | 0'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceCost(i) end)",
+					["t"] = "44.50",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: 'Interface\\Icons\\INV_Pants_Wolf'  ;;  3: 'Interface\\Icons\\INV_Belt_04'  ;;  4: 'Interface\\Icons\\INV_Misc_Quiver_01''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceIcon(i) end)",
+					["t"] = "44.80",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceDescription(i) end)",
+					["t"] = "45.10",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceLevelReq(i) end)",
+					["t"] = "45.40",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | 1  ;;  2: 'Leatherworking' | 15 | nil  ;;  3: 'Leatherworking' | 25 | nil  ;;  4: 'Leatherworking' | 30 | nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillReq(i) end)",
+					["t"] = "45.70",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: 'Leatherworking'  ;;  3: 'Leatherworking'  ;;  4: 'Leatherworking''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillLine(i) end)",
+					["t"] = "46.00",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "'1: 1  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceNumAbilityReq(i) end)",
+					["t"] = "46.31",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "'1: nil | 1  ;;  2: nil | 1  ;;  3: nil | 1  ;;  4: nil | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceAbilityReq(i, 1) end)",
+					["t"] = "46.61",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return IsTrainerServiceSkillStep(i) end)",
+					["t"] = "46.91",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"available\")",
+					["t"] = "47.22",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"unavailable\")",
+					["t"] = "47.52",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"used\")",
+					["t"] = "47.82",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetTrainerSelectionIndex()",
+					["t"] = "48.13",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "IsTradeskillTrainer()",
+					["t"] = "48.43",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+						[1] = "nil",
+						[2] = "nil",
+					},
+					["name"] = "GetTrainerSkillLines()",
+					["t"] = "48.73",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[19] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerSkillLineFilter(1)",
+					["t"] = "49.03",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[7] = {
+			["trigger"] = "MAIL_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 7,
+			["window"] = "mail",
+			["t"] = "66.62",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetInboxNumItems()",
+					["t"] = "67.53",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "HasNewMail()",
+					["t"] = "67.83",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | nil | nil | 0 | 0 | 0 | nil | nil | nil | nil | nil | nil  ;;  2: nil | nil | nil | nil | 0 | 0 | 0 | nil | nil | nil | nil | nil | nil  ;;  3: nil | nil | nil | nil | 0 | 0 | 0 | nil | nil | nil | nil | nil | nil  ;;  4: nil | nil | nil | nil | 0 | 0 | 0 | nil | nil | nil | nil | nil | nil  ;;  5: nil | nil | nil | nil | 0 | 0 | 0 | nil | nil | nil | nil | nil | nil  ;;  6: nil | nil | nil | nil | 0 | 0 | 0 | nil | nil | nil | nil | nil | nil'",
+					},
+					["name"] = "FWP_each(6, function(i) return GetInboxHeaderInfo(i) end)",
+					["t"] = "68.13",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | nil | nil  ;;  2: nil | nil | nil | nil  ;;  3: nil | nil | nil | nil'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetInboxText(i) end)",
+					["t"] = "68.44",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | 0 | 0 | nil  ;;  2: nil | nil | 0 | 0 | nil  ;;  3: nil | nil | 0 | 0 | nil'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetInboxItem(i) end)",
+					["t"] = "68.74",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | nil | 0 | 0 | 0 | 0  ;;  2: nil | nil | nil | 0 | 0 | 0 | 0  ;;  3: nil | nil | nil | 0 | 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetInboxInvoiceInfo(i) end)",
+					["t"] = "69.05",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil'",
+					},
+					["name"] = "FWP_each(3, function(i) return InboxItemCanDelete(i) end)",
+					["t"] = "69.35",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "30",
+					},
+					["name"] = "GetSendMailPrice()",
+					["t"] = "69.65",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetSendMailMoney()",
+					["t"] = "69.96",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetSendMailCOD()",
+					["t"] = "70.27",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "nil",
+						[2] = "nil",
+						[3] = "0",
+						[4] = "0",
+					},
+					["name"] = "GetSendMailItem()",
+					["t"] = "70.57",
+					["ok"] = true,
+					["n"] = 4,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetNumStationeries()",
+					["t"] = "70.88",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "'1: 'Default Stationery' | 'Interface\\Icons\\INV_Misc_Note_01' | 0  ;;  2: nil | nil | nil  ;;  3: nil | nil | nil'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetStationeryInfo(i) end)",
+					["t"] = "71.18",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "'STATIONERYTEST'",
+					},
+					["name"] = "GetSelectedStationeryTexture()",
+					["t"] = "71.48",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetNumPackages()",
+					["t"] = "71.79",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "'1: 'Test Package' | 'Interface\\Icons\\INV_BOX_04' | 10  ;;  2: nil | nil | 0  ;;  3: nil | nil | 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetPackageInfo(i) end)",
+					["t"] = "72.09",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetInboxItemID and GetInboxItemID(1)",
+					["t"] = "72.40",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[8] = {
+			["trigger"] = "BATTLEFIELDS_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 8,
+			["window"] = "battlefield",
+			["t"] = "93.03",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumBattlefields()",
+					["t"] = "93.93",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'Warsong Gulch'",
+						[2] = "'A valley bordering Ashenvale Forest and the Barrens, Warsong Gulch hosts a constant battle between the Horde and the Alliance. Orcs use their Warsong Mill to cut lumber reaped from Ashenvale, provoking the night elves of Silverwing Hold. Eager to aid their allies, members of every race in Azeroth rush to the Gulch to lend sword, or spell, to the conflict.'",
+						[3] = "10",
+						[4] = "60",
+						[5] = "-1",
+						[6] = "0",
+						[7] = "0",
+						[8] = "20",
+						[9] = "29",
+					},
+					["name"] = "GetBattlefieldInfo()",
+					["t"] = "94.23",
+					["ok"] = true,
+					["n"] = 9,
+				},
+				[3] = {
+					["ret"] = {
+					},
+					["name"] = "GetBattlefieldInstanceInfo(1)",
+					["t"] = "94.54",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetSelectedBattlefield()",
+					["t"] = "94.84",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "CanJoinBattlefieldAsGroup()",
+					["t"] = "95.15",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: 'none' | 'Eastern Kingdoms' | 0 | 0 | 0  ;;  2: 'none' | 'Eastern Kingdoms' | 0 | 0 | 0  ;;  3: 'none' | 'Eastern Kingdoms' | 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetBattlefieldStatus(i) end)",
+					["t"] = "95.44",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 0  ;;  3: 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetBattlefieldEstimatedWaitTime(i) end)",
+					["t"] = "95.75",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[9] = {
+			["trigger"] = "GOSSIP_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 9,
+			["window"] = "gossip",
+			["t"] = "123.95",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "'The spirits have guided you to me. How may I be of service?'",
+					},
+					["name"] = "GetGossipText()",
+					["t"] = "124.88",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipOptions and GetNumGossipOptions()",
+					["t"] = "125.19",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipOptions()",
+					["t"] = "125.49",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[4] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipAvailableQuests()",
+					["t"] = "125.80",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[5] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipActiveQuests()",
+					["t"] = "126.10",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipAvailableQuests and GetNumGossipAvailableQuests()",
+					["t"] = "126.40",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipActiveQuests and GetNumGossipActiveQuests()",
+					["t"] = "126.70",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[10] = {
+			["trigger"] = "TRAINER_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 10,
+			["window"] = "trainer",
+			["t"] = "127.31",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "164",
+					},
+					["name"] = "GetNumTrainerServices()",
+					["t"] = "128.22",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'Hello, shaman!  Ready for some training?'",
+					},
+					["name"] = "GetTrainerGreetingText()",
+					["t"] = "128.52",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: 'Elemental Combat' | '' | 'header' | 1  ;;  2: 'Flame Shock' | 'Rank 1' | 'available' | 1  ;;  3: 'Fire Nova Totem' | 'Rank 1' | 'available' | 1  ;;  4: 'Purge' | 'Rank 1' | 'available' | 1  ;;  5: 'Earth Shock' | 'Rank 3' | 'available' | 1  ;;  6: 'Lightning Bolt' | 'Rank 3' | 'available' | 1  ;;  7: 'Flame Shock' | 'Rank 2' | 'unavailable' | 1  ;;  8: 'Stoneclaw Totem' | 'Rank 2' | 'unavailable' | 1'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceInfo(i) end)",
+					["t"] = "128.82",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 0 | 0 | 5356880  ;;  2: 400 | 0 | 0  ;;  3: 800 | 0 | 0  ;;  4: 720 | 0 | 0  ;;  5: 900 | 0 | 0  ;;  6: 900 | 0 | 0  ;;  7: 2000 | 0 | 0  ;;  8: 2000 | 0 | 0'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceCost(i) end)",
+					["t"] = "129.13",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: 'Interface\\Icons\\Spell_Fire_FlameShock'  ;;  3: 'Interface\\Icons\\Spell_Fire_SealOfFire'  ;;  4: 'Interface\\Icons\\Spell_Nature_Purge''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceIcon(i) end)",
+					["t"] = "129.43",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: 'Instantly sears the target with fire, causing 24 to 25 Fire damage immediately and 35 Fire damage over 15 sec.'  ;;  3: 'Summons a Fire Nova Totem that has 5 health and lasts 5 sec.  Unless it is destroyed within 4 sec., the totem inflicts 50 to 59 fire damage to enemies within 10 yd.'  ;;  4: 'Purges the enemy target, removing 1 magic effect.''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceDescription(i) end)",
+					["t"] = "129.73",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 10  ;;  3: 12  ;;  4: 12'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceLevelReq(i) end)",
+					["t"] = "130.04",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | 1  ;;  2: nil | 0 | 1  ;;  3: nil | 0 | 1  ;;  4: nil | 0 | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillReq(i) end)",
+					["t"] = "130.34",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: 'Elemental Combat'  ;;  3: 'Elemental Combat'  ;;  4: 'Elemental Combat''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillLine(i) end)",
+					["t"] = "130.64",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "'1: 1  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceNumAbilityReq(i) end)",
+					["t"] = "130.94",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "'1: 'Word of Recall Other' | 1  ;;  2: nil | 1  ;;  3: nil | 1  ;;  4: nil | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceAbilityReq(i, 1) end)",
+					["t"] = "131.25",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return IsTrainerServiceSkillStep(i) end)",
+					["t"] = "131.55",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"available\")",
+					["t"] = "131.85",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"unavailable\")",
+					["t"] = "132.16",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"used\")",
+					["t"] = "132.46",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetTrainerSelectionIndex()",
+					["t"] = "132.76",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "IsTradeskillTrainer()",
+					["t"] = "133.07",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+						[1] = "'Defense'",
+						[2] = "'Elemental Combat'",
+						[3] = "'Enhancement'",
+						[4] = "'Restoration'",
+					},
+					["name"] = "GetTrainerSkillLines()",
+					["t"] = "133.37",
+					["ok"] = true,
+					["n"] = 4,
+				},
+				[19] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerSkillLineFilter(1)",
+					["t"] = "133.67",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[11] = {
+			["trigger"] = "TRADE_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 11,
+			["window"] = "trade",
+			["t"] = "147.03",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetPlayerTradeMoney()",
+					["t"] = "147.94",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetTargetTradeMoney()",
+					["t"] = "148.24",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | 0 | 0 | nil  ;;  2: nil | nil | 0 | 0 | nil  ;;  3: nil | nil | 0 | 0 | nil  ;;  4: nil | nil | 0 | 0 | nil  ;;  5: nil | nil | 0 | 0 | nil  ;;  6: nil | nil | 0 | 0 | nil  ;;  7: nil | nil | 0 | 0 | nil'",
+					},
+					["name"] = "FWP_each(7, function(i) return GetTradePlayerItemInfo(i) end)",
+					["t"] = "148.54",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | 0 | 0 | nil | nil  ;;  2: nil | nil | 0 | 0 | nil | nil  ;;  3: nil | nil | 0 | 0 | nil | nil  ;;  4: nil | nil | 0 | 0 | nil | nil  ;;  5: nil | nil | 0 | 0 | nil | nil  ;;  6: nil | nil | 0 | 0 | nil | nil  ;;  7: nil | nil | 0 | 0 | nil | nil'",
+					},
+					["name"] = "FWP_each(7, function(i) return GetTradeTargetItemInfo(i) end)",
+					["t"] = "148.85",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1:   ;;  2:   ;;  3:   ;;  4:   ;;  5:   ;;  6:   ;;  7: '",
+					},
+					["name"] = "FWP_each(7, function(i) return GetTradePlayerItemLink(i) end)",
+					["t"] = "149.15",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1:   ;;  2:   ;;  3:   ;;  4:   ;;  5:   ;;  6:   ;;  7: '",
+					},
+					["name"] = "FWP_each(7, function(i) return GetTradeTargetItemLink(i) end)",
+					["t"] = "149.45",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'Partner'",
+						[2] = "nil",
+					},
+					["name"] = "UnitName(\"npc\")",
+					["t"] = "149.75",
+					["ok"] = true,
+					["n"] = 2,
+				},
+			},
+		},
+		[12] = {
+			["trigger"] = "GOSSIP_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 12,
+			["window"] = "gossip",
+			["t"] = "217.64",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "'You haven't lived until you've looked down on the world from the back of a wind rider.'",
+					},
+					["name"] = "GetGossipText()",
+					["t"] = "218.55",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipOptions and GetNumGossipOptions()",
+					["t"] = "218.86",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipOptions()",
+					["t"] = "219.16",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[4] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipAvailableQuests()",
+					["t"] = "219.47",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[5] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipActiveQuests()",
+					["t"] = "219.77",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipAvailableQuests and GetNumGossipAvailableQuests()",
+					["t"] = "220.08",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipActiveQuests and GetNumGossipActiveQuests()",
+					["t"] = "220.38",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[13] = {
+			["trigger"] = "TAXIMAP_OPENED",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 13,
+			["window"] = "taxi",
+			["t"] = "220.99",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "3",
+					},
+					["name"] = "NumTaxiNodes()",
+					["t"] = "221.90",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'1: 'Orgrimmar, Durotar'  ;;  2: 'Crossroads, The Barrens'  ;;  3: 'Ratchet, The Barrens'  ;;  4: 'INVALID'  ;;  5: 'INVALID'  ;;  6: 'INVALID''",
+					},
+					["name"] = "FWP_each(6, function(i) return TaxiNodeName(i) end)",
+					["t"] = "222.21",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: 'CURRENT'  ;;  2: 'REACHABLE'  ;;  3: 'REACHABLE'  ;;  4: 'NONE'  ;;  5: 'NONE'  ;;  6: 'NONE''",
+					},
+					["name"] = "FWP_each(6, function(i) return TaxiNodeGetType(i) end)",
+					["t"] = "222.51",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 110  ;;  3: 220  ;;  4: ERR [string \"return FWP_each(6, function(i) return TaxiN...\"]:1: Invalid taxi node slot  ;;  5: ERR [string \"return FWP_each(6, function(i) return TaxiN...\"]:1: Invalid taxi node slot  ;;  6: ERR [string \"return FWP_each(6, function(i) return TaxiN...\"]:1: Invalid taxi node slot'",
+					},
+					["name"] = "FWP_each(6, function(i) return TaxiNodeCost(i) end)",
+					["t"] = "222.82",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1: 0.6280078291893 | 0.55659776926041  ;;  2: 0.55735743045807 | 0.46952342987061  ;;  3: 0.6057111620903 | 0.45092070102692  ;;  4: ERR [string \"return FWP_each(6, function(i) return TaxiN...\"]:1: Invalid taxi node slot  ;;  5: ERR [string \"return FWP_each(6, function(i) return TaxiN...\"]:1: Invalid taxi node slot  ;;  6: ERR [string \"return FWP_each(6, function(i) return TaxiN...\"]:1: Invalid taxi node slot'",
+					},
+					["name"] = "FWP_each(6, function(i) return TaxiNodePosition(i) end)",
+					["t"] = "223.13",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[14] = {
+			["trigger"] = "BANKFRAME_OPENED",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 14,
+			["window"] = "bank",
+			["t"] = "248.77",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "nil",
+					},
+					["name"] = "GetNumBankSlots()",
+					["t"] = "249.68",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'1: 1000  ;;  2: 1000  ;;  3: 1000  ;;  4: 1000'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetBankSlotCost(i) end)",
+					["t"] = "249.98",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "24",
+					},
+					["name"] = "GetContainerNumSlots(-1)",
+					["t"] = "250.28",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 'Interface\\Icons\\Spell_Nature_NullifyPoison' | 10 | nil | -1 | nil  ;;  2: 'Interface\\Icons\\Spell_Nature_NullifyPoison' | 10 | nil | -1 | nil  ;;  3: 'Interface\\Icons\\Spell_Nature_NullifyPoison' | 6 | nil | -1 | nil  ;;  4: 'Interface\\Icons\\inv_misc_slime_02' | 10 | nil | -1 | nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetContainerItemInfo(-1, i) end)",
+					["t"] = "250.58",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1:   ;;  2:   ;;  3: ERR [string \"return FWP_each(3, function(i) return GetIn...\"]:1: Invalid inventory slot in GetInventoryItemLink'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetInventoryItemLink(\"player\", 67 + i) end)",
+					["t"] = "250.88",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[15] = {
+			["trigger"] = "AUCTION_HOUSE_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 15,
+			["window"] = "auction",
+			["t"] = "274.05",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "CanSendAuctionQuery()",
+					["t"] = "274.96",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetNumAuctionItems(\"list\")",
+					["t"] = "275.26",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetNumAuctionItems(\"owner\")",
+					["t"] = "275.57",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetNumAuctionItems(\"bidder\")",
+					["t"] = "275.87",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'Weapon'",
+						[2] = "'Armor'",
+						[3] = "'Container'",
+						[4] = "'Consumable'",
+						[5] = "'Trade Goods'",
+						[6] = "'Projectile'",
+						[7] = "'Quiver'",
+						[8] = "'Recipe'",
+						[9] = "'Reagent'",
+						[10] = "'Miscellaneous'",
+					},
+					["name"] = "GetAuctionItemClasses()",
+					["t"] = "276.17",
+					["ok"] = true,
+					["n"] = 10,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: 'One-Handed Axes' | 'Two-Handed Axes' | 'Bows' | 'Guns' | 'One-Handed Maces' | 'Two-Handed Maces' | 'Polearms' | 'One-Handed Swords' | 'Two-Handed Swords' | 'Staves' | 'Fist Weapons' | 'Miscellaneous' | 'Daggers' | 'Thrown' | 'Crossbows' | 'Wands' | 'Fishing Pole'  ;;  2: 'Miscellaneous' | 'Cloth' | 'Leather' | 'Mail' | 'Plate' | 'Shields' | 'Librams' | 'Idols' | 'Totems'  ;;  3: 'Bag' | 'Soul Bag' | 'Herb Bag' | 'Enchanting Bag' | 'Engineering Bag' | 'Gem Bag' | 'Mining Bag' | 'Leatherworking Bag' | 'Meat Bag' | 'Fish Bag'  ;;  4: '",
+					},
+					["name"] = "FWP_each(4, function(i) return GetAuctionItemSubClasses(i) end)",
+					["t"] = "276.47",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'INVTYPE_HEAD'",
+						[2] = "'INVTYPE_NECK'",
+						[3] = "'INVTYPE_SHOULDER'",
+						[4] = "'INVTYPE_BODY'",
+						[5] = "'INVTYPE_CHEST'",
+						[6] = "'INVTYPE_WAIST'",
+						[7] = "'INVTYPE_LEGS'",
+						[8] = "'INVTYPE_FEET'",
+						[9] = "'INVTYPE_WRIST'",
+						[10] = "'INVTYPE_HAND'",
+						[11] = "'INVTYPE_FINGER'",
+						[12] = "'INVTYPE_TRINKET'",
+						[13] = "'INVTYPE_CLOAK'",
+						[14] = "'INVTYPE_HOLDABLE'",
+					},
+					["name"] = "GetAuctionInvTypes(2, 1)",
+					["t"] = "276.78",
+					["ok"] = true,
+					["n"] = 14,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "5",
+					},
+					["name"] = "GetAuctionHouseDepositRate()",
+					["t"] = "277.08",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  2: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  3: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  4: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  5: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil'",
+					},
+					["name"] = "FWP_each(5, function(i) return GetAuctionItemInfo(\"owner\", i) end)",
+					["t"] = "277.38",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  2: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  3: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  4: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil  ;;  5: nil | nil | 1 | -1 | nil | 0 | 0 | 0 | 0 | 0 | nil | nil'",
+					},
+					["name"] = "FWP_each(5, function(i) return GetAuctionItemInfo(\"bidder\", i) end)",
+					["t"] = "277.69",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "nil",
+						[2] = "nil",
+						[3] = "1",
+						[4] = "-1",
+						[5] = "nil",
+						[6] = "0",
+						[7] = "0",
+						[8] = "nil",
+					},
+					["name"] = "GetAuctionSellItemInfo()",
+					["t"] = "278.00",
+					["ok"] = true,
+					["n"] = 8,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetSelectedAuctionItem(\"list\")",
+					["t"] = "278.30",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "IsAuctionSortReversed(\"list\", \"name\")",
+					["t"] = "278.60",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+					},
+					["name"] = "QueryAuctionItems(\"\", nil, nil, 0, 0, 0, 0, 0, 0)",
+					["t"] = "278.91",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "CanSendAuctionQuery()",
+					["t"] = "283.76",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "50",
+						[2] = "55710",
+					},
+					["name"] = "GetNumAuctionItems(\"list\")",
+					["t"] = "284.07",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "'1: 'Small Glimmering Shard' | 'Interface\\Icons\\INV_Enchant_ShardGlimmeringSmall' | 1 | 3 | 1 | 1 | 100 | 5 | 0 | 100 | nil | 'Seller'  ;;  2: 'Plans: Frostbound Slasher' | 'Interface\\Icons\\INV_Scroll_05' | 1 | 3 | nil | 1 | 7000 | 0 | 0 | 0 | nil | 'Seller'  ;;  3: 'Large Brilliant Shard' | 'Interface\\Icons\\INV_Enchant_ShardBrilliantLarge' | 1 | 3 | 1 | 1 | 34989 | 0 | 0 | 0 | nil | 'Seller'  ;;  4: 'Large Brilliant Shard' | 'Interface\\Icons\\INV_Enchant_ShardBrilliantLarge' | 1 | 3 | 1 | 1 | 34989 | 0 | 0 | 0 | nil | 'Seller'  ;;  5: 'Large Brilliant Shard' | 'Interface\\Icons\\INV_Enchant_ShardBrilliantLarge' | 1 | 3 | 1 | 1 | 34989 | 0 | 0 | 0 | nil | 'Seller''",
+					},
+					["name"] = "FWP_each(5, function(i) return GetAuctionItemInfo(\"list\", i) end)",
+					["t"] = "284.38",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+						[1] = "'1: '|cff0070dd|Hitem:10978:0:0:0|h[Small Glimmering Shard]|h|r'  ;;  2: '|cff0070dd|Hitem:83549:0:0:0|h[Plans: Frostbound Slasher]|h|r'  ;;  3: '|cff0070dd|Hitem:14344:0:0:0|h[Large Brilliant Shard]|h|r''",
+					},
+					["name"] = "FWP_each(3, function(i) return GetAuctionItemLink(\"list\", i) end)",
+					["t"] = "284.68",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[19] = {
+					["ret"] = {
+						[1] = "'1: 4  ;;  2: 2  ;;  3: 4'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetAuctionItemTimeLeft(\"list\", i) end)",
+					["t"] = "284.99",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[20] = {
+					["ret"] = {
+						[1] = "10978",
+					},
+					["name"] = "GetAuctionItemID and GetAuctionItemID(\"list\", 1)",
+					["t"] = "285.29",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+	},
+	["sessionCount"] = 15,
+}

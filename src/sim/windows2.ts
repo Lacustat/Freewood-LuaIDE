@@ -43,7 +43,7 @@ const avail = (h: SimHost, r: Recipe): number => Math.min(...r.reagents.map((x) 
 
 interface Skill { open: boolean; sel: number; rank: number; max: number; name: string }
 interface W2 { ts: Skill; craft: Skill; trainer?: { sel: number; services: Service[]; filter: Record<string, boolean>; greeting: string; skillLine: boolean }; }
-interface Service { spell: number; name: string; icon: string; cost: number; level: number; state: "available" | "unavailable" | "used"; desc: string }
+interface Service { spell: number; name: string; icon: string; cost: number; level: number; state: "available" | "unavailable" | "used" | "header"; desc: string }
 const w2 = (h: SimHost): W2 => h.store("windows2", (): W2 => ({ ts: { open: false, sel: 0, rank: 1, max: 75, name: "Sample Tailoring" }, craft: { open: false, sel: 0, rank: 1, max: 75, name: "Sample Enchanting" } }));
 // DE: Index 1 ist eine Überschrift (wie auf OctoWoW, Probe 2), Rezepte beginnen bei 2. EN: index 1 is a header row (as on OctoWoW, probe 2); recipes start at 2.
 const rec = (i: unknown): Recipe | undefined => RECIPES[(num(i) ?? 0) - 1];
@@ -127,14 +127,16 @@ const SERVICES: Service[] = [
   { spell: 78, name: "Heroic Strike", icon: "Interface\\Icons\\Ability_Rogue_Ambush", cost: 10, level: 1, state: "used", desc: "A strong attack that increases melee damage." },
 ];
 const svc = (h: SimHost, i: unknown): Service | undefined => w2(h).trainer?.services[(num(i) ?? 0) - 1];
-const visible = (h: SimHost): Service[] => { const t = w2(h).trainer; return t ? t.services.filter((s) => t.filter[s.state] !== false) : []; };
+// DE: Zeile 1 ist eine Überschrift (OctoWoW, Probe 2). EN: row 1 is a header row (OctoWoW, probe 2).
+const HEAD: Service = { spell: 0, name: "Class Skills", icon: "", cost: 10, level: 0, state: "header", desc: "" };
+const visible = (h: SimHost): Service[] => { const t = w2(h).trainer; return t ? [HEAD, ...t.services.filter((s) => t.filter[s.state] !== false)] : []; };
 
 export const TRAINER_API: Record<string, Impl> = {
   GetNumTrainerServices: (h) => visible(h).length,
   GetTrainerGreetingText: (h) => w2(h).trainer?.greeting,
-  GetTrainerServiceInfo: (h, a) => { const s = visible(h)[(num(a[0]) ?? 0) - 1]; return s ? [s.name, "", s.state, true] : undefined; },
-  GetTrainerServiceCost: (h, a) => { const s = visible(h)[(num(a[0]) ?? 0) - 1]; return s ? [s.cost, 0] : undefined; },
-  GetTrainerServiceIcon: (h, a) => visible(h)[(num(a[0]) ?? 0) - 1]?.icon,
+  GetTrainerServiceInfo: (h, a) => { const s = visible(h)[(num(a[0]) ?? 0) - 1]; return s ? [s.name, "", s.state, 1] : undefined; },
+  GetTrainerServiceCost: (h, a) => { const s = visible(h)[(num(a[0]) ?? 0) - 1]; return s ? [s.cost, 0, s.state === "header" ? 1 : 0] : undefined; },
+  GetTrainerServiceIcon: (h, a) => visible(h)[(num(a[0]) ?? 0) - 1]?.icon || undefined,
   GetTrainerServiceDescription: (h, a) => visible(h)[(num(a[0]) ?? 0) - 1]?.desc,
   GetTrainerServiceLevelReq: (h, a) => visible(h)[(num(a[0]) ?? 0) - 1]?.level,
   GetTrainerServiceSkillLine: () => undefined,

@@ -1,0 +1,1060 @@
+
+FreewoodProbeWinDB = {
+	["polled"] = "trainer,",
+	["events"] = {
+		[1] = "0.01 [s0] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[2] = "0.01 [s0] PET_BAR_UPDATE(nil, nil, nil, nil)",
+		[3] = "0.05 [s0] CHAT_MSG_SYSTEM('XP gain is ON', '', '', '')",
+		[4] = "0.07 [s1] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[5] = "0.07 [s1] UPDATE_INSTANCE_INFO(nil, nil, nil, nil)",
+		[6] = "0.07 [s1] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[7] = "0.07 [s1] UPDATE_TICKET(0, '', -1.#QNAN, 2.1219957904712e-314)",
+		[8] = "0.07 [s1] UPDATE_PENDING_MAIL(nil, nil, nil, nil)",
+		[9] = "2.49 [s1] UNIT_PET('0x000000003BA02125', nil, nil, nil)",
+		[10] = "11.45 [s1] QUEST_LOG_UPDATE(nil, nil, nil, nil)",
+		[11] = "11.45 [s1] UPDATE_TICKET(0, '', -1.#QNAN, 2.1219957904712e-314)",
+		[12] = "19.78 [s1] PLAYER_FLAGS_CHANGED('0x000000003B9C72DE', nil, nil, nil)",
+		[13] = "34.05 [s0] PLAYER_FLAGS_CHANGED('0x000000003B9FA659', nil, nil, nil)",
+		[14] = "38.51 [s0] UNIT_PET('0x000000003B9E3D1F', nil, nil, nil)",
+		[15] = "38.88 [s0] PLAYER_FLAGS_CHANGED('0x000000003B9FA659', nil, nil, nil)",
+		[16] = "71.72 [s0] PLAYER_FLAGS_CHANGED('0x000000003B9B8D7D', nil, nil, nil)",
+		[17] = "74.02 [s0] PLAYER_FLAGS_CHANGED('0x000000003B9E9476', nil, nil, nil)",
+		[18] = "74.56 [s0] UNIT_PET('0x000000003B9FAC8E', nil, nil, nil)",
+		[19] = "78.27 [s0] GOSSIP_SHOW(nil, nil, nil, nil)",
+		[20] = "79.35 [s3] GOSSIP_CLOSED(nil, nil, nil, nil)",
+		[21] = "79.35 [s3] MERCHANT_SHOW(nil, nil, nil, nil)",
+		[22] = "81.86 [s4] UNIT_PET('0x000000003B9FA5FB', nil, nil, nil)",
+		[23] = "85.37 [s4] PLAYER_FLAGS_CHANGED('0x000000003B9B4836', nil, nil, nil)",
+		[24] = "87.45 [s0] MERCHANT_CLOSED('LeftButton', nil, nil, nil)",
+		[25] = "87.45 [s0] MERCHANT_CLOSED('LeftButton', nil, nil, nil)",
+	},
+	["registered"] = {
+	},
+	["meta"] = {
+		["hasSelect"] = "true",
+		["started"] = "2026-11-01 00:34:55",
+		["locale"] = "enUS",
+		["player"] = "Probechar",
+		["lua"] = "nil",
+		["realm"] = "Realm",
+		["build"] = "1.18.1",
+	},
+	["sessions"] = {
+		[1] = {
+			["trigger"] = "-",
+			["args"] = "",
+			["id"] = 1,
+			["window"] = "general",
+			["t"] = "0.06",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumSavedInstances()",
+					["t"] = "0.99",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | nil  ;;  2: nil | 0 | nil  ;;  3: nil | 0 | nil'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetSavedInstanceInfo(i) end)",
+					["t"] = "1.29",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetInstanceBootTimeRemaining()",
+					["t"] = "1.59",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "CanShowResetInstances()",
+					["t"] = "1.90",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+						[3] = "0",
+					},
+					["name"] = "GetPVPLifetimeStats()",
+					["t"] = "2.21",
+					["ok"] = true,
+					["n"] = 3,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetPVPSessionStats()",
+					["t"] = "2.52",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetPVPThisWeekStats()",
+					["t"] = "2.83",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+						[3] = "0",
+						[4] = "0",
+					},
+					["name"] = "GetPVPLastWeekStats()",
+					["t"] = "3.13",
+					["ok"] = true,
+					["n"] = 4,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+						[3] = "0",
+					},
+					["name"] = "GetPVPYesterdayStats()",
+					["t"] = "3.43",
+					["ok"] = true,
+					["n"] = 3,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetPVPRankProgress()",
+					["t"] = "3.74",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "'1: 'Scout ' | 1  ;;  2: 'Grunt ' | 2  ;;  3: 'Sergeant ' | 3  ;;  4: 'Senior Sergeant ' | 4'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetPVPRankInfo(i + 4) end)",
+					["t"] = "4.04",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "'1: '' | 0 | 0 | 0 | 0 | 1.000000059139 | 1 | nil | 1  ;;  2: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | 2  ;;  3: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  4: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  5: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  6: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil  ;;  7: '' | 0 | 0 | 0 | 0 | 0 | nil | 1 | nil'",
+					},
+					["name"] = "FWP_each(7, function(i) return GetChatWindowInfo(i) end)",
+					["t"] = "4.35",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "'1: 'SAY' | 'CREATURE' | 'CHANNEL' | 'SKILL' | 'LOOT' | 'COMBAT_XP_GAIN' | 'COMBAT_HONOR_GAIN' | 'COMBAT_FACTION_CHANGE'  ;;  2: 'CREATURE' | 'SKILL' | 'LOOT' | 'COMBAT_MISC_INFO' | 'COMBAT_SELF_HITS' | 'COMBAT_SELF_MISSES' | 'COMBAT_PET_HITS' | 'COMBAT_PET_MISSES' | 'COMBAT_HOSTILEPLAYER_HITS' | 'COMBAT_HOSTILEPLAYER_MISSES' | 'COMBAT_CREATURE_VS_SELF_HITS' | 'COMBAT_CREATURE_VS_SELF_MISSES' | 'COMBAT_FRIENDLY_DEATH' | 'COMBAT_HOSTILE_DEATH' | 'COMBAT_XP_GAIN' | 'SPELL_SELF_DAMAGE' | 'SPELL_SELF_BUFF' | 'SPELL_PET_DAMAGE' | 'SPELL_PET_BUFF' | 'SPELL_HOSTILEPLAYER_DAMAGE' | 'SPELL_HOSTILEPLAYER_BUFF' | 'SPELL_CREATURE_VS_SELF_DAMAGE' | 'SPELL_CREATURE_VS_SELF_BUFF' | 'SPELL_TRADESKILLS' | 'SPELL_DAMAGESHIELDS_ON_SELF' | 'SPELL_AURA_GONE_SELF' | 'SPELL_ITEM_ENCHANTMENTS' | 'SPELL_BREAK_AURA' | 'SPELL_PERIODIC_SELF_DAMAGE'  ;;  3: '",
+					},
+					["name"] = "FWP_each(3, function(i) return GetChatWindowMessages(i) end)",
+					["t"] = "4.65",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "'1: 'GuildRecruitment' | 25  ;;  2:   ;;  3: '",
+					},
+					["name"] = "FWP_each(3, function(i) return GetChatWindowChannels(i) end)",
+					["t"] = "4.96",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetChatTypeIndex(\"SAY\")",
+					["t"] = "5.26",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetChatTypeIndex(\"PARTY\")",
+					["t"] = "5.57",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "6",
+					},
+					["name"] = "GetCurrentResolution()",
+					["t"] = "5.89",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+						[1] = "'1680x720'",
+						[2] = "'1920x820'",
+						[3] = "'2310x990'",
+						[4] = "'2560x1080'",
+						[5] = "'3024x1296'",
+						[6] = "'3440x1440'",
+					},
+					["name"] = "GetScreenResolutions()",
+					["t"] = "6.18",
+					["ok"] = true,
+					["n"] = 6,
+				},
+				[19] = {
+					["ret"] = {
+						[1] = "60",
+						[2] = "100",
+						[3] = "120",
+						[4] = "144",
+						[5] = "165",
+					},
+					["name"] = "GetRefreshRates()",
+					["t"] = "6.51",
+					["ok"] = true,
+					["n"] = 5,
+				},
+				[20] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetGamma()",
+					["t"] = "6.80",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[21] = {
+					["ret"] = {
+						[1] = "2200",
+					},
+					["name"] = "GetFarclip()",
+					["t"] = "7.11",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[22] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetBaseMip()",
+					["t"] = "7.41",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[23] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTerrainMip()",
+					["t"] = "7.72",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[24] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetTexLodBias()",
+					["t"] = "8.02",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[25] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetWaterDetail()",
+					["t"] = "8.33",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[26] = {
+					["ret"] = {
+						[1] = "2",
+					},
+					["name"] = "GetWorldDetail()",
+					["t"] = "8.63",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[27] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetDoodadAnim()",
+					["t"] = "8.93",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[28] = {
+					["ret"] = {
+						[1] = "7",
+					},
+					["name"] = "GetCurrentMultisampleFormat()",
+					["t"] = "9.24",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[29] = {
+					["ret"] = {
+						[1] = "24",
+						[2] = "16",
+						[3] = "1",
+						[4] = "24",
+						[5] = "16",
+						[6] = "2",
+						[7] = "24",
+						[8] = "16",
+						[9] = "4",
+						[10] = "24",
+						[11] = "16",
+						[12] = "8",
+						[13] = "24",
+						[14] = "24",
+						[15] = "1",
+						[16] = "24",
+						[17] = "24",
+						[18] = "2",
+						[19] = "24",
+						[20] = "24",
+						[21] = "4",
+						[22] = "24",
+						[23] = "24",
+						[24] = "8",
+					},
+					["name"] = "GetMultisampleFormats()",
+					["t"] = "9.54",
+					["ok"] = true,
+					["n"] = 24,
+				},
+				[30] = {
+					["ret"] = {
+						[1] = "1",
+						[2] = "1",
+						[3] = "1",
+						[4] = "1",
+						[5] = "1",
+						[6] = "16",
+						[7] = "1",
+					},
+					["name"] = "GetVideoCaps()",
+					["t"] = "9.84",
+					["ok"] = true,
+					["n"] = 7,
+				},
+				[31] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "IsMouselooking()",
+					["t"] = "10.15",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[32] = {
+					["ret"] = {
+						[1] = "5107",
+					},
+					["name"] = "GetNumFrames()",
+					["t"] = "10.45",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[33] = {
+					["ret"] = {
+						[1] = "<function>",
+					},
+					["name"] = "geterrorhandler()",
+					["t"] = "10.76",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[34] = {
+					["ret"] = {
+					},
+					["name"] = "GetGMStatus()",
+					["t"] = "11.06",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[35] = {
+					["ret"] = {
+					},
+					["name"] = "GetGMTicket()",
+					["t"] = "11.37",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[36] = {
+					["ret"] = {
+						[1] = "1",
+						[2] = "'I want to report someone's behavior'",
+						[3] = "2",
+						[4] = "'I have an issue with my character'",
+					},
+					["name"] = "GetGMTicketCategories()",
+					["t"] = "11.67",
+					["ok"] = true,
+					["n"] = 4,
+				},
+				[37] = {
+					["ret"] = {
+						[1] = "4.9200000762939",
+					},
+					["name"] = "GetBlockChance()",
+					["t"] = "11.97",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[38] = {
+					["ret"] = {
+						[1] = "4.9200000762939",
+					},
+					["name"] = "GetParryChance()",
+					["t"] = "12.55",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[39] = {
+					["ret"] = {
+						[1] = "4.8727569580078",
+					},
+					["name"] = "GetDodgeChance()",
+					["t"] = "12.86",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[40] = {
+					["ok"] = false,
+					["name"] = "GetCombatRating(1)",
+					["t"] = "13.16",
+					["err"] = "[string \"return GetCombatRating(1)\"]:1: attempt to call global `GetCombatRating' (a nil value)",
+				},
+				[41] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetDamageBonusStat()",
+					["t"] = "13.46",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[42] = {
+					["ret"] = {
+						[1] = "'4 minutes'",
+					},
+					["name"] = "GetResSicknessDuration()",
+					["t"] = "13.77",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[43] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetTimeToWellRested()",
+					["t"] = "14.07",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[44] = {
+					["ret"] = {
+						[1] = "nil",
+						[2] = "nil",
+					},
+					["name"] = "HasPetUI()",
+					["t"] = "14.38",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[45] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "PetHasActionBar()",
+					["t"] = "14.68",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[46] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | nil | nil | nil | nil | nil  ;;  2: nil | nil | nil | nil | nil | nil | nil  ;;  3: nil | nil | nil | nil | nil | nil | nil  ;;  4: nil | nil | nil | nil | nil | nil | nil  ;;  5: nil | nil | nil | nil | nil | nil | nil  ;;  6: nil | nil | nil | nil | nil | nil | nil  ;;  7: nil | nil | nil | nil | nil | nil | nil  ;;  8: nil | nil | nil | nil | nil | nil | nil  ;;  9: nil | nil | nil | nil | nil | nil | nil  ;;  10: nil | nil | nil | nil | nil | nil | nil'",
+					},
+					["name"] = "FWP_each(10, function(i) return GetPetActionInfo(i) end)",
+					["t"] = "14.99",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[47] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPetActionsUsable()",
+					["t"] = "15.29",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[48] = {
+					["ok"] = false,
+					["name"] = "IsPetAttackActive()",
+					["t"] = "15.60",
+					["err"] = "[string \"return IsPetAttackActive()\"]:1: Usage: IsPetAttackActive(index)",
+				},
+				[49] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "PetCanBeAbandoned()",
+					["t"] = "15.90",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[50] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "PetCanBeRenamed()",
+					["t"] = "16.19",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[51] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPetIcon()",
+					["t"] = "16.50",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[52] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPetTimeRemaining()",
+					["t"] = "16.81",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[53] = {
+					["ret"] = {
+						[1] = "false",
+					},
+					["name"] = "GetTotemInfo and GetTotemInfo(1)",
+					["t"] = "17.11",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[54] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "UnitIsCorpse(\"player\")",
+					["t"] = "17.41",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[55] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "0",
+					},
+					["name"] = "GetCorpseMapPosition()",
+					["t"] = "17.72",
+					["ok"] = true,
+					["n"] = 2,
+				},
+				[56] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetNumMapLandmarks()",
+					["t"] = "18.03",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[57] = {
+					["ret"] = {
+						[1] = "'1: 'Orgrimmar' | '' | 15 | 0.47610533237457 | 0.65349251031876  ;;  2: nil | nil | 0 | 0 | 0  ;;  3: nil | nil | 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetMapLandmarkInfo(i) end)",
+					["t"] = "18.33",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[58] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumMapOverlays()",
+					["t"] = "18.65",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[59] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | 0 | 0 | 0 | 0 | 0  ;;  2: nil | 0 | 0 | 0 | 0 | 0 | 0  ;;  3: nil | 0 | 0 | 0 | 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetMapOverlayInfo(i) end)",
+					["t"] = "18.96",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[60] = {
+					["ok"] = false,
+					["name"] = "GetWorldLocMapPosition and GetWorldLocMapPosition(0, 0)",
+					["t"] = "19.26",
+					["err"] = "[string \"return GetWorldLocMapPosition and GetWorldL...\"]:1: Usage: GetWorldLocMapPosition(continent, x, y)",
+				},
+				[61] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetInventoryAlertStatus(1)",
+					["t"] = "19.57",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[62] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumBattlefieldScores()",
+					["t"] = "19.87",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[63] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetNumBattlefieldPositions()",
+					["t"] = "20.18",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[64] = {
+					["ret"] = {
+						[1] = "0",
+						[2] = "'Progress: 0'",
+						[3] = "''",
+						[4] = "''",
+						[5] = "''",
+						[6] = "''",
+						[7] = "'CAPTUREPOINT'",
+						[8] = "0",
+						[9] = "0",
+						[10] = "0",
+					},
+					["name"] = "GetWorldStateUIInfo(1)",
+					["t"] = "20.48",
+					["ok"] = true,
+					["n"] = 10,
+				},
+				[65] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "TutorialsEnabled()",
+					["t"] = "20.78",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[66] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPVPDesired and GetPVPDesired()",
+					["t"] = "21.09",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[67] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "IsPVPTimerRunning and IsPVPTimerRunning()",
+					["t"] = "21.39",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[68] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetPVPTimer and GetPVPTimer()",
+					["t"] = "21.69",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[2] = {
+			["trigger"] = "poll",
+			["args"] = "",
+			["id"] = 2,
+			["window"] = "trainer",
+			["t"] = "22.30",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "164",
+					},
+					["name"] = "GetNumTrainerServices()",
+					["t"] = "23.21",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "''",
+					},
+					["name"] = "GetTrainerGreetingText()",
+					["t"] = "23.52",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: nil | nil | nil | 1  ;;  2: nil | nil | nil | 1  ;;  3: nil | nil | nil | 1  ;;  4: nil | nil | nil | 1  ;;  5: nil | nil | nil | 1  ;;  6: nil | nil | nil | 1  ;;  7: nil | nil | nil | 1  ;;  8: nil | nil | nil | 1'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceInfo(i) end)",
+					["t"] = "23.83",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 0 | 0 | 0  ;;  2: 0 | 0 | 0  ;;  3: 0 | 0 | 0  ;;  4: 0 | 0 | 0  ;;  5: 0 | 0 | 0  ;;  6: 0 | 0 | 0  ;;  7: 0 | 0 | 0  ;;  8: 0 | 0 | 0'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetTrainerServiceCost(i) end)",
+					["t"] = "24.13",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceIcon(i) end)",
+					["t"] = "24.43",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceDescription(i) end)",
+					["t"] = "24.74",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceLevelReq(i) end)",
+					["t"] = "25.05",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "'1: nil | 0 | 1  ;;  2: nil | 0 | 1  ;;  3: nil | 0 | 1  ;;  4: nil | 0 | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillReq(i) end)",
+					["t"] = "25.35",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceSkillLine(i) end)",
+					["t"] = "25.65",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "'1: 0  ;;  2: 0  ;;  3: 0  ;;  4: 0'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceNumAbilityReq(i) end)",
+					["t"] = "25.95",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[11] = {
+					["ret"] = {
+						[1] = "'1: nil | 1  ;;  2: nil | 1  ;;  3: nil | 1  ;;  4: nil | 1'",
+					},
+					["name"] = "FWP_each(4, function(i) return GetTrainerServiceAbilityReq(i, 1) end)",
+					["t"] = "26.26",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[12] = {
+					["ret"] = {
+						[1] = "'1: nil  ;;  2: nil  ;;  3: nil  ;;  4: nil'",
+					},
+					["name"] = "FWP_each(4, function(i) return IsTrainerServiceSkillStep(i) end)",
+					["t"] = "26.56",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[13] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"available\")",
+					["t"] = "26.87",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[14] = {
+					["ret"] = {
+						[1] = "1",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"unavailable\")",
+					["t"] = "27.17",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[15] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetTrainerServiceTypeFilter(\"used\")",
+					["t"] = "27.47",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[16] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetTrainerSelectionIndex()",
+					["t"] = "27.78",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[17] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "IsTradeskillTrainer()",
+					["t"] = "28.08",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[18] = {
+					["ret"] = {
+					},
+					["name"] = "GetTrainerSkillLines()",
+					["t"] = "28.39",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[19] = {
+					["ok"] = false,
+					["name"] = "GetTrainerSkillLineFilter(1)",
+					["t"] = "28.69",
+					["err"] = "[string \"return GetTrainerSkillLineFilter(1)\"]:1: Bad skill line in GetTrainerSkillLineFilter",
+				},
+			},
+		},
+		[3] = {
+			["trigger"] = "GOSSIP_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 3,
+			["window"] = "gossip",
+			["t"] = "78.35",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "'If we are to make these new lands ours then we must have places to rest our battle weary bodies. Lay your axe by the fire and share the stories of your mighty battles.'",
+					},
+					["name"] = "GetGossipText()",
+					["t"] = "79.26",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipOptions and GetNumGossipOptions()",
+					["t"] = "79.57",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipOptions()",
+					["t"] = "79.87",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[4] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipAvailableQuests()",
+					["t"] = "80.18",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[5] = {
+					["ret"] = {
+					},
+					["name"] = "GetGossipActiveQuests()",
+					["t"] = "80.48",
+					["ok"] = true,
+					["n"] = 0,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipAvailableQuests and GetNumGossipAvailableQuests()",
+					["t"] = "80.78",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "GetNumGossipActiveQuests and GetNumGossipActiveQuests()",
+					["t"] = "81.09",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+		[4] = {
+			["trigger"] = "MERCHANT_SHOW",
+			["args"] = "nil, nil, nil, nil",
+			["id"] = 4,
+			["window"] = "merchant",
+			["t"] = "81.69",
+			["results"] = {
+				[1] = {
+					["ret"] = {
+						[1] = "13",
+					},
+					["name"] = "GetMerchantNumItems()",
+					["t"] = "82.61",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[2] = {
+					["ret"] = {
+						[1] = "'1: 'Tough Jerky' | 'Interface\\Icons\\INV_Misc_Food_16' | 25 | 5 | -1 | 1  ;;  2: 'Refreshing Spring Water' | 'Interface\\Icons\\INV_Drink_07' | 25 | 5 | -1 | 1  ;;  3: 'Ice Cold Milk' | 'Interface\\Icons\\INV_Drink_Milk_01' | 125 | 5 | -1 | 1  ;;  4: 'Melon Juice' | 'Interface\\Icons\\INV_Drink_09' | 500 | 5 | -1 | nil  ;;  5: 'Moonberry Juice' | 'Interface\\Icons\\INV_Drink_02' | 2000 | 5 | -1 | nil  ;;  6: 'Sweet Nectar' | 'Interface\\Icons\\INV_Drink_12' | 1000 | 5 | -1 | nil  ;;  7: 'Haunch of Meat' | 'Interface\\Icons\\INV_Misc_Food_18' | 125 | 5 | -1 | 1  ;;  8: 'Mutton Chop' | 'Interface\\Icons\\INV_Misc_Food_14' | 500 | 5 | -1 | nil'",
+					},
+					["name"] = "FWP_each(8, function(i) return GetMerchantItemInfo(i) end)",
+					["t"] = "82.91",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[3] = {
+					["ret"] = {
+						[1] = "'1: '|cffffffff|Hitem:117:0:0:0|h[Tough Jerky]|h|r'  ;;  2: '|cffffffff|Hitem:159:0:0:0|h[Refreshing Spring Water]|h|r'  ;;  3: '|cffffffff|Hitem:1179:0:0:0|h[Ice Cold Milk]|h|r'  ;;  4: '|cffffffff|Hitem:1205:0:0:0|h[Melon Juice]|h|r''",
+					},
+					["name"] = "FWP_each(4, function(i) return GetMerchantItemLink(i) end)",
+					["t"] = "83.22",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[4] = {
+					["ret"] = {
+						[1] = "'1: 1  ;;  2: 1  ;;  3: 1'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetMerchantItemMaxStack(i) end)",
+					["t"] = "83.52",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[5] = {
+					["ret"] = {
+						[1] = "nil",
+					},
+					["name"] = "CanMerchantRepair()",
+					["t"] = "83.83",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[6] = {
+					["ret"] = {
+						[1] = "0",
+					},
+					["name"] = "GetRepairAllCost()",
+					["t"] = "84.13",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[7] = {
+					["ret"] = {
+						[1] = "12",
+					},
+					["name"] = "GetNumBuybackItems()",
+					["t"] = "84.43",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[8] = {
+					["ret"] = {
+						[1] = "'1: 'Slimy Bone' | 'Interface\\Icons\\INV_Misc_Bone_01' | 65 | 5 | 0 | 1  ;;  2: 'Chipped Boar Tusk' | 'Interface\\Icons\\INV_Misc_Bone_04' | 38 | 1 | 0 | 1  ;;  3: 'Dry Scorpid Eye' | 'Interface\\Icons\\INV_Misc_Eye_01' | 95 | 1 | 0 | 1'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetBuybackItemInfo(i) end)",
+					["t"] = "84.74",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[9] = {
+					["ret"] = {
+						[1] = "'1: ERR [string \"return FWP_each(3, function(i) return GetBu...\"]:1: attempt to call global `GetBuybackItemLink' (a nil value)  ;;  2: ERR [string \"return FWP_each(3, function(i) return GetBu...\"]:1: attempt to call global `GetBuybackItemLink' (a nil value)  ;;  3: ERR [string \"return FWP_each(3, function(i) return GetBu...\"]:1: attempt to call global `GetBuybackItemLink' (a nil value)'",
+					},
+					["name"] = "FWP_each(3, function(i) return GetBuybackItemLink(i) end)",
+					["t"] = "85.04",
+					["ok"] = true,
+					["n"] = 1,
+				},
+				[10] = {
+					["ret"] = {
+						[1] = "117",
+					},
+					["name"] = "GetMerchantItemID and GetMerchantItemID(1)",
+					["t"] = "85.34",
+					["ok"] = true,
+					["n"] = 1,
+				},
+			},
+		},
+	},
+	["sessionCount"] = 4,
+}

@@ -148,14 +148,14 @@ engines("trainer: services, filter, learning", async (mk) => {
   sim.openWindow("trainer");
   const v = run(sim, `
     local n = GetNumTrainerServices()
-    local name, _, cat = GetTrainerServiceInfo(1)
-    local cost = GetTrainerServiceCost(1)
+    local name, _, cat = GetTrainerServiceInfo(2)
+    local cost = GetTrainerServiceCost(2)
     local m0 = GetMoney()
-    BuyTrainerService(1)
-    local _, _, cat2 = GetTrainerServiceInfo(1)
+    BuyTrainerService(2)
+    local _, _, cat2 = GetTrainerServiceInfo(2)
     return n, name, cat, cost, m0 - GetMoney(), cat2
   `);
-  assert.deepEqual(v, [4, "Rend", "available", 100, 100, "used"]);
+  assert.deepEqual(v, [5, "Rend", "available", 100, 100, "used"]);
 });
 
 engines("pet and stable", async (mk) => {

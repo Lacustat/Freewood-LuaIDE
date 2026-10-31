@@ -8395,7 +8395,8 @@
       "de": "(englisch) Returns the item link of the item in a buyback slot, 1 to 12. Returns nil if the slot is empty. The link has the enchant and the random suffix of the item that you sold."
     },
     "tags": [
-      "types-inferred"
+      "types-inferred",
+      "absent-on-octowoow-1.18.1"
     ]
   },
   {

@@ -56,3 +56,5 @@ DE: Sofort-Erfassung (loot, lootroll, itemtext), Abfrage-Erkennung (tradeskill, 
 EN: immediate capture (loot, lootroll, itemtext), polling detection (tradeskill, craft, trainer, merchant, itemtext, auction), RegisterEvent hook (db.registered), group registrar (GUILD_REGISTRAR_SHOW).
 
 Kalibrierung Probe 2 · calibration probe 2: tradeskill (Überschrift an Index 1, Rezepte ab 2), Loot außerhalb, Petition ohne Petition, Tabard, CanSignPetition. Fixture: tests/fixtures/octowoow-probewin-results.txt
+
+Kalibrierung Probe 2 (Runde 3) · calibration probe 2 (round 3): Ausbilder-Kopfzeile, Briefpapier, Schlachtfeld-Info/-Status, Auktions-Standardtupel, Rückkauf (6 Werte), GetBuybackItemLink als absent getaggt. Fixtures: tests/fixtures/octowoow-probewin-2.txt, -3.txt

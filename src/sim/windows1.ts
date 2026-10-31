@@ -53,7 +53,7 @@ const pay = (h: SimHost, n: number): void => { h.inventory().money = money(h) - 
 // ===== [S2] Post · mail =====
 
 const mailOf = (h: SimHost, i: unknown): Mail | undefined => win(h).mail?.inbox[(num(i) ?? 0) - 1];
-const STATIONERY = [["Default", "Interface\\Icons\\INV_Letter_15", 0], ["Gold", "Interface\\Icons\\INV_Letter_03", 30]] as const;
+const STATIONERY = [["Default Stationery", "Interface\\Icons\\INV_Misc_Note_01", 0]] as const;
 
 export const MAIL_API: Record<string, Impl> = {
   CheckInbox: (h) => { if (win(h).mail) h.fireIf("MAIL_INBOX_UPDATE"); },
@@ -101,7 +101,7 @@ export const MAIL_API: Record<string, Impl> = {
     m.send = { money: 0, cod: 0 }; h.later(0.2, () => { h.fireIf("MAIL_SEND_SUCCESS"); h.fireIf("MAIL_SEND_INFO_UPDATE"); });
   },
   GetNumStationeries: () => STATIONERY.length,
-  GetStationeryInfo: (_h, a) => { const s = STATIONERY[(num(a[0]) ?? 0) - 1]; return s ? [s[0], s[1], s[2]] : undefined; },
+  GetStationeryInfo: (_h, a) => { const s = STATIONERY[(num(a[0]) ?? 0) - 1]; return s ? [s[0], s[1], s[2]] : [undefined, undefined, undefined]; },
   SelectStationery: (h, a) => { const m = win(h).mail; if (m) m.stationery = Math.max(0, (num(a[0]) ?? 1) - 1); },
   GetSelectedStationeryTexture: (h) => STATIONERY[win(h).mail?.stationery ?? 0]?.[1],
   GetNumPackages: () => 1,
@@ -127,7 +127,7 @@ export const AUCTION_API: Record<string, Impl> = {
   },
   GetNumAuctionItems: (h, a) => { const l = ahList(h, a[0]); return [l.length, l.length]; },
   GetAuctionItemInfo: (h, a) => {
-    const x = ahItem(h, a[0], a[1]); if (!x) return undefined;
+    const x = ahItem(h, a[0], a[1]); if (!x) return [undefined, undefined, 1, -1, undefined, 0, 0, 0, 0, 0, undefined, undefined];
     const m = im(h, x.id); const lvl = h.inventory().items[String(x.id)]?.level ?? x.level;
     return [m.name, m.icon, x.count, m.quality, true, lvl, x.minBid, x.inc, x.buyout, x.bid, x.high, x.owner];
   },
