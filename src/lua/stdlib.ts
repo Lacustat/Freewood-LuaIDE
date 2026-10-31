@@ -659,7 +659,7 @@ export function installStdlib(it: Interpreter, opts: StdlibOptions = {}): void {
   const G = it.globals;
   const S = installString(it);
   G.set("string", S);
-  it.stringMeta.set("__index", S);
+  if (it.version !== "5.0") it.stringMeta.set("__index", S); // DE: Lua 5.0 hat keine String-Methoden (s:upper()). EN: Lua 5.0 has no string methods.
   G.set("table", installTable(it));
   G.set("math", installMath(it));
   G.set("os", installOs(opts.now ?? (() => Date.now())));

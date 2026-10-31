@@ -184,6 +184,14 @@
   {
    "code": "local t={} t.x:y()",
    "message": "input:1: attempt to index field `x' (a nil value)"
+  },
+  {
+   "code": "return ('x'):bad()",
+   "message": "input:1: attempt to index a string value"
+  },
+  {
+   "code": "local s='abc' return s:upper()",
+   "message": "input:1: attempt to index local `s' (a string value)"
   }
  ]
 }
