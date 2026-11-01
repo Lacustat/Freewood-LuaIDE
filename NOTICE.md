@@ -10,5 +10,9 @@ Lizenz · License: GNU General Public License v3 (`GPL-3.0-or-later`), siehe/see
 
 **English:** The bundled plugin data (`plugins/`) is sample data. It names functions and structures from publicly documented sources; the description texts are original wording. The exact sources are listed in the `sources` field of each plugin manifest. Wiki content (Warcraft Wiki) is licensed under CC BY-SA 4.0; data derived from it must stay under the same license and credit the author. Blizzard's original files are not bundled.
 
+## ClassicAPI
+**Deutsch:** Teile der Beschreibungstexte in `plugins/classicapi-1.12/` stammen aus der Dokumentation der ClassicAPI (GPL-3.0) und stehen deshalb ebenfalls unter GPL-3.0-or-later.
+**English:** Parts of the description texts in `plugins/classicapi-1.12/` come from the ClassicAPI documentation (GPL-3.0) and are therefore also under GPL-3.0-or-later.
+
 ## Lua 5.0 (runtimes/lua50/lua50.wasm)
 Built from Lua 5.0, Copyright © 1994–2003 Tecgraf, PUC-Rio, MIT licence (https://www.lua.org/license.html).
