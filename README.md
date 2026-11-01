@@ -46,3 +46,7 @@ node scripts/serve.mjs 8123   # then http://127.0.0.1:8123/
 ## Lizenz · License
 
 GPL-3.0-or-later, Copyright (C) 2026 Lacustat. Siehe/See [LICENSE](LICENSE), [NOTICE.md](NOTICE.md).
+
+
+## Kommandozeile · Command line
+`node scripts/fw.mjs check <addon>` und `node scripts/fw.mjs run <addon> [--open mail] ...` – siehe [docs/CLI.md](docs/CLI.md). · see [docs/CLI.md](docs/CLI.md).

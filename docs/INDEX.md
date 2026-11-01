@@ -39,3 +39,5 @@
 | `tests/core.test.ts` | Tests inkl. Hygiene · tests incl. hygiene |
 
 Jede Quelldatei hat oben ein Inhaltsverzeichnis mit Abschnitten `// ===== [Sn] Name =====`. · Every source file has a table of contents at the top referring to `// ===== [Sn] Name =====` sections.
+
+- [CLI.md](CLI.md) – Kommandozeile `fw` (check, run) · command line `fw` (check, run)

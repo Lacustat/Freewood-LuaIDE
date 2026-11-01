@@ -2149,5 +2149,53 @@
       "en": "Fires for the update ticket window/state change (unverified).",
       "de": "Wird bei Änderung des Fensters/Zustands update ticket ausgelöst (ungeprüft)."
     }
+  },
+  {
+    "name": "GUILD_REGISTRAR_SHOW",
+    "payload": [],
+    "description": {
+      "en": "Fires when the guild registrar window opens.",
+      "de": "Wird ausgelöst, wenn das Gildenregistrar-Fenster geöffnet wird."
+    }
+  },
+  {
+    "name": "GUILD_REGISTRAR_CLOSED",
+    "payload": [],
+    "description": {
+      "en": "Fires when the guild registrar window closes.",
+      "de": "Wird ausgelöst, wenn das Gildenregistrar-Fenster geschlossen wird."
+    }
+  },
+  {
+    "name": "MERCHANT_FILTER_ITEM_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when the vendor item filter changes (seen on OctoWoW).",
+      "de": "Wird ausgelöst, wenn sich der Händlerfilter ändert (auf OctoWoW beobachtet)."
+    }
+  },
+  {
+    "name": "QUEST_ITEM_UPDATE",
+    "payload": [],
+    "description": {
+      "en": "Fires when quest item information updates.",
+      "de": "Wird ausgelöst, wenn sich Quest-Gegenstandsinfos aktualisieren."
+    }
+  },
+  {
+    "name": "QUEST_ACCEPT_CONFIRM",
+    "payload": [],
+    "description": {
+      "en": "Fires when another player asks you to accept a shared quest.",
+      "de": "Wird ausgelöst, wenn ein Spieler dich bittet, eine geteilte Quest anzunehmen."
+    }
+  },
+  {
+    "name": "PET_STABLE_UPDATE_PAPERDOLL",
+    "payload": [],
+    "description": {
+      "en": "Fires when the stable pet model updates.",
+      "de": "Wird ausgelöst, wenn sich das Stall-Tiermodell aktualisiert."
+    }
   }
 ]

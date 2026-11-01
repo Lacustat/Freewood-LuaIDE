@@ -1,17 +1,21 @@
 {
   "name": "freewood-lua-ide",
   "version": "0.1.0",
-  "description": "Freewood LUA IDE – modular web IDE for WoW addons (Phase 1: core and plugin skeleton) / modulare Web-IDE für WoW-Addons (Phase 1: Kern und Plugin-Gerüst)",
+  "description": "Freewood LUA IDE \u2013 modular web IDE for WoW addons (Phase 1: core and plugin skeleton) / modulare Web-IDE f\u00fcr WoW-Addons (Phase 1: Kern und Plugin-Ger\u00fcst)",
   "author": "Lacustat",
   "license": "GPL-3.0-or-later",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "tsc -p tsconfig.json && node --test dist/tests/*.test.js"
+    "test": "tsc -p tsconfig.json && node --test dist/tests/*.test.js",
+    "fw": "node scripts/fw.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "typescript": "^5.6.0"
+  },
+  "bin": {
+    "fw": "scripts/fw.mjs"
   }
 }
