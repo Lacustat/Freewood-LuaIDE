@@ -1,8 +1,7 @@
 # Freewood LUA IDE – SPDX-License-Identifier: GPL-3.0-or-later – Copyright (C) 2026 Lacustat
-# DE: Veröffentlicht die Web-IDE mit GitHub Pages (in den Repo-Einstellungen Pages auf "GitHub Actions" stellen). EN: publishes the web IDE with GitHub Pages (set Pages to "GitHub Actions" in the repo settings).
+# DE: Nur manuell (Pages braucht ein öffentliches Repo oder einen bezahlten Plan). Veröffentlicht die Web-IDE mit GitHub Pages (in den Repo-Einstellungen Pages auf "GitHub Actions" stellen). EN: manual only (Pages needs a public repo or a paid plan). Publishes the web IDE with GitHub Pages (set Pages to "GitHub Actions" in the repo settings).
 name: pages
 on:
-  push: { branches: [main, master] }
   workflow_dispatch:
 permissions: { contents: read, pages: write, id-token: write }
 jobs:
