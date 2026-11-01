@@ -83,7 +83,8 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
 
   const controls = h("div", { class: "sim-controls" });
   const screen = h("div", { class: "form-screen sim-screen", style: { width: "1024px", height: "768px" } });
-  const viewport = h("div", { class: "form-viewport" }, screen);
+  const stage = h("div", { class: "form-stage" }, screen);
+  const viewport = h("div", { class: "form-viewport" }, stage);
   const log = h("div", { class: "sim-log", role: "log", "aria-live": "polite" });
   const frames = h("ul", { class: "sim-frames" });
   const right = h("div", { class: "sim-right" }, h("h4", { text: ctx.t("sim.log") }), log, h("h4", { text: ctx.t("sim.frames") }), frames);
@@ -91,9 +92,10 @@ export function renderSimView(root: HTMLElement, ctx: Ctx): void {
 
   let scale = 1;
   const fit = (): void => {
-    scale = Math.min(1, Math.max(0.3, ((viewport.clientWidth || 1024) - 8) / 1024));
+    scale = Math.min(1, Math.max(0.1, ((viewport.clientWidth || 1024) - 10) / 1024), Math.max(0.1, ((viewport.clientHeight || 768) - 10) / 768));
     screen.style.transform = `scale(${scale})`;
-    viewport.style.height = `${768 * scale + 8}px`;
+    stage.style.width = `${1024 * scale}px`;
+    stage.style.height = `${768 * scale}px`;
   };
   new ResizeObserver(fit).observe(viewport);
 

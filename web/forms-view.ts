@@ -40,7 +40,8 @@ export function renderFormsView(root: HTMLElement, ctx: Ctx, path: string): void
 
   const treeBox = h("div", { class: "forms-tree" });
   const screen = h("div", { class: "form-screen", style: { width: `${SCREEN.width}px`, height: `${SCREEN.height}px` } });
-  const viewport = h("div", { class: "form-viewport" }, screen);
+  const stage = h("div", { class: "form-stage" }, screen);
+  const viewport = h("div", { class: "form-viewport" }, stage);
   const props = h("div", { class: "forms-props" });
   const outBox = h("div", { class: "forms-out" });
   root.append(h("div", { class: "forms-main" }, treeBox, viewport, props), outBox);
@@ -60,10 +61,13 @@ export function renderFormsView(root: HTMLElement, ctx: Ctx, path: string): void
   // ===== [S2] Zeichenfläche · canvas =====
   let scale = 1;
   function fit(): void {
+    // DE: Auto = Bühne passt in Breite UND Höhe der Fläche (wandert mit der Fenstergröße); fester Zoom = scrollen. EN: auto = stage fits width AND height of the area (follows the window size); fixed zoom = scroll.
     const w = viewport.clientWidth || SCREEN.width;
-    scale = ctx.settings.formsZoom > 0 ? ctx.settings.formsZoom / 100 : Math.min(1, Math.max(0.3, (w - 8) / SCREEN.width));
+    const hh = viewport.clientHeight || SCREEN.height;
+    scale = ctx.settings.formsZoom > 0 ? ctx.settings.formsZoom / 100 : Math.min(1, Math.max(0.1, (w - 10) / SCREEN.width, 0.1), Math.max(0.1, (hh - 10) / SCREEN.height));
     screen.style.transform = `scale(${scale})`;
-    viewport.style.height = ctx.settings.formsZoom > 0 ? "100%" : `${SCREEN.height * scale + 8}px`;
+    stage.style.width = `${SCREEN.width * scale}px`;
+    stage.style.height = `${SCREEN.height * scale}px`;
   }
 
   function drawCanvas(): void {
