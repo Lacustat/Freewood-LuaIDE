@@ -48,5 +48,8 @@ node scripts/serve.mjs 8123   # then http://127.0.0.1:8123/
 GPL-3.0-or-later, Copyright (C) 2026 Lacustat. Siehe/See [LICENSE](LICENSE), [NOTICE.md](NOTICE.md).
 
 
+## Für KI-Assistenten · For AI assistants
+Die IDE lässt sich ohne Browser per Kommandozeile nutzen, auch von KI-Assistenten: [docs/KI-ANLEITUNG.md](docs/KI-ANLEITUNG.md). · The IDE can be used from the command line without a browser, also by AI assistants: [docs/KI-ANLEITUNG.md](docs/KI-ANLEITUNG.md).
+
 ## Kommandozeile · Command line
 `node scripts/fw.mjs check <addon>` und `node scripts/fw.mjs run <addon> [--open mail] ...` – siehe [docs/CLI.md](docs/CLI.md). · see [docs/CLI.md](docs/CLI.md).

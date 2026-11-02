@@ -41,3 +41,4 @@
 Jede Quelldatei hat oben ein Inhaltsverzeichnis mit Abschnitten `// ===== [Sn] Name =====`. · Every source file has a table of contents at the top referring to `// ===== [Sn] Name =====` sections.
 
 - [CLI.md](CLI.md) – Kommandozeile `fw` (check, run) · command line `fw` (check, run)
+- [KI-ANLEITUNG.md](KI-ANLEITUNG.md) – Anleitung für KI-Assistenten · guide for AI assistants
