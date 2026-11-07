@@ -118,6 +118,20 @@
 
 ## Eigene Fehler, die Tests hätten finden können · Own bugs tests could have found
 
+### F-16 Es gibt keinen Munitionsplatz (Inventarplatz 0)
+- **Symptom:** Jäger-Addon meldete bei jeder Taschenänderung „Munition angelegt“, obwohl die Pfeile schon im Köcher lagen.
+- **Ursache:** Auf Forever liefert `GetInventoryItemLink("player", 0)` dauerhaft nichts (Probe: „Munitionsplatz (0): leer oder nicht vorhanden“), obwohl Pfeile im Köcher liegen und genutzt werden. Der Vanilla-Munitionsplatz existiert dort nicht oder wird nicht gemeldet; Munition im Köcher gilt direkt.
+- **Lösung:** Nicht versuchen, Munition anzulegen: nur ein Versuch je Item-ID, Wirkung prüfen, sonst aufgeben (Freewood-Class 0.4.1).
+- **Für die IDE:** `GetInventoryItemLink("player", 0)` gibt `nil` zurück; Köcher (Klasse 11, Unterklasse 2) und Munition (Klasse 6) werden über Taschen gelesen. Aktionen mit Rückmeldung immer auf Wirkung prüfen, nicht auf „Aufruf ohne Fehler“.
+- **Status:** *bestätigt* (Probe, Build 16001).
+
+### F-17 Händler verkauft nur ganze Packungen
+- **Symptom:** Das Addon wollte „auf den Punkt“ auffüllen (z. B. 142 Pfeile), der Händler verkauft Pfeile aber nur in Packungen zu 200 (Preis je 200, höchste Menge 200).
+- **Ursache:** `GetMerchantItemInfo` meldet Menge 200 je Angebot; ein Kauf bringt immer 200. Eine Menge unter 200 gibt es nicht, 200 würden nicht in den Köcher passen.
+- **Lösung:** Platz auf volle Angebotsmengen abrunden und nur diese kaufen (`WholeUnits`, Freewood-Class 0.4.2).
+- **Für die IDE:** Händlerangebote mit Menge > 1 simulieren (Preis je Angebot, nicht je Stück) und prüfen, dass nie mehr als hineinpasst gekauft wird.
+- **Status:** *bestätigt* für das Angebotsformat (Probe); der Kauf selbst ist noch nicht im Spiel geprüft.
+
 ### F-15 Namensprüfung ohne Leerzeichen
 - **Symptom:** „Grindma Silberrücken“ (Name mit Leerzeichen) wurde in der Mailingliste als ungültig abgelehnt; nur „GrindmaSilberrücken“ ging.
 - **Ursache:** Das Muster `[^%w\128-\255%-]` enthielt kein Leerzeichen.
