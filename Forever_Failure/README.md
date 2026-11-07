@@ -199,6 +199,13 @@
 - **Für die IDE:** `fw check` soll Funktionen melden, die im Rest des Addons aufgerufen werden, aber nicht mehr definiert sind (Idee, offen).
 - **Status:** *bestätigt*.
 
+### F-28 Per Lua erzeugtes Eingabefeld holt sich den Tastaturfokus
+- **Symptom:** Nach einem Update reagierte die Tastatur im Spiel nicht mehr; Esc löste es.
+- **Ursache:** `CreateFrame("EditBox")` hat `autoFocus` standardmäßig an und ist sofort sichtbar. Ein Hilfsfeld, das nur zum Erreichen der Methodentabelle (für `hooksecurefunc`) angelegt wurde, nahm alle Tasten an (Freewood-Core 0.16.0).
+- **Lösung:** Sofort `SetAutoFocus(false)`, `ClearFocus()`, `Hide()` (Core 0.16.1); besser nur Hilfsobjekte anlegen, die keinen Fokus nehmen (Frame, Texture, FontString).
+- **Für die IDE:** `CreateFrame("EditBox", ...)` ohne `SetAutoFocus(false)` im selben Block als Warnung melden; in der Simulation Tastaturfokus nachbilden (Tasten gehen an das fokussierte Feld).
+- **Status:** *bestätigt* (Nutzer).
+
 ### F-15 Namensprüfung ohne Leerzeichen
 - **Symptom:** „Grindma Silberrücken“ (Name mit Leerzeichen) wurde in der Mailingliste als ungültig abgelehnt; nur „GrindmaSilberrücken“ ging.
 - **Ursache:** Das Muster `[^%w\128-\255%-]` enthielt kein Leerzeichen.
