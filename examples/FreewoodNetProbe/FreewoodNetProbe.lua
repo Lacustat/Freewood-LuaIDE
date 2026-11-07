@@ -175,6 +175,32 @@ local function SendTo(id)
     end)
 end
 
+-- Lasttest: N Fluesternachrichten an mich selbst, so schnell wie moeglich, mit 240 Zeichen
+local burst
+local function Burst(n)
+    n = tonumber(n) or 50
+    local name = G.UnitName("player")
+    local first, sur = G.UnitFullName("player")
+    local a2, b2 = G.UnitFullName("player")
+    local full = G.GetUnitName and G.GetUnitName("player", true)
+    if full and Safe(full):find(" ") then name = Safe(full) elseif a2 and G.UnitName("player") then name = name end
+    if not name:find(" ") then name = name .. " Freewood" end
+    burst = { n = n, got = 0, codes = {}, t0 = G.GetTime(), name = name }
+    local pad = string.rep("x", 230)
+    local api = G.C_ChatInfo
+    for i = 1, n do
+        local ok, res = pcall(api.SendAddonMessage, PREFIX, "B" .. i .. "|" .. pad, "WHISPER", name)
+        local k = ResultName(res)
+        burst.codes[k] = (burst.codes[k] or 0) + 1
+    end
+    Log("LAST", n .. " Nachrichten gesendet in " .. string.format("%.2f", G.GetTime() - burst.t0) .. " s an " .. name)
+    G.C_Timer.After(10, function()
+        local parts = {}
+        for k, v in pairs(burst.codes) do parts[#parts + 1] = k .. "=" .. v end
+        Log("LAST", "Rueckgabecodes: " .. table.concat(parts, ", ") .. " | angekommen: " .. burst.got .. " von " .. burst.n)
+    end)
+end
+
 local function TestChan()
     stopFlag = false
     local function Next(i)
@@ -259,7 +285,10 @@ f:SetScript("OnEvent", function(_, event, a1, a2, a3, a4)
             DB.seen[k] = (DB.seen[k] or 0) + 1
             if DB.seen[k] == 1 then Log("FREMD", "neues Praefix " .. k .. " von " .. Safe(a4)) end
         else
-            Log("EMPFANG", "Praefix=" .. Safe(a1) .. " Art=" .. Safe(a3) .. " von=" .. Safe(a4) .. " Text=" .. text:sub(1, 40))
+            if burst and text:sub(1, 1) == "B" and text:find("|", 1, true) then burst.got = burst.got + 1
+            else
+                Log("EMPFANG", "Praefix=" .. Safe(a1) .. " Art=" .. Safe(a3) .. " von=" .. Safe(a4) .. " Text=" .. text:sub(1, 40))
+            end
         end
         if a1 == PREFIX then
             if Safe(a3) == "CHANNEL" then echo.addon = true end
@@ -292,6 +321,7 @@ G.SlashCmdList["FWNP"] = function(msg)
     elseif cmd == "call" then TestCall()
     elseif cmd == "club" then TestClub()
     elseif cmd == "send" then SendTo(rest)
+    elseif cmd == "burst" then Burst(rest)
     elseif cmd == "list" then ListChannels(false)
     elseif cmd == "leave" then ListChannels(true)
     elseif cmd == "chan" then TestChan()
