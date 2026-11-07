@@ -137,6 +137,44 @@ local function TestTypes()
     Step(1)
 end
 
+local function ListChannels(leave)
+    local n = 0
+    for i = 1, 30 do
+        local id, name, inst, comm = G.GetChannelName(i)
+        if name and Safe(name) ~= "nil" and Safe(name) ~= "" then
+            n = n + 1
+            Log("LISTE", "Platz " .. i .. ": id=" .. Safe(id) .. " name=" .. Safe(name) .. " gemeinschaft=" .. Safe(comm))
+            if leave then
+                local low = Safe(name):lower()
+                if low:find("^freewood") or low:find("^fw") then
+                    pcall(G.LeaveChannelByName, Safe(name))
+                    Log("LISTE", "  verlassen: " .. Safe(name))
+                end
+            end
+        end
+    end
+    Log("LISTE", "Kanaele gesamt: " .. n)
+end
+
+local function SendTo(id)
+    id = tonumber(id)
+    if not id then print("FWNP: /fwnp send <Kanalnummer>") return end
+    echo.addon, echo.chat = false, false
+    local t0 = G.GetTime()
+    local api = G.C_ChatInfo
+    local ok1, r1 = false, nil
+    if api and api.SendAddonMessage then ok1, r1 = pcall(api.SendAddonMessage, PREFIX, "test", "CHANNEL", id) end
+    Log("SEND", "Kanal " .. id .. " Addon ok=" .. tostring(ok1) .. " " .. ResultName(r1))
+    G.C_Timer.After(3, function()
+        Log("SEND", "Kanal " .. id .. " Echo Addon=" .. tostring(echo.addon) .. " sichtbar=" .. tostring(VisibleSince(t0) ~= nil))
+        local ok2, r2 = pcall(G.SendChatMessage, "test", "CHANNEL", nil, id)
+        Log("SEND", "Kanal " .. id .. " Chat ok=" .. tostring(ok2) .. " " .. Safe(r2))
+        G.C_Timer.After(3, function()
+            Log("SEND", "Kanal " .. id .. " Echo Chat=" .. tostring(echo.chat))
+        end)
+    end)
+end
+
 local function TestChan()
     stopFlag = false
     local function Next(i)
@@ -157,7 +195,7 @@ local function TestChan()
             end
             local id, cname = G.GetChannelName and G.GetChannelName(name)
             Log("KANAL", name .. " Nummer=" .. Safe(id) .. " Name=" .. Safe(cname))
-            if not id or id == 0 or Safe(cname):lower() ~= name:lower() then
+            if not id or id == 0 then
                 Log("KANAL", name .. ": Beitritt nicht bestaetigt, ueberspringe (nichts gesendet)")
                 pcall(G.LeaveChannelByName, name)
                 G.C_Timer.After(1, function() Next(i + 1) end)
@@ -253,6 +291,9 @@ G.SlashCmdList["FWNP"] = function(msg)
     if cmd == "self" then TestSelf()
     elseif cmd == "call" then TestCall()
     elseif cmd == "club" then TestClub()
+    elseif cmd == "send" then SendTo(rest)
+    elseif cmd == "list" then ListChannels(false)
+    elseif cmd == "leave" then ListChannels(true)
     elseif cmd == "chan" then TestChan()
     elseif cmd == "types" then TestTypes()
     elseif cmd == "stop" then stopFlag = true print("FWNP: stop")
