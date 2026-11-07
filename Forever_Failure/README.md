@@ -132,6 +132,13 @@
 - **Für die IDE:** Händlerangebote mit Menge > 1 simulieren (Preis je Angebot, nicht je Stück) und prüfen, dass nie mehr als hineinpasst gekauft wird.
 - **Status:** *bestätigt* für das Angebotsformat (Probe); der Kauf selbst ist noch nicht im Spiel geprüft.
 
+### F-18 Zeilenrahmen ohne Breite zeigt seine Kinder nicht
+- **Symptom:** Im Reiter „Munition/Pfeile“ blieben Beschriftung und Regler (Größe, Reserve, Warnschwelle) leer; nur die Lücke im Stapel war da.
+- **Ursache:** Beschriftung und Regler hingen an einem Zeilenrahmen, dem nur Höhe und ein Ankerpunkt, aber keine Breite gegeben wurde. Auf Forever zeichnet so ein Rahmen seine Kinder nicht.
+- **Lösung:** Beschriftung und Regler als eigene Bausteine in den Stapel (wie in ChatBubbles), jeder mit eigener Höhe (Freewood-Class 0.4.3).
+- **Für die IDE:** Rahmen ohne Breite oder Höhe (`GetWidth() == 0`) im Test als Warnung melden; Kinder eines solchen Rahmens gelten als nicht sichtbar.
+- **Status:** *bestätigt* (Screenshot).
+
 ### F-15 Namensprüfung ohne Leerzeichen
 - **Symptom:** „Grindma Silberrücken“ (Name mit Leerzeichen) wurde in der Mailingliste als ungültig abgelehnt; nur „GrindmaSilberrücken“ ging.
 - **Ursache:** Das Muster `[^%w\128-\255%-]` enthielt kein Leerzeichen.
