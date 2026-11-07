@@ -342,3 +342,27 @@ engines("FreewoodProbeWin addon: detects simulated windows and records their ses
   for (const k of [1, 2, 3, 4, 5, 6, 7]) assert.ok((v[k] as number) >= 3, `group ${k} too small: ${String(v[k])}`);
   assert.equal(v[8], "", `syntax errors:\n${String(v[8])}`);
 });
+
+// ===== [S2] Addon-Nachrichten · addon messages (Forever_Failure F-20 bis F-23) =====
+
+engines("C_ChatInfo.SendAddonMessage: result codes, self whisper, channel drop", async (mk) => {
+  const t = await targets();
+  const sim = await mk(t.c!);
+  const v = run(sim, `
+    local got = {}
+    local f = CreateFrame("Frame")
+    f:RegisterEvent("CHAT_MSG_ADDON")
+    f:RegisterEvent("CHAT_MSG_SYSTEM")
+    f:SetScript("OnEvent", function(self, event, a1, a2, a3, a4) table.insert(got, event .. ":" .. tostring(a1)) end)
+    local E = Enum.SendAddonMessageResult
+    local reg = C_ChatInfo.RegisterAddonMessagePrefix("FWTEST")
+    local self_ = C_ChatInfo.SendAddonMessage("FWTEST", "hi", "WHISPER", UnitName("player"))
+    local other = C_ChatInfo.SendAddonMessage("FWTEST", "hi", "WHISPER", "Nobody Here")
+    local say = C_ChatInfo.SendAddonMessage("FWTEST", "hi", "SAY")
+    local guild = C_ChatInfo.SendAddonMessage("FWTEST", "hi", "OFFICER")
+    local chan = C_ChatInfo.SendAddonMessage("FWTEST", "hi", "CHANNEL", 5)
+    local nowhisper = C_ChatInfo.SendAddonMessage("FWTEST", "hi", "WHISPER")
+    return reg, self_, other, say, guild, chan, nowhisper, E.InvalidChatType, E.NotInGuild
+  `);
+  assert.deepEqual(v, [true, 0, 0, 4, 10, 0, 4, 4, 10]);
+});

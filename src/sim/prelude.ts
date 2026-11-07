@@ -660,6 +660,7 @@ G.Enum = G.Enum or {}
 G.Enum.UIMapType = { Cosmic = 0, World = 1, Continent = 2, Zone = 3, Dungeon = 4, Micro = 5, Orphan = 6 }
 G.Enum.FlightPathFaction = { Neutral = 0, Horde = 1, Alliance = 2 }
 G.Enum.FlightPathState = { Reachable = 0, Current = 1, Unreachable = 2 }
+G.Enum.SendAddonMessageResult = { Success = 0, InvalidPrefix = 1, InvalidMessage = 2, AddonMessageThrottle = 3, InvalidChatType = 4, NotInGroup = 5, TargetRequired = 6, InvalidChannel = 7, ChannelThrottle = 8, GeneralError = 9, NotInGuild = 10, AddOnMessageLockdown = 11, TargetOffline = 12 }
 -- ---- Farben, JSON, kleine Tabellen · colors, JSON, small tables ----
 local ColorMixin = {}
 ColorMixin.GetRGB = function(self) return self.r, self.g, self.b end

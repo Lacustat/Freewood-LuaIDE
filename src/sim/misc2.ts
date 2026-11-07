@@ -78,6 +78,29 @@ export const MISC2_API: Record<string, Impl> = {
   ExpandAllFactionHeaders: (h) => { for (const f of h.character().factions) if (f.header) f.collapsed = false; },
   LoggingCombat: (h, a) => { const p = h.store("combatlog", () => ({ on: false })); if (a[0] !== undefined) p.on = a[0] === true || a[0] === 1; return p.on ? 1 : undefined; },
   LoggingChat: (h, a) => { const p = h.store("chatlog", () => ({ on: false })); if (a[0] !== undefined) p.on = a[0] === true || a[0] === 1; return p.on ? 1 : undefined; },
+  // Auf Forever gemessen (7.11.2026, Forever_Failure F-20 bis F-23): Ergebniscodes, WHISPER nur zustellbar an sich selbst (andere Spieler
+  // sind in der Simulation nicht da: Systemzeile "kein Spieler mit dem Namen ... online"), CHANNEL wird angenommen, aber verworfen.
+  "C_ChatInfo.RegisterAddonMessagePrefix": (h, a) => { const p = h.store("addonprefix", () => new Set<string>()); const ok = typeof a[0] === "string" && a[0].length > 0 && a[0].length <= 16; if (ok) p.add(a[0] as string); return ok; },
+  "C_ChatInfo.SendAddonMessage": (h, a) => {
+    const prefix = String(a[0]), text = String(a[1] ?? ""), ch = String(a[2] ?? "").toUpperCase(), target = str(a[3]);
+    if (prefix.length > 16 || text.length > 255) return text.length > 255 ? 2 : 1;
+    const registered = h.store("addonprefix", () => new Set<string>());
+    const me = h.scenario.player.name;
+    if (ch === "WHISPER") {
+      if (!target) return 4;
+      if (target.toLowerCase() === me.toLowerCase()) {
+        if (registered.has(prefix)) h.later(0, () => h.fireIf("CHAT_MSG_ADDON", prefix, text, "WHISPER", me));
+        return 0;
+      }
+      h.note("info", `Addon whisper to ${target}: other players are not simulated`);
+      h.later(0, () => h.fireIf("CHAT_MSG_SYSTEM", `Momentan ist kein Spieler mit dem Namen '${target}' online.`));
+      return 0;
+    }
+    if (ch === "PARTY" || ch === "RAID" || ch === "INSTANCE_CHAT") return h.scenario.party.length > 0 ? 0 : 5;
+    if (ch === "GUILD" || ch === "OFFICER") return h.scenario.player.guild ? 0 : 10;
+    if (ch === "CHANNEL") { h.note("info", "Addon message to a custom channel: accepted but dropped (measured on Forever)"); return 0; }
+    return 4; // SAY, YELL, CLUB, COMMUNITY und alles Unbekannte
+  },
   SendAddonMessage: (h, a) => { const ch = str(a[2]) ?? "PARTY"; h.note("info", `Addon message [${String(a[0])}] on ${ch}: ${String(a[1])}`); h.later(0, () => h.fireIf("CHAT_MSG_ADDON", String(a[0]), String(a[1]), ch, h.scenario.player.name)); },
 };
 void str;

@@ -12,8 +12,9 @@
 5. [Makros und Tastenbelegung · Macros and key bindings](#makros-und-tastenbelegung--macros-and-key-bindings)
 6. [Laden, Neustart, SavedVariables · Loading, restart, SavedVariables](#laden-neustart-savedvariables--loading-restart-savedvariables)
 7. [Eigene Fehler, die Tests hätten finden können · Own bugs tests could have found](#eigene-fehler-die-tests-hätten-finden-können--own-bugs-tests-could-have-found)
-8. [Hinweise für Retail und die Simulation · Notes for Retail and the simulation](#hinweise-für-retail-und-die-simulation--notes-for-retail-and-the-simulation)
-9. [Neuen Eintrag anlegen · Adding an entry](#neuen-eintrag-anlegen--adding-an-entry)
+8. [Erfolge, die im Spiel bestätigt sind · Confirmed successes](#erfolge-die-im-spiel-bestätigt-sind--confirmed-successes)
+9. [Hinweise für Retail und die Simulation · Notes for Retail and the simulation](#hinweise-für-retail-und-die-simulation--notes-for-retail-and-the-simulation)
+10. [Neuen Eintrag anlegen · Adding an entry](#neuen-eintrag-anlegen--adding-an-entry)
 
 ## Wofür · Purpose
 **DE:** Hier stehen Fehler, die beim Testen von Freewood-Addons im echten Spiel (WoW Forever, Client 1.60.1, Interface 16001, Lua 5.1) aufgetreten sind, obwohl Syntax-Prüfung und Simulation grün waren. Ziel: die Simulation der IDE so zu verbessern, dass sie diese Fälle nachstellt, und anderen Chats (zum Beispiel für Retail) zu sagen, was sie beachten müssen.
@@ -146,12 +147,81 @@
 - **Für die IDE:** Text mit `\n` in einem Label ohne Umbruch als Warnung melden.
 - **Status:** *bestätigt* (Screenshot).
 
+### F-20 `UnitName("player")` liefert nur den Vornamen
+- **Symptom:** Flüstern an den eigenen Charakter („Dr“) ergab „Momentan ist kein Spieler mit dem Namen 'Dr' online“.
+- **Ursache:** Charaktere haben auf Forever Vor- und Nachnamen („Dr Freewood“). `UnitName("player")` gibt nur den ersten Teil zurück; Flüstern und Addon-Nachrichten brauchen den vollen Namen.
+- **Lösung:** `GetUnitName("player", true)` bzw. `UnitFullName("player")` verwenden und beide Teile mit Leerzeichen verbinden (`Whisper.SelfName`, Core 0.13.2).
+- **Für die IDE:** Szenarien mit zweiteiligem Spielernamen anbieten; `UnitName` für den Spieler soll dort nur den Vornamen liefern, `GetUnitName(unit, true)` den vollen Namen.
+- **Status:** *bestätigt* (Probe FreewoodNetProbe).
+
+### F-21 `SendAddonMessage` meldet Erfolg, die Nachricht kommt trotzdem nicht an (Kanäle)
+- **Symptom:** Senden in eigene Kanäle (und die Kanäle anderer Addons) liefert `Success(0)`, aber weder Addon-Nachricht noch Chat-Text kommt zurück, nicht einmal als Echo.
+- **Ursache:** Der Server nimmt Nachrichten in benutzerdefinierte Kanäle an und verwirft sie. Der Rückgabewert sagt nur, dass der Aufruf gültig war.
+- **Lösung:** Kanäle nicht als Datenweg benutzen; Flüstern (unsichtbar, an einen online bekannten Spieler), Gilde, Gruppe oder Schlachtzug verwenden.
+- **Für die IDE:** `C_ChatInfo.SendAddonMessage(..., "CHANNEL", id)` gibt 0 zurück und stellt nichts zu (umgesetzt, Test in `sim-world.test.ts`). Merksatz: Rückgabewert „Erfolg“ ist kein Zustellbeweis.
+- **Status:** *bestätigt* (Probe, drei Kanäle).
+
+### F-22 Ergebnis-Codes und Sendearten von Addon-Nachrichten
+- **Gemessen:** SAY, YELL, CLUB, COMMUNITY = `InvalidChatType(4)`. PARTY, RAID, INSTANCE_CHAT = `NotInGroup(5)`. GUILD, OFFICER = `NotInGuild(10)`. WHISPER = `Success(0)`, kommt als `CHAT_MSG_ADDON` (Art WHISPER) an, steht nicht im Chat, auch von fremden Spielern; 100 Nachrichten zu 240 Zeichen in einem Zug ohne Drosselung (an sich selbst). Grenze 255 Zeichen je Nachricht.
+- **Für die IDE:** Alle Codes in `Enum.SendAddonMessageResult` und die Regeln in `C_ChatInfo.SendAddonMessage` nachgebildet (ClassicAPI- und Retail-Plugin-Daten, Tests). Das Präfix muss vorher mit `RegisterAddonMessagePrefix` angemeldet sein, sonst kommt nichts an.
+- **Status:** *bestätigt*.
+
+### F-23 Systemzeile bei Flüstern an Offline-Spieler
+- **Symptom:** Jede Flüster-Addon-Nachricht an einen nicht angemeldeten Spieler schreibt „Momentan ist kein Spieler mit dem Namen 'X' online.“ in den Chat des Senders (auch bei fremden Addons wie `TTS_NET`).
+- **Lösung:** Nach dem Senden `CHAT_MSG_SYSTEM` mit `ChatFrame_AddMessageEventFilter` filtern (Namen vergleichen, kurzes Zeitfenster) und den Empfänger als offline merken (Core 0.14.0).
+- **Für die IDE:** Flüstern an unbekannte Namen löst `CHAT_MSG_SYSTEM` mit dieser Zeile aus (umgesetzt).
+- **Status:** *bestätigt*.
+
+### F-24 `|t` im protokollierten Text ist eine Textur-Escape
+- **Symptom:** Im Protokoll stand „Test“ statt „T|test“.
+- **Ursache:** `|t` beendet im Text eine Textur; ein senkrechter Strich vor `t` verschwindet oder verändert die Ausgabe.
+- **Lösung:** `|` vor der Anzeige durch `/` ersetzen.
+- **Für die IDE:** Textfelder, die `|` ungeprüft ausgeben, als Warnung melden.
+- **Status:** *bestätigt*.
+
+### F-25 `GetChannelName(name)` liefert die Nummer, nicht den Namen
+- **Symptom:** Meine Prüfung „Kanal beigetreten“ las den zweiten Rückgabewert als Namen und beurteilte den Beitritt falsch.
+- **Ursache:** Erster Rückgabewert = Kanalnummer (0 = nicht beigetreten).
+- **Lösung:** Auf `id > 0` prüfen.
+- **Für die IDE:** `GetChannelName` liefert Nummer und Namen laut Vanilla-Signatur; Test für beide Rückgabewerte.
+- **Status:** *bestätigt*.
+
+### F-26 Antwort kommt vor dem Zustandswechsel (eigener Fehler im Sender)
+- **Symptom (Simulation):** Der Sender wartete nie auf die Quittung, schickte dasselbe Paket endlos erneut.
+- **Ursache:** „Warte auf Quittung“ wurde erst nach dem letzten Teil gesetzt; die Quittung kann vor dem nächsten Zeitgeber eintreffen.
+- **Lösung:** Zustand vor dem Senden des letzten Teils setzen (WhisperSend 0.14.0, Test `whisper_net_test.lua`).
+- **Für die IDE:** Antworten auf eigene Nachrichten dürfen sofort (gleicher Tick) eintreffen; Testläufer mit Zustellung ohne Verzögerung anbieten.
+- **Status:** *bestätigt* (Simulationstest).
+
+### F-27 Datei nur halb gespeichert (Arbeitsablauf)
+- **Symptom:** Eine große Datei war nach dem Umbau auf 72 statt 160 Zeilen gekürzt; der Syntax-Test war trotzdem grün.
+- **Lösung:** Nach großen Umschreibungen Zeilenzahl und die wichtigsten Funktionen prüfen (`grep "^function"`), `git diff --stat` ansehen, vor dem Commit den Test laufen lassen.
+- **Für die IDE:** `fw check` soll Funktionen melden, die im Rest des Addons aufgerufen werden, aber nicht mehr definiert sind (Idee, offen).
+- **Status:** *bestätigt*.
+
 ### F-15 Namensprüfung ohne Leerzeichen
 - **Symptom:** „Grindma Silberrücken“ (Name mit Leerzeichen) wurde in der Mailingliste als ungültig abgelehnt; nur „GrindmaSilberrücken“ ging.
 - **Ursache:** Das Muster `[^%w\128-\255%-]` enthielt kein Leerzeichen.
 - **Lösung:** Leerzeichen erlauben (`[^%w\128-\255%- ]`).
 - **Für die IDE:** Testfälle für Namen mit Leerzeichen, Umlauten, Bindestrich und Apostroph in jeder Eingabeprüfung.
 - **Status:** *bestätigt*, behoben in Freewood-Mail 0.1.8.
+
+## Erfolge, die im Spiel bestätigt sind · Confirmed successes
+**DE:** Was auf Forever nachweislich funktioniert (Gegenstück zu den Fehlern; die Simulation soll es genauso tun).
+- Unsichtbarer Datenweg per Flüstern: `C_ChatInfo.SendAddonMessage(Präfix, Text, "WHISPER", "Vor Nachname")` kommt an, auch zwischen zwei verschiedenen Spielern (7. 11. 2026), nicht im Chat.
+- Burst von 100 Nachrichten zu 240 Zeichen ohne Drosselung (an sich selbst). Daraus folgt der Plan: etwa 4 Nachrichten je Sekunde, Quittung je Paket.
+- Sicheres Gegenmittel gegen die Offline-Systemzeile: Chatfilter auf `CHAT_MSG_SYSTEM` (F-23).
+- `Share.Scan`-Datensätze lassen sich mit `C_EncodingUtil` (CBOR, Kompression, Base64) in ein Paket packen; ist es zu groß, liefert `Encode` nil und der Sender halbiert die Paketgröße.
+- Zauber-Scan des Codex (Katalog-Art `s`, 0.46.1) lief im Spiel durch; Dungeons ohne Bossdaten zeigen eine Meldung „wartet auf Daten“.
+- Simulationstests mit nachgebauter Schnittstelle (`texlua`) finden Ablauf-Fehler vor dem Spieltest (F-26).
+
+**EN:** What demonstrably works on Forever (counterpart to the failures; the simulation should do the same).
+- Invisible data path by whisper: `C_ChatInfo.SendAddonMessage(prefix, text, "WHISPER", "First Last")` arrives, also between two different players (7 Nov 2026), not shown in chat.
+- Burst of 100 messages of 240 characters without throttling (to self). Plan: about 4 messages per second, ack per packet.
+- Reliable counter to the offline system line: chat filter on `CHAT_MSG_SYSTEM` (F-23).
+- `Share.Scan` records pack into one packet with `C_EncodingUtil` (CBOR, compression, base64); if too large `Encode` returns nil and the sender halves the packet size.
+- The Codex spell scan (catalog kind `s`, 0.46.1) ran through in game; dungeons without boss data show a "waiting for data" note.
+- Simulation tests with a mocked interface (`texlua`) find flow bugs before the in-game test (F-26).
 
 ## Hinweise für Retail und die Simulation · Notes for Retail and the simulation
 **DE:**

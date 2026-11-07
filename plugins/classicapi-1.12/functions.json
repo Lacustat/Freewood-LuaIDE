@@ -15012,5 +15012,59 @@
     "tags": [
       "signature-unknown"
     ]
+  },
+  {
+    "name": "C_ChatInfo.RegisterAddonMessagePrefix",
+    "system": "ChatInfo",
+    "params": [
+      {
+        "name": "prefix",
+        "type": "string"
+      }
+    ],
+    "returns": [
+      {
+        "name": "result",
+        "type": "boolean"
+      }
+    ],
+    "description": {
+      "en": "Registers an addon message prefix (needed to receive CHAT_MSG_ADDON).",
+      "de": "Meldet ein Addon-Nachrichten-Präfix an (nötig, um CHAT_MSG_ADDON zu erhalten)."
+    }
+  },
+  {
+    "name": "C_ChatInfo.SendAddonMessage",
+    "system": "ChatInfo",
+    "params": [
+      {
+        "name": "prefix",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "chatType",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "returns": [
+      {
+        "name": "result",
+        "type": "number"
+      }
+    ],
+    "description": {
+      "en": "Sends an invisible addon message. Returns Enum.SendAddonMessageResult (0 Success, 4 InvalidChatType, 5 NotInGroup, 10 NotInGuild). Measured on Forever: WHISPER arrives (also from other players), CHANNEL accepts but drops.",
+      "de": "Sendet eine unsichtbare Addon-Nachricht. Liefert Enum.SendAddonMessageResult (0 Erfolg, 4 ungültige Art, 5 nicht in Gruppe, 10 nicht in Gilde). Auf Forever gemessen: WHISPER kommt an (auch von anderen Spielern), CHANNEL wird angenommen, aber verworfen."
+    }
   }
 ]
