@@ -1,0 +1,8 @@
+## Interface: 16001
+## Title: Freewood NetProbe
+## Notes: Test addon: which ways of sending addon data work (whisper, channels, communities) and are they invisible? Author: Lacustat
+## Author: Lacustat
+## Version: 0.1.0
+## SavedVariables: FreewoodNetProbeDB
+
+FreewoodNetProbe.lua
