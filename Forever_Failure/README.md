@@ -139,6 +139,13 @@
 - **Für die IDE:** Rahmen ohne Breite oder Höhe (`GetWidth() == 0`) im Test als Warnung melden; Kinder eines solchen Rahmens gelten als nicht sichtbar.
 - **Status:** *bestätigt* (Screenshot).
 
+### F-19 Mehrzeiliger Text mit SetWordWrap(false) zeigt nur die erste Zeile
+- **Symptom:** Im Statistik-Reiter stand je Kategorie nur die erste Zeile (zum Beispiel „Name“), obwohl der Platz für alle Zeilen reserviert war.
+- **Ursache:** Ein Label mit `SetWordWrap(false)` und per `\n` verbundenen Zeilen zeichnet auf Forever nur die erste Zeile.
+- **Lösung:** Eine Zeile je Label (Pool aus linkem und rechtem Label), Core 0.11.1.
+- **Für die IDE:** Text mit `\n` in einem Label ohne Umbruch als Warnung melden.
+- **Status:** *bestätigt* (Screenshot).
+
 ### F-15 Namensprüfung ohne Leerzeichen
 - **Symptom:** „Grindma Silberrücken“ (Name mit Leerzeichen) wurde in der Mailingliste als ungültig abgelehnt; nur „GrindmaSilberrücken“ ging.
 - **Ursache:** Das Muster `[^%w\128-\255%-]` enthielt kein Leerzeichen.
