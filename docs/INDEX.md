@@ -7,6 +7,7 @@
 
 | Datei · File | Inhalt · Purpose |
 |---|---|
+| `Forever_Failure/README.md` | Gesammelte Fehler aus dem echten Forever-Client, Vorlage für die Simulation und Retail · failures from the real Forever client, input for the simulation and Retail |
 | `docs/MODULE.md` | Modulübersicht · module overview |
 | `src/plugin-api/types.ts` | Typen für Manifest und API-Daten · types for manifest and API data |
 | `src/plugin-api/validate.ts` | Validierung, Fehlercodes `PLG_*` · validation, error codes |
