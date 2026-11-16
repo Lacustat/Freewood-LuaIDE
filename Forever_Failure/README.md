@@ -213,6 +213,13 @@
 - **Für die IDE:** `CreateFrame("EditBox", ...)` ohne `SetAutoFocus(false)` im selben Block als Warnung melden; in der Simulation Tastaturfokus nachbilden (Tasten gehen an das fokussierte Feld).
 - **Status:** *bestätigt* (Nutzer).
 
+### F-30 `IsShown()` bei Reitern: unsichtbare Neuaufbauten (Ruckler bei jedem Kill)
+- **Symptom:** Nach dem ersten Öffnen der Codex-Datenbank ruckelte das Spiel bei jedem besiegten Gegner und jedem Looten (250–370 ms je Ereignis), auch bei geschlossenem Freewood-Fenster. Log: `FW:CODEX_CHANGED [Freewood-Codex/CodexUI.lua:3658] 282 ms`, Speicher stieg um 80 MB in 10 Minuten. · After opening the Codex once, every kill and loot stuttered, even with the window closed.
+- **Ursache · Cause:** Der Handler fragte `f:IsShown()`. Das ist nur der eigene Schalter des Reiters und bleibt nach dem ersten Öffnen wahr, wenn das Elternfenster geschlossen wird. `IsVisible()` prüft auch die Eltern. · `IsShown()` is the frame's own flag and stays true when the parent window closes; `IsVisible()` also checks the parents.
+- **Lösung · Fix:** In Ereignis-Handlern von Reitern `IsVisible()` nutzen; beim Öffnen frisch aufbauen (`onShow`); Änderungen bei sichtbarem Fenster bündeln (höchstens ein Neuaufbau je Sekunde). Codex 0.50.2, Brett 0.7.4, Creator 0.15.2. Eigene Fenster mit `UIParent` als Eltern sind nicht betroffen.
+- **Für die IDE:** In der Simulation `IsShown` und `IsVisible` getrennt halten (Kind mit gezeigtem Schalter, aber verstecktem Elternfenster: `IsShown` wahr, `IsVisible` falsch). Prüfregel: `FW:On`/`RegisterEvent`-Handler, die bei `IsShown()` teure Arbeit machen, als Hinweis melden.
+- **Status:** *ungeprüft · unchecked* (Ursache aus dem Log und dem Code belegt, Behebung im Spiel noch nicht gesehen).
+
 ### F-15 Namensprüfung ohne Leerzeichen
 - **Symptom:** „Grindma Silberrücken“ (Name mit Leerzeichen) wurde in der Mailingliste als ungültig abgelehnt; nur „GrindmaSilberrücken“ ging.
 - **Ursache:** Das Muster `[^%w\128-\255%-]` enthielt kein Leerzeichen.
