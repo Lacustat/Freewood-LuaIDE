@@ -11,7 +11,7 @@
 ## Befehle · Commands
 | Befehl · Command | DE | EN |
 |---|---|---|
-| `fw check <Addon-Ordner\|Datei.lua> [--target classicapi\|vanilla\|retail]` | Syntax + API-Prüfung (unbekannte Funktionen, Versionsfallen). Exit 1 bei Fehlern. | Syntax + API check (unknown functions, version traps). Exit 1 on errors. |
+| `fw check <Addon-Ordner\|Datei.lua> [--target classicapi\|vanilla\|retail]` | Syntax + API-Prüfung (unbekannte Funktionen, Versionsfallen). Bei einem Addon-Ordner auch die `Bindings.xml`: Bereich in Optionen > Tastaturbelegung (`BINDINGS_CATEGORY`, `BINDINGS_CATEGORY_RAW`), fehlende `BINDING_NAME_*`, Neustart-Hinweis (Forever_Failure F-12, F-29). Exit 1 bei Fehlern. | Syntax + API check (unknown functions, version traps). For an addon folder also `Bindings.xml`: section in Options > Key Bindings, missing `BINDING_NAME_*`, restart hint (Forever_Failure F-12, F-29). Exit 1 on errors. |
 | `fw run <Addon> [--open mail,merchant] [--event NAME:arg;NAME2] [--cmd "/slash"] [--eval "lua"] [--advance s] [--frames] [--verbose] [--max N] [--engine wasm\|interp] [--json]` | Lädt die `.toc` (nur `.lua`), meldet sich an, öffnet Fenster, löst Ereignisse/Befehle aus, gibt Log + Frames kurz aus. Exit 1 bei Skriptfehlern. | Loads the `.toc` (`.lua` only), logs in, opens windows, fires events/commands, prints log + frames compactly. Exit 1 on script errors. |
 | `fw targets` | Zielplattformen. | Target platforms. |
 | `fw windows` | Fenstername für `--open`. | Window names for `--open`. |

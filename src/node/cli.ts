@@ -18,6 +18,7 @@ import { join, resolve, basename } from "node:path";
 import { Kernel, WowSim, createWasmEngine, realVmVersion, supportsRealVm, checkSource, type ResolvedTarget } from "../index.js";
 import { WINDOW_NAMES } from "../sim/extras.js";
 import { loadPluginsFromRoot } from "./fs-loaders.js";
+import { checkBindings } from "../analysis/bindings-check.js";
 
 // ===== [S1] Hilfen · helpers =====
 
@@ -70,6 +71,9 @@ async function cmdCheck(a: Args): Promise<number> {
   const addon = loadAddon(path);
   const rows: { file: string; line: number; sev: string; code: string; msg: string }[] = [];
   for (const f of addon.lua) for (const d of checkSource(f.code, target, f.file)) rows.push({ file: f.file, line: d.line, sev: d.severity, code: d.code, msg: L(d.message) });
+  // Bindings.xml (steht nicht in der .toc): Namen, Bereich im Menü, Neustart-Hinweis · names, menu section, restart hint
+  const bxml = statSync(path).isDirectory() ? readdirSync(addon.dir).find((f) => f.toLowerCase() === "bindings.xml") : undefined;
+  if (bxml) for (const d of checkBindings(readFileSync(join(addon.dir, bxml), "utf8"), addon.lua)) rows.push({ file: bxml, line: d.line, sev: d.severity, code: d.code, msg: L(d.message) });
   const errs = rows.filter((r) => r.sev === "error").length;
   const human = [`check ${addon.name} · target ${target.id} · ${addon.lua.length} lua file(s)${addon.skipped.length ? ` · xml not run: ${addon.skipped.join(", ")}` : ""}`,
     ...rows.map((r) => `${r.sev.toUpperCase().padEnd(7)} ${r.file}:${r.line} ${r.code} ${r.msg}`), rows.length ? `${errs} error(s), ${rows.length - errs} other` : "OK: no findings"];

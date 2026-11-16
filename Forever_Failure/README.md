@@ -102,8 +102,15 @@
 - **Symptom:** Neue Tastenbelegungen erscheinen nach `/reload` nicht.
 - **Ursache:** `Bindings.xml` wird nur beim Spielstart gelesen und steht nicht in der `.toc`. Namen kommen aus den Globals `BINDING_HEADER_*` und `BINDING_NAME_*` (aus einer Lua-Datei in der `.toc`).
 - **Lösung:** Eine `Bindings.xml` mit `header=` je Modul, Texte aus `GetLocale()`. Spiel neu starten.
-- **Für die IDE:** `Bindings.xml` einlesen, Namen gegen die `BINDING_*`-Globals prüfen, `/reload` ändert die Liste nicht.
+- **Für die IDE:** `Bindings.xml` einlesen, Namen gegen die `BINDING_*`-Globals prüfen, `/reload` ändert die Liste nicht. *Umgesetzt in `fw check` (16.11.2026), siehe auch F-29.*
 - **Status:** *bestätigt* (nach Neustart sichtbar und benutzbar).
+
+### F-29 Eigener Bereich in der Tastaturbelegung (`category`)
+- **Symptom:** Alle Freewood-Tasten standen in Optionen > Tastaturbelegung unter „AddOns“, gemischt mit anderen Addons. · All Freewood keys were listed under "AddOns" in Options > Key Bindings, mixed with other addons.
+- **Ursache · Cause:** `category="ADDONS"` in jeder `Bindings.xml`. Das Spiel nennt einen Bereich nach `_G[category]`, wenn das ein Text ist, sonst nach dem Namen selbst (Blizzard `Blizzard_SettingsDefinitions_Frame/Keybindings.lua`, Funktion `GetBindingCategoryName`; `ADDONS` ist der Spiel-Text „AddOns“). Kopfzeilen (`header=`) zeigt das heutige Menü nur als Abstand, nicht als Text. · The game names a section after `_G[category]` if that is a string, otherwise the raw name; headers are shown only as a spacer.
+- **Lösung · Fix:** In jeder `Bindings.xml` `category="BINDING_CATEGORY_FREEWOOD"`, in jeder `Bindings.lua` `BINDING_CATEGORY_FREEWOOD = "Freewood"` (alle Freewood-Forever-Module, 16.11.2026). Vorsilbe `BINDING_CATEGORY_`, damit der Name mit keinem anderen Global kollidiert (`_G.Freewood` ist eine Tabelle; das Menü fiele dann auf den rohen Namen zurück, ältere Menüs könnten daran scheitern). Neustart des Spiels nötig (F-12). · Use `category="BINDING_CATEGORY_FREEWOOD"` and `BINDING_CATEGORY_FREEWOOD = "Freewood"` in every module; game restart needed.
+- **Für die IDE:** `fw check` meldet den Bereich, in dem die Einträge landen (`BINDINGS_CATEGORY`), warnt bei einer category ohne Text-Global (`BINDINGS_CATEGORY_RAW`) und bei fehlendem `BINDING_NAME_*` (`BINDINGS_NAME_MISSING`), dazu den Neustart-Hinweis (`BINDINGS_RESTART`). Datei `src/analysis/bindings-check.ts`, Test in `tests/cli.test.ts`. · `fw check` reports the menu section, warns about a category without a string global and missing `BINDING_NAME_*`, plus the restart hint.
+- **Status:** *ungeprüft · unchecked* (Blizzard-Code gelesen, im Forever-Menü noch nicht gesehen).
 
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 

@@ -50,6 +50,9 @@ node scripts/fw.mjs windows      # Fenster für --open · windows for --open
 **DE:** `--json` liefert maschinenlesbare Ausgabe. Exit-Codes: 0 = in Ordnung, 1 = Befunde oder Fehler, 2 = falsche Benutzung. XML-Dateien aus der `.toc` werden gemeldet, aber nicht ausgeführt. Vollständig: [CLI.md](CLI.md).
 **EN:** `--json` gives machine-readable output. Exit codes: 0 = ok, 1 = findings or errors, 2 = usage error. XML files from the `.toc` are reported but not run. Full reference: [CLI.md](CLI.md).
 
+**DE:** Tastenbelegungen: `fw check` prüft bei einem Addon-Ordner auch die `Bindings.xml` (fehlende `BINDING_NAME_*`, Bereich im Menü). Freewood-Module gehören in den eigenen Bereich „Freewood“: `category="BINDING_CATEGORY_FREEWOOD"` in der XML und `BINDING_CATEGORY_FREEWOOD = "Freewood"` in der `Bindings.lua`. Das Spiel nimmt `_G[category]` als Überschrift, wenn das ein Text ist, sonst den rohen Namen. `Bindings.xml` wird nur beim Spielstart gelesen. Details: Forever_Failure F-12, F-29.
+**EN:** Key bindings: for an addon folder `fw check` also checks `Bindings.xml` (missing `BINDING_NAME_*`, menu section). Freewood modules belong in their own section "Freewood": `category="BINDING_CATEGORY_FREEWOOD"` in the XML and `BINDING_CATEGORY_FREEWOOD = "Freewood"` in `Bindings.lua`. The game uses `_G[category]` as the heading if that is a string, else the raw name. `Bindings.xml` is read only at game start. Details: Forever_Failure F-12, F-29.
+
 Beispiele · Examples:
 ```
 node scripts/fw.mjs check MyAddon --target vanilla
