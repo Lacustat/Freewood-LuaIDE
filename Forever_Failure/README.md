@@ -213,6 +213,13 @@
 - **Für die IDE:** `CreateFrame("EditBox", ...)` ohne `SetAutoFocus(false)` im selben Block als Warnung melden; in der Simulation Tastaturfokus nachbilden (Tasten gehen an das fokussierte Feld).
 - **Status:** *bestätigt* (Nutzer).
 
+### F-31 Reagenzientasche (Tasche 5) wird bei `0..NUM_BAG_SLOTS` übersehen
+- **Symptom:** Kräuter, Erze und Öle fehlten in der Item-Auswahl der Mailingliste („nicht in den Taschen“), obwohl sie im Inventar lagen. · Herbs, ores and oils were missing from the mailing list picker although they were in the bags.
+- **Ursache · Cause:** Forever hat wie der heutige Client eine Reagenzientasche als Tasche 5. `NUM_BAG_SLOTS` ist 4; eine Schleife `for bag = 0, NUM_BAG_SLOTS` sieht sie nicht. · Forever has a reagent bag as bag 5; `NUM_BAG_SLOTS` is 4.
+- **Lösung · Fix:** Zum Suchen von Items bis `math.max(NUM_BAG_SLOTS, NUM_TOTAL_EQUIPPED_BAG_SLOTS or 5)` gehen (Freewood-Mail 0.3.3). Für „freie Plätze“ die Reagenzientasche weglassen, sie nimmt nur Handwerksmaterial an.
+- **Für die IDE:** In der Simulation Tasche 5 als Reagenzientasche anbieten (nur Handwerksmaterial); Prüfregel: Schleifen `0..NUM_BAG_SLOTS` bei der Item-Suche als Hinweis melden.
+- **Status:** *bestätigt · confirmed* (Lacustat, 16.11.2026: nach der Änderung erscheinen die Kräuter).
+
 ### F-30 `IsShown()` bei Reitern: unsichtbare Neuaufbauten (Ruckler bei jedem Kill)
 - **Symptom:** Nach dem ersten Öffnen der Codex-Datenbank ruckelte das Spiel bei jedem besiegten Gegner und jedem Looten (250–370 ms je Ereignis), auch bei geschlossenem Freewood-Fenster. Log: `FW:CODEX_CHANGED [Freewood-Codex/CodexUI.lua:3658] 282 ms`, Speicher stieg um 80 MB in 10 Minuten. · After opening the Codex once, every kill and loot stuttered, even with the window closed.
 - **Ursache · Cause:** Der Handler fragte `f:IsShown()`. Das ist nur der eigene Schalter des Reiters und bleibt nach dem ersten Öffnen wahr, wenn das Elternfenster geschlossen wird. `IsVisible()` prüft auch die Eltern. · `IsShown()` is the frame's own flag and stays true when the parent window closes; `IsVisible()` also checks the parents.
