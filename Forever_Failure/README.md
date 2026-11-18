@@ -213,6 +213,13 @@
 - **Für die IDE:** `CreateFrame("EditBox", ...)` ohne `SetAutoFocus(false)` im selben Block als Warnung melden; in der Simulation Tastaturfokus nachbilden (Tasten gehen an das fokussierte Feld).
 - **Status:** *bestätigt* (Nutzer).
 
+### F-34 Knopf blinkt beim ersten Überfahren (Textur wird erst beim Zeichnen geladen)
+- **Symptom:** Beim ersten Überfahren eines Knopfs mit eigenem Hover-Bild blinkt er kurz, danach nicht mehr. · A button with its own hover image flickers once on the first hover.
+- **Ursache · Cause:** Das Spiel lädt eine Bilddatei erst, wenn sie zum ersten Mal gezeichnet wird. `SetTexture` auf ein neues Bild oder ein vorher verstecktes (`Hide`) bzw. ganz durchsichtiges Bild lädt nicht vorab. · The game loads a file only when it is first drawn; hidden or fully transparent textures are not preloaded.
+- **Lösung · Fix:** Alle Zustände eines Knopfs in eine Datei (Atlas) legen und nur die Texturkoordinaten wechseln; andere Bilder vorladen, indem man sie mit Deckkraft 0,01 auf 1 Pixel zeichnet (Freewood-Design 0.2.14, `tools/make_atlas.py`).
+- **Für die IDE:** Hinweis bei `SetTexture` in `OnEnter`/`OnMouseDown`.
+- **Status:** *bestätigt · confirmed* (Lacustat, 18.11.2026).
+
 ### F-33 `Texture:SetMask` verzerrt Icons zu Streifen
 - **Symptom:** Berufs-Icons (`Interface\Icons\Trade_*`) mit `SetMask("Interface\CharacterFrame\TempPortraitAlphaMask")` und beschnittenen Texturkoordinaten erschienen im Pinky-Fenster als zusammengequetschte, mehrfach wiederholte Streifen. · Icons masked with the round portrait mask showed up as squeezed, repeated stripes.
 - **Ursache · Cause:** Unklar; vermutlich verträgt die Maske in Forever keine geänderten Texturkoordinaten oder die Maskendatei fehlt. · Unclear; likely the mask does not work with changed texture coordinates in Forever, or the mask file is missing.
