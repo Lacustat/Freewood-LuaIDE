@@ -213,6 +213,20 @@
 - **Für die IDE:** `CreateFrame("EditBox", ...)` ohne `SetAutoFocus(false)` im selben Block als Warnung melden; in der Simulation Tastaturfokus nachbilden (Tasten gehen an das fokussierte Feld).
 - **Status:** *bestätigt* (Nutzer).
 
+### F-33 `Texture:SetMask` verzerrt Icons zu Streifen
+- **Symptom:** Berufs-Icons (`Interface\Icons\Trade_*`) mit `SetMask("Interface\CharacterFrame\TempPortraitAlphaMask")` und beschnittenen Texturkoordinaten erschienen im Pinky-Fenster als zusammengequetschte, mehrfach wiederholte Streifen. · Icons masked with the round portrait mask showed up as squeezed, repeated stripes.
+- **Ursache · Cause:** Unklar; vermutlich verträgt die Maske in Forever keine geänderten Texturkoordinaten oder die Maskendatei fehlt. · Unclear; likely the mask does not work with changed texture coordinates in Forever, or the mask file is missing.
+- **Lösung · Fix:** Keine Maske; Icons eckig mit `SetTexCoord(0.07, 0.93, 0.07, 0.93)` (Freewood-Design 0.2.7). Runde Form besser über eine eigene Ring-Textur darüber.
+- **Für die IDE:** Prüfregel: `SetMask` auf Forever als Hinweis melden.
+- **Status:** *bestätigt · confirmed* (Screenshot Lacustat, 18.11.2026).
+
+### F-32 Lokale Konstante nach der Funktion, die sie nutzt
+- **Symptom:** Der Trenner im Pinky-Fenster stand links außerhalb des Fensters. · The separator was placed left outside the window.
+- **Ursache · Cause:** `local SEP_X = …` stand im Code hinter der Funktion, die das Fenster baut. Für diese Funktion war `SEP_X` ein (leerer) globaler Name, `SetPoint` bekam `nil` und setzte 0. · The local was defined after the function using it; inside, it was a nil global.
+- **Lösung · Fix:** Maße oben in der Datei festlegen; mit `texluac -l -p datei.lua | grep GETTABUP` prüfen, welche globalen Namen gelesen werden (Freewood-Design 0.2.5).
+- **Für die IDE:** Prüfregel: gelesene globale Namen, die in derselben Datei später als `local` erscheinen, als Fehler melden.
+- **Status:** *bestätigt · confirmed* (18.11.2026).
+
 ### F-31 Reagenzientasche (Tasche 5) wird bei `0..NUM_BAG_SLOTS` übersehen
 - **Symptom:** Kräuter, Erze und Öle fehlten in der Item-Auswahl der Mailingliste („nicht in den Taschen“), obwohl sie im Inventar lagen. · Herbs, ores and oils were missing from the mailing list picker although they were in the bags.
 - **Ursache · Cause:** Forever hat wie der heutige Client eine Reagenzientasche als Tasche 5. `NUM_BAG_SLOTS` ist 4; eine Schleife `for bag = 0, NUM_BAG_SLOTS` sieht sie nicht. · Forever has a reagent bag as bag 5; `NUM_BAG_SLOTS` is 4.
