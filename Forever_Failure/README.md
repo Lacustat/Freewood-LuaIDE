@@ -148,6 +148,13 @@
 - **Für die IDE:** Modus „Kampf“: `UNIT_AURA` mit Secret-`updateInfo`; `ipairs`/`pairs` darauf als Fehler, danach Taint-Meldung.
 - **Status:** *bestätigt* (Fehlermeldungen, Lacustat 21.11.2026); Lösung im Spiel ungeprüft.
 
+### F-40 Blizzard-Methoden ersetzen verdirbt ganze Durchläufe (Taint)
+- **Symptom:** Im Kampf (12x): „GetAuraDataByIndex(): Auras cannot be accessed when secret while tainted by 'Freewood-Core'“, Spur über `Blizzard_ObjectiveTracker` → `ScenarioObjectiveTracker:LayoutContents` → `ShouldShowMawBuffs`. · Replacing a Blizzard method taints every run through it.
+- **Ursache · Cause:** Core (Questsortierung, seit 0.52) ersetzte `QuestObjectiveTracker.BuildQuestWatchInfos` durch eine eigene Funktion und rief `MarkDirty` auf. Jeder Neuaufbau des Trackers lief dadurch als Freewood-Code; andere Teile im selben Durchlauf (Szenario, Maw-Buffs) lesen im Kampf geschützte Auren und scheitern.
+- **Lösung · Fix:** Core 0.60.3: Tracker nicht anfassen; Reihenfolge über die Beobachtungsliste (`C_QuestLog.RemoveQuestWatch`/`AddQuestWatch`), nur außerhalb des Kampfes. Regel: **Blizzard-Methoden nie ersetzen, nur `hooksecurefunc`; Blizzard-Neuaufbau (`MarkDirty`, `*_Update`) nicht aus eigenem Code anstoßen, schon gar nicht im Kampf.**
+- **Für die IDE:** `check` warnt bei Zuweisungen an Felder von Blizzard-Rahmen (`QuestObjectiveTracker.X = function`), Modus „Kampf“ meldet Taint, wenn danach Blizzard-Code geschützte Werte liest.
+- **Status:** *bestätigt* (Fehlermeldung, Lacustat 22.11.2026); Lösung im Spiel ungeprüft.
+
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 
 ### F-13 Neue Dateien in der `.toc` brauchen einen Neustart
