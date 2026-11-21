@@ -119,6 +119,13 @@
 - **Für die IDE:** Warnung, wenn `SetPropagateKeyboardInput(false)` ohne Rückstellung im selben Bild steht; im Kampf-Szenario `SetPropagateKeyboardInput` als blockiert behandeln.
 - **Status:** *gemeldet, Lösung ungeprüft · reported, fix unchecked* (Lacustat, 21.11.2026).
 
+### F-36 Spielvorlagen mit nummerierten Platzhaltern (`%1$s`, `%2$d`)
+- **Symptom:** „Für mich > Berufe“ im Auktion-Modul blieb leer, die Seite zeigte weiter „drücke Jetzt suchen“. · "For me > Professions" stayed empty.
+- **Ursache · Cause:** Aus `ITEM_MIN_SKILL` („Benötigt %s (%d)“) wurde ein Lua-Suchmuster gebaut. Der deutsche Forever-Client schreibt die Vorlage mit nummerierten Platzhaltern; `%1` ist in Lua-Mustern ein Rückbezug, `string.match` bricht mit „invalid capture index“ ab. · The German client uses numbered placeholders; `%1` is a back-reference in Lua patterns and `string.match` errors.
+- **Lösung · Fix:** Vor dem Umbau `string.gsub(p, "%%%d+%$([sd])", "%%%1")`, `string.match` in `pcall`, Suchfehler sichtbar machen (Auction 0.12.1). Das Würfelfenster (`UI/RollWindow.lua`, `Compile`) kannte das schon. Gilt für jede Spielvorlage, aus der ein Muster gebaut wird. · Normalise numbered placeholders before building patterns; applies to every game template.
+- **Für die IDE:** Deutsche Vorlagen in der Simulation mit nummerierten Platzhaltern liefern; Warnung, wenn ein Global-String ohne diese Umwandlung in `string.match`/`string.find` landet.
+- **Status:** *bestätigt · confirmed* (Lacustat, 21.11.2026: nach dem Fix erscheinen die Rezepte).
+
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 
 ### F-13 Neue Dateien in der `.toc` brauchen einen Neustart
