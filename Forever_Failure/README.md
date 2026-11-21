@@ -141,6 +141,13 @@
 - **Für die IDE:** `RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")` im Forever-Ziel als `ADDON_ACTION_FORBIDDEN` melden; `check` warnt bei diesem Ereignisnamen.
 - **Status:** *sehr wahrscheinlich* (einzige neue Anmeldung einer geschützten Sache beim Einloggen); bestätigt, wenn die Meldung mit 0.60.1 weg ist.
 
+### F-39 `UNIT_AURA`-Daten sind im Kampf Secret-Tabellen
+- **Symptom:** Im Kampf: „AutoReply.lua:696: bad argument #1 to 'ipairs' (table expected, got secret)“ (160x), danach „attempted to iterate a table that cannot be accessed while tainted (execution tainted by 'Freewood-Core')“ (3226x). · In combat the updateInfo tables are secret; touching them also breaks Blizzard code.
+- **Ursache · Cause:** `updateInfo.addedAuras` aus `UNIT_AURA` ist im Kampf eine geschützte Tabelle. `type()` liefert trotzdem `"table"`, erst `ipairs` scheitert. Das Anfassen färbt die Ausführung, Blizzards eigener Code scheitert danach an derselben Tabelle.
+- **Lösung · Fix:** Core 0.60.2: Ereignisdaten von `UNIT_AURA` nie lesen; im Kampf nichts tun; außerhalb 0,3 s später eigene Buffs mit `C_UnitAuras.GetBuffDataByIndex` lesen, jeden Wert mit `issecretvalue`/`canaccesstable` prüfen, alles in `pcall`. Regel: **Payload-Tabellen von Aura-Ereignissen nie anfassen.**
+- **Für die IDE:** Modus „Kampf“: `UNIT_AURA` mit Secret-`updateInfo`; `ipairs`/`pairs` darauf als Fehler, danach Taint-Meldung.
+- **Status:** *bestätigt* (Fehlermeldungen, Lacustat 21.11.2026); Lösung im Spiel ungeprüft.
+
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 
 ### F-13 Neue Dateien in der `.toc` brauchen einen Neustart
