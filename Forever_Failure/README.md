@@ -134,6 +134,13 @@
 - **Für die IDE:** Szenario mit `GetNormalizedRealmName() == ""`; Warnung bei `GetNormalizedRealmName() or ...` ohne Prüfung auf leeren Text.
 - **Status:** *in Daten bestätigt · confirmed in data* (Lacustat, 21.11.2026: SavedVariables mit beiden Bereichen), Lösung im Spiel ungeprüft.
 
+### F-38 `COMBAT_LOG_EVENT_UNFILTERED` anmelden ist gesperrt
+- **Symptom:** Direkt beim Einloggen: „Freewood-Core wurde geblockt. Die angeforderte Funktion ist der Blizzard-UI vorbehalten.“ (Deaktivieren / Ignorieren). · On login: "Freewood-Core has been blocked. The requested function is reserved for the Blizzard UI."
+- **Ursache · Cause:** Core 0.59.0/0.60.0 (Auto-Antwort) meldete `COMBAT_LOG_EVENT_UNFILTERED` als Ersatzweg für die Buff-Erkennung an. Wie im neuen Retail ist das für Addons gesperrt; `pcall(frame.RegisterEvent, ...)` fängt das nicht ab, das Spiel meldet `ADDON_ACTION_FORBIDDEN`. · Registering the combat log is forbidden for addons; pcall does not catch it.
+- **Lösung · Fix:** Core 0.60.1: kein Kampflog, Buffs nur über `UNIT_AURA` (`addedAuras[].sourceUnit`); `FW:RegisterEvent` weist gesperrte Ereignisse ab (`FW.RESTRICTED_EVENTS`). Regel: **Kampflog nie anmelden.**
+- **Für die IDE:** `RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")` im Forever-Ziel als `ADDON_ACTION_FORBIDDEN` melden; `check` warnt bei diesem Ereignisnamen.
+- **Status:** *sehr wahrscheinlich* (einzige neue Anmeldung einer geschützten Sache beim Einloggen); bestätigt, wenn die Meldung mit 0.60.1 weg ist.
+
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 
 ### F-13 Neue Dateien in der `.toc` brauchen einen Neustart
