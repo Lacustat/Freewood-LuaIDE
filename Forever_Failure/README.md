@@ -112,6 +112,13 @@
 - **Für die IDE:** `fw check` meldet den Bereich, in dem die Einträge landen (`BINDINGS_CATEGORY`), warnt bei einer category ohne Text-Global (`BINDINGS_CATEGORY_RAW`) und bei fehlendem `BINDING_NAME_*` (`BINDINGS_NAME_MISSING`), dazu den Neustart-Hinweis (`BINDINGS_RESTART`). Datei `src/analysis/bindings-check.ts`, Test in `tests/cli.test.ts`. · `fw check` reports the menu section, warns about a category without a string global and missing `BINDING_NAME_*`, plus the restart hint.
 - **Status:** *ungeprüft · unchecked* (Blizzard-Code gelesen, im Forever-Menü noch nicht gesehen).
 
+### F-35 Keine Bewegung im Kampf nach dem Öffnen des Chats (`SetPropagateKeyboardInput`)
+- **Symptom:** Chat geöffnet (Enter), dann in den Kampf: W/A/S/D und alle anderen Tasten tun nichts mehr, bis der Kampf vorbei ist. · Open the chat with Enter, enter combat: no key works (no movement) until combat ends.
+- **Ursache · Cause:** Ein unsichtbarer Rahmen mit `EnableKeyboard(true)` hört auf Enter und schluckt diesen Druck mit `SetPropagateKeyboardInput(false)`. Zurückgestellt wurde erst beim nächsten Tastendruck. `SetPropagateKeyboardInput` ist in der Kampfsperre geschützt; kam der Kampf dazwischen, blieb die Weitergabe aus und der Rahmen verschluckte alle Tasten. · A key-listener frame swallowed Enter with `SetPropagateKeyboardInput(false)` and only restored it on the next key press; that call is protected in combat lockdown.
+- **Lösung · Fix:** Nur den einen Druck schlucken und sofort zurückstellen (`C_Timer.After(0)` und `OnKeyUp`), beim Kampfbeginn (`PLAYER_REGEN_DISABLED`, kommt vor der Sperre) noch einmal freigeben, im Kampf nie etwas schlucken (Core 0.55.2, Test `tests/chatkeys_test.lua`). · Swallow only that press and restore at once, restore again on `PLAYER_REGEN_DISABLED`, never swallow in combat.
+- **Für die IDE:** Warnung, wenn `SetPropagateKeyboardInput(false)` ohne Rückstellung im selben Bild steht; im Kampf-Szenario `SetPropagateKeyboardInput` als blockiert behandeln.
+- **Status:** *gemeldet, Lösung ungeprüft · reported, fix unchecked* (Lacustat, 21.11.2026).
+
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 
 ### F-13 Neue Dateien in der `.toc` brauchen einen Neustart
