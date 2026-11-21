@@ -126,6 +126,13 @@
 - **Für die IDE:** Deutsche Vorlagen in der Simulation mit nummerierten Platzhaltern liefern; Warnung, wenn ein Global-String ohne diese Umwandlung in `string.match`/`string.find` landet.
 - **Status:** *bestätigt · confirmed* (Lacustat, 21.11.2026: nach dem Fix erscheinen die Rezepte).
 
+### F-37 `GetNormalizedRealmName()` liefert einen leeren Text
+- **Symptom:** Auktionsdaten schienen nach einem Update weg; neue Scans standen in `FreewoodAuctionDB.realms["-Horde"]`, die alten unter `"<Realm>-Horde"`. · Auction data seemed gone; new scans were stored under "-Horde".
+- **Ursache · Cause:** Ab etwa 20.11.2026 lieferte Forever zeitweise `""` statt des Realmnamens. Der übliche Ersatz `GetNormalizedRealmName() or GetRealmName()` greift bei `""` nicht, weil ein leerer Text in Lua wahr ist. · `""` is truthy in Lua, so the `or` fallback never runs.
+- **Lösung · Fix:** Leere Texte wie fehlende behandeln, dann `GetRealmName` ohne Leerzeichen, dann den gemerkten Realm; verwaiste Bereiche beim Anmelden zusammenführen (Auction 0.12.2). Dasselbe Muster steht noch in Codex (`CodexTrust.lua`), Gilde (`Guild.lua`) und Brett (`Brett.lua`); dort gehen keine Daten verloren, aber der Realmvergleich kann leer sein.
+- **Für die IDE:** Szenario mit `GetNormalizedRealmName() == ""`; Warnung bei `GetNormalizedRealmName() or ...` ohne Prüfung auf leeren Text.
+- **Status:** *in Daten bestätigt · confirmed in data* (Lacustat, 21.11.2026: SavedVariables mit beiden Bereichen), Lösung im Spiel ungeprüft.
+
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 
 ### F-13 Neue Dateien in der `.toc` brauchen einen Neustart
