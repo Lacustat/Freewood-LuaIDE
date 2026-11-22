@@ -155,6 +155,13 @@
 - **Für die IDE:** `check` warnt bei Zuweisungen an Felder von Blizzard-Rahmen (`QuestObjectiveTracker.X = function`), Modus „Kampf“ meldet Taint, wenn danach Blizzard-Code geschützte Werte liest.
 - **Status:** *bestätigt* (Fehlermeldung, Lacustat 22.11.2026); Lösung im Spiel ungeprüft.
 
+### F-41 Schlachtfelder: Dauerfeuer von Ereignissen und Taint
+- **Symptom:** Auf Schlachtfeldern (PvP) 6655x „attempted to iterate a table that cannot be accessed while tainted (execution tainted by 'Freewood-Core')“, ohne Spur; Lacustat ordnete es der Auto-Antwort zu. · In battlegrounds the auto reply ran hot.
+- **Ursache · Cause:** Auf Schlachtfeldern kommen und gehen bis zu 40 Spieler; `GROUP_ROSTER_UPDATE`, `UNIT_LEVEL`, `NAME_PLATE_UNIT_ADDED` und Chat feuern ununterbrochen, viele Werte sind geschützt. Die Auto-Antwort (Gruppenbeitritt, Stufen in der Umgebung, Chat) lief bei jedem Ereignis und färbte die Ausführung; Blizzards Code im selben Durchlauf scheiterte. Welche Tabelle genau, ist offen (Meldung ohne Spur).
+- **Lösung · Fix:** Core 0.62.1: alle Auslöser der Auto-Antwort prüfen zuerst die Zone (`IsInInstance` → `pvp`/`arena`) und tun dort nichts (Haken „Auf Schlachtfeldern und in Arenen aus“, Standard an); beim Wechsel Ausgangsstand neu. Regel: **Dauer-Ereignisse in PvP-Instanzen nicht auswerten.**
+- **Für die IDE:** Szenario „Schlachtfeld“ mit 40 Einheiten und Ereignis-Dauerfeuer, geschützte Werte.
+- **Status:** *bestätigt* (Fehlermeldung, Lacustat 22.11.2026); Lösung im Spiel ungeprüft.
+
 ## Laden, Neustart, SavedVariables · Loading, restart, SavedVariables
 
 ### F-13 Neue Dateien in der `.toc` brauchen einen Neustart
